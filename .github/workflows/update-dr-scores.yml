@@ -1,0 +1,63 @@
+name: Weekly DR Score Update
+
+on:
+  schedule:
+    # Run every Sunday at 2:00 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch: # Allow manual triggers
+
+jobs:
+  update-scores:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update DR Scores
+        env:
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          MOZ_API_ACCESS_ID: ${{ secrets.MOZ_API_ACCESS_ID }}
+          MOZ_API_SECRET_KEY: ${{ secrets.MOZ_API_SECRET_KEY }}
+        run: node scripts/update-dr-scores.js
+
+      - name: Commit updates
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          # Create update summary
+          echo "# DR Score Update $(date +%Y-%m-%d)" > data/updates/$(date +%Y-%m-%d).md
+          echo "" >> data/updates/$(date +%Y-%m-%d).md
+          echo "Automated weekly update of Domain Rating scores" >> data/updates/$(date +%Y-%m-%d).md
+
+          git add data/updates/
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update DR scores $(date +%Y-%m-%d)"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Create issue on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️ DR Score Update Failed',
+              body: 'The weekly DR score update workflow failed. Please check the logs: ' + context.payload.repository.html_url + '/actions/runs/' + context.runId,
+              labels: ['automated', 'bug']
+            })
