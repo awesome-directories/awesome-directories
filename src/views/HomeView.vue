@@ -26,7 +26,7 @@
           <div class="hidden sm:block text-blue-200">•</div>
           <div class="text-center">
             <div class="text-3xl font-bold">Open Source</div>
-            <div class="text-sm text-blue-100">MIT License ❤️</div>
+            <div class="text-sm text-blue-100">Apache 2.0 License ❤️</div>
           </div>
         </div>
 
