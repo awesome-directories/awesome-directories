@@ -14,6 +14,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 ## Features
 
 ### Core Features
+
 - ✅ **388+ Curated Directories** - Pre-loaded with quality directories
 - 🔍 **Advanced Filtering** - Filter by DR, category, pricing, dofollow status
 - ⚡ **Instant Search** - Real-time search across names, descriptions, categories
@@ -23,6 +24,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 - 💬 **Giscus Comments** - Community reviews powered by GitHub Discussions
 
 ### User Features
+
 - 🔐 **Optional Authentication** - Google & GitHub OAuth via Supabase
 - ❤️ **Favorites** - Save directories to your personal collection
 - ✅ **Submission Tracking** - Track which directories you've submitted to
@@ -31,6 +33,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 - 🎨 **Screenshot Generation** - Social media sharing cards
 
 ### Technical Features
+
 - 🚀 **Static SPA** - Blazing fast Vue.js 3 + Vite
 - 📦 **GitHub Pages Hosting** - Free, reliable hosting
 - 🔄 **Weekly Automation** - GitHub Actions for DR updates
@@ -57,7 +60,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 
 ### Prerequisites
 
-- Node.js 20+ and npm
+- Bun
 - Supabase account (free tier works)
 - Mautic instance (or use environment variable stubs)
 - GitHub repository for Giscus
@@ -65,22 +68,26 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 ### Installation
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/awesome-directories/awesome-directories.git
    cd awesome-directories
    ```
 
 2. **Install dependencies:**
+
    ```bash
-   npm install
+   bun install
    ```
 
 3. **Set up environment variables:**
+
    ```bash
    cp .env.example .env
    ```
 
    Edit `.env` with your credentials:
+
    ```env
    # Required
    VITE_SUPABASE_URL=https://your-project.supabase.co
@@ -99,6 +106,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
    ```
 
 4. **Set up Supabase database:**
+
    - Create a new Supabase project
    - Run the migration: `supabase/migrations/001_initial_schema.sql`
    - Seed the database with: `supabase/seed-data.json`
@@ -111,14 +119,16 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
    ```
 
 5. **Configure Supabase Auth:**
+
    - Go to Authentication → Providers in Supabase
    - Enable Google OAuth (add Client ID and Secret)
    - Enable GitHub OAuth (add Client ID and Secret)
    - Add redirect URL: `http://localhost:3000/awesome-directories`
 
 6. **Run development server:**
+
    ```bash
-   npm run dev
+   bun run dev
    ```
 
    Open [http://localhost:3000](http://localhost:3000)
@@ -130,10 +140,12 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 ### GitHub Pages Deployment
 
 1. **Enable GitHub Pages:**
+
    - Go to repository Settings → Pages
    - Source: GitHub Actions
 
 2. **Add GitHub Secrets:**
+
    - Go to Settings → Secrets and variables → Actions
    - Add the following secrets:
      ```
@@ -159,7 +171,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 ### Manual Build
 
 ```bash
-npm run build
+bun run build
 ```
 
 Output will be in `dist/` directory.
@@ -175,15 +187,16 @@ Output will be in `dist/` directory.
 
 2. **Seed Data:**
    Import directories from `supabase/seed-data.json`:
+
    ```javascript
    // Use Supabase JavaScript client
-   import { createClient } from '@supabase/supabase-js'
-   import seedData from './supabase/seed-data.json'
+   import { createClient } from "@supabase/supabase-js";
+   import seedData from "./supabase/seed-data.json";
 
-   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
    for (const directory of seedData) {
-     await supabase.from('directories').insert(directory)
+     await supabase.from("directories").insert(directory);
    }
    ```
 
@@ -220,6 +233,7 @@ Output will be in `dist/` directory.
    Edit `supabase/seed-data.json` and re-import
 
 2. **Via Pull Request:**
+
    - Fork the repository
    - Add/update directory in `supabase/seed-data.json`
    - Create Pull Request
@@ -277,9 +291,9 @@ awesome-directories/
 ### Available Scripts
 
 ```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run preview  # Preview production build
+bun run dev      # Start development server
+bun run build    # Build for production
+bun run preview  # Preview production build
 ```
 
 ### Key Composables
@@ -314,30 +328,30 @@ We welcome contributions! Here's how:
 
 ### Required
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `VITE_SUPABASE_URL` | Supabase project URL | `https://xxx.supabase.co` |
-| `VITE_SUPABASE_ANON_KEY` | Supabase anonymous key | `eyJhbGc...` |
-| `VITE_MAUTIC_BASE_URL` | Mautic instance URL | `https://crm.meysam.io` |
-| `VITE_MAUTIC_FORM_ID` | Mautic form ID | `5` |
+| Variable                 | Description            | Example                   |
+| ------------------------ | ---------------------- | ------------------------- |
+| `VITE_SUPABASE_URL`      | Supabase project URL   | `https://xxx.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anonymous key | `eyJhbGc...`              |
+| `VITE_MAUTIC_BASE_URL`   | Mautic instance URL    | `https://crm.meysam.io`   |
+| `VITE_MAUTIC_FORM_ID`    | Mautic form ID         | `5`                       |
 
 ### Optional
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_PIRSCH_SITE_ID` | Pirsch site ID | None |
-| `VITE_GITHUB_REPO` | GitHub repo for Giscus | `awesome-directories/awesome-directories` |
-| `VITE_GITHUB_REPO_ID` | GitHub repo ID | None |
-| `VITE_GITHUB_CATEGORY` | Giscus category | `Announcements` |
-| `VITE_GITHUB_CATEGORY_ID` | Giscus category ID | None |
+| Variable                  | Description            | Default                                   |
+| ------------------------- | ---------------------- | ----------------------------------------- |
+| `VITE_PIRSCH_SITE_ID`     | Pirsch site ID         | None                                      |
+| `VITE_GITHUB_REPO`        | GitHub repo for Giscus | `awesome-directories/awesome-directories` |
+| `VITE_GITHUB_REPO_ID`     | GitHub repo ID         | None                                      |
+| `VITE_GITHUB_CATEGORY`    | Giscus category        | `Announcements`                           |
+| `VITE_GITHUB_CATEGORY_ID` | Giscus category ID     | None                                      |
 
 ### CI/CD Only
 
-| Variable | Description |
-|----------|-------------|
+| Variable               | Description                                |
+| ---------------------- | ------------------------------------------ |
 | `SUPABASE_SERVICE_KEY` | Supabase service role key (for DR updates) |
-| `MOZ_API_ACCESS_ID` | Moz API access ID |
-| `MOZ_API_SECRET_KEY` | Moz API secret key |
+| `MOZ_API_ACCESS_ID`    | Moz API access ID                          |
+| `MOZ_API_SECRET_KEY`   | Moz API secret key                         |
 
 ---
 

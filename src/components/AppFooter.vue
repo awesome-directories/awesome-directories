@@ -44,7 +44,7 @@
             </li>
             <li>
               <a
-                href="https://github.com/sponsors/meysam"
+                href="https://github.com/sponsors/meysam81"
                 target="_blank"
                 rel="noopener"
                 class="text-sm text-gray-400 hover:text-white transition-colors"
@@ -120,7 +120,7 @@
             </a>
 
             <a
-              href="https://twitter.com/meysam"
+              href="https://x.com/meysamazing"
               target="_blank"
               rel="noopener"
               class="text-gray-500 hover:text-white transition-colors"
@@ -138,7 +138,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useMauticNewsletter } from '../composables/useMauticNewsletter'
+import { useMauticNewsletter } from '@/composables/useMauticNewsletter'
 
 const email = ref('')
 const isSubmitting = ref(false)

@@ -1,9 +1,10 @@
--- Enable UUID extension
+-- Enable UUID extension (try multiple approaches)
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Directories table
 CREATE TABLE IF NOT EXISTS directories (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   slug TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
   description TEXT,
@@ -45,7 +46,7 @@ CREATE TABLE IF NOT EXISTS directories (
 
 -- Directory votes table (helpful button)
 CREATE TABLE IF NOT EXISTS directory_votes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   directory_id UUID REFERENCES directories(id) ON DELETE CASCADE NOT NULL,
   ip_hash TEXT NOT NULL,
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS directory_votes (
 
 -- User favorites table
 CREATE TABLE IF NOT EXISTS user_favorites (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
   directory_id UUID REFERENCES directories(id) ON DELETE CASCADE NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -66,7 +67,7 @@ CREATE TABLE IF NOT EXISTS user_favorites (
 
 -- User submissions tracking table
 CREATE TABLE IF NOT EXISTS user_submissions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
   directory_id UUID REFERENCES directories(id) ON DELETE CASCADE NOT NULL,
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'submitted', 'approved', 'rejected')),
@@ -78,7 +79,7 @@ CREATE TABLE IF NOT EXISTS user_submissions (
 
 -- Newsletter signups table
 CREATE TABLE IF NOT EXISTS newsletter_signups (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email TEXT UNIQUE NOT NULL,
   name TEXT,
   product_name TEXT,
