@@ -103,7 +103,7 @@
               rel="noopener"
               class="text-gray-400 hover:text-white transition-colors"
             >
-              MIT License
+              Apache 2.0 License
             </a>
           </p>
 

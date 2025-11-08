@@ -30,7 +30,7 @@
         <div class="card p-8">
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Open Source Philosophy</h2>
           <p class="text-gray-700 mb-4">
-            This project is 100% open source (MIT License) and community-driven. The data is transparent,
+            This project is 100% open source (Apache 2.0 License) and community-driven. The data is transparent,
             the codebase is public, and contributions are welcome from everyone.
           </p>
           <p class="text-gray-700 mb-4">
