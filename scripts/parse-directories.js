@@ -105,7 +105,7 @@ function parseSites2and3() {
     let pricing_type = 'free';
     let is_dofollow = false;
 
-    if (/paid|\\$\d+/i.test(details)) {
+    if (/paid|\$\d+/i.test(details)) {
       pricing_type = 'paid';
     } else if (/freemium/i.test(details)) {
       pricing_type = 'freemium';
