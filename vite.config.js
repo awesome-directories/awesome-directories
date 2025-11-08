@@ -18,7 +18,7 @@ export default defineConfig(function configureVite({ mode }) {
   if (missingVars.length > 0 && mode === "production") {
     throw new Error(
       `Missing required environment variables: ${missingVars.join(", ")}\n` +
-        "Please set these in your .env file or environment."
+        "Please set these in your .env file or environment.",
     );
   }
 
@@ -53,7 +53,7 @@ export default defineConfig(function configureVite({ mode }) {
         exclude: [/\.(br)$/, /\.(gz)$/],
         threshold: 1024,
         compressionOptions: { level: 11 },
-      })
+      }),
     );
   }
 

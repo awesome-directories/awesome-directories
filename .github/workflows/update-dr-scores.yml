@@ -3,7 +3,7 @@ name: Weekly DR Score Update
 on:
   schedule:
     # Run every Sunday at 2:00 AM UTC
-    - cron: '0 2 * * 0'
+    - cron: "0 2 * * 0"
   workflow_dispatch: # Allow manual triggers
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm ci
@@ -36,12 +36,12 @@ jobs:
           git config --local user.name "github-actions[bot]"
 
           # Create update summary
-          echo "# DR Score Update $(date +%Y-%m-%d)" > data/updates/$(date +%Y-%m-%d).md
-          echo "" >> data/updates/$(date +%Y-%m-%d).md
-          echo "Automated weekly update of Domain Rating scores" >> data/updates/$(date +%Y-%m-%d).md
+          echo "# DR Score Update $(date +%Y-%m-%d)" > "data/updates/$(date +%Y-%m-%d).md"
+          echo "" >> "data/updates/$(date +%Y-%m-%d).md"
+          echo "Automated weekly update of Domain Rating scores" >> "data/updates/$(date +%Y-%m-%d).md"
 
           git add data/updates/
-          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update DR scores $(date +%Y-%m-%d)"
+          (git diff --quiet && git diff --staged --quiet) || git commit -m "chore: update DR scores $(date +%Y-%m-%d)"
 
       - name: Push changes
         uses: ad-m/github-push-action@master

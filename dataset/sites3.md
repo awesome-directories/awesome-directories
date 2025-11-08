@@ -1,4 +1,5 @@
 ### General Startup Directories
+
 1. **Product Hunt** (DR 91) - Free, dofollow - producthunt.com
 2. **Hacker News** (DR 92) - Free, nofollow but massive traffic - news.ycombinator.com
 3. **Indie Hackers** (DR 78) - Free, community-driven - indiehackers.com
@@ -21,6 +22,7 @@
 20. **Betabound** - Free, beta testing focus
 
 ### Niche/Tech Specific
+
 21. **Stack Share** (DR 72) - Free, tech stack showcase
 22. **TechCrunch** (DR 93) - Submit via pitch (editorial)
 23. **Crunchbase** (DR 91) - Free basic listing
@@ -99,6 +101,7 @@ These accept guest posts but require quality content:
 ## **DIRECTORIES BY SUBMISSION TYPE**
 
 ### Social Media / Profile Links
+
 75. **LinkedIn Company Page** (DR 98)
 76. **Twitter/X Profile** (DR 94)
 77. **Facebook Page** (DR 96)
@@ -107,6 +110,7 @@ These accept guest posts but require quality content:
 80. **Twitch** (DR 94)
 
 ### Business Directories
+
 81. **Google Business Profile** - Free, essential
 82. **Yelp** (DR 93) - Free
 83. **Trustpilot** (DR 91) - Free
@@ -158,6 +162,7 @@ These accept guest posts but require quality content:
    - DIY option
 
 ### Individual Paid Directories (Pay-per-listing)
+
 - **KillerStartups**: $197 for quick listing (3-6 months free)
 - **FeedMyApp**: $9+ for featured placement
 - **Uneed**: Paid boost options
@@ -167,11 +172,13 @@ These accept guest posts but require quality content:
 ## **GUEST POST PRICING** (When Paid)
 
 Most tech blogs accept FREE guest posts, but some charge for:
+
 - **Sponsored content**: $500-$5,000 depending on DR
 - **Guaranteed placement**: $100-$1,000
 - **Featured articles**: $200-$2,000
 
 Services that find and place guest posts:
+
 - **Loganix**: Variable pricing, done-for-you
 - **PRPosting**: 42,000+ sites, variable pricing
 - **Collaborator**: Database access + placement
@@ -182,6 +189,7 @@ Services that find and place guest posts:
 Given your SRE + backend (K8s, Go) background building in public:
 
 **IMMEDIATE PRIORITIES (Do First):**
+
 1. DEV.to - Post your technical guides
 2. Hashnode - Set up blog with custom domain
 3. Hacker News - Share Show HN posts
@@ -191,23 +199,14 @@ Given your SRE + backend (K8s, Go) background building in public:
 7. LinkedIn - Regular updates
 8. Twitter/X - #buildinpublic tag
 
-**COMMUNITY ENGAGEMENT:**
-9. r/devops, r/golang, r/kubernetes
-10. CNCF Slack channels
-11. DevOps Discord communities
-12. Golang Weekly submissions
+**COMMUNITY ENGAGEMENT:** 9. r/devops, r/golang, r/kubernetes 10. CNCF Slack channels 11. DevOps Discord communities 12. Golang Weekly submissions
 
-**DIRECTORY SUBMISSIONS (Start with 15-20 high-DR):**
-13. Uneed, DevHunt, BetaList, AlternativeTo
-14. Stack Share (showcase tech stack)
-15. Crunchbase, AngelList
+**DIRECTORY SUBMISSIONS (Start with 15-20 high-DR):** 13. Uneed, DevHunt, BetaList, AlternativeTo 14. Stack Share (showcase tech stack) 15. Crunchbase, AngelList
 
-**LONG-TERM SEO PLAY:**
-16. Guest posts on DZone, DevOpsCube
-17. Tutorial submissions to DigitalOcean Community
-18. Regular blogging + cross-posting
+**LONG-TERM SEO PLAY:** 16. Guest posts on DZone, DevOpsCube 17. Tutorial submissions to DigitalOcean Community 18. Regular blogging + cross-posting
 
 **If Going Paid Route:**
+
 - Best value: **GetMoreBacklinks** ($127 for 500+ submissions)
 - Premium option: **SaasPedia** ($668 for 300+ with guaranteed DA)
 - DIY with guidance: **backl.io** (curated list with money-back guarantee)

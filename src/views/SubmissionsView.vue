@@ -7,12 +7,16 @@
       </p>
 
       <div v-if="loading" class="text-center py-12">
-        <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div
+          class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"
+        ></div>
       </div>
 
       <div v-else-if="submissions.length === 0" class="card p-12 text-center">
         <div class="text-6xl mb-4">✅</div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">No submissions tracked yet</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">
+          No submissions tracked yet
+        </h2>
         <p class="text-gray-600 mb-6">
           Start tracking your directory submissions to stay organized
         </p>
@@ -64,7 +68,7 @@
                       'badge-green': submission.status === 'approved',
                       'badge-blue': submission.status === 'submitted',
                       'badge-orange': submission.status === 'pending',
-                      'badge-gray': submission.status === 'rejected'
+                      'badge-gray': submission.status === 'rejected',
                     }"
                   >
                     {{ submission.status.toUpperCase() }}
@@ -81,7 +85,10 @@
               </div>
 
               <a
-                :href="submission.directories.submission_url || submission.directories.url"
+                :href="
+                  submission.directories.submission_url ||
+                  submission.directories.url
+                "
                 target="_blank"
                 rel="noopener"
                 class="btn-secondary text-sm ml-4"
@@ -97,60 +104,63 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { supabase } from '../lib/supabase'
-import { useAuth } from '../composables/useAuth'
+import { ref, computed, onMounted } from "vue";
+import { supabase } from "../lib/supabase";
+import { useAuth } from "../composables/useAuth";
 
-const { user } = useAuth()
-const submissions = ref([])
-const loading = ref(true)
+const { user } = useAuth();
+const submissions = ref([]);
+const loading = ref(true);
 
-const submittedCount = computed(() =>
-  submissions.value.filter(s => s.status === 'submitted' || s.status === 'approved').length
-)
+const submittedCount = computed(
+  () =>
+    submissions.value.filter(
+      (s) => s.status === "submitted" || s.status === "approved",
+    ).length,
+);
 
 const progressPercentage = computed(() => {
-  if (submissions.value.length === 0) return 0
-  return Math.round((submittedCount.value / submissions.value.length) * 100)
-})
+  if (submissions.value.length === 0) return 0;
+  return Math.round((submittedCount.value / submissions.value.length) * 100);
+});
 
 const formatDate = (dateString) => {
-  const date = new Date(dateString)
-  const now = new Date()
-  const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24))
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return 'today'
-  if (diffDays === 1) return 'yesterday'
-  if (diffDays < 7) return `${diffDays} days ago`
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`
-  return date.toLocaleDateString()
-}
+  if (diffDays === 0) return "today";
+  if (diffDays === 1) return "yesterday";
+  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+  return date.toLocaleDateString();
+};
 
 const loadSubmissions = async () => {
-  if (!user.value) return
+  if (!user.value) return;
 
   try {
     const { data, error } = await supabase
-      .from('user_submissions')
-      .select('*, directories(*)')
-      .eq('user_id', user.value.id)
-      .order('submitted_at', { ascending: false })
+      .from("user_submissions")
+      .select("*, directories(*)")
+      .eq("user_id", user.value.id)
+      .order("submitted_at", { ascending: false });
 
-    if (error) throw error
+    if (error) throw error;
 
-    submissions.value = data || []
+    submissions.value = data || [];
   } catch (err) {
-    console.error('Error loading submissions:', err)
+    console.error("Error loading submissions:", err);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
 onMounted(() => {
-  loadSubmissions()
+  loadSubmissions();
 
   if (window.pirsch) {
-    window.pirsch('Submissions Page View')
+    window.pirsch("Submissions Page View");
   }
-})
+});
 </script>

@@ -1,64 +1,67 @@
-import { ref, computed, onMounted } from 'vue'
-import { supabase } from '../lib/supabase'
+import { ref, computed, onMounted } from "vue";
+import { supabase } from "../lib/supabase";
 
-const user = ref(null)
-const session = ref(null)
-const loading = ref(true)
+const user = ref(null);
+const session = ref(null);
+const loading = ref(true);
 
 export function useAuth() {
-  const isAuthenticated = computed(() => !!session.value)
+  const isAuthenticated = computed(() => !!session.value);
 
   const signInWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: "google",
       options: {
-        redirectTo: window.location.origin + import.meta.env.BASE_URL
-      }
-    })
-    if (error) throw error
-  }
+        redirectTo: window.location.origin + import.meta.env.BASE_URL,
+      },
+    });
+    if (error) throw error;
+  };
 
   const signInWithGithub = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'github',
+      provider: "github",
       options: {
-        redirectTo: window.location.origin + import.meta.env.BASE_URL
-      }
-    })
-    if (error) throw error
-  }
+        redirectTo: window.location.origin + import.meta.env.BASE_URL,
+      },
+    });
+    if (error) throw error;
+  };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) throw error
-    user.value = null
-    session.value = null
-  }
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    user.value = null;
+    session.value = null;
+  };
 
   const refreshSession = async () => {
     try {
-      const { data: { session: currentSession }, error } = await supabase.auth.getSession()
-      if (error) throw error
+      const {
+        data: { session: currentSession },
+        error,
+      } = await supabase.auth.getSession();
+      if (error) throw error;
 
-      session.value = currentSession
-      user.value = currentSession?.user ?? null
+      session.value = currentSession;
+      user.value = currentSession?.user ?? null;
     } catch (error) {
-      console.error('Error refreshing session:', error)
+      console.error("Error refreshing session:", error);
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }
+  };
 
   onMounted(() => {
-    refreshSession()
+    refreshSession();
 
     // Listen for auth changes
     supabase.auth.onAuthStateChange((_event, newSession) => {
-      session.value = newSession
-      user.value = newSession?.user ?? null
-      loading.value = false
-    })
-  })
+      session.value = newSession;
+      user.value = newSession?.user ?? null;
+      loading.value = false;
+    });
+  });
 
   return {
     user,
@@ -68,6 +71,6 @@ export function useAuth() {
     signInWithGoogle,
     signInWithGithub,
     signOut,
-    refreshSession
-  }
+    refreshSession,
+  };
 }

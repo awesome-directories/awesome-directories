@@ -47,10 +47,7 @@
           </span>
 
           <!-- Dofollow Badge -->
-          <span
-            v-if="directory.is_dofollow"
-            class="badge-green text-xs"
-          >
+          <span v-if="directory.is_dofollow" class="badge-green text-xs">
             🔗 Dofollow
           </span>
         </div>
@@ -59,7 +56,7 @@
 
     <!-- Description -->
     <p class="text-sm text-gray-600 mb-4 flex-grow line-clamp-3">
-      {{ directory.description || 'No description available.' }}
+      {{ directory.description || "No description available." }}
     </p>
 
     <!-- Tags and Pricing -->
@@ -84,14 +81,16 @@
     </div>
 
     <!-- Footer -->
-    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+    <div
+      class="flex items-center justify-between pt-4 border-t border-gray-100"
+    >
       <button
         @click="handleHelpfulClick"
         :disabled="hasVoted"
         class="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         :class="{ 'text-primary': hasVoted }"
       >
-        <span>{{ hasVoted ? '✓' : '👍' }}</span>
+        <span>{{ hasVoted ? "✓" : "👍" }}</span>
         <span>{{ directory.helpful_count || 0 }} helpful</span>
       </button>
 
@@ -106,73 +105,73 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 
 const props = defineProps({
   directory: {
     type: Object,
-    required: true
+    required: true,
   },
   selectable: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isSelected: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
-const emit = defineEmits(['toggle-select', 'vote'])
+const emit = defineEmits(["toggle-select", "vote"]);
 
-const hasVoted = ref(false)
+const hasVoted = ref(false);
 
 const drBadgeClass = computed(() => {
-  const dr = props.directory.domain_rating
-  if (!dr) return 'badge-gray'
+  const dr = props.directory.domain_rating;
+  if (!dr) return "badge-gray";
 
-  if (dr >= 80) return 'badge-green'
-  if (dr >= 70) return 'badge-blue'
-  if (dr >= 60) return 'badge-orange'
-  return 'badge-gray'
-})
+  if (dr >= 80) return "badge-green";
+  if (dr >= 70) return "badge-blue";
+  if (dr >= 60) return "badge-orange";
+  return "badge-gray";
+});
 
 const pricingBadgeClass = computed(() => {
-  const pricing = props.directory.pricing_type
+  const pricing = props.directory.pricing_type;
 
-  if (pricing === 'free') return 'badge-green'
-  if (pricing === 'paid') return 'badge-orange'
-  if (pricing === 'freemium') return 'badge-blue'
-  return 'badge-gray'
-})
+  if (pricing === "free") return "badge-green";
+  if (pricing === "paid") return "badge-orange";
+  if (pricing === "freemium") return "badge-blue";
+  return "badge-gray";
+});
 
 const pricingLabel = computed(() => {
-  const pricing = props.directory.pricing_type
+  const pricing = props.directory.pricing_type;
 
-  if (pricing === 'free') return '💰 Free'
-  if (pricing === 'paid' && props.directory.pricing_amount) {
-    return `💰 $${props.directory.pricing_amount}`
+  if (pricing === "free") return "💰 Free";
+  if (pricing === "paid" && props.directory.pricing_amount) {
+    return `💰 $${props.directory.pricing_amount}`;
   }
-  if (pricing === 'paid') return '💰 Paid'
-  if (pricing === 'freemium') return '💰 Freemium'
-  return ''
-})
+  if (pricing === "paid") return "💰 Paid";
+  if (pricing === "freemium") return "💰 Freemium";
+  return "";
+});
 
 const displayCategories = computed(() => {
-  const cats = props.directory.categories || []
-  return cats.slice(0, 3)
-})
+  const cats = props.directory.categories || [];
+  return cats.slice(0, 3);
+});
 
 const handleImageError = (e) => {
-  e.target.style.display = 'none'
-}
+  e.target.style.display = "none";
+};
 
 const handleHelpfulClick = () => {
-  if (hasVoted.value) return
+  if (hasVoted.value) return;
 
-  hasVoted.value = true
-  emit('vote', props.directory)
-}
+  hasVoted.value = true;
+  emit("vote", props.directory);
+};
 </script>
 
 <style scoped>

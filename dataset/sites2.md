@@ -1,16 +1,19 @@
 **DevHunt** (devhunt.org)
+
 - Purpose-built for dev tools by developers
 - Submit via GitHub PR (open source platform)
 - Strong developer audience, dofollow links
 - DR not specified but high engagement
 
 **OSS Software** (osssoftware.org)
+
 - Dedicated OSS alternatives directory
 - Free submission, DR varies
 - Lists alternatives to commercial software
 
 **GitHub Awesome Lists**
-- Submit to relevant awesome-* repos (e.g., awesome-nodejs, awesome-python)
+
+- Submit to relevant awesome-\* repos (e.g., awesome-nodejs, awesome-python)
 - Creates network effect with secondary backlinks
 - Highly valuable for developer audience
 - Follow contribution guidelines carefully
@@ -41,8 +44,9 @@
 **MicroLaunch** - Perfect for early MVPs
 
 ## Reddit (Follow subreddit rules carefully)
+
 - r/SideProject
-- r/opensource  
+- r/opensource
 - r/programming
 - r/coolgithubprojects
 
@@ -57,6 +61,7 @@
 The GitHub Awesome Lists strategy is particularly strong for OSS - you get dofollow links from high-authority repos that get forked and referenced extensively. Focus on awesome lists in your tech stack (awesome-react, awesome-python, etc.).
 
 For directories, prioritize:
+
 1. DevHunt (dev-specific audience)
 2. SaaSHub (DR 75, strong SEO)
 3. AlternativeTo (massive traffic)
