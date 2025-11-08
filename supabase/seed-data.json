@@ -1,0 +1,4705 @@
+[
+  {
+    "slug": "10-words",
+    "name": "10 Words",
+    "url": "https://10words.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to 10 Words to reach your target audience.",
+    "submission_url": "https://10words.io"
+  },
+  {
+    "slug": "9-sites",
+    "name": "9 Sites",
+    "url": "https://www.9sites.net/addurl.php",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to 9 Sites to reach your target audience.",
+    "submission_url": "https://www.9sites.net/addurl.php"
+  },
+  {
+    "slug": "active-search-results",
+    "name": "Active Search Results",
+    "url": "https://www.activesearchresults.com/addw",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Active Search Results to reach your target audience.",
+    "submission_url": "https://www.activesearchresults.com/addw"
+  },
+  {
+    "slug": "addictive-tips",
+    "name": "Addictive Tips",
+    "url": "https://www.addictivetips.com/tip-us",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Addictive Tips to reach your target audience.",
+    "submission_url": "https://www.addictivetips.com/tip-us"
+  },
+  {
+    "slug": "agni",
+    "name": "Agni",
+    "url": "https://office.angi.com/app/join/registratio",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Agni to reach your target audience.",
+    "submission_url": "https://office.angi.com/app/join/registratio"
+  },
+  {
+    "slug": "all-startups-info",
+    "name": "All Startups Info",
+    "url": "https://www.allstartups.info",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to All Startups Info to reach your target audience.",
+    "submission_url": "https://www.allstartups.info"
+  },
+  {
+    "slug": "all-top",
+    "name": "All Top",
+    "url": "https://alltop.com/feed",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to All Top to reach your target audience.",
+    "submission_url": "https://alltop.com/feed"
+  },
+  {
+    "slug": "all-top-startups",
+    "name": "All Top Startups",
+    "url": "https://alltopstartups.com/submit-st",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to All Top Startups to reach your target audience.",
+    "submission_url": "https://alltopstartups.com/submit-st"
+  },
+  {
+    "slug": "alpha-digits",
+    "name": "Alpha Digits",
+    "url": "https://alphadigits.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Alpha Digits to reach your target audience.",
+    "submission_url": "https://alphadigits.com"
+  },
+  {
+    "slug": "alternative-to",
+    "name": "Alternative To",
+    "url": "https://alternativeto.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Alternative To to reach your target audience.",
+    "submission_url": "https://alternativeto.net"
+  },
+  {
+    "slug": "alternativeto",
+    "name": "AlternativeTo",
+    "url": "https://alternativeto.net",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to AlternativeTo to reach your target audience.",
+    "submission_url": "https://alternativeto.net"
+  },
+  {
+    "slug": "american-inno",
+    "name": "American Inno",
+    "url": "https://www.americaninno.com/post-a-star",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to American Inno to reach your target audience.",
+    "submission_url": "https://www.americaninno.com/post-a-star"
+  },
+  {
+    "slug": "american-startups",
+    "name": "American Startups",
+    "url": "https://americanstartups.com/share-your-s",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to American Startups to reach your target audience.",
+    "submission_url": "https://americanstartups.com/share-your-s"
+  },
+  {
+    "slug": "amfibi",
+    "name": "Amfibi",
+    "url": "http://www.amfibi.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Amfibi to reach your target audience.",
+    "submission_url": "http://www.amfibi.com"
+  },
+  {
+    "slug": "android-apps-review",
+    "name": "Android Apps Review",
+    "url": "https://www.androidappsreview.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Android Apps Review to reach your target audience.",
+    "submission_url": "https://www.androidappsreview.com"
+  },
+  {
+    "slug": "android-authority",
+    "name": "Android Authority",
+    "url": "https://www.androidauthority.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Android Authority to reach your target audience.",
+    "submission_url": "https://www.androidauthority.com"
+  },
+  {
+    "slug": "android-central",
+    "name": "Android Central",
+    "url": "http://www.amfibi.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Android Central to reach your target audience.",
+    "submission_url": "http://www.amfibi.com"
+  },
+  {
+    "slug": "android-guys",
+    "name": "Android Guys",
+    "url": "https://www.androidappsreview.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Android Guys to reach your target audience.",
+    "submission_url": "https://www.androidappsreview.com"
+  },
+  {
+    "slug": "android-police",
+    "name": "Android Police",
+    "url": "https://www.androidauthority.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Android Police to reach your target audience.",
+    "submission_url": "https://www.androidauthority.com"
+  },
+  {
+    "slug": "angel-list",
+    "name": "Angel List",
+    "url": "https://angel.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Angel List to reach your target audience.",
+    "submission_url": "https://angel.co"
+  },
+  {
+    "slug": "app-entrepreneurs-and-market",
+    "name": "App Entrepreneurs and Market",
+    "url": "http://www.facebook.com/groups/appentre",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to App Entrepreneurs and Market to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/appentre"
+  },
+  {
+    "slug": "app-listo",
+    "name": "App Listo",
+    "url": "https://appslisto.com/submit-your-app",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to App Listo to reach your target audience.",
+    "submission_url": "https://appslisto.com/submit-your-app"
+  },
+  {
+    "slug": "app-rater",
+    "name": "App Rater",
+    "url": "https://apprater.net/add",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to App Rater to reach your target audience.",
+    "submission_url": "https://apprater.net/add"
+  },
+  {
+    "slug": "app-review-central",
+    "name": "App Review Central",
+    "url": "http://www.appreviewcentral.net/app-sub",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to App Review Central to reach your target audience.",
+    "submission_url": "http://www.appreviewcentral.net/app-sub"
+  },
+  {
+    "slug": "app-spy",
+    "name": "App Spy",
+    "url": "https://www.appspy.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to App Spy to reach your target audience.",
+    "submission_url": "https://www.appspy.com"
+  },
+  {
+    "slug": "app-sumo",
+    "name": "App Sumo",
+    "url": "https://appsumo.com/sell",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to App Sumo to reach your target audience.",
+    "submission_url": "https://appsumo.com/sell"
+  },
+  {
+    "slug": "appagg",
+    "name": "AppAgg",
+    "url": "https://appagg.com/?hl=en",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to AppAgg to reach your target audience.",
+    "submission_url": "https://appagg.com/?hl=en"
+  },
+  {
+    "slug": "apple-insider",
+    "name": "Apple Insider",
+    "url": "https://appleinsider.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Apple Insider to reach your target audience.",
+    "submission_url": "https://appleinsider.com"
+  },
+  {
+    "slug": "appoid",
+    "name": "Appoid",
+    "url": "https://appiod.com/submit-app-for-revien",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Appoid to reach your target audience.",
+    "submission_url": "https://appiod.com/submit-app-for-revien"
+  },
+  {
+    "slug": "appolicious",
+    "name": "Appolicious",
+    "url": "https://www.appolicious.com/contact-us",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Appolicious to reach your target audience.",
+    "submission_url": "https://www.appolicious.com/contact-us"
+  },
+  {
+    "slug": "apps-400",
+    "name": "Apps 400",
+    "url": "https://apps400.com/submit-your-application-fol",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Apps 400 to reach your target audience.",
+    "submission_url": "https://apps400.com/submit-your-application-fol"
+  },
+  {
+    "slug": "apps-mamma",
+    "name": "Apps Mamma",
+    "url": "http://appsmamma.com/submit-your-app",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Apps Mamma to reach your target audience.",
+    "submission_url": "http://appsmamma.com/submit-your-app"
+  },
+  {
+    "slug": "apps-mirror",
+    "name": "Apps Mirror",
+    "url": "https://appsmirror.com/submit-your-app-fol",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Apps Mirror to reach your target audience.",
+    "submission_url": "https://appsmirror.com/submit-your-app-fol"
+  },
+  {
+    "slug": "apps-thunder",
+    "name": "Apps Thunder",
+    "url": "https://appsthunder.com/submit-your-app",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Apps Thunder to reach your target audience.",
+    "submission_url": "https://appsthunder.com/submit-your-app"
+  },
+  {
+    "slug": "apps-zoom",
+    "name": "Apps Zoom",
+    "url": "http://appszoom.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Apps Zoom to reach your target audience.",
+    "submission_url": "http://appszoom.com"
+  },
+  {
+    "slug": "appvita",
+    "name": "Appvita",
+    "url": "https://www.appvita.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Appvita to reach your target audience.",
+    "submission_url": "https://www.appvita.com"
+  },
+  {
+    "slug": "appy-smarts",
+    "name": "Appy Smarts",
+    "url": "https://www.appysmarts.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Appy Smarts to reach your target audience.",
+    "submission_url": "https://www.appysmarts.com"
+  },
+  {
+    "slug": "ars-technica",
+    "name": "ARS Technica",
+    "url": "https://arstechnica.com/contact-us",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to ARS Technica to reach your target audience.",
+    "submission_url": "https://arstechnica.com/contact-us"
+  },
+  {
+    "slug": "artic-startups",
+    "name": "Artic Startups",
+    "url": "https://arcticstartup.com/become-a",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Artic Startups to reach your target audience.",
+    "submission_url": "https://arcticstartup.com/become-a"
+  },
+  {
+    "slug": "ask-your-android",
+    "name": "Ask Your Android",
+    "url": "http://askyourandroid.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Ask Your Android to reach your target audience.",
+    "submission_url": "http://askyourandroid.com"
+  },
+  {
+    "slug": "astro-growth",
+    "name": "Astro Growth",
+    "url": "https://www.astrogrowth.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Astro Growth to reach your target audience.",
+    "submission_url": "https://www.astrogrowth.com"
+  },
+  {
+    "slug": "awesome-india",
+    "name": "Awesome India",
+    "url": "https://awesomeindie.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Awesome India to reach your target audience.",
+    "submission_url": "https://awesomeindie.com"
+  },
+  {
+    "slug": "backlio-seo-kickstarter",
+    "name": "backl.io (SEO Kickstarter)",
+    "url": "https://Curated list with DR data",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to backl.io (SEO Kickstarter) to reach your target audience.",
+    "submission_url": "https://Curated list with DR data"
+  },
+  {
+    "slug": "badass-marketers-founders",
+    "name": "Badass Marketers & Founders",
+    "url": "http://www.facebook.com/groups/hackgro",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Badass Marketers & Founders to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/hackgro"
+  },
+  {
+    "slug": "behance",
+    "name": "Behance",
+    "url": "http://behance.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Behance to reach your target audience.",
+    "submission_url": "http://behance.net"
+  },
+  {
+    "slug": "being-guru",
+    "name": "Being Guru",
+    "url": "https://www.beingguru.com/submit-startu",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Being Guru to reach your target audience.",
+    "submission_url": "https://www.beingguru.com/submit-startu"
+  },
+  {
+    "slug": "best-app-for-kids",
+    "name": "Best App for Kids",
+    "url": "https://www.bestappsforkids.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Best App for Kids to reach your target audience.",
+    "submission_url": "https://www.bestappsforkids.com/submit"
+  },
+  {
+    "slug": "beta-bound",
+    "name": "Beta Bound",
+    "url": "https://betabound.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Beta Bound to reach your target audience.",
+    "submission_url": "https://betabound.com"
+  },
+  {
+    "slug": "betakit",
+    "name": "Betakit",
+    "url": "https://betakit.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Betakit to reach your target audience.",
+    "submission_url": "https://betakit.com"
+  },
+  {
+    "slug": "betalist",
+    "name": "BetaList",
+    "url": "https://betalist.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "paid",
+    "is_active": true,
+    "domain_rating": null,
+    "is_dofollow": false,
+    "description": "Submit your product to BetaList to reach your target audience.",
+    "submission_url": "https://betalist.com"
+  },
+  {
+    "slug": "betapage",
+    "name": "BetaPage",
+    "url": "https://betapage.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to BetaPage to reach your target audience.",
+    "submission_url": "https://betapage.co"
+  },
+  {
+    "slug": "better-business-bureau",
+    "name": "Better Business Bureau",
+    "url": "https://www.bbb.org",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Better Business Bureau to reach your target audience.",
+    "submission_url": "https://www.bbb.org"
+  },
+  {
+    "slug": "big-startups",
+    "name": "Big Startups",
+    "url": "https://biqstartups.co/overview/sub",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Big Startups to reach your target audience.",
+    "submission_url": "https://biqstartups.co/overview/sub"
+  },
+  {
+    "slug": "bing",
+    "name": "Bing",
+    "url": "https://www.bingplaces.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Bing to reach your target audience.",
+    "submission_url": "https://www.bingplaces.com"
+  },
+  {
+    "slug": "bloombuzz",
+    "name": "Bloombuzz",
+    "url": "https://bloombuzz.in/joinus",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Bloombuzz to reach your target audience.",
+    "submission_url": "https://bloombuzz.in/joinus"
+  },
+  {
+    "slug": "boing-boing",
+    "name": "Boing Boing",
+    "url": "https://boingboing.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Boing Boing to reach your target audience.",
+    "submission_url": "https://boingboing.net"
+  },
+  {
+    "slug": "bootstrappers",
+    "name": "Bootstrappers",
+    "url": "https://bootstrappers.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Bootstrappers to reach your target audience.",
+    "submission_url": "https://bootstrappers.io"
+  },
+  {
+    "slug": "built-in",
+    "name": "Built In",
+    "url": "https://builtin.com/expert-contributors",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Built In to reach your target audience.",
+    "submission_url": "https://builtin.com/expert-contributors"
+  },
+  {
+    "slug": "business-insider",
+    "name": "Business Insider",
+    "url": "https://www.businessinsider.in/contributors",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Business Insider to reach your target audience.",
+    "submission_url": "https://www.businessinsider.in/contributors"
+  },
+  {
+    "slug": "business-software",
+    "name": "Business Software",
+    "url": "https://www.business-software.com/add-",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Business Software to reach your target audience.",
+    "submission_url": "https://www.business-software.com/add-"
+  },
+  {
+    "slug": "business-to-community",
+    "name": "Business to Community",
+    "url": "https://www.business2community.com/;",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Business to Community to reach your target audience.",
+    "submission_url": "https://www.business2community.com/;"
+  },
+  {
+    "slug": "buy-me-a-coffee",
+    "name": "Buy Me A Coffee",
+    "url": "https://www.buymeacoffee.com/prforstartu",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Buy Me A Coffee to reach your target audience.",
+    "submission_url": "https://www.buymeacoffee.com/prforstartu"
+  },
+  {
+    "slug": "buzzfeed-news",
+    "name": "Buzzfeed News",
+    "url": "https://www.buzzfeednews.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Buzzfeed News to reach your target audience.",
+    "submission_url": "https://www.buzzfeednews.com"
+  },
+  {
+    "slug": "cabinet",
+    "name": "Cabinet",
+    "url": "https://www.cabinetm.com/information/m",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Cabinet to reach your target audience.",
+    "submission_url": "https://www.cabinetm.com/information/m"
+  },
+  {
+    "slug": "capterra",
+    "name": "Capterra",
+    "url": "https://Capterra.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Capterra to reach your target audience.",
+    "submission_url": "https://Capterra.com"
+  },
+  {
+    "slug": "change-log",
+    "name": "Change Log",
+    "url": "http://changelog.com/sponsor/pricing",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Change Log to reach your target audience.",
+    "submission_url": "http://changelog.com/sponsor/pricing"
+  },
+  {
+    "slug": "cipinet",
+    "name": "Cipinet",
+    "url": "https://www.cipinet.com/suggest.php?ac",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Cipinet to reach your target audience.",
+    "submission_url": "https://www.cipinet.com/suggest.php?ac"
+  },
+  {
+    "slug": "clutch",
+    "name": "Clutch",
+    "url": "https://clutch.co/review",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Clutch to reach your target audience.",
+    "submission_url": "https://clutch.co/review"
+  },
+  {
+    "slug": "cnet",
+    "name": "CNET",
+    "url": "https://www.cnet.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to CNET to reach your target audience.",
+    "submission_url": "https://www.cnet.com"
+  },
+  {
+    "slug": "cofounders-lab",
+    "name": "CoFounders Lab",
+    "url": "https://cofounderslab.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to CoFounders Lab to reach your target audience.",
+    "submission_url": "https://cofounderslab.com"
+  },
+  {
+    "slug": "coin-scribble",
+    "name": "Coin Scribble",
+    "url": "http://coinscribble.com/contact",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Coin Scribble to reach your target audience.",
+    "submission_url": "http://coinscribble.com/contact"
+  },
+  {
+    "slug": "coindoo",
+    "name": "Coindoo",
+    "url": "https://coindoo.com/submit-press-releast",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Coindoo to reach your target audience.",
+    "submission_url": "https://coindoo.com/submit-press-releast"
+  },
+  {
+    "slug": "collaborizm",
+    "name": "Collaborizm",
+    "url": "https://www.collaborizm.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Collaborizm to reach your target audience.",
+    "submission_url": "https://www.collaborizm.com"
+  },
+  {
+    "slug": "compare-software",
+    "name": "Compare Software",
+    "url": "https://www.comparasoftware.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Compare Software to reach your target audience.",
+    "submission_url": "https://www.comparasoftware.com"
+  },
+  {
+    "slug": "coop-commerce",
+    "name": "Coop Commerce",
+    "url": "https://www.coopcommerce.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Coop Commerce to reach your target audience.",
+    "submission_url": "https://www.coopcommerce.com"
+  },
+  {
+    "slug": "crazy-about-startups",
+    "name": "Crazy About Startups",
+    "url": "https://crazyaboutstartups.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Crazy About Startups to reach your target audience.",
+    "submission_url": "https://crazyaboutstartups.com"
+  },
+  {
+    "slug": "crowd-reviews",
+    "name": "Crowd Reviews",
+    "url": "https://www.crowdreviews.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Crowd Reviews to reach your target audience.",
+    "submission_url": "https://www.crowdreviews.com"
+  },
+  {
+    "slug": "croz-desk",
+    "name": "Croz Desk",
+    "url": "https://Crozdesk.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Croz Desk to reach your target audience.",
+    "submission_url": "https://Crozdesk.com"
+  },
+  {
+    "slug": "crunchbase",
+    "name": "Crunchbase",
+    "url": "https://www.crunchbase.com/home",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Crunchbase to reach your target audience.",
+    "submission_url": "https://www.crunchbase.com/home"
+  },
+  {
+    "slug": "cuspera-e27",
+    "name": "Cuspera e27",
+    "url": "https://www.cuspera.com/vendors",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Cuspera e27 to reach your target audience.",
+    "submission_url": "https://www.cuspera.com/vendors"
+  },
+  {
+    "slug": "designer-news",
+    "name": "Designer News",
+    "url": "https://designernews.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Designer News to reach your target audience.",
+    "submission_url": "https://designernews.co"
+  },
+  {
+    "slug": "dev-community",
+    "name": "DEV Community",
+    "url": "http://dev.to",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to DEV Community to reach your target audience.",
+    "submission_url": "http://dev.to"
+  },
+  {
+    "slug": "dev-post",
+    "name": "Dev Post",
+    "url": "https://devpost.com/software",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Dev Post to reach your target audience.",
+    "submission_url": "https://devpost.com/software"
+  },
+  {
+    "slug": "devhunt",
+    "name": "DevHunt",
+    "url": "https://devhunt.org",
+    "domain_rating": null,
+    "is_dofollow": true,
+    "categories": [
+      "Dev Tools"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to DevHunt to reach your target audience.",
+    "submission_url": "https://devhunt.org"
+  },
+  {
+    "slug": "digg",
+    "name": "Digg",
+    "url": "https://digg.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Digg to reach your target audience.",
+    "submission_url": "https://digg.com"
+  },
+  {
+    "slug": "digital-trends",
+    "name": "Digital Trends",
+    "url": "https://www.digitaltrends.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Digital Trends to reach your target audience.",
+    "submission_url": "https://www.digitaltrends.com"
+  },
+  {
+    "slug": "discover-cloud",
+    "name": "Discover Cloud",
+    "url": "https://www.discovercloud.com/become-",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Discover Cloud to reach your target audience.",
+    "submission_url": "https://www.discovercloud.com/become-"
+  },
+  {
+    "slug": "discover-our-town",
+    "name": "Discover Our Town",
+    "url": "http://www.discoverourtown.com/add",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Discover Our Town to reach your target audience.",
+    "submission_url": "http://www.discoverourtown.com/add"
+  },
+  {
+    "slug": "dribble",
+    "name": "Dribble",
+    "url": "https://dribbble.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Dribble to reach your target audience.",
+    "submission_url": "https://dribbble.com"
+  },
+  {
+    "slug": "ebool",
+    "name": "EBool",
+    "url": "https://www.ebool.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to EBool to reach your target audience.",
+    "submission_url": "https://www.ebool.com/submit"
+  },
+  {
+    "slug": "elpha",
+    "name": "Elpha",
+    "url": "https://elpha.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Elpha to reach your target audience.",
+    "submission_url": "https://elpha.com"
+  },
+  {
+    "slug": "emoji-launch",
+    "name": "Emoji Launch",
+    "url": "https://emojilaunch.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Emoji Launch to reach your target audience.",
+    "submission_url": "https://emojilaunch.com/submit"
+  },
+  {
+    "slug": "engadget",
+    "name": "EnGadget",
+    "url": "https://www.engadget.com/about/advertist",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to EnGadget to reach your target audience.",
+    "submission_url": "https://www.engadget.com/about/advertist"
+  },
+  {
+    "slug": "eu-startups",
+    "name": "EU-Startups",
+    "url": "https://www.eu-startups.com/directory/?'",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to EU-Startups to reach your target audience.",
+    "submission_url": "https://www.eu-startups.com/directory/?'"
+  },
+  {
+    "slug": "exact-seek",
+    "name": "Exact Seek",
+    "url": "https://www.exactseek.com/add.html",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Exact Seek to reach your target audience.",
+    "submission_url": "https://www.exactseek.com/add.html"
+  },
+  {
+    "slug": "f6s",
+    "name": "F6S",
+    "url": "https://www.f6s.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to F6S to reach your target audience.",
+    "submission_url": "https://www.f6s.com"
+  },
+  {
+    "slug": "fark",
+    "name": "Fark",
+    "url": "https://www.fark.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Fark to reach your target audience.",
+    "submission_url": "https://www.fark.com"
+  },
+  {
+    "slug": "fast-company",
+    "name": "Fast Company",
+    "url": "https://www.fastcompany.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Fast Company to reach your target audience.",
+    "submission_url": "https://www.fastcompany.com"
+  },
+  {
+    "slug": "featured-customers",
+    "name": "Featured Customers",
+    "url": "https://www.featuredcustomers.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Featured Customers to reach your target audience.",
+    "submission_url": "https://www.featuredcustomers.com"
+  },
+  {
+    "slug": "feed-my-startup",
+    "name": "Feed My Startup",
+    "url": "http://feedmystartup.com/submit-your-st",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Feed My Startup to reach your target audience.",
+    "submission_url": "http://feedmystartup.com/submit-your-st"
+  },
+  {
+    "slug": "feedough",
+    "name": "Feedough",
+    "url": "https://www.feedough.com/submit-'",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Feedough to reach your target audience.",
+    "submission_url": "https://www.feedough.com/submit-'"
+  },
+  {
+    "slug": "finances-online",
+    "name": "Finances Online",
+    "url": "https://financesonline.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Finances Online to reach your target audience.",
+    "submission_url": "https://financesonline.com"
+  },
+  {
+    "slug": "finding-startups",
+    "name": "Finding Startups",
+    "url": "https://findingstartups.com/startups",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Finding Startups to reach your target audience.",
+    "submission_url": "https://findingstartups.com/startups"
+  },
+  {
+    "slug": "fintech-news-ilounge",
+    "name": "Fintech News iLounge",
+    "url": "https://fintechnews.sq/submit-your-fintec",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Fintech News iLounge to reach your target audience.",
+    "submission_url": "https://fintechnews.sq/submit-your-fintec"
+  },
+  {
+    "slug": "foundoutio",
+    "name": "Foundout.io",
+    "url": "https://friendly",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Foundout.io to reach your target audience.",
+    "submission_url": "https://friendly"
+  },
+  {
+    "slug": "foursquare",
+    "name": "FourSquare",
+    "url": "https://foursquare.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to FourSquare to reach your target audience.",
+    "submission_url": "https://foursquare.com"
+  },
+  {
+    "slug": "freeble",
+    "name": "Freeble",
+    "url": "https://freeble.site",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Freeble to reach your target audience.",
+    "submission_url": "https://freeble.site"
+  },
+  {
+    "slug": "fuel-up",
+    "name": "Fuel Up",
+    "url": "https://fuelup.co/add",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Fuel Up to reach your target audience.",
+    "submission_url": "https://fuelup.co/add"
+  },
+  {
+    "slug": "future-of-saas",
+    "name": "Future of Saas",
+    "url": "https://www.futureofsaas.io/contributor-",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Future of Saas to reach your target audience.",
+    "submission_url": "https://www.futureofsaas.io/contributor-"
+  },
+  {
+    "slug": "g2",
+    "name": "G2",
+    "url": "https://g2.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to G2 to reach your target audience.",
+    "submission_url": "https://g2.com"
+  },
+  {
+    "slug": "geek-wire",
+    "name": "Geek Wire",
+    "url": "https://Geekwire.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Geek Wire to reach your target audience.",
+    "submission_url": "https://Geekwire.com"
+  },
+  {
+    "slug": "geekopedia",
+    "name": "Geekopedia",
+    "url": "https://geekopedia.me/write-for-us",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Geekopedia to reach your target audience.",
+    "submission_url": "https://geekopedia.me/write-for-us"
+  },
+  {
+    "slug": "get-app",
+    "name": "Get App",
+    "url": "https://www.gartner.com/en/digital-marke",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Get App to reach your target audience.",
+    "submission_url": "https://www.gartner.com/en/digital-marke"
+  },
+  {
+    "slug": "get-worm",
+    "name": "Get Worm",
+    "url": "https://getworm.com/submit-startup",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Get Worm to reach your target audience.",
+    "submission_url": "https://getworm.com/submit-startup"
+  },
+  {
+    "slug": "getmorebacklinksorg",
+    "name": "GetMoreBacklinks.org",
+    "url": "https://time",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to GetMoreBacklinks.org to reach your target audience.",
+    "submission_url": "https://time"
+  },
+  {
+    "slug": "google-my-business",
+    "name": "Google My Business",
+    "url": "https://www.google.com/business",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Google My Business to reach your target audience.",
+    "submission_url": "https://www.google.com/business"
+  },
+  {
+    "slug": "growing-page",
+    "name": "Growing Page",
+    "url": "https://growingpage.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Growing Page to reach your target audience.",
+    "submission_url": "https://growingpage.com"
+  },
+  {
+    "slug": "growth-hack-list",
+    "name": "Growth Hack List",
+    "url": "https://growthhacklist.com/startup-director",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Growth Hack List to reach your target audience.",
+    "submission_url": "https://growthhacklist.com/startup-director"
+  },
+  {
+    "slug": "growth-hackers",
+    "name": "Growth Hackers",
+    "url": "https://growthhackers.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Growth Hackers to reach your target audience.",
+    "submission_url": "https://growthhackers.com"
+  },
+  {
+    "slug": "growth-junkie",
+    "name": "Growth Junkie",
+    "url": "https://growthiunkie.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Growth Junkie to reach your target audience.",
+    "submission_url": "https://growthiunkie.com"
+  },
+  {
+    "slug": "growth-kit",
+    "name": "Growth Kit",
+    "url": "https://www.growthkit.so",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Growth Kit to reach your target audience.",
+    "submission_url": "https://www.growthkit.so"
+  },
+  {
+    "slug": "growth-marketers",
+    "name": "Growth Marketers",
+    "url": "http://www.facebook.com/groups/growthm",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Growth Marketers to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/growthm"
+  },
+  {
+    "slug": "gust",
+    "name": "Gust",
+    "url": "https://gust.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Gust to reach your target audience.",
+    "submission_url": "https://gust.com"
+  },
+  {
+    "slug": "hacker-news",
+    "name": "Hacker News",
+    "url": "https://news.ycombinator.com",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Hacker News to reach your target audience.",
+    "submission_url": "https://news.ycombinator.com"
+  },
+  {
+    "slug": "hackernews",
+    "name": "HackerNews",
+    "url": "https://news.ycombinator.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to HackerNews to reach your target audience.",
+    "submission_url": "https://news.ycombinator.com"
+  },
+  {
+    "slug": "hackernoon",
+    "name": "Hackernoon",
+    "url": "https://hackernoon.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Hackernoon to reach your target audience.",
+    "submission_url": "https://hackernoon.com"
+  },
+  {
+    "slug": "hackerspad",
+    "name": "Hackerspad",
+    "url": "https://hackerspad.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Hackerspad to reach your target audience.",
+    "submission_url": "https://hackerspad.net"
+  },
+  {
+    "slug": "how-brands-are-built",
+    "name": "How Brands Are Built",
+    "url": "https://howbrandsarebuilt.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to How Brands Are Built to reach your target audience.",
+    "submission_url": "https://howbrandsarebuilt.com/submit"
+  },
+  {
+    "slug": "how-to-buy-saas",
+    "name": "How to buy SaaS",
+    "url": "https://www.howtobuysaas.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to How to buy SaaS to reach your target audience.",
+    "submission_url": "https://www.howtobuysaas.com"
+  },
+  {
+    "slug": "inbox-world",
+    "name": "Inbox World",
+    "url": "https://inboxworld.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Inbox World to reach your target audience.",
+    "submission_url": "https://inboxworld.io"
+  },
+  {
+    "slug": "inc42",
+    "name": "Inc42",
+    "url": "https://inc42.com/startup-submissic",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Inc42 to reach your target audience.",
+    "submission_url": "https://inc42.com/startup-submissic"
+  },
+  {
+    "slug": "index",
+    "name": "Index",
+    "url": "https://index.co/companies?&",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Index to reach your target audience.",
+    "submission_url": "https://index.co/companies?&"
+  },
+  {
+    "slug": "index-by-dodo-payments",
+    "name": "Index by Dodo Payments",
+    "url": "https://index.dodopayments.com",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Index by Dodo Payments to reach your target audience.",
+    "submission_url": "https://index.dodopayments.com"
+  },
+  {
+    "slug": "india-mart",
+    "name": "India Mart",
+    "url": "https://seller.indiamart.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to India Mart to reach your target audience.",
+    "submission_url": "https://seller.indiamart.com"
+  },
+  {
+    "slug": "indian-yellow-pages",
+    "name": "Indian Yellow Pages",
+    "url": "https://www.indianyellowpages.com/post-",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Indian Yellow Pages to reach your target audience.",
+    "submission_url": "https://www.indianyellowpages.com/post-"
+  },
+  {
+    "slug": "indie-gamer-reviewer",
+    "name": "Indie Gamer Reviewer",
+    "url": "https://indiegamereviewer.com/contact-ir",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Indie Gamer Reviewer to reach your target audience.",
+    "submission_url": "https://indiegamereviewer.com/contact-ir"
+  },
+  {
+    "slug": "indie-hackers",
+    "name": "Indie Hackers",
+    "url": "https://driven - indiehackers.com",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Build-in-Public",
+      "Forums"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Indie Hackers to reach your target audience.",
+    "submission_url": "https://driven - indiehackers.com"
+  },
+  {
+    "slug": "indiehackers",
+    "name": "IndieHackers",
+    "url": "https://www.indiehackers.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to IndieHackers to reach your target audience.",
+    "submission_url": "https://www.indiehackers.com"
+  },
+  {
+    "slug": "indiestack",
+    "name": "IndieStack",
+    "url": "https://www.indiestack.co/contribute",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to IndieStack to reach your target audience.",
+    "submission_url": "https://www.indiestack.co/contribute"
+  },
+  {
+    "slug": "info-world",
+    "name": "Info World",
+    "url": "https://www.infoworld.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Info World to reach your target audience.",
+    "submission_url": "https://www.infoworld.com"
+  },
+  {
+    "slug": "innmind",
+    "name": "InnMind",
+    "url": "https://innmind.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to InnMind to reach your target audience.",
+    "submission_url": "https://innmind.com"
+  },
+  {
+    "slug": "inside",
+    "name": "Inside",
+    "url": "https://community.inside.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Inside to reach your target audience.",
+    "submission_url": "https://community.inside.com"
+  },
+  {
+    "slug": "insur-tech-iphone-life",
+    "name": "Insur-Tech iPhone Life",
+    "url": "https://insur-tech.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Insur-Tech iPhone Life to reach your target audience.",
+    "submission_url": "https://insur-tech.com/submit"
+  },
+  {
+    "slug": "ircoupons",
+    "name": "Ir/Coupons",
+    "url": "http://reddit.com/r/coupons",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Ir/Coupons to reach your target audience.",
+    "submission_url": "http://reddit.com/r/coupons"
+  },
+  {
+    "slug": "joinly",
+    "name": "Joinly",
+    "url": "https://www.joinly.xyz",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Joinly to reach your target audience.",
+    "submission_url": "https://www.joinly.xyz"
+  },
+  {
+    "slug": "just-dial",
+    "name": "Just Dial",
+    "url": "https://www.justdial.com/Free-Listing",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Just Dial to reach your target audience.",
+    "submission_url": "https://www.justdial.com/Free-Listing"
+  },
+  {
+    "slug": "karo-startup",
+    "name": "Karo Startup",
+    "url": "https://karostartup.com/advertise-with-us",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Karo Startup to reach your target audience.",
+    "submission_url": "https://karostartup.com/advertise-with-us"
+  },
+  {
+    "slug": "killer-startups",
+    "name": "Killer Startups",
+    "url": "http://www.killerstartups.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Killer Startups to reach your target audience.",
+    "submission_url": "http://www.killerstartups.com"
+  },
+  {
+    "slug": "killerstartups",
+    "name": "KillerStartups",
+    "url": "https://**FeedMyApp**: $9+ for featured placement",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Startup"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to KillerStartups to reach your target audience.",
+    "submission_url": "https://**FeedMyApp**: $9+ for featured placement"
+  },
+  {
+    "slug": "kitdb",
+    "name": "KitDB",
+    "url": "https://kitdb.app",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to KitDB to reach your target audience.",
+    "submission_url": "https://kitdb.app"
+  },
+  {
+    "slug": "kotaku",
+    "name": "Kotaku",
+    "url": "https://kotaku.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Kotaku to reach your target audience.",
+    "submission_url": "https://kotaku.com"
+  },
+  {
+    "slug": "land-book",
+    "name": "Land-Book",
+    "url": "https://land-book.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Land-Book to reach your target audience.",
+    "submission_url": "https://land-book.com"
+  },
+  {
+    "slug": "landing-folio",
+    "name": "Landing Folio",
+    "url": "https://www.landingfolio.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Landing Folio to reach your target audience.",
+    "submission_url": "https://www.landingfolio.com"
+  },
+  {
+    "slug": "launchdirectories-auto-submit",
+    "name": "LaunchDirectories Auto Submit",
+    "url": "https://100+ directories",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Product Launch"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to LaunchDirectories Auto Submit to reach your target audience.",
+    "submission_url": "https://100+ directories"
+  },
+  {
+    "slug": "launched",
+    "name": "Launched!",
+    "url": "https://launched.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Launched! to reach your target audience.",
+    "submission_url": "https://launched.io"
+  },
+  {
+    "slug": "launching-next",
+    "name": "Launching Next",
+    "url": "https://www.launchingnext.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Launching Next to reach your target audience.",
+    "submission_url": "https://www.launchingnext.com"
+  },
+  {
+    "slug": "launchingnext",
+    "name": "LaunchingNext",
+    "url": "https://launchingnext.com",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Product Launch"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to LaunchingNext to reach your target audience.",
+    "submission_url": "https://launchingnext.com"
+  },
+  {
+    "slug": "lets-venture",
+    "name": "Lets Venture",
+    "url": "https://letsventure.com/join/startup",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Lets Venture to reach your target audience.",
+    "submission_url": "https://letsventure.com/join/startup"
+  },
+  {
+    "slug": "letter-list",
+    "name": "Letter List",
+    "url": "https://letterlist.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Letter List to reach your target audience.",
+    "submission_url": "https://letterlist.com/submit"
+  },
+  {
+    "slug": "life-hack",
+    "name": "Life Hack",
+    "url": "https://www.lifehack.org",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Life Hack to reach your target audience.",
+    "submission_url": "https://www.lifehack.org"
+  },
+  {
+    "slug": "linkedin",
+    "name": "Linkedin",
+    "url": "https://linkedin.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Linkedin to reach your target audience.",
+    "submission_url": "https://linkedin.com"
+  },
+  {
+    "slug": "listly",
+    "name": "Listly",
+    "url": "https://list.ly",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Listly to reach your target audience.",
+    "submission_url": "https://list.ly"
+  },
+  {
+    "slug": "lobsters",
+    "name": "Lobsters",
+    "url": "https://lobste.rs",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Lobsters to reach your target audience.",
+    "submission_url": "https://lobste.rs"
+  },
+  {
+    "slug": "local",
+    "name": "Local",
+    "url": "https://partners.local.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Local to reach your target audience.",
+    "submission_url": "https://partners.local.com"
+  },
+  {
+    "slug": "loganix",
+    "name": "Loganix",
+    "url": "https://you",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Loganix to reach your target audience.",
+    "submission_url": "https://you"
+  },
+  {
+    "slug": "mactrast",
+    "name": "MacTrast",
+    "url": "http://www.mactrast.com/contact",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to MacTrast to reach your target audience.",
+    "submission_url": "http://www.mactrast.com/contact"
+  },
+  {
+    "slug": "magnitt",
+    "name": "Magnitt",
+    "url": "https://magnitt.com/startups",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Magnitt to reach your target audience.",
+    "submission_url": "https://magnitt.com/startups"
+  },
+  {
+    "slug": "make-use-of",
+    "name": "Make Use Of",
+    "url": "https://www.makeuseof.com/contributor",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Make Use Of to reach your target audience.",
+    "submission_url": "https://www.makeuseof.com/contributor"
+  },
+  {
+    "slug": "maker-lead",
+    "name": "Maker Lead",
+    "url": "https://makerlead.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Maker Lead to reach your target audience.",
+    "submission_url": "https://makerlead.com"
+  },
+  {
+    "slug": "makerpad",
+    "name": "Makerpad",
+    "url": "http://makerpad.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Makerpad to reach your target audience.",
+    "submission_url": "http://makerpad.co"
+  },
+  {
+    "slug": "mashable",
+    "name": "Mashable",
+    "url": "https://in.mashable.com/website-informati",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Mashable to reach your target audience.",
+    "submission_url": "https://in.mashable.com/website-informati"
+  },
+  {
+    "slug": "medium",
+    "name": "Medium",
+    "url": "https://medium.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Medium to reach your target audience.",
+    "submission_url": "https://medium.com"
+  },
+  {
+    "slug": "merchant-circle",
+    "name": "Merchant Circle",
+    "url": "https://www.merchantcircle.com/signup/#â€¹",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Merchant Circle to reach your target audience.",
+    "submission_url": "https://www.merchantcircle.com/signup/#â€¹"
+  },
+  {
+    "slug": "microstartups",
+    "name": "MicroStartups",
+    "url": "https://www.microstartups.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to MicroStartups to reach your target audience.",
+    "submission_url": "https://www.microstartups.co"
+  },
+  {
+    "slug": "moddb",
+    "name": "ModDB",
+    "url": "https://www.moddb.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to ModDB to reach your target audience.",
+    "submission_url": "https://www.moddb.com"
+  },
+  {
+    "slug": "my-startup-tool",
+    "name": "My Startup Tool",
+    "url": "https://mystartuptool.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to My Startup Tool to reach your target audience.",
+    "submission_url": "https://mystartuptool.com"
+  },
+  {
+    "slug": "mystartuptool",
+    "name": "myStartupTool",
+    "url": "https://Free plan: View 250+ directories",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Startup"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to myStartupTool to reach your target audience.",
+    "submission_url": "https://Free plan: View 250+ directories"
+  },
+  {
+    "slug": "netted",
+    "name": "Netted",
+    "url": "https://www.netted.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Netted to reach your target audience.",
+    "submission_url": "https://www.netted.net"
+  },
+  {
+    "slug": "new-startups",
+    "name": "New Startups",
+    "url": "https://www.new-startups.com/pron",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to New Startups to reach your target audience.",
+    "submission_url": "https://www.new-startups.com/pron"
+  },
+  {
+    "slug": "next-big-product",
+    "name": "Next Big Product",
+    "url": "http://nextbigproduct.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Next Big Product to reach your target audience.",
+    "submission_url": "http://nextbigproduct.net"
+  },
+  {
+    "slug": "next-big-what",
+    "name": "Next Big What",
+    "url": "https://nextbigwhat.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Next Big What to reach your target audience.",
+    "submission_url": "https://nextbigwhat.com"
+  },
+  {
+    "slug": "nocode-tech",
+    "name": "NoCode Tech",
+    "url": "https://www.nocode.tech/tools",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to NoCode Tech to reach your target audience.",
+    "submission_url": "https://www.nocode.tech/tools"
+  },
+  {
+    "slug": "online-genuises",
+    "name": "Online Genuises",
+    "url": "https://onlinegeniuses.com/marketplace-",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Online Genuises to reach your target audience.",
+    "submission_url": "https://onlinegeniuses.com/marketplace-"
+  },
+  {
+    "slug": "open-startup-list",
+    "name": "Open Startup List",
+    "url": "https://openstartuplist.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Open Startup List to reach your target audience.",
+    "submission_url": "https://openstartuplist.com"
+  },
+  {
+    "slug": "openhunts",
+    "name": "OpenHunts",
+    "url": "https://friendly alternative",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Build-in-Public"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to OpenHunts to reach your target audience.",
+    "submission_url": "https://friendly alternative"
+  },
+  {
+    "slug": "openlaunch",
+    "name": "OpenLaunch",
+    "url": "https://source",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Product Launch"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to OpenLaunch to reach your target audience.",
+    "submission_url": "https://source"
+  },
+  {
+    "slug": "owwly",
+    "name": "Owwly",
+    "url": "https://owwly.com/products/all",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Owwly to reach your target audience.",
+    "submission_url": "https://owwly.com/products/all"
+  },
+  {
+    "slug": "oye-startups",
+    "name": "Oye Startups",
+    "url": "https://oyestartups.com/contact",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Oye Startups to reach your target audience.",
+    "submission_url": "https://oyestartups.com/contact"
+  },
+  {
+    "slug": "paggu",
+    "name": "Paggu",
+    "url": "https://www.paggu.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Paggu to reach your target audience.",
+    "submission_url": "https://www.paggu.com"
+  },
+  {
+    "slug": "pando",
+    "name": "Pando",
+    "url": "https://pando.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Pando to reach your target audience.",
+    "submission_url": "https://pando.com"
+  },
+  {
+    "slug": "pc-mag",
+    "name": "PC Mag",
+    "url": "https://in.pcmag.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to PC Mag to reach your target audience.",
+    "submission_url": "https://in.pcmag.com"
+  },
+  {
+    "slug": "peerlist-launchpad",
+    "name": "Peerlist Launchpad",
+    "url": "https://long launch window",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Product Launch"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Peerlist Launchpad to reach your target audience.",
+    "submission_url": "https://long launch window"
+  },
+  {
+    "slug": "pinterest",
+    "name": "Pinterest",
+    "url": "https://pinterest.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Pinterest to reach your target audience.",
+    "submission_url": "https://pinterest.com"
+  },
+  {
+    "slug": "pitchbook",
+    "name": "PitchBook",
+    "url": "https://www.pitchbook.com/sponsorship",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to PitchBook to reach your target audience.",
+    "submission_url": "https://www.pitchbook.com/sponsorship"
+  },
+  {
+    "slug": "pocket-gamer",
+    "name": "Pocket gamer",
+    "url": "https://www.pocketgamer.com/pages/cont",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Pocket gamer to reach your target audience.",
+    "submission_url": "https://www.pocketgamer.com/pages/cont"
+  },
+  {
+    "slug": "pocket-lint",
+    "name": "Pocket Lint",
+    "url": "https://www.pocket-lint.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Pocket Lint to reach your target audience.",
+    "submission_url": "https://www.pocket-lint.com"
+  },
+  {
+    "slug": "post-make",
+    "name": "Post Make",
+    "url": "https://postmake.io/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Post Make to reach your target audience.",
+    "submission_url": "https://postmake.io/submit"
+  },
+  {
+    "slug": "prefundia",
+    "name": "Prefundia",
+    "url": "https://prefundia.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Prefundia to reach your target audience.",
+    "submission_url": "https://prefundia.com"
+  },
+  {
+    "slug": "product-hunt",
+    "name": "Product Hunt",
+    "url": "https://producthunt.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "domain_rating": null,
+    "is_dofollow": true,
+    "description": "Submit your product to Product Hunt to reach your target audience.",
+    "submission_url": "https://producthunt.com"
+  },
+  {
+    "slug": "profit-hunt",
+    "name": "Profit Hunt",
+    "url": "https://profithunt.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Profit Hunt to reach your target audience.",
+    "submission_url": "https://profithunt.co"
+  },
+  {
+    "slug": "programmable-web",
+    "name": "Programmable Web",
+    "url": "https://www.programmableweb.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Programmable Web to reach your target audience.",
+    "submission_url": "https://www.programmableweb.com"
+  },
+  {
+    "slug": "project-hatch",
+    "name": "Project Hatch",
+    "url": "https://www.projecthatch.co/your-story",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Project Hatch to reach your target audience.",
+    "submission_url": "https://www.projecthatch.co/your-story"
+  },
+  {
+    "slug": "promote-project",
+    "name": "Promote Project",
+    "url": "https://www.promoteproiect.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Promote Project to reach your target audience.",
+    "submission_url": "https://www.promoteproiect.com"
+  },
+  {
+    "slug": "quora",
+    "name": "Quora",
+    "url": "https://quora.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Quora to reach your target audience.",
+    "submission_url": "https://quora.com"
+  },
+  {
+    "slug": "ralphaandbetausers",
+    "name": "r/Alphaandbetausers",
+    "url": "https://reddit.com/r/Alphaandbetausers",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Alphaandbetausers to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Alphaandbetausers"
+  },
+  {
+    "slug": "rdesign-critiques",
+    "name": "r/Design_Critiques",
+    "url": "https://www.reddit.com/r/Design_Critiques",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Design_Critiques to reach your target audience.",
+    "submission_url": "https://www.reddit.com/r/Design_Critiques"
+  },
+  {
+    "slug": "rentrepreneur",
+    "name": "r/Entrepreneur",
+    "url": "https://reddit.com/r/Entrepreneur",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Entrepreneur to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Entrepreneur"
+  },
+  {
+    "slug": "rentrepreneurridealong",
+    "name": "r/EntrepreneurRideAlong",
+    "url": "http://reddit.com/r/EntrepreneurRideAlong",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/EntrepreneurRideAlong to reach your target audience.",
+    "submission_url": "http://reddit.com/r/EntrepreneurRideAlong"
+  },
+  {
+    "slug": "rgamedev",
+    "name": "r/gamedev",
+    "url": "http://reddit.com/r/gamedev",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/gamedev to reach your target audience.",
+    "submission_url": "http://reddit.com/r/gamedev"
+  },
+  {
+    "slug": "rgrowmybusiness",
+    "name": "r/Growmybusiness",
+    "url": "https://reddit.com/r/Growmybusiness",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Growmybusiness to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Growmybusiness"
+  },
+  {
+    "slug": "rimadethis",
+    "name": "r/IMadethis",
+    "url": "https://reddit.com/r/Madethis",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/IMadethis to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Madethis"
+  },
+  {
+    "slug": "rindiebiz",
+    "name": "r/Indiebiz",
+    "url": "https://reddit.com/r/Indiebiz",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Indiebiz to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Indiebiz"
+  },
+  {
+    "slug": "rladybusiness",
+    "name": "r/Ladybusiness",
+    "url": "https://reddit.com/r/Ladybusiness",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Ladybusiness to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Ladybusiness"
+  },
+  {
+    "slug": "rlavascript",
+    "name": "r/lavascript",
+    "url": "http://reddit.com/r/javascript",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/lavascript to reach your target audience.",
+    "submission_url": "http://reddit.com/r/javascript"
+  },
+  {
+    "slug": "rpython",
+    "name": "r/python",
+    "url": "http://reddit.com/r/Python",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/python to reach your target audience.",
+    "submission_url": "http://reddit.com/r/Python"
+  },
+  {
+    "slug": "rroastmystartup",
+    "name": "r/Roastmystartup",
+    "url": "https://reddit.com/r/Roastmystartup",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Roastmystartup to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Roastmystartup"
+  },
+  {
+    "slug": "rshamelessplug",
+    "name": "r/ShamelessPlug",
+    "url": "http://reddit.com/r/shamelessplug",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/ShamelessPlug to reach your target audience.",
+    "submission_url": "http://reddit.com/r/shamelessplug"
+  },
+  {
+    "slug": "rsideproject",
+    "name": "r/SideProject",
+    "url": "https://reddit.com/r/SideProject",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/SideProject to reach your target audience.",
+    "submission_url": "https://reddit.com/r/SideProject"
+  },
+  {
+    "slug": "rsmallbusiness",
+    "name": "r/Smallbusiness",
+    "url": "https://reddit.com/r/Smallbusiness",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Smallbusiness to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Smallbusiness"
+  },
+  {
+    "slug": "rstartups",
+    "name": "r/Startups",
+    "url": "https://reddit.com/r/Startups",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/Startups to reach your target audience.",
+    "submission_url": "https://reddit.com/r/Startups"
+  },
+  {
+    "slug": "rweb-dev",
+    "name": "r/web dev",
+    "url": "http://reddit.com/r/webdev",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to r/web dev to reach your target audience.",
+    "submission_url": "http://reddit.com/r/webdev"
+  },
+  {
+    "slug": "readwrite",
+    "name": "ReadWrite",
+    "url": "https://readwrite.com/contributor-guideline",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to ReadWrite to reach your target audience.",
+    "submission_url": "https://readwrite.com/contributor-guideline"
+  },
+  {
+    "slug": "ready-saas-go",
+    "name": "Ready SaaS Go",
+    "url": "http://readysaasgo.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Ready SaaS Go to reach your target audience.",
+    "submission_url": "http://readysaasgo.com"
+  },
+  {
+    "slug": "red-ferret",
+    "name": "Red Ferret",
+    "url": "https://www.redferret.net/contact-us",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Red Ferret to reach your target audience.",
+    "submission_url": "https://www.redferret.net/contact-us"
+  },
+  {
+    "slug": "reddit",
+    "name": "Reddit",
+    "url": "https://reddit.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Reddit to reach your target audience.",
+    "submission_url": "https://reddit.com"
+  },
+  {
+    "slug": "remote-tools",
+    "name": "Remote Tools",
+    "url": "https://www.remote.tools",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Remote Tools to reach your target audience.",
+    "submission_url": "https://www.remote.tools"
+  },
+  {
+    "slug": "robingood",
+    "name": "Robingood",
+    "url": "https://tools.robingood.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Robingood to reach your target audience.",
+    "submission_url": "https://tools.robingood.com"
+  },
+  {
+    "slug": "romanian-startups",
+    "name": "Romanian Startups",
+    "url": "https://www.romanianstartups.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Romanian Startups to reach your target audience.",
+    "submission_url": "https://www.romanianstartups.com"
+  },
+  {
+    "slug": "saas-breakthrough-marketing",
+    "name": "SaaS Breakthrough Marketing",
+    "url": "http://www.facebook.com/groups/saasbreakthrough",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Breakthrough Marketing to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/saasbreakthrough"
+  },
+  {
+    "slug": "saas-directory",
+    "name": "SaaS Directory",
+    "url": "http://saasdirectory.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Directory to reach your target audience.",
+    "submission_url": "http://saasdirectory.com"
+  },
+  {
+    "slug": "saas-founders-and-execs",
+    "name": "SaaS Founders and Execs",
+    "url": "http://www.facebook.com/groups/saasfour",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Founders and Execs to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/saasfour"
+  },
+  {
+    "slug": "saas-genius",
+    "name": "SaaS Genius",
+    "url": "https://www.saasgenius.com/free-listing",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Genius to reach your target audience.",
+    "submission_url": "https://www.saasgenius.com/free-listing"
+  },
+  {
+    "slug": "saas-growth-hacking",
+    "name": "SaaS Growth Hacking",
+    "url": "http://www.facebook.com/groups/SaaSgro",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Growth Hacking to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/SaaSgro"
+  },
+  {
+    "slug": "saas-hub",
+    "name": "Saas Hub",
+    "url": "https://Saashub.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Saas Hub to reach your target audience.",
+    "submission_url": "https://Saashub.com"
+  },
+  {
+    "slug": "saas-lifetime-deals-digital-i",
+    "name": "SaaS Lifetime Deals & Digital I",
+    "url": "https://www.facebook.com/groups/softwar",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Lifetime Deals & Digital I to reach your target audience.",
+    "submission_url": "https://www.facebook.com/groups/softwar"
+  },
+  {
+    "slug": "saas-marketer",
+    "name": "SaaS Marketer",
+    "url": "http://www.facebook.com/groups/saasmar",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Marketer to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/saasmar"
+  },
+  {
+    "slug": "saas-place",
+    "name": "SaaS Place",
+    "url": "https://saasplace.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Place to reach your target audience.",
+    "submission_url": "https://saasplace.io"
+  },
+  {
+    "slug": "saas-products-marketing",
+    "name": "SaaS Products & Marketing",
+    "url": "http://www.facebook.com/groups/saasproductsandmarketing",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaS Products & Marketing to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/saasproductsandmarketing"
+  },
+  {
+    "slug": "saas-worthy",
+    "name": "Saas Worthy",
+    "url": "http://saasworthy.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Saas Worthy to reach your target audience.",
+    "submission_url": "http://saasworthy.com"
+  },
+  {
+    "slug": "saasified",
+    "name": "SaaSified",
+    "url": "https://Saasified.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaaSified to reach your target audience.",
+    "submission_url": "https://Saasified.co"
+  },
+  {
+    "slug": "saaspedia",
+    "name": "SaasPedia",
+    "url": "https://$997 one-time",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "SaaS"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SaasPedia to reach your target audience.",
+    "submission_url": "https://$997 one-time"
+  },
+  {
+    "slug": "serchen",
+    "name": "Serchen",
+    "url": "https://www.serchen.com/get-listed",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Serchen to reach your target audience.",
+    "submission_url": "https://www.serchen.com/get-listed"
+  },
+  {
+    "slug": "side-bar",
+    "name": "Side Bar",
+    "url": "https://Sidebar.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Side Bar to reach your target audience.",
+    "submission_url": "https://Sidebar.io"
+  },
+  {
+    "slug": "side-projectors",
+    "name": "Side Projectors",
+    "url": "https://www.sideprojectors.com/#",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Side Projectors to reach your target audience.",
+    "submission_url": "https://www.sideprojectors.com/#"
+  },
+  {
+    "slug": "side-projects",
+    "name": "Side Projects",
+    "url": "https://sideprojects.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Side Projects to reach your target audience.",
+    "submission_url": "https://sideprojects.net"
+  },
+  {
+    "slug": "silicon-angle",
+    "name": "Silicon Angle",
+    "url": "https://siliconangle.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Silicon Angle to reach your target audience.",
+    "submission_url": "https://siliconangle.com"
+  },
+  {
+    "slug": "similar-site-search",
+    "name": "Similar Site Search",
+    "url": "http://similarsitesearch.com/webmaster",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Similar Site Search to reach your target audience.",
+    "submission_url": "http://similarsitesearch.com/webmaster"
+  },
+  {
+    "slug": "site-jabber",
+    "name": "Site Jabber",
+    "url": "https://www.siteiabber.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Site Jabber to reach your target audience.",
+    "submission_url": "https://www.siteiabber.com"
+  },
+  {
+    "slug": "slant",
+    "name": "Slant",
+    "url": "http://slant.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Slant to reach your target audience.",
+    "submission_url": "http://slant.co"
+  },
+  {
+    "slug": "slash-dot",
+    "name": "Slash Dot",
+    "url": "http://slashdot.org",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Slash Dot to reach your target audience.",
+    "submission_url": "http://slashdot.org"
+  },
+  {
+    "slug": "slate",
+    "name": "Slate",
+    "url": "https://slate.com/pitch",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Slate to reach your target audience.",
+    "submission_url": "https://slate.com/pitch"
+  },
+  {
+    "slug": "smart-money-match",
+    "name": "Smart Money Match",
+    "url": "https://www.smartmoneymatch.com/busin",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Smart Money Match to reach your target audience.",
+    "submission_url": "https://www.smartmoneymatch.com/busin"
+  },
+  {
+    "slug": "snapmunk",
+    "name": "Snapmunk",
+    "url": "https://startups.snapmunk.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Snapmunk to reach your target audience.",
+    "submission_url": "https://startups.snapmunk.com"
+  },
+  {
+    "slug": "software-advice",
+    "name": "Software Advice",
+    "url": "https://www.softwareadvice.com/vendors",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Software Advice to reach your target audience.",
+    "submission_url": "https://www.softwareadvice.com/vendors"
+  },
+  {
+    "slug": "software-suggest",
+    "name": "Software Suggest",
+    "url": "http://softwaresuggest.com/vendors",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Software Suggest to reach your target audience.",
+    "submission_url": "http://softwaresuggest.com/vendors"
+  },
+  {
+    "slug": "software-world",
+    "name": "Software World",
+    "url": "https://www.softwareworld.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Software World to reach your target audience.",
+    "submission_url": "https://www.softwareworld.co"
+  },
+  {
+    "slug": "sourceforge",
+    "name": "SourceForge",
+    "url": "https://sourceforge.net/user/registration?",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SourceForge to reach your target audience.",
+    "submission_url": "https://sourceforge.net/user/registration?"
+  },
+  {
+    "slug": "space-bandits",
+    "name": "Space Bandits",
+    "url": "https://www.spacebandits.io/startups",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Space Bandits to reach your target audience.",
+    "submission_url": "https://www.spacebandits.io/startups"
+  },
+  {
+    "slug": "spectacle",
+    "name": "Spectacle",
+    "url": "https://spectacle.is/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Spectacle to reach your target audience.",
+    "submission_url": "https://spectacle.is/submit"
+  },
+  {
+    "slug": "spoke",
+    "name": "Spoke",
+    "url": "https://www.spoke.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Spoke to reach your target audience.",
+    "submission_url": "https://www.spoke.com"
+  },
+  {
+    "slug": "sponsored-content",
+    "name": "Sponsored content",
+    "url": "https://**Guaranteed placement**: $100-$1,000",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Sponsored content to reach your target audience.",
+    "submission_url": "https://**Guaranteed placement**: $100-$1,000"
+  },
+  {
+    "slug": "springwise",
+    "name": "SpringWise",
+    "url": "https://www.springwise.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SpringWise to reach your target audience.",
+    "submission_url": "https://www.springwise.com"
+  },
+  {
+    "slug": "srbooster",
+    "name": "SRBooster",
+    "url": "https://DIY option",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to SRBooster to reach your target audience.",
+    "submission_url": "https://DIY option"
+  },
+  {
+    "slug": "stack-share",
+    "name": "Stack Share",
+    "url": "https://stackshare.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Stack Share to reach your target audience.",
+    "submission_url": "https://stackshare.io"
+  },
+  {
+    "slug": "start-us",
+    "name": "Start Us",
+    "url": "https://www.startus.cc",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Start Us to reach your target audience.",
+    "submission_url": "https://www.startus.cc"
+  },
+  {
+    "slug": "starter-story",
+    "name": "Starter Story",
+    "url": "https://www.starterstory.com/share",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Starter Story to reach your target audience.",
+    "submission_url": "https://www.starterstory.com/share"
+  },
+  {
+    "slug": "starticorn",
+    "name": "Starticorn",
+    "url": "https://starticorn.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Starticorn to reach your target audience.",
+    "submission_url": "https://starticorn.com/submit"
+  },
+  {
+    "slug": "startup-base",
+    "name": "Startup Base",
+    "url": "https://startupbase.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Base to reach your target audience.",
+    "submission_url": "https://startupbase.io"
+  },
+  {
+    "slug": "startup-beat",
+    "name": "Startup Beat",
+    "url": "https://startupbeat.com/get-featured",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Beat to reach your target audience.",
+    "submission_url": "https://startupbeat.com/get-featured"
+  },
+  {
+    "slug": "startup-benchmarks",
+    "name": "Startup benchmarks",
+    "url": "https://www.startupbenchmarks.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup benchmarks to reach your target audience.",
+    "submission_url": "https://www.startupbenchmarks.com"
+  },
+  {
+    "slug": "startup-buffer",
+    "name": "Startup Buffer",
+    "url": "https://startupbuffer.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Buffer to reach your target audience.",
+    "submission_url": "https://startupbuffer.com"
+  },
+  {
+    "slug": "startup-button",
+    "name": "Startup Button",
+    "url": "https://www.startupbutton.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Button to reach your target audience.",
+    "submission_url": "https://www.startupbutton.com"
+  },
+  {
+    "slug": "startup-collections",
+    "name": "Startup Collections",
+    "url": "http://startupcollections.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Collections to reach your target audience.",
+    "submission_url": "http://startupcollections.com"
+  },
+  {
+    "slug": "startup-costs",
+    "name": "Startup Costs",
+    "url": "https://www.startupcosts.co/signup",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Costs to reach your target audience.",
+    "submission_url": "https://www.startupcosts.co/signup"
+  },
+  {
+    "slug": "startup-deals",
+    "name": "Startup Deals",
+    "url": "https://www.startupdeals.tech",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Deals to reach your target audience.",
+    "submission_url": "https://www.startupdeals.tech"
+  },
+  {
+    "slug": "startup-dope",
+    "name": "Startup Dope",
+    "url": "https://startupdope.com/submit-nev",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Dope to reach your target audience.",
+    "submission_url": "https://startupdope.com/submit-nev"
+  },
+  {
+    "slug": "startup-europe",
+    "name": "Startup Europe",
+    "url": "http://startupeurope.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Europe to reach your target audience.",
+    "submission_url": "http://startupeurope.net"
+  },
+  {
+    "slug": "startup-explore",
+    "name": "Startup Explore",
+    "url": "https://startupxplore.com/en/startur",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Explore to reach your target audience.",
+    "submission_url": "https://startupxplore.com/en/startur"
+  },
+  {
+    "slug": "startup-founders",
+    "name": "Startup Founders",
+    "url": "https://startupfounders.com.au",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Founders to reach your target audience.",
+    "submission_url": "https://startupfounders.com.au"
+  },
+  {
+    "slug": "startup-galaxy",
+    "name": "Startup Galaxy",
+    "url": "https://world.startupsgalaxy.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Galaxy to reach your target audience.",
+    "submission_url": "https://world.startupsgalaxy.com"
+  },
+  {
+    "slug": "startup-guys",
+    "name": "Startup Guys",
+    "url": "http://startupguys.net/submit-startup",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Guys to reach your target audience.",
+    "submission_url": "http://startupguys.net/submit-startup"
+  },
+  {
+    "slug": "startup-inspire",
+    "name": "Startup Inspire",
+    "url": "http://startupinspire.com/startups",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Inspire to reach your target audience.",
+    "submission_url": "http://startupinspire.com/startups"
+  },
+  {
+    "slug": "startup-john",
+    "name": "Startup John",
+    "url": "https://www.startupiohn.com/submit-startu",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup John to reach your target audience.",
+    "submission_url": "https://www.startupiohn.com/submit-startu"
+  },
+  {
+    "slug": "startup-lift",
+    "name": "Startup Lift",
+    "url": "http://startuplift.com/submit-your-startup",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Lift to reach your target audience.",
+    "submission_url": "http://startuplift.com/submit-your-startup"
+  },
+  {
+    "slug": "startup-lister",
+    "name": "Startup Lister",
+    "url": "https://startuplister.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Lister to reach your target audience.",
+    "submission_url": "https://startuplister.com"
+  },
+  {
+    "slug": "startup-pitch",
+    "name": "Startup Pitch",
+    "url": "http://thestartuppitch.com/post-a-pi",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Pitch to reach your target audience.",
+    "submission_url": "http://thestartuppitch.com/post-a-pi"
+  },
+  {
+    "slug": "startup-ranking",
+    "name": "Startup Ranking",
+    "url": "https://www.startupranking.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Ranking to reach your target audience.",
+    "submission_url": "https://www.startupranking.com"
+  },
+  {
+    "slug": "startup-resources",
+    "name": "Startup Resources",
+    "url": "https://startupresources.io",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Resources to reach your target audience.",
+    "submission_url": "https://startupresources.io"
+  },
+  {
+    "slug": "startup-roulette",
+    "name": "Startup Roulette",
+    "url": "http://startuproulette.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Roulette to reach your target audience.",
+    "submission_url": "http://startuproulette.com"
+  },
+  {
+    "slug": "startup-savant",
+    "name": "Startup Savant",
+    "url": "https://startupsavant.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Savant to reach your target audience.",
+    "submission_url": "https://startupsavant.com"
+  },
+  {
+    "slug": "startup-sea",
+    "name": "Startup Sea",
+    "url": "http://www.startupsea.com/p/submi",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Sea to reach your target audience.",
+    "submission_url": "http://www.startupsea.com/p/submi"
+  },
+  {
+    "slug": "startup-stash",
+    "name": "Startup Stash",
+    "url": "https://startupstash.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Stash to reach your target audience.",
+    "submission_url": "https://startupstash.com"
+  },
+  {
+    "slug": "startup-tabs",
+    "name": "Startup Tabs",
+    "url": "https://www.startuptabs.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Tabs to reach your target audience.",
+    "submission_url": "https://www.startuptabs.com"
+  },
+  {
+    "slug": "startup-tracker",
+    "name": "Startup Tracker",
+    "url": "https://startuptracker.io/crowdsourcing",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Tracker to reach your target audience.",
+    "submission_url": "https://startuptracker.io/crowdsourcing"
+  },
+  {
+    "slug": "startup-wizz",
+    "name": "Startup Wizz",
+    "url": "http://startupwizz.com/submit-a-startup",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Wizz to reach your target audience.",
+    "submission_url": "http://startupwizz.com/submit-a-startup"
+  },
+  {
+    "slug": "startup-wonders",
+    "name": "Startup Wonders",
+    "url": "https://startupwonders.com/submit/star",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup Wonders to reach your target audience.",
+    "submission_url": "https://startupwonders.com/submit/star"
+  },
+  {
+    "slug": "startup-world",
+    "name": "Startup World",
+    "url": "https://www.startupworld.com/conti",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup World to reach your target audience.",
+    "submission_url": "https://www.startupworld.com/conti"
+  },
+  {
+    "slug": "startup-list",
+    "name": "Startup-List",
+    "url": "https://www.startups-list.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup-List to reach your target audience.",
+    "submission_url": "https://www.startups-list.com"
+  },
+  {
+    "slug": "startup88",
+    "name": "Startup88",
+    "url": "https://startup88.com/category/star",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startup88 to reach your target audience.",
+    "submission_url": "https://startup88.com/category/star"
+  },
+  {
+    "slug": "startups-of-london",
+    "name": "Startups of London",
+    "url": "https://startupsoflondon.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startups of London to reach your target audience.",
+    "submission_url": "https://startupsoflondon.com"
+  },
+  {
+    "slug": "startups-uk",
+    "name": "Startups UK",
+    "url": "https://startups.co.uk/contact-us",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startups UK to reach your target audience.",
+    "submission_url": "https://startups.co.uk/contact-us"
+  },
+  {
+    "slug": "startups-watch",
+    "name": "Startups Watch",
+    "url": "https://startups.watch",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Startups Watch to reach your target audience.",
+    "submission_url": "https://startups.watch"
+  },
+  {
+    "slug": "startupsubmit",
+    "name": "StartupSubmit",
+    "url": "https://Multiple tiers available",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "Startup"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to StartupSubmit to reach your target audience.",
+    "submission_url": "https://Multiple tiers available"
+  },
+  {
+    "slug": "startupvalley-news",
+    "name": "StartupValley News",
+    "url": "https://\"https://www.startupvalley.news/apply-now,\"",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to StartupValley News to reach your target audience.",
+    "submission_url": "https://\"https://www.startupvalley.news/apply-now,\""
+  },
+  {
+    "slug": "state-of-tech",
+    "name": "State of Tech",
+    "url": "https://stateoftech.net",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to State of Tech to reach your target audience.",
+    "submission_url": "https://stateoftech.net"
+  },
+  {
+    "slug": "storyfied",
+    "name": "Storyfied",
+    "url": "https://storyfied.com/get-featured",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Storyfied to reach your target audience.",
+    "submission_url": "https://storyfied.com/get-featured"
+  },
+  {
+    "slug": "stripe",
+    "name": "Stripe",
+    "url": "https://stripe.com/en-in/partner-proqram",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Stripe to reach your target audience.",
+    "submission_url": "https://stripe.com/en-in/partner-proqram"
+  },
+  {
+    "slug": "submissions-web-directory",
+    "name": "Submissions Web Directory",
+    "url": "https://www.submissionwebdirectory.cor",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Submissions Web Directory to reach your target audience.",
+    "submission_url": "https://www.submissionwebdirectory.cor"
+  },
+  {
+    "slug": "sulekha",
+    "name": "Sulekha",
+    "url": "https://www.sulekha.com/local-services/bi",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Sulekha to reach your target audience.",
+    "submission_url": "https://www.sulekha.com/local-services/bi"
+  },
+  {
+    "slug": "superbcrew",
+    "name": "Superbcrew",
+    "url": "https://www.superbcrew.com/about",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Superbcrew to reach your target audience.",
+    "submission_url": "https://www.superbcrew.com/about"
+  },
+  {
+    "slug": "surges",
+    "name": "Surges",
+    "url": "https://www.surges.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Surges to reach your target audience.",
+    "submission_url": "https://www.surges.co"
+  },
+  {
+    "slug": "swpelycom",
+    "name": "swpely.com",
+    "url": "https://airtable.com/shrisz9tIBCdbuEHb",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to swpely.com to reach your target audience.",
+    "submission_url": "https://airtable.com/shrisz9tIBCdbuEHb"
+  },
+  {
+    "slug": "taalk",
+    "name": "Taalk",
+    "url": "https://taalk.com/submit-startup",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Taalk to reach your target audience.",
+    "submission_url": "https://taalk.com/submit-startup"
+  },
+  {
+    "slug": "tapscape",
+    "name": "TapScape",
+    "url": "http://www.tapscape.com/submit-app-re",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to TapScape to reach your target audience.",
+    "submission_url": "http://www.tapscape.com/submit-app-re"
+  },
+  {
+    "slug": "teachonline",
+    "name": "TeachOnline",
+    "url": "https://teachonline.ca/tools-trends/best-pr",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to TeachOnline to reach your target audience.",
+    "submission_url": "https://teachonline.ca/tools-trends/best-pr"
+  },
+  {
+    "slug": "tech",
+    "name": "Tech",
+    "url": "https://tech.eu",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tech to reach your target audience.",
+    "submission_url": "https://tech.eu"
+  },
+  {
+    "slug": "tech-co",
+    "name": "Tech Co.",
+    "url": "https://tech.co/contact",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tech Co. to reach your target audience.",
+    "submission_url": "https://tech.co/contact"
+  },
+  {
+    "slug": "tech-directory",
+    "name": "Tech Directory",
+    "url": "http://techdirectory.io/get-listed",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tech Directory to reach your target audience.",
+    "submission_url": "http://techdirectory.io/get-listed"
+  },
+  {
+    "slug": "tech-dirt",
+    "name": "Tech Dirt",
+    "url": "http://techdirt.com/submitstory.php",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tech Dirt to reach your target audience.",
+    "submission_url": "http://techdirt.com/submitstory.php"
+  },
+  {
+    "slug": "tech-faster",
+    "name": "Tech Faster",
+    "url": "http://techfaster.com/submit-your-c",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tech Faster to reach your target audience.",
+    "submission_url": "http://techfaster.com/submit-your-c"
+  },
+  {
+    "slug": "tech-hive",
+    "name": "Tech Hive",
+    "url": "https://www.techhive.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tech Hive to reach your target audience.",
+    "submission_url": "https://www.techhive.com"
+  },
+  {
+    "slug": "tech-in-asia",
+    "name": "Tech In Asia",
+    "url": "https://www.techinasia.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tech In Asia to reach your target audience.",
+    "submission_url": "https://www.techinasia.com"
+  },
+  {
+    "slug": "tech-pluto",
+    "name": "Tech Pluto",
+    "url": "https://www.techpluto.com/submit-a-star",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tech Pluto to reach your target audience.",
+    "submission_url": "https://www.techpluto.com/submit-a-star"
+  },
+  {
+    "slug": "techboard",
+    "name": "TechBoard",
+    "url": "https://techboard.com.au",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to TechBoard to reach your target audience.",
+    "submission_url": "https://techboard.com.au"
+  },
+  {
+    "slug": "techcrunch",
+    "name": "TechCrunch",
+    "url": "https://techcrunch.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to TechCrunch to reach your target audience.",
+    "submission_url": "https://techcrunch.com"
+  },
+  {
+    "slug": "techendo",
+    "name": "Techendo",
+    "url": "http://techendo.com/beta",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Techendo to reach your target audience.",
+    "submission_url": "http://techendo.com/beta"
+  },
+  {
+    "slug": "techli",
+    "name": "Techli",
+    "url": "https://techli.com/contact",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Techli to reach your target audience.",
+    "submission_url": "https://techli.com/contact"
+  },
+  {
+    "slug": "that-app-show",
+    "name": "That App Show",
+    "url": "https://thatappshow.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to That App Show to reach your target audience.",
+    "submission_url": "https://thatappshow.com"
+  },
+  {
+    "slug": "the-apple-google",
+    "name": "The Apple Google",
+    "url": "http://theapplegoogle.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Apple Google to reach your target audience.",
+    "submission_url": "http://theapplegoogle.com"
+  },
+  {
+    "slug": "the-fascination",
+    "name": "The Fascination",
+    "url": "https://thefascination.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Fascination to reach your target audience.",
+    "submission_url": "https://thefascination.com"
+  },
+  {
+    "slug": "the-hive-index",
+    "name": "The Hive Index",
+    "url": "https://thehiveindex.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Hive Index to reach your target audience.",
+    "submission_url": "https://thehiveindex.com/submit"
+  },
+  {
+    "slug": "the-indianpreneur",
+    "name": "The Indianpreneur",
+    "url": "https://theindianpreneur.com/advertise-",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Indianpreneur to reach your target audience.",
+    "submission_url": "https://theindianpreneur.com/advertise-"
+  },
+  {
+    "slug": "the-iphone-app-review",
+    "name": "The iPhone App Review",
+    "url": "http://theiphoneappreview.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The iPhone App Review to reach your target audience.",
+    "submission_url": "http://theiphoneappreview.com"
+  },
+  {
+    "slug": "the-next-web",
+    "name": "The Next Web",
+    "url": "https://deals.thenextweb.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Next Web to reach your target audience.",
+    "submission_url": "https://deals.thenextweb.com"
+  },
+  {
+    "slug": "the-popular-apps",
+    "name": "The Popular Apps",
+    "url": "http://thepopularapps.com/submit-app",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Popular Apps to reach your target audience.",
+    "submission_url": "http://thepopularapps.com/submit-app"
+  },
+  {
+    "slug": "the-startup-inc",
+    "name": "The Startup Inc",
+    "url": "https://www.thestartupinc.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Startup Inc to reach your target audience.",
+    "submission_url": "https://www.thestartupinc.com"
+  },
+  {
+    "slug": "the-startup-journal",
+    "name": "The Startup Journal",
+    "url": "http://thestartupjournal.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Startup Journal to reach your target audience.",
+    "submission_url": "http://thestartupjournal.com/submit"
+  },
+  {
+    "slug": "the-startup-videos",
+    "name": "The Startup Videos",
+    "url": "http://thestartupvideos.com/submit-",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Startup Videos to reach your target audience.",
+    "submission_url": "http://thestartupvideos.com/submit-"
+  },
+  {
+    "slug": "the-tech-blog",
+    "name": "The Tech Blog",
+    "url": "https://www.thetechblock.com/contact-t",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Tech Blog to reach your target audience.",
+    "submission_url": "https://www.thetechblock.com/contact-t"
+  },
+  {
+    "slug": "the-tech-map",
+    "name": "The Tech Map",
+    "url": "http://thetechmap.com/Account/Login",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Tech Map to reach your target audience.",
+    "submission_url": "http://thetechmap.com/Account/Login"
+  },
+  {
+    "slug": "the-verge",
+    "name": "The Verge",
+    "url": "https://www.theverge.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to The Verge to reach your target audience.",
+    "submission_url": "https://www.theverge.com"
+  },
+  {
+    "slug": "thing-testing",
+    "name": "Thing Testing",
+    "url": "https://thingtesting.com/submit-brand",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Thing Testing to reach your target audience.",
+    "submission_url": "https://thingtesting.com/submit-brand"
+  },
+  {
+    "slug": "tool-salad",
+    "name": "Tool Salad",
+    "url": "https://toolsalad.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tool Salad to reach your target audience.",
+    "submission_url": "https://toolsalad.com/submit"
+  },
+  {
+    "slug": "topion-networls",
+    "name": "Topion Networls",
+    "url": "https://www.topionetworks.com/#new-sitt",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Topion Networls to reach your target audience.",
+    "submission_url": "https://www.topionetworks.com/#new-sitt"
+  },
+  {
+    "slug": "toshilist",
+    "name": "Toshilist",
+    "url": "https://www.toshilist.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Toshilist to reach your target audience.",
+    "submission_url": "https://www.toshilist.com"
+  },
+  {
+    "slug": "touchearcade",
+    "name": "ToucheArcade",
+    "url": "https://toucharcade.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to ToucheArcade to reach your target audience.",
+    "submission_url": "https://toucharcade.com"
+  },
+  {
+    "slug": "tradeindia",
+    "name": "TradeIndia",
+    "url": "https://www.tradeindia.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to TradeIndia to reach your target audience.",
+    "submission_url": "https://www.tradeindia.com"
+  },
+  {
+    "slug": "traffic-and-copy",
+    "name": "Traffic And Copy",
+    "url": "http://www.facebook.com/groups/trafficanc",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Traffic And Copy to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/trafficanc"
+  },
+  {
+    "slug": "tran",
+    "name": "Tran",
+    "url": "https://tracxn.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tran to reach your target audience.",
+    "submission_url": "https://tracxn.com"
+  },
+  {
+    "slug": "trendy-startups",
+    "name": "Trendy Startups",
+    "url": "http://trendystartups.com/register",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Trendy Startups to reach your target audience.",
+    "submission_url": "http://trendystartups.com/register"
+  },
+  {
+    "slug": "trust-pilot",
+    "name": "Trust Pilot",
+    "url": "http://trustpilot.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Trust Pilot to reach your target audience.",
+    "submission_url": "http://trustpilot.com"
+  },
+  {
+    "slug": "trust-radius",
+    "name": "Trust Radius",
+    "url": "http://trustradius.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Trust Radius to reach your target audience.",
+    "submission_url": "http://trustradius.com"
+  },
+  {
+    "slug": "tumblr",
+    "name": "Tumblr",
+    "url": "https://tumblr.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Tumblr to reach your target audience.",
+    "submission_url": "https://tumblr.com"
+  },
+  {
+    "slug": "twitter",
+    "name": "Twitter",
+    "url": "https://twitter.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Twitter to reach your target audience.",
+    "submission_url": "https://twitter.com"
+  },
+  {
+    "slug": "unboxing-startups",
+    "name": "Unboxing Startups",
+    "url": "https://unboxingstartups.com/contact",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Unboxing Startups to reach your target audience.",
+    "submission_url": "https://unboxingstartups.com/contact"
+  },
+  {
+    "slug": "uneed",
+    "name": "Uneed",
+    "url": "https://uneed.best",
+    "domain_rating": null,
+    "is_dofollow": false,
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "paid",
+    "is_active": true,
+    "description": "Submit your product to Uneed to reach your target audience.",
+    "submission_url": "https://uneed.best"
+  },
+  {
+    "slug": "unita",
+    "name": "Unita",
+    "url": "https://www.unita.co",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Unita to reach your target audience.",
+    "submission_url": "https://www.unita.co"
+  },
+  {
+    "slug": "unsplash",
+    "name": "Unsplash",
+    "url": "https://unsplash.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Unsplash to reach your target audience.",
+    "submission_url": "https://unsplash.com"
+  },
+  {
+    "slug": "up-labs",
+    "name": "Up Labs",
+    "url": "https://www.uplabs.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Up Labs to reach your target audience.",
+    "submission_url": "https://www.uplabs.com"
+  },
+  {
+    "slug": "valuer",
+    "name": "Valuer",
+    "url": "https://www.valuer.ai",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Valuer to reach your target audience.",
+    "submission_url": "https://www.valuer.ai"
+  },
+  {
+    "slug": "vator-news",
+    "name": "Vator News",
+    "url": "https://vator.tv",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Vator News to reach your target audience.",
+    "submission_url": "https://vator.tv"
+  },
+  {
+    "slug": "venture-beat",
+    "name": "Venture Beat",
+    "url": "https://venturebeat.com/quest-posts",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Venture Beat to reach your target audience.",
+    "submission_url": "https://venturebeat.com/quest-posts"
+  },
+  {
+    "slug": "ventureradar",
+    "name": "VentureRadar",
+    "url": "http://ventureradar.com/add_company",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to VentureRadar to reach your target audience.",
+    "submission_url": "http://ventureradar.com/add_company"
+  },
+  {
+    "slug": "viral-indian-diary",
+    "name": "Viral Indian Diary",
+    "url": "https://www.viralindiandiary.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Viral Indian Diary to reach your target audience.",
+    "submission_url": "https://www.viralindiandiary.com/submit"
+  },
+  {
+    "slug": "virtual-mojito",
+    "name": "Virtual Mojito",
+    "url": "https://virtualmojito.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Virtual Mojito to reach your target audience.",
+    "submission_url": "https://virtualmojito.com"
+  },
+  {
+    "slug": "vyper-growth",
+    "name": "VYPER Growth",
+    "url": "http://www.facebook.com/groups/vypergro",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to VYPER Growth to reach your target audience.",
+    "submission_url": "http://www.facebook.com/groups/vypergro"
+  },
+  {
+    "slug": "w3-catalog",
+    "name": "W3 Catalog",
+    "url": "http://w3catalog.com/submit.php",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to W3 Catalog to reach your target audience.",
+    "submission_url": "http://w3catalog.com/submit.php"
+  },
+  {
+    "slug": "web-app-rater",
+    "name": "Web App Rater",
+    "url": "https://webapprater.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Web App Rater to reach your target audience.",
+    "submission_url": "https://webapprater.com"
+  },
+  {
+    "slug": "web-designer-news",
+    "name": "Web Designer News",
+    "url": "https://webdesignernews.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Web Designer News to reach your target audience.",
+    "submission_url": "https://webdesignernews.com"
+  },
+  {
+    "slug": "web-tools-weekly",
+    "name": "Web Tools Weekly",
+    "url": "http://webtoolsweekly.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Web Tools Weekly to reach your target audience.",
+    "submission_url": "http://webtoolsweekly.com/submit"
+  },
+  {
+    "slug": "web-wiki",
+    "name": "Web Wiki",
+    "url": "https://www.webwiki.com/info/add-websit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Web Wiki to reach your target audience.",
+    "submission_url": "https://www.webwiki.com/info/add-websit"
+  },
+  {
+    "slug": "web3-canvas",
+    "name": "Web3 Canvas",
+    "url": "http://web3canvas.com/submit",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Web3 Canvas to reach your target audience.",
+    "submission_url": "http://web3canvas.com/submit"
+  },
+  {
+    "slug": "webdesign-inspiration",
+    "name": "Webdesign Inspiration",
+    "url": "https://webdesign-inspiration.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Webdesign Inspiration to reach your target audience.",
+    "submission_url": "https://webdesign-inspiration.com"
+  },
+  {
+    "slug": "webrazzi",
+    "name": "Webrazzi",
+    "url": "http://webrazzi.com/en/startup-form",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Webrazzi to reach your target audience.",
+    "submission_url": "http://webrazzi.com/en/startup-form"
+  },
+  {
+    "slug": "webwide",
+    "name": "Webwide",
+    "url": "http://webwide.io/forums/project-showca",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Webwide to reach your target audience.",
+    "submission_url": "http://webwide.io/forums/project-showca"
+  },
+  {
+    "slug": "whats-new-on-the-net",
+    "name": "What's new on the net",
+    "url": "https://www.whatsnewonthenet.com/conti",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to What's new on the net to reach your target audience.",
+    "submission_url": "https://www.whatsnewonthenet.com/conti"
+  },
+  {
+    "slug": "whitepages",
+    "name": "WhitePages",
+    "url": "https://www.whitepages.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to WhitePages to reach your target audience.",
+    "submission_url": "https://www.whitepages.com"
+  },
+  {
+    "slug": "women-entrepreneurs-portal",
+    "name": "Women Entrepreneurs Portal",
+    "url": "https://wep.gov.in/knowledge-bank/mybl",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Women Entrepreneurs Portal to reach your target audience.",
+    "submission_url": "https://wep.gov.in/knowledge-bank/mybl"
+  },
+  {
+    "slug": "yc-startup-school",
+    "name": "YC Startup School",
+    "url": "https://www.startupschool.org",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to YC Startup School to reach your target audience.",
+    "submission_url": "https://www.startupschool.org"
+  },
+  {
+    "slug": "yellow-pages",
+    "name": "Yellow Pages",
+    "url": "https://www.yellowpages.com/?re=yp",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Yellow Pages to reach your target audience.",
+    "submission_url": "https://www.yellowpages.com/?re=yp"
+  },
+  {
+    "slug": "yelp",
+    "name": "Yelp",
+    "url": "https://business.velp.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Yelp to reach your target audience.",
+    "submission_url": "https://business.velp.com"
+  },
+  {
+    "slug": "young-upstarts",
+    "name": "Young Upstarts",
+    "url": "http://youngupstarts.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Young Upstarts to reach your target audience.",
+    "submission_url": "http://youngupstarts.com"
+  },
+  {
+    "slug": "younoodle",
+    "name": "Younoodle",
+    "url": "http://younoodle.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Younoodle to reach your target audience.",
+    "submission_url": "http://younoodle.com"
+  },
+  {
+    "slug": "your-stack",
+    "name": "Your Stack",
+    "url": "https://yourstack.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Your Stack to reach your target audience.",
+    "submission_url": "https://yourstack.com"
+  },
+  {
+    "slug": "yourstory",
+    "name": "YourStory",
+    "url": "https://yourstory.com/companies",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to YourStory to reach your target audience.",
+    "submission_url": "https://yourstory.com/companies"
+  },
+  {
+    "slug": "youtube",
+    "name": "YouTube",
+    "url": "https://youtube.com",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to YouTube to reach your target audience.",
+    "submission_url": "https://youtube.com"
+  },
+  {
+    "slug": "zdnet",
+    "name": "ZDNet",
+    "url": "https://www.zdnet.com/blog",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to ZDNet to reach your target audience.",
+    "submission_url": "https://www.zdnet.com/blog"
+  },
+  {
+    "slug": "zumvu",
+    "name": "Zumvu",
+    "url": "http://zumvu.com/make-profile.zvx",
+    "categories": [
+      "General"
+    ],
+    "pricing_type": "free",
+    "is_active": true,
+    "description": "Submit your product to Zumvu to reach your target audience.",
+    "submission_url": "http://zumvu.com/make-profile.zvx"
+  }
+]
