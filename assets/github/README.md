@@ -46,6 +46,7 @@ If you want to use the header in your README.md:
 ![Awesome Directories](./assets/readme-header.png)
 
 # awesome-directories
+
 ...
 ```
 
@@ -121,10 +122,10 @@ Awesome Directories is an open-source directory aggregator that helps indie hack
 
 ## Dimensions Reference
 
-| Asset | Size | Usage |
-|-------|------|-------|
-| repo-social-preview | 1280x640px | Repository social sharing |
-| readme-header | 1200x300px | README.md banner (optional) |
+| Asset               | Size       | Usage                       |
+| ------------------- | ---------- | --------------------------- |
+| repo-social-preview | 1280x640px | Repository social sharing   |
+| readme-header       | 1200x300px | README.md banner (optional) |
 
 ## GitHub Profile
 

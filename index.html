@@ -1,16 +1,87 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Awesome Directories - Curated Launch Directories for SaaS</title>
     <meta
       name="description"
       content="Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly."
     />
+    <meta
+      name="keywords"
+      content="launch directories, SaaS, startup directories, product launch, directory submission, curated directories"
+    />
+    <meta name="author" content="Awesome Directories" />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <meta
+      name="googlebot"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <meta
+      name="bingbot"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <link rel="canonical" href="https://awesome-directories.com/" />
 
-    <!-- Open Graph / Facebook -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="geolocation=(), microphone=(), camera=()"
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+
+    <link rel="dns-prefetch" href="https://analytics.awesome-directories.com" />
+    <link
+      rel="preconnect"
+      href="https://analytics.awesome-directories.com"
+      crossorigin
+    />
+    <link rel="preload" href="/src/main.js" as="script" crossorigin />
+    <link rel="modulepreload" href="/src/main.js" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#1a1a1a"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Awesome Directories" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Awesome Directories" />
+    <meta name="format-detection" content="telephone=no" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Awesome Directories" />
+    <meta property="og:url" content="https://awesome-directories.com/" />
+    <meta property="og:locale" content="en_US" />
     <meta
       property="og:title"
       content="Awesome Directories - Curated Launch Directories for SaaS"
@@ -19,39 +90,166 @@
       property="og:description"
       content="Find the top 20 directories worth your time in under 3 minutes. Curated, verified, updated weekly."
     />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
     <meta
-      property="twitter:title"
+      property="og:image"
+      content="https://awesome-directories.com/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Awesome Directories - Curated Launch Directories for SaaS"
+    />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@awesome_dirs" />
+    <meta name="twitter:creator" content="@awesome_dirs" />
+    <meta
+      name="twitter:title"
       content="Awesome Directories - Curated Launch Directories for SaaS"
     />
     <meta
-      property="twitter:description"
-      content="Find the top 20 directories worth your time in under 3 minutes."
+      name="twitter:description"
+      content="Find the top 20 directories worth your time in under 3 minutes. Curated, verified, updated weekly."
+    />
+    <meta
+      name="twitter:image"
+      content="https://awesome-directories.com/og-image.jpg"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Awesome Directories - Curated Launch Directories for SaaS"
     />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="alternate"
+      hreflang="en"
+      href="https://awesome-directories.com/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://awesome-directories.com/"
     />
 
-    <title>Awesome Directories - Curated Launch Directories for SaaS</title>
+    <!-- webmention.io -->
+    <link
+      rel="webmention"
+      href="https://webmention.io/awesome-directories.com/webmention"
+    />
+
+    <!-- mastodon -->
+    <meta name="fediverse:creator" content="@meysam81@mastodon.social" />
+    <link rel="me" href="https://mastodon.social/@meysam81" />
+
+    <!-- IndieAuth -->
+    <link rel="me" href="https://github.com/meysam81" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Awesome Directories",
+        "url": "https://awesome-directories.com/",
+        "description": "Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly.",
+        "inLanguage": "en-US",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Awesome Directories",
+          "url": "https://awesome-directories.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://awesome-directories.com/logo.png",
+            "width": 512,
+            "height": 512
+          }
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://awesome-directories.com/?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Awesome Directories",
+        "url": "https://awesome-directories.com/",
+        "description": "Curated launch directories for SaaS products",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "ratingCount": "250",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://awesome-directories.com/"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
+    <noscript>
+      <div
+        style="
+          padding: 20px;
+          text-align: center;
+          font-family:
+            system-ui,
+            -apple-system,
+            sans-serif;
+        "
+      >
+        <h1>Awesome Directories</h1>
+        <p>
+          JavaScript is required to view this application. Please enable
+          JavaScript in your browser settings.
+        </p>
+        <p>
+          Find the top 20 launch directories worth your time in under 3
+          minutes—curated, verified, and updated weekly.
+        </p>
+      </div>
+    </noscript>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
 
-    <!-- Pirsch Analytics -->
     <script
+      async
       defer
-      type="text/javascript"
-      src="https://api.pirsch.io/pa.js"
+      src="https://analytics.awesome-directories.com/pa.js"
       id="pianjs"
-      data-code=""
+      data-code="D4R3WDGkZAf9IXFOvMp9cYnDeNSWlrwn"
+      data-hit-endpoint="https://analytics.awesome-directories.com/hit"
+      data-event-endpoint="https://analytics.awesome-directories.com/event"
+      data-session-endpoint="https://analytics.awesome-directories.com/session"
     ></script>
   </body>
 </html>

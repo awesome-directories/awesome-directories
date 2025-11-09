@@ -14,6 +14,7 @@ This package contains **46 files** across **5 priority phases**:
 ### ✅ Phase 1: Core Brand Assets (COMPLETE)
 
 **Logo Package** (`/logos/`)
+
 - `logo-full.svg` - Horizontal wordmark (primary use)
 - `logo-icon.svg` - Square icon for avatars
 - `logo-white.svg` - For dark backgrounds
@@ -22,11 +23,13 @@ This package contains **46 files** across **5 priority phases**:
 - Icon variations: `-white`, `-black`
 
 **Favicon Package** (`/favicon/`)
+
 - `favicon.svg` - Optimized for small sizes
 - `site.webmanifest` - Web app manifest
 - README with export instructions for PNG/ICO
 
 **OG Images** (`/og-images/`)
+
 - `og-homepage.svg` - Homepage social share (1200x630)
 - `og-product-hunt.svg` - PH launch specific (1200x630)
 - `og-template.svg` - Reusable template (1200x630)
@@ -35,14 +38,17 @@ This package contains **46 files** across **5 priority phases**:
 ### ✅ Phase 2: Social Media Assets (COMPLETE)
 
 **Twitter/X** (`/social/`)
+
 - `twitter-profile.svg` - Profile picture (400x400)
 - `twitter-header.svg` - Header image (1500x500)
 
 **LinkedIn** (`/social/`)
+
 - `linkedin-logo.svg` - Company logo (300x300)
 - `linkedin-cover.svg` - Cover photo (1584x396)
 
 **GitHub** (`/github/`)
+
 - `repo-social-preview.svg` - Repository preview (1280x640)
 - `readme-header.svg` - Optional README banner (1200x300)
 - README with setup instructions
@@ -50,6 +56,7 @@ This package contains **46 files** across **5 priority phases**:
 ### ✅ Phase 3: Launch Campaign (COMPLETE)
 
 **Product Hunt** (`/product-hunt/`)
+
 - `thumbnail.svg` - Square thumbnail (240x240)
 - `gallery-01-homepage.svg` - Hero & filters (1270x760)
 - `gallery-02-filters.svg` - DR filter results (1270x760)
@@ -58,6 +65,7 @@ This package contains **46 files** across **5 priority phases**:
 - Comprehensive launch guide README
 
 **Social Templates** (`/social/`)
+
 - `instagram-post-template.svg` - Square posts (1080x1080)
 - `twitter-thread-visual.svg` - Thread images (1200x675)
 - `story-template.svg` - Stories/Reels (1080x1920)
@@ -65,20 +73,24 @@ This package contains **46 files** across **5 priority phases**:
 ### ✅ Phase 4: Website Assets (COMPLETE)
 
 **Illustrations** (`/website/`)
+
 - `hero-illustration.svg` - Homepage hero (600x400)
 
 **Empty States** (`/website/empty-states/`)
+
 - `no-results.svg` - No search results
 - `no-favorites.svg` - No saved favorites
 - `checklist-empty.svg` - Empty checklist
 
 **Icon Set** (`/website/icons/`)
+
 - 10 icons: filter, search, checklist, download, share, link, star, thumbs-up, external-link, folder
 - All 24x24px, stroke-based, use `currentColor`
 
 ### ✅ Phase 5: Documentation (COMPLETE)
 
 **Brand Guidelines** (`/docs/BRAND_GUIDELINES.md`)
+
 - Brand foundation & archetype
 - Logo usage rules & variations
 - Complete color palette
@@ -88,6 +100,7 @@ This package contains **46 files** across **5 priority phases**:
 - Application examples
 
 **Design System** (`/docs/DESIGN_SYSTEM.md`)
+
 - Design tokens & CSS variables
 - Component library with code
 - Responsive breakpoints
@@ -104,6 +117,7 @@ This package contains **46 files** across **5 priority phases**:
 Most platforms need PNG files. Export from SVG:
 
 **Using Inkscape (Free, CLI):**
+
 ```bash
 cd assets
 
@@ -118,11 +132,13 @@ inkscape product-hunt/thumbnail.svg --export-type=png --export-width=240 --expor
 ```
 
 **Using Figma/Sketch:**
+
 1. Import SVG files
 2. Export at specified dimensions
 3. Use 2x resolution for retina displays
 
 **Using Online Tools:**
+
 - CloudConvert: https://cloudconvert.com/svg-to-png
 - Inkscape Online: https://inkscape.org/
 - Real Favicon Generator: https://realfavicongenerator.net/
@@ -146,27 +162,30 @@ tinypng *.png
 3. Add to your HTML `<head>`:
 
 ```html
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#3b82f6">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#3b82f6" />
 ```
 
 ### 4. Update Social Media Profiles
 
 **Twitter:**
+
 1. Export `social/twitter-profile.svg` to PNG (400x400)
 2. Export `social/twitter-header.svg` to PNG (1500x500)
 3. Upload to Twitter profile settings
 
 **LinkedIn:**
+
 1. Export `social/linkedin-logo.svg` to PNG (300x300)
 2. Export `social/linkedin-cover.svg` to PNG (1584x396)
 3. Upload to LinkedIn company page
 
 **GitHub:**
+
 1. Export `github/repo-social-preview.svg` to PNG (1280x640)
 2. Go to repo Settings → Social preview → Upload image
 
@@ -175,11 +194,13 @@ tinypng *.png
 Follow the complete guide in `product-hunt/README.md`:
 
 **2 Weeks Before:**
+
 - [ ] Export all gallery images to PNG
 - [ ] Create PH account and build network
 - [ ] Schedule launch for Tuesday-Thursday
 
 **Launch Day:**
+
 - [ ] Submit at 12:01 AM PT
 - [ ] Post detailed "first comment"
 - [ ] Share on social media
@@ -198,9 +219,9 @@ Follow the complete guide in `product-hunt/README.md`:
 --primary-light: #60a5fa;
 
 /* Semantic */
---success: #10b981;  /* Dofollow, DR 300+ */
---warning: #f59e0b;  /* Paid, DR 60-79 */
---danger: #ef4444;   /* Errors, DR <60 */
+--success: #10b981; /* Dofollow, DR 300+ */
+--warning: #f59e0b; /* Paid, DR 60-79 */
+--danger: #ef4444; /* Errors, DR <60 */
 
 /* Grays */
 --gray-900: #1f2937; /* Headings */
@@ -226,6 +247,7 @@ Small: 14px / 0.875rem / font-normal (400)
 ### Spacing
 
 8px base unit:
+
 - xs: 8px
 - sm: 16px
 - md: 24px
@@ -320,16 +342,19 @@ assets/
 ## 🛠️ Tools & Resources
 
 ### Design Tools
+
 - **Inkscape** (Free): https://inkscape.org/ - Edit SVGs
 - **Figma** (Freemium): https://figma.com/ - Design mockups
 - **SVGOMG** (Free): https://jakearchibald.github.io/svgomg/ - Optimize SVGs
 
 ### Export & Optimization
+
 - **CloudConvert**: https://cloudconvert.com/svg-to-png - SVG to PNG
 - **TinyPNG**: https://tinypng.com/ - Compress PNGs
 - **Real Favicon Generator**: https://realfavicongenerator.net/ - Generate favicons
 
 ### Testing
+
 - **Facebook OG Debugger**: https://developers.facebook.com/tools/debug/
 - **Twitter Card Validator**: https://cards-dev.twitter.com/validator
 - **LinkedIn Post Inspector**: Paste URL in LinkedIn to preview
@@ -367,27 +392,32 @@ A: Yes! Licensed under Apache-2.0. Attribution appreciated but not required.
 ## ✅ Brand Asset Checklist
 
 ### Core Assets
+
 - [x] Logo variations (full, icon, colors)
 - [x] Favicon package
 - [x] OG images (homepage, PH, template)
 
 ### Social Media
+
 - [x] Twitter profile + header
 - [x] LinkedIn logo + cover
 - [x] GitHub repository preview
 - [x] Social content templates
 
 ### Launch Materials
+
 - [x] Product Hunt thumbnail + gallery
 - [x] Launch guide & checklist
 - [x] Social campaign templates
 
 ### Website Assets
+
 - [x] Hero illustration
 - [x] Empty state illustrations (3)
 - [x] Icon set (10 icons)
 
 ### Documentation
+
 - [x] Brand guidelines
 - [x] Design system
 - [x] Component library

@@ -43,11 +43,11 @@ done
 
 ## Product Hunt Specifications
 
-| Asset Type | Dimensions | Format | Notes |
-|------------|-----------|--------|-------|
-| Thumbnail | 240x240px | PNG | Required, square |
-| Gallery | 1270x760px | PNG/GIF | Up to 8 images |
-| Video | 16:9 ratio | MP4 | Optional, under 100MB |
+| Asset Type | Dimensions | Format  | Notes                 |
+| ---------- | ---------- | ------- | --------------------- |
+| Thumbnail  | 240x240px  | PNG     | Required, square      |
+| Gallery    | 1270x760px | PNG/GIF | Up to 8 images        |
+| Video      | 16:9 ratio | MP4     | Optional, under 100MB |
 
 ## Product Hunt Launch Checklist
 
@@ -88,22 +88,23 @@ done
 Use these captions when uploading:
 
 1. **gallery-01-homepage.png**
-   - *Homepage with quick DR filters and hero section showcasing key features*
+   - _Homepage with quick DR filters and hero section showcasing key features_
 
 2. **gallery-02-filters.png**
-   - *Filter by Domain Rating 70+ to find 142 high-quality directories with dofollow backlinks*
+   - _Filter by Domain Rating 70+ to find 142 high-quality directories with dofollow backlinks_
 
 3. **gallery-03-checklist.png**
-   - *Multi-select checklist to track your launch progress across all directories*
+   - _Multi-select checklist to track your launch progress across all directories_
 
 4. **gallery-04-detail.png**
-   - *Detailed directory pages with submission info, community feedback, and helpful votes*
+   - _Detailed directory pages with submission info, community feedback, and helpful votes_
 
 ## Writing Your PH Description
 
 ### Tagline (60 chars max)
 
 Examples:
+
 - "300+ curated directories to launch your product"
 - "Find the top 20 directories in under 3 minutes"
 - "Launch directory aggregator with DR filters"
@@ -154,17 +155,20 @@ Happy to answer any questions!
 ## Optimization Tips
 
 ### Image Quality
+
 - Use PNG format (not JPG) for crisp text
 - Optimize with TinyPNG (reduces file size 60-70%)
 - Ensure text is readable at 100% zoom
 
 ### Gallery Order
+
 1. Start with hero/overview (gallery-01)
 2. Show key differentiator (gallery-02 filters)
 3. Highlight unique features (gallery-03 checklist)
 4. End with details/depth (gallery-04)
 
 ### Thumbnail Design
+
 - High contrast for small size visibility
 - Recognizable icon (folder + star)
 - Works in dark and light modes
@@ -172,6 +176,7 @@ Happy to answer any questions!
 ## Tracking Launch Success
 
 Monitor these metrics:
+
 - **Upvotes**: Goal 100+ for top 10
 - **Comments**: Reply to every single one
 - **Traffic**: Track via analytics
@@ -191,8 +196,17 @@ Monitor these metrics:
 Add to your website:
 
 ```html
-<a href="https://www.producthunt.com/posts/YOUR-PRODUCT?utm_source=badge-featured&utm_medium=badge&utm_source=badge-YOUR-PRODUCT" target="_blank">
-  <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=YOUR-POST-ID&theme=light" alt="Awesome Directories - 300+ curated launch directories | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
+<a
+  href="https://www.producthunt.com/posts/YOUR-PRODUCT?utm_source=badge-featured&utm_medium=badge&utm_source=badge-YOUR-PRODUCT"
+  target="_blank"
+>
+  <img
+    src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=YOUR-POST-ID&theme=light"
+    alt="Awesome Directories - 300+ curated launch directories | Product Hunt"
+    style="width: 250px; height: 54px;"
+    width="250"
+    height="54"
+  />
 </a>
 ```
 

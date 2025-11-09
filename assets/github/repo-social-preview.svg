@@ -18,7 +18,7 @@
   </text>
 
   <!-- Description -->
-  <text x="220" y="210" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="400" fill="#8b949e">
+  <text x="220" y="210" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="400" fill="#8b949e">
     Curated list of 300+ launch directories with DR filters, dofollow badges, and community voting
   </text>
 

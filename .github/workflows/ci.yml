@@ -1,0 +1,130 @@
+name: ci
+
+concurrency:
+  cancel-in-progress: true
+  group: ci-${{ github.ref_name }}-${{ github.event_name }}
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+env:
+  NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
+  NETLIFY_DEPLOY_TO_PROD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+
+jobs:
+  preview:
+    if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('**/bun.lock', '**/package-lock.json') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install bun deps
+        run: bun install
+      - name: Build
+        run: bun run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: build-pr${{ github.event.pull_request.number }}
+          path: dist
+      - id: netlify
+        name: Deploy to Netlify
+        uses: jsmrcaga/action-netlify-deploy@v2.4.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_DEPLOY_TO_PROD: ${{ env.NETLIFY_DEPLOY_TO_PROD }}
+          NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
+          build_command: echo Skipping building the web files
+          build_directory: dist
+          install_command: echo Skipping installing the dependencies
+      - name: Comment PR
+        uses: meysam81/comment-pr@main
+        with:
+          title: "# Live preview"
+          content: |
+            The live preview of the changes are available at the following URL:
+            <${{ steps.netlify.outputs.NETLIFY_PREVIEW_URL }}>
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('**/bun.lock', '**/package-lock.json') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Install bun deps
+        run: bun install
+      - name: Build
+        run: bun run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      - id: upload-artifact
+        name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-actions-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist
+      - id: deployment
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-actions-${{ github.run_id }}-${{ github.run_attempt }}
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        id: netlify
+        name: Deploy to Netlify
+        uses: jsmrcaga/action-netlify-deploy@v2.4.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_DEPLOY_TO_PROD: ${{ env.NETLIFY_DEPLOY_TO_PROD }}
+          NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
+          build_command: echo Skipping building the web files
+          build_directory: dist
+          install_command: echo Skipping installing the dependencies
