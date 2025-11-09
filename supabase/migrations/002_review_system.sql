@@ -350,8 +350,7 @@ CREATE POLICY "Users can update their own votes"
 CREATE POLICY "Users can delete their own votes"
   ON review_votes FOR DELETE
   USING (
-    (auth.uid() IS NOT NULL AND user_id = auth.uid())
-    OR (auth.uid() IS NULL AND ip_hash IS NOT NULL)
+    auth.uid() IS NOT NULL AND user_id = auth.uid()
   );
 
 -- Review Flags: Authenticated users can flag
