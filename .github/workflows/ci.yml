@@ -61,7 +61,7 @@ jobs:
             --no-build \
             --json \
             --dir './dist' \
-            --message 'branch ${{ github.ref_name }} sha ${{ github.sha }}' \
+            --message 'pr:${{ github.event.pull_request.number }} sha:${{ github.sha }}' \
             | jq -r .deploy_url | tee deploy_url.txt
           deploy_url="$(cat deploy_url.txt)"
           echo "deploy_url=$deploy_url" >> "$GITHUB_OUTPUT"
