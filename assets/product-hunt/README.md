@@ -146,7 +146,7 @@ I'm building in public to grow my personal brand and email list. No paywalls, no
 I'd love your feedback! What directories am I missing? What features would help you most?
 
 🔗 Try it: awesome-directories.com
-🐙 GitHub: github.com/yourusername/awesome-directories
+🐙 GitHub: github.com/awesome-directories/awesome-directories
 
 Happy to answer any questions!
 ```
