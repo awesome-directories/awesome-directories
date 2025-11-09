@@ -67,10 +67,10 @@ export function useDirectories() {
       directories.value = cache.value.data;
       // Restore pagination state
       const totalPages = Math.ceil(cache.value.totalCount / pageSize.value);
-      currentPage.value = Math.min(
+      currentPage.value = Math.max(0, Math.min(
         Math.floor(directories.value.length / pageSize.value),
         totalPages - 1,
-      );
+      ));
       hasMore.value = directories.value.length < cache.value.totalCount;
       return;
     }
