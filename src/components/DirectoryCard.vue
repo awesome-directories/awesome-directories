@@ -84,15 +84,18 @@
     <div
       class="flex items-center justify-between pt-4 border-t border-gray-100"
     >
-      <button
-        @click="handleHelpfulClick"
-        :disabled="hasVoted"
-        class="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        :class="{ 'text-primary': hasVoted }"
-      >
-        <span>{{ hasVoted ? "✓" : "👍" }}</span>
-        <span>{{ directory.helpful_count || 0 }} helpful</span>
-      </button>
+      <div>
+        <button
+          v-if="directory?.helpful_count > 0"
+          @click="handleHelpfulClick"
+          :disabled="hasVoted"
+          class="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          :class="{ 'text-primary': hasVoted }"
+        >
+          <span>{{ hasVoted ? "✓" : "👍" }}</span>
+          <span>{{ directory.helpful_count || 0 }} helpful</span>
+        </button>
+      </div>
 
       <router-link
         :to="`/directory/${directory.slug}`"

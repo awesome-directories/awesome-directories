@@ -95,7 +95,7 @@ Your complete Awesome Directories application has been built according to the te
    VITE_SUPABASE_ANON_KEY=eyJhbGc...
 
    # Required - your Mautic instance
-   VITE_MAUTIC_BASE_URL=https://crm.meysam.io
+   VITE_MAUTIC_BASE_URL=https://mautic.your-domain.com
    VITE_MAUTIC_FORM_ID=your-form-id
 
    # Optional (can be added later)
@@ -172,7 +172,7 @@ Open http://localhost:3000 🎉
 
 ### Mautic Newsletter
 
-Your Mautic instance is already configured at `crm.meysam.io`. You need:
+Your Mautic instance is already configured at `https://mautic.your-domain.com`. You need:
 
 1. Create a form in Mautic with fields: `email`, `name`, `product_name`
 2. Get the form ID from Mautic dashboard

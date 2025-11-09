@@ -52,7 +52,6 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 - **Hosting:** GitHub Pages (Static SPA)
 - **Newsletter:** Mautic (self-hosted at crm.meysam.io)
 - **Analytics:** Pirsch (privacy-first)
-- **Comments:** Giscus (GitHub Discussions)
 - **CI/CD:** GitHub Actions
 - **APIs:** Moz API for Domain Rating scores
 
@@ -96,7 +95,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
    VITE_SUPABASE_ANON_KEY=your-anon-key
 
    # Required for newsletter
-   VITE_MAUTIC_BASE_URL=https://crm.meysam.io
+   VITE_MAUTIC_BASE_URL=https://mautic.your-domain.com
    VITE_MAUTIC_FORM_ID=your-form-id
 
    # Optional
@@ -108,6 +107,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
    ```
 
 4. **Set up Supabase database:**
+
    - Create a new Supabase project
    - Run the migration: `supabase/migrations/001_initial_schema.sql`
    - Seed the database with: `supabase/seed-data.json`
@@ -120,6 +120,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
    ```
 
 5. **Configure Supabase Auth:**
+
    - Go to Authentication → Providers in Supabase
    - Enable Google OAuth (add Client ID and Secret)
    - Enable GitHub OAuth (add Client ID and Secret)
@@ -140,10 +141,12 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 ### GitHub Pages Deployment
 
 1. **Enable GitHub Pages:**
+
    - Go to repository Settings → Pages
    - Source: GitHub Actions
 
 2. **Add GitHub Secrets:**
+
    - Go to Settings → Secrets and variables → Actions
    - Add the following secrets:
      ```
@@ -231,6 +234,7 @@ Output will be in `dist/` directory.
    Edit `supabase/seed-data.json` and re-import
 
 2. **Via Pull Request:**
+
    - Fork the repository
    - Add/update directory in `supabase/seed-data.json`
    - Create Pull Request
@@ -325,12 +329,12 @@ We welcome contributions! Here's how:
 
 ### Required
 
-| Variable                 | Description            | Example                   |
-| ------------------------ | ---------------------- | ------------------------- |
-| `VITE_SUPABASE_URL`      | Supabase project URL   | `https://xxx.supabase.co` |
-| `VITE_SUPABASE_ANON_KEY` | Supabase anonymous key | `eyJhbGc...`              |
-| `VITE_MAUTIC_BASE_URL`   | Mautic instance URL    | `https://crm.meysam.io`   |
-| `VITE_MAUTIC_FORM_ID`    | Mautic form ID         | `5`                       |
+| Variable                 | Description            | Example                          |
+| ------------------------ | ---------------------- | -------------------------------- |
+| `VITE_SUPABASE_URL`      | Supabase project URL   | `https://xxx.supabase.co`        |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anonymous key | `eyJhbGc...`                     |
+| `VITE_MAUTIC_BASE_URL`   | Mautic instance URL    | `https://mautic.your-domain.com` |
+| `VITE_MAUTIC_FORM_ID`    | Mautic form ID         | `5`                              |
 
 ### Optional
 
