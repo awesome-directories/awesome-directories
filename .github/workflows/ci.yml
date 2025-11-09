@@ -20,10 +20,6 @@ permissions:
   pages: write
   id-token: write
 
-env:
-  NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
-  NETLIFY_DEPLOY_TO_PROD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-
 jobs:
   preview:
     if: github.event_name == 'pull_request'
@@ -121,14 +117,3 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-actions-${{ github.run_id }}-${{ github.run_attempt }}
-      - if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        id: netlify
-        name: Deploy to Netlify
-        uses: jsmrcaga/action-netlify-deploy@v2.4.0
-        with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_DEPLOY_TO_PROD: ${{ env.NETLIFY_DEPLOY_TO_PROD }}
-          NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
-          build_command: echo Skipping building the web files
-          build_directory: dist
-          install_command: echo Skipping installing the dependencies
