@@ -42,7 +42,7 @@
               v-model="searchQuery"
               type="text"
               placeholder="Search directories... (e.g., 'Product Hunt', 'reddit', 'dev tools')"
-              class="w-full px-6 py-4 pr-12 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg"
+              class="w-full px-6 py-4 pr-12 rounded-lg text-gray-900 placeholder-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg"
             />
             <svg
               class="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
