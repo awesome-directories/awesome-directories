@@ -26,8 +26,7 @@
   }
 
   .btn-primary {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-    @apply bg-primary text-white hover:bg-primary-dark focus:ring-primary;
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary text-white hover:bg-primary-dark focus:ring-primary;
   }
 
   .btn-secondary {
