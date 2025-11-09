@@ -87,6 +87,14 @@
               >
                 ✅ My Submissions
               </router-link>
+              <router-link
+                to="/settings"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                @click="showUserMenu = false"
+              >
+                ⚙️ Settings
+              </router-link>
+              <div class="border-t border-gray-200 my-1"></div>
               <button
                 @click="handleSignOut"
                 class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -176,6 +184,13 @@
               @click="showMobileMenu = false"
             >
               ✅ My Submissions
+            </router-link>
+            <router-link
+              to="/settings"
+              class="block text-gray-700 hover:text-primary font-medium"
+              @click="showMobileMenu = false"
+            >
+              ⚙️ Settings
             </router-link>
             <button
               @click="handleSignOut"
