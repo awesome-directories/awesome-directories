@@ -90,6 +90,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@import "tailwindcss" reference;
+
 .prose code {
   @apply bg-gray-100 px-2 py-1 rounded text-sm;
 }
