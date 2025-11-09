@@ -92,7 +92,7 @@ Create custom badges at https://shields.io/ with these colors:
 
 **300+ curated launch directories for indie hackers**
 
-[Visit Website](https://awesome-directories.com) · [Report Bug](https://github.com/yourusername/awesome-directories/issues) · [Request Feature](https://github.com/yourusername/awesome-directories/issues)
+[Visit Website](https://awesome-directories.com) · [Report Bug](https://github.com/awesome-directories/awesome-directories/issues) · [Request Feature](https://github.com/awesome-directories/awesome-directories/issues)
 
 </div>
 
