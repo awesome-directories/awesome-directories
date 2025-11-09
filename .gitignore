@@ -45,3 +45,8 @@ temp
 bundle-analysis.html
 .envrc*
 ignore
+
+.github/workflows/deploy.yml
+.github/workflows/update-dr-scores.yml
+data
+dataset
