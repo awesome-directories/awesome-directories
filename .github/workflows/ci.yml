@@ -1,0 +1,57 @@
+name: ci
+
+concurrency:
+  cancel-in-progress: true
+  group: ci-$${{ github.ref_name }}-$${{ github.event_name }}
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('**/bun.lock', '**/package-lock.json') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Install bun deps
+        run: bun install
+      - name: Build
+        run: bun run build
+      - id: upload-artifact
+        name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-actions-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist
+      - id: deployment
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-actions-${{ github.run_id }}-${{ github.run_attempt }}
