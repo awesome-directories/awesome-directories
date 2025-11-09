@@ -1,0 +1,42 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Empty state: Checklist empty -->
+
+  <!-- Clipboard with empty checkboxes -->
+  <g transform="translate(70, 40)">
+    <!-- Clipboard -->
+    <rect x="10" y="15" width="80" height="110" rx="6" fill="#f3f4f6" stroke="#cbd5e1" stroke-width="3"/>
+
+    <!-- Clipboard clip -->
+    <rect x="30" y="0" width="40" height="20" rx="4" fill="#94a3b8"/>
+    <rect x="35" y="5" width="30" height="10" rx="2" fill="#e2e8f0"/>
+
+    <!-- Empty checkboxes -->
+    <g transform="translate(20, 30)">
+      <rect x="0" y="0" width="16" height="16" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+      <rect x="24" y="4" width="36" height="4" rx="2" fill="#e2e8f0"/>
+      <rect x="24" y="10" width="24" height="3" rx="1.5" fill="#e2e8f0"/>
+    </g>
+
+    <g transform="translate(20, 55)">
+      <rect x="0" y="0" width="16" height="16" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+      <rect x="24" y="4" width="32" height="4" rx="2" fill="#e2e8f0"/>
+      <rect x="24" y="10" width="28" height="3" rx="1.5" fill="#e2e8f0"/>
+    </g>
+
+    <g transform="translate(20, 80)">
+      <rect x="0" y="0" width="16" height="16" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+      <rect x="24" y="4" width="38" height="4" rx="2" fill="#e2e8f0"/>
+      <rect x="24" y="10" width="26" height="3" rx="1.5" fill="#e2e8f0"/>
+    </g>
+  </g>
+
+  <!-- Supporting text -->
+  <g transform="translate(60, 175)">
+    <text x="60" y="0" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#6b7280" text-anchor="middle">
+      Checklist is empty
+    </text>
+    <text x="60" y="25" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#9ca3af" text-anchor="middle">
+      Select directories to start
+    </text>
+  </g>
+</svg>

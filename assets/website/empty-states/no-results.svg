@@ -1,0 +1,26 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Empty state: No search results -->
+
+  <!-- Magnifying glass with X -->
+  <g transform="translate(70, 60)">
+    <!-- Glass -->
+    <circle cx="40" cy="40" r="35" fill="none" stroke="#cbd5e1" stroke-width="6"/>
+
+    <!-- Handle -->
+    <line x1="68" y1="68" x2="90" y2="90" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- X mark inside glass -->
+    <line x1="28" y1="28" x2="52" y2="52" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+    <line x1="52" y1="28" x2="28" y2="52" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Supporting text illustration -->
+  <g transform="translate(60, 170)">
+    <text x="60" y="0" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#6b7280" text-anchor="middle">
+      No results found
+    </text>
+    <text x="60" y="25" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#9ca3af" text-anchor="middle">
+      Try different filters
+    </text>
+  </g>
+</svg>

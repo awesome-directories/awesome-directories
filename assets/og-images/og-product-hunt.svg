@@ -1,0 +1,68 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="phGradient" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#phGradient)"/>
+
+  <!-- Grid pattern overlay -->
+  <g opacity="0.05" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="157.5" x2="1200" y2="157.5"/>
+    <line x1="0" y1="315" x2="1200" y2="315"/>
+    <line x1="0" y1="472.5" x2="1200" y2="472.5"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+
+  <!-- Accent shape -->
+  <rect x="0" y="0" width="8" height="630" fill="#3b82f6"/>
+
+  <!-- Logo -->
+  <g transform="translate(80, 100)">
+    <path d="M0 20C0 13.3726 5.37258 8 12 8H36L48 30H96C102.627 30 108 35.3726 108 42V54H0V20Z" fill="#3b82f6"/>
+    <path d="M0 36H108V96C108 102.627 102.627 108 96 108H12C5.37258 108 0 102.627 0 96V36Z" fill="#3b82f6"/>
+    <path d="M54 51L58.5 64.5L72 69L58.5 73.5L54 87L49.5 73.5L36 69L49.5 64.5L54 51Z" fill="#ffffff"/>
+  </g>
+
+  <!-- Main Headline -->
+  <text x="220" y="160" font-family="Inter, system-ui, sans-serif" font-size="52" font-weight="800" fill="#ffffff">
+    Find the Top 20 Directories
+  </text>
+  <text x="220" y="220" font-family="Inter, system-ui, sans-serif" font-size="52" font-weight="800" fill="#ffffff">
+    in Under 3 Minutes
+  </text>
+
+  <!-- Value Props -->
+  <g transform="translate(220, 280)">
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="400" fill="#94a3b8">
+      ✓  Filter by Domain Rating (60-300+)
+    </text>
+    <text x="0" y="50" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="400" fill="#94a3b8">
+      ✓  See Dofollow vs Nofollow Links
+    </text>
+    <text x="0" y="100" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="400" fill="#94a3b8">
+      ✓  Community Verified &amp; Voted
+    </text>
+  </g>
+
+  <!-- CTA Badge -->
+  <g transform="translate(220, 480)">
+    <rect x="0" y="0" width="380" height="70" rx="35" fill="#3b82f6"/>
+    <text x="190" y="45" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="#ffffff" text-anchor="middle">
+      Free &amp; Open Source
+    </text>
+  </g>
+
+  <!-- Product Hunt emoji -->
+  <text x="950" y="400" font-size="180">🚀</text>
+
+  <!-- Footer -->
+  <text x="600" y="590" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="500" fill="#64748b" text-anchor="middle">
+    awesome-directories.com • Launching Today on Product Hunt
+  </text>
+</svg>

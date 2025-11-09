@@ -1,0 +1,213 @@
+<svg width="1270" height="760" viewBox="0 0 1270 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1270" height="760" fill="#f8fafc"/>
+
+  <!-- Browser chrome mockup -->
+  <g id="browser-chrome">
+    <rect x="40" y="40" width="1190" height="680" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <rect x="40" y="40" width="1190" height="48" rx="12" fill="#f1f5f9"/>
+    <rect x="40" y="76" width="1190" height="2" fill="#e2e8f0"/>
+    <circle cx="64" cy="64" r="6" fill="#ef4444"/>
+    <circle cx="88" cy="64" r="6" fill="#f59e0b"/>
+    <circle cx="112" cy="64" r="6" fill="#10b981"/>
+  </g>
+
+  <!-- Content -->
+  <g transform="translate(80, 120)">
+    <!-- Filter bar -->
+    <rect x="0" y="0" width="1110" height="80" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+
+    <text x="20" y="30" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+      DOMAIN RATING
+    </text>
+
+    <g transform="translate(20, 40)">
+      <rect x="0" y="0" width="60" height="32" rx="8" fill="#3b82f6"/>
+      <text x="30" y="21" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">
+        70+
+      </text>
+
+      <rect x="70" y="0" width="60" height="32" rx="8" fill="#e2e8f0"/>
+      <text x="100" y="21" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#64748b" text-anchor="middle">
+        80+
+      </text>
+
+      <rect x="140" y="0" width="60" height="32" rx="8" fill="#e2e8f0"/>
+      <text x="170" y="21" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#64748b" text-anchor="middle">
+        300+
+      </text>
+    </g>
+
+    <text x="250" y="30" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+      LINK TYPE
+    </text>
+
+    <g transform="translate(250, 40)">
+      <rect x="0" y="0" width="100" height="32" rx="8" fill="#10b981"/>
+      <text x="50" y="21" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">
+        ✓ Dofollow
+      </text>
+    </g>
+
+    <!-- Results count -->
+    <text x="900" y="50" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#1f2937">
+      142 directories found
+    </text>
+
+    <!-- Directory cards grid -->
+    <g transform="translate(0, 110)">
+      <!-- Card 1 - Product Hunt -->
+      <g>
+        <rect x="0" y="0" width="540" height="120" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+
+        <rect x="20" y="20" width="48" height="48" rx="8" fill="#da552f"/>
+        <text x="44" y="52" font-family="sans-serif" font-size="32" fill="#ffffff" text-anchor="middle">P</text>
+
+        <text x="85" y="37" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#1f2937">
+          Product Hunt
+        </text>
+
+        <text x="85" y="58" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280">
+          Launch platform for tech products
+        </text>
+
+        <g transform="translate(85, 68)">
+          <rect x="0" y="0" width="50" height="24" rx="12" fill="#10b981" opacity="0.1"/>
+          <text x="25" y="16" font-family="monospace" font-size="12" font-weight="700" fill="#10b981" text-anchor="middle">
+            DR 92
+          </text>
+
+          <rect x="60" y="0" width="80" height="24" rx="12" fill="#10b981" opacity="0.1"/>
+          <text x="100" y="16" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#10b981" text-anchor="middle">
+            ✓ Dofollow
+          </text>
+
+          <rect x="150" y="0" width="60" height="24" rx="12" fill="#3b82f6" opacity="0.1"/>
+          <text x="180" y="16" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#3b82f6" text-anchor="middle">
+            Free
+          </text>
+        </g>
+
+        <text x="480" y="70" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#6b7280">
+          👍 142 helpful
+        </text>
+      </g>
+
+      <!-- Card 2 - Hacker News -->
+      <g transform="translate(570, 0)">
+        <rect x="0" y="0" width="540" height="120" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+
+        <rect x="20" y="20" width="48" height="48" rx="8" fill="#ff6600"/>
+        <text x="44" y="52" font-family="sans-serif" font-size="32" fill="#ffffff" text-anchor="middle">Y</text>
+
+        <text x="85" y="37" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#1f2937">
+          Hacker News
+        </text>
+
+        <text x="85" y="58" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280">
+          Tech news and discussions
+        </text>
+
+        <g transform="translate(85, 68)">
+          <rect x="0" y="0" width="50" height="24" rx="12" fill="#10b981" opacity="0.1"/>
+          <text x="25" y="16" font-family="monospace" font-size="12" font-weight="700" fill="#10b981" text-anchor="middle">
+            DR 93
+          </text>
+
+          <rect x="60" y="0" width="80" height="24" rx="12" fill="#10b981" opacity="0.1"/>
+          <text x="100" y="16" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#10b981" text-anchor="middle">
+            ✓ Dofollow
+          </text>
+
+          <rect x="150" y="0" width="60" height="24" rx="12" fill="#3b82f6" opacity="0.1"/>
+          <text x="180" y="16" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#3b82f6" text-anchor="middle">
+            Free
+          </text>
+        </g>
+
+        <text x="480" y="70" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#6b7280">
+          👍 98 helpful
+        </text>
+      </g>
+
+      <!-- Card 3 - Indie Hackers -->
+      <g transform="translate(0, 140)">
+        <rect x="0" y="0" width="540" height="120" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+
+        <rect x="20" y="20" width="48" height="48" rx="8" fill="#0e2439"/>
+        <text x="44" y="52" font-family="sans-serif" font-size="32" fill="#ffffff" text-anchor="middle">I</text>
+
+        <text x="85" y="37" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#1f2937">
+          Indie Hackers
+        </text>
+
+        <text x="85" y="58" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280">
+          Community for indie founders
+        </text>
+
+        <g transform="translate(85, 68)">
+          <rect x="0" y="0" width="50" height="24" rx="12" fill="#10b981" opacity="0.1"/>
+          <text x="25" y="16" font-family="monospace" font-size="12" font-weight="700" fill="#10b981" text-anchor="middle">
+            DR 78
+          </text>
+
+          <rect x="60" y="0" width="80" height="24" rx="12" fill="#10b981" opacity="0.1"/>
+          <text x="100" y="16" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#10b981" text-anchor="middle">
+            ✓ Dofollow
+          </text>
+
+          <rect x="150" y="0" width="60" height="24" rx="12" fill="#3b82f6" opacity="0.1"/>
+          <text x="180" y="16" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#3b82f6" text-anchor="middle">
+            Free
+          </text>
+        </g>
+
+        <text x="480" y="70" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#6b7280">
+          👍 87 helpful
+        </text>
+      </g>
+
+      <!-- Card 4 - BetaList -->
+      <g transform="translate(570, 140)">
+        <rect x="0" y="0" width="540" height="120" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+
+        <rect x="20" y="20" width="48" height="48" rx="8" fill="#6c5ce7"/>
+        <text x="44" y="52" font-family="sans-serif" font-size="32" fill="#ffffff" text-anchor="middle">β</text>
+
+        <text x="85" y="37" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#1f2937">
+          BetaList
+        </text>
+
+        <text x="85" y="58" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280">
+          Discover tomorrow's startups, today
+        </text>
+
+        <g transform="translate(85, 68)">
+          <rect x="0" y="0" width="50" height="24" rx="12" fill="#10b981" opacity="0.1"/>
+          <text x="25" y="16" font-family="monospace" font-size="12" font-weight="700" fill="#10b981" text-anchor="middle">
+            DR 74
+          </text>
+
+          <rect x="60" y="0" width="80" height="24" rx="12" fill="#10b981" opacity="0.1"/>
+          <text x="100" y="16" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#10b981" text-anchor="middle">
+            ✓ Dofollow
+          </text>
+
+          <rect x="150" y="0" width="70" height="24" rx="12" fill="#f59e0b" opacity="0.1"/>
+          <text x="185" y="16" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" fill="#f59e0b" text-anchor="middle">
+            Paid
+          </text>
+        </g>
+
+        <text x="480" y="70" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#6b7280">
+          👍 65 helpful
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Caption -->
+  <text x="635" y="745" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#3b82f6" text-anchor="middle">
+    DR 70+ Filter - 142 High-Quality Directories Found
+  </text>
+</svg>

@@ -1,0 +1,76 @@
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Minimal, clean illustration representing directory organization -->
+
+  <!-- Background elements -->
+  <g opacity="0.6">
+    <circle cx="500" cy="80" r="60" fill="#3b82f6" opacity="0.1"/>
+    <circle cx="100" cy="320" r="40" fill="#10b981" opacity="0.1"/>
+  </g>
+
+  <!-- Main illustration: Directory cards being organized -->
+  <g transform="translate(150, 80)">
+    <!-- Card 1 - Floating up (highest quality) -->
+    <g transform="translate(20, -20)">
+      <rect x="0" y="0" width="120" height="80" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="3"/>
+      <circle cx="20" cy="20" r="10" fill="#10b981"/>
+      <rect x="38" y="14" width="60" height="6" rx="3" fill="#e2e8f0"/>
+      <rect x="38" y="26" width="40" height="4" rx="2" fill="#e2e8f0"/>
+
+      <!-- DR badge -->
+      <rect x="8" y="50" width="35" height="18" rx="9" fill="#10b981" opacity="0.2"/>
+      <text x="25.5" y="62" font-family="monospace" font-size="10" font-weight="700" fill="#10b981" text-anchor="middle">
+        DR 92
+      </text>
+
+      <!-- Checkmark -->
+      <circle cx="100" cy="60" r="10" fill="#10b981"/>
+      <path d="M 96 60 L 99 63 L 104 58" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </g>
+
+    <!-- Card 2 - Middle position -->
+    <g transform="translate(150, 40)">
+      <rect x="0" y="0" width="120" height="80" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="2" opacity="0.8"/>
+      <circle cx="20" cy="20" r="10" fill="#3b82f6"/>
+      <rect x="38" y="14" width="60" height="6" rx="3" fill="#e2e8f0"/>
+      <rect x="38" y="26" width="45" height="4" rx="2" fill="#e2e8f0"/>
+
+      <rect x="8" y="50" width="35" height="18" rx="9" fill="#3b82f6" opacity="0.2"/>
+      <text x="25.5" y="62" font-family="monospace" font-size="10" font-weight="700" fill="#3b82f6" text-anchor="middle">
+        DR 78
+      </text>
+    </g>
+
+    <!-- Card 3 - Lower position (filtered out) -->
+    <g transform="translate(85, 120)" opacity="0.4">
+      <rect x="0" y="0" width="120" height="80" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+      <circle cx="20" cy="20" r="10" fill="#6b7280"/>
+      <rect x="38" y="14" width="55" height="6" rx="3" fill="#e2e8f0"/>
+      <rect x="38" y="26" width="50" height="4" rx="2" fill="#e2e8f0"/>
+
+      <rect x="8" y="50" width="35" height="18" rx="9" fill="#6b7280" opacity="0.2"/>
+      <text x="25.5" y="62" font-family="monospace" font-size="10" font-weight="700" fill="#6b7280" text-anchor="middle">
+        DR 45
+      </text>
+    </g>
+
+    <!-- Filter/funnel icon -->
+    <g transform="translate(-60, 90)">
+      <path d="M 0 0 L 30 0 L 20 20 L 10 20 Z" fill="#3b82f6" opacity="0.3"/>
+      <path d="M 10 20 L 20 20 L 20 40 L 10 40 Z" fill="#3b82f6" opacity="0.5"/>
+      <circle cx="15" cy="45" r="3" fill="#3b82f6"/>
+    </g>
+
+    <!-- Sparkles/stars indicating quality -->
+    <g>
+      <path d="M 10 20 L 12 26 L 18 28 L 12 30 L 10 36 L 8 30 L 2 28 L 8 26 L 10 20 Z" fill="#10b981" opacity="0.6"/>
+      <path d="M 280 50 L 282 54 L 286 56 L 282 58 L 280 62 L 278 58 L 274 56 L 278 54 L 280 50 Z" fill="#3b82f6" opacity="0.6"/>
+      <path d="M 190 180 L 191.5 183 L 194.5 184.5 L 191.5 186 L 190 189 L 188.5 186 L 185.5 184.5 L 188.5 183 L 190 180 Z" fill="#f59e0b" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- Subtle arrow showing filtering/organization -->
+  <g transform="translate(250, 280)">
+    <path d="M 0 0 L 100 0" stroke="#3b82f6" stroke-width="3" stroke-dasharray="5,5" opacity="0.4"/>
+    <path d="M 95 -5 L 105 0 L 95 5" fill="#3b82f6" opacity="0.4"/>
+  </g>
+</svg>

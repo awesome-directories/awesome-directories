@@ -1,0 +1,81 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Clean background -->
+  <rect width="1200" height="675" fill="#ffffff"/>
+
+  <!-- Top accent -->
+  <rect x="0" y="0" width="1200" height="8" fill="#3b82f6"/>
+
+  <!-- Logo in corner -->
+  <g transform="translate(60, 60)">
+    <path d="M0 8C0 6.89543 0.895431 6 2 6H6L8 10H16C17.1046 10 18 10.8954 18 12V14H0V8Z" fill="#3b82f6"/>
+    <path d="M0 12H18V32C18 33.1046 17.1046 34 16 34H2C0.895431 34 0 33.1046 0 32V12Z" fill="#3b82f6"/>
+    <path d="M9 17L9.75 19.25L12 20L9.75 20.75L9 23L8.25 20.75L6 20L8.25 19.25L9 17Z" fill="#ffffff"/>
+  </g>
+
+  <!-- Week indicator -->
+  <g transform="translate(60, 140)">
+    <rect x="0" y="0" width="160" height="60" rx="30" fill="#3b82f6" opacity="0.1"/>
+    <text x="80" y="40" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="#3b82f6" text-anchor="middle">
+      Week [X]
+    </text>
+  </g>
+
+  <!-- Main content area -->
+  <g transform="translate(60, 240)">
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="56" font-weight="800" fill="#1f2937">
+      [Your Update Here]
+    </text>
+
+    <text x="0" y="100" font-family="Inter, system-ui, sans-serif" font-size="28" fill="#6b7280">
+      [Key metric or achievement]
+    </text>
+  </g>
+
+  <!-- Progress indicator -->
+  <g transform="translate(60, 480)">
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#6b7280">
+      PROGRESS
+    </text>
+
+    <!-- Progress bar background -->
+    <rect x="0" y="15" width="600" height="12" rx="6" fill="#e2e8f0"/>
+    <!-- Progress bar fill (customize width) -->
+    <rect x="0" y="15" width="400" height="12" rx="6" fill="#3b82f6"/>
+
+    <text x="0" y="55" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#6b7280">
+      67% to launch
+    </text>
+  </g>
+
+  <!-- Stats box -->
+  <g transform="translate(750, 240)">
+    <rect x="0" y="0" width="380" height="300" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+
+    <text x="30" y="45" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#6b7280">
+      THIS WEEK
+    </text>
+
+    <g transform="translate(30, 80)">
+      <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="800" fill="#1f2937">
+        [Stat]
+      </text>
+      <text x="0" y="30" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#6b7280">
+        Metric name
+      </text>
+    </g>
+
+    <g transform="translate(30, 170)">
+      <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="800" fill="#10b981">
+        [Stat]
+      </text>
+      <text x="0" y="30" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#6b7280">
+        Metric name
+      </text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <text x="60" y="640" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#94a3b8">
+    Building in public • awesome-directories.com
+  </text>
+</svg>

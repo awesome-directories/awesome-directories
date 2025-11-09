@@ -1,0 +1,43 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Clean white background with subtle gradient -->
+  <defs>
+    <linearGradient id="cleanGradient" x1="0" y1="0" x2="0" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#cleanGradient)"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="6" fill="#3b82f6"/>
+
+  <!-- Logo in corner -->
+  <g transform="translate(50, 40)">
+    <path d="M0 8C0 6.89543 0.895431 6 2 6H6L8 10H16C17.1046 10 18 10.8954 18 12V14H0V8Z" fill="#3b82f6"/>
+    <path d="M0 12H18V32C18 33.1046 17.1046 34 16 34H2C0.895431 34 0 33.1046 0 32V12Z" fill="#3b82f6"/>
+    <path d="M9 17L9.75 19.25L12 20L9.75 20.75L9 23L8.25 20.75L6 20L8.25 19.25L9 17Z" fill="#ffffff"/>
+
+    <text x="25" y="28" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="#1f2937">
+      awesome-directories
+    </text>
+  </g>
+
+  <!-- Main content area (customizable) -->
+  <g transform="translate(80, 200)">
+    <!-- Large headline placeholder -->
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="800" fill="#1f2937">
+      [Your Headline Here]
+    </text>
+
+    <!-- Subheading placeholder -->
+    <text x="0" y="80" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="400" fill="#6b7280">
+      [Your subheading or description goes here]
+    </text>
+  </g>
+
+  <!-- Bottom watermark -->
+  <text x="600" y="580" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="500" fill="#94a3b8" text-anchor="middle">
+    awesome-directories.com
+  </text>
+</svg>

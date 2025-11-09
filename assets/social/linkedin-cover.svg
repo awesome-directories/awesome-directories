@@ -1,0 +1,66 @@
+<svg width="1584" height="396" viewBox="0 0 1584 396" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Professional background -->
+  <defs>
+    <linearGradient id="linkedinCoverGradient" x1="0" y1="0" x2="1584" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1584" height="396" fill="url(#linkedinCoverGradient)"/>
+
+  <!-- Subtle pattern -->
+  <g opacity="0.05">
+    <line x1="0" y1="100" x2="1584" y2="100" stroke="#ffffff" stroke-width="1"/>
+    <line x1="0" y1="200" x2="1584" y2="200" stroke="#ffffff" stroke-width="1"/>
+    <line x1="0" y1="300" x2="1584" y2="300" stroke="#ffffff" stroke-width="1"/>
+  </g>
+
+  <!-- Logo -->
+  <g transform="translate(80, 60)">
+    <path d="M0 15C0 10.0294 4.02944 6 9 6H27L36 22.5H72C76.9706 22.5 81 26.5294 81 31.5V40.5H0V15Z" fill="#3b82f6"/>
+    <path d="M0 27H81V72C81 76.9706 76.9706 81 72 81H9C4.02944 81 0 76.9706 0 72V27Z" fill="#3b82f6"/>
+    <path d="M40.5 38.25L43.875 48.375L54 51.75L43.875 55.125L40.5 65.25L37.125 55.125L27 51.75L37.125 48.375L40.5 38.25Z" fill="#ffffff"/>
+  </g>
+
+  <!-- Main message -->
+  <text x="190" y="130" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="700" fill="#ffffff">
+    Open Source Directory Aggregator
+  </text>
+
+  <text x="190" y="185" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="400" fill="#cbd5e1">
+    Built by Founders, For Founders • 300+ Curated Launch Directories
+  </text>
+
+  <!-- Professional badges -->
+  <g transform="translate(190, 230)">
+    <g>
+      <rect x="0" y="0" width="140" height="40" rx="20" fill="#3b82f6"/>
+      <text x="70" y="26" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#ffffff" text-anchor="middle">
+        Apache-2.0
+      </text>
+    </g>
+
+    <g transform="translate(155, 0)">
+      <rect x="0" y="0" width="180" height="40" rx="20" fill="#10b981"/>
+      <text x="90" y="26" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#ffffff" text-anchor="middle">
+        300+ Directories
+      </text>
+    </g>
+
+    <g transform="translate(350, 0)">
+      <rect x="0" y="0" width="140" height="40" rx="20" fill="#ffffff" opacity="0.15"/>
+      <text x="70" y="26" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#ffffff" text-anchor="middle">
+        Free Forever
+      </text>
+    </g>
+
+    <g transform="translate(505, 0)">
+      <rect x="0" y="0" width="280" height="40" rx="20" fill="#ffffff" opacity="0.15"/>
+      <text x="140" y="26" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#ffffff" text-anchor="middle">
+        → awesome-directories.com
+      </text>
+    </g>
+  </g>
+</svg>

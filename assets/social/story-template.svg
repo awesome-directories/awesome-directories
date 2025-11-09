@@ -1,0 +1,81 @@
+<svg width="1080" height="1920" viewBox="0 0 1080 1920" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="storyGradient" x1="0" y1="0" x2="0" y2="1920" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1080" height="1920" fill="url(#storyGradient)"/>
+
+  <!-- Subtle pattern -->
+  <g opacity="0.05">
+    <line x1="0" y1="480" x2="1080" y2="480" stroke="#ffffff" stroke-width="2"/>
+    <line x1="0" y1="960" x2="1080" y2="960" stroke="#ffffff" stroke-width="2"/>
+    <line x1="0" y1="1440" x2="1080" y2="1440" stroke="#ffffff" stroke-width="2"/>
+  </g>
+
+  <!-- Logo -->
+  <g transform="translate(90, 120)">
+    <path d="M0 15C0 10.0294 4.02944 6 9 6H27L36 22.5H72C76.9706 22.5 81 26.5294 81 31.5V40.5H0V15Z" fill="#3b82f6"/>
+    <path d="M0 27H81V72C81 76.9706 76.9706 81 72 81H9C4.02944 81 0 76.9706 0 72V27Z" fill="#3b82f6"/>
+    <path d="M40.5 38.25L43.875 48.375L54 51.75L43.875 55.125L40.5 65.25L37.125 55.125L27 51.75L37.125 48.375L40.5 38.25Z" fill="#ffffff"/>
+
+    <text x="100" y="60" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="#ffffff">
+      awesome-directories
+    </text>
+  </g>
+
+  <!-- Day counter -->
+  <g transform="translate(90, 280)">
+    <rect x="0" y="0" width="200" height="80" rx="40" fill="#3b82f6"/>
+    <text x="100" y="52" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="700" fill="#ffffff" text-anchor="middle">
+      Day [X]
+    </text>
+  </g>
+
+  <!-- Main content -->
+  <g transform="translate(90, 440)">
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="800" fill="#ffffff">
+      [Feature or
+    </text>
+    <text x="0" y="75" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="800" fill="#ffffff">
+      Update
+    </text>
+    <text x="0" y="150" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="800" fill="#ffffff">
+      Title]
+    </text>
+  </g>
+
+  <!-- Visual element placeholder -->
+  <g transform="translate(90, 720)">
+    <rect x="0" y="0" width="900" height="600" rx="24" fill="#334155" stroke="#475569" stroke-width="3"/>
+    <text x="450" y="310" font-family="Inter, system-ui, sans-serif" font-size="24" fill="#94a3b8" text-anchor="middle">
+      [Screenshot or visual element]
+    </text>
+  </g>
+
+  <!-- Description -->
+  <g transform="translate(90, 1400)">
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="28" fill="#cbd5e1">
+      [Brief description of feature or update.
+    </text>
+    <text x="0" y="45" font-family="Inter, system-ui, sans-serif" font-size="28" fill="#cbd5e1">
+      Keep it short and scannable.]
+    </text>
+  </g>
+
+  <!-- CTA -->
+  <g transform="translate(90, 1600)">
+    <rect x="0" y="0" width="900" height="80" rx="40" fill="#3b82f6"/>
+    <text x="450" y="52" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="#ffffff" text-anchor="middle">
+      Swipe Up to Try →
+    </text>
+  </g>
+
+  <!-- Footer -->
+  <text x="540" y="1800" font-family="Inter, system-ui, sans-serif" font-size="22" fill="#64748b" text-anchor="middle">
+    awesome-directories.com
+  </text>
+</svg>
