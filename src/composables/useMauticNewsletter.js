@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 export function useMauticNewsletter() {
   const mauticBaseUrl = import.meta.env.VITE_MAUTIC_BASE_URL;

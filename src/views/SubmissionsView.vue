@@ -105,8 +105,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { supabase } from "../lib/supabase";
-import { useAuth } from "../composables/useAuth";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/composables/useAuth";
 
 const { user } = useAuth();
 const submissions = ref([]);

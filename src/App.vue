@@ -24,12 +24,12 @@
 <script setup>
 import { ref, provide, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import AppHeader from "./components/AppHeader.vue";
-import AppFooter from "./components/AppFooter.vue";
-import AuthModal from "./components/AuthModal.vue";
-import ChecklistModal from "./components/ChecklistModal.vue";
-import { supabase } from "./lib/supabase";
-import { useAuth } from "./composables/useAuth";
+import AppHeader from "@/components/AppHeader.vue";
+import AppFooter from "@/components/AppFooter.vue";
+import AuthModal from "@/components/AuthModal.vue";
+import ChecklistModal from "@/components/ChecklistModal.vue";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/composables/useAuth";
 
 const router = useRouter();
 const { user, session } = useAuth();

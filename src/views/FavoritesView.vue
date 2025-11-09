@@ -36,9 +36,9 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { supabase } from "../lib/supabase";
-import { useAuth } from "../composables/useAuth";
-import DirectoryCard from "../components/DirectoryCard.vue";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/composables/useAuth";
+import DirectoryCard from "@/components/DirectoryCard.vue";
 
 const { user } = useAuth();
 const favorites = ref([]);

@@ -147,8 +147,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useDirectories } from "../composables/useDirectories";
-import { supabase } from "../lib/supabase";
+import { useDirectories } from "@/composables/useDirectories";
+import { supabase } from "@/lib/supabase";
 
 const route = useRoute();
 const { getDirectoryBySlug } = useDirectories();

@@ -1,5 +1,5 @@
 import { ref, computed, onMounted } from "vue";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 const user = ref(null);
 const session = ref(null);

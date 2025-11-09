@@ -1,5 +1,5 @@
 import { ref, computed } from "vue";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 const directories = ref([]);
 const loading = ref(false);
@@ -58,19 +58,17 @@ export function useDirectories() {
     }
 
     // Check cache first (only if not loading all)
-    if (
-      !loadAll &&
-      isCacheValid() &&
-      cache.value.data &&
-      !resetPagination
-    ) {
+    if (!loadAll && isCacheValid() && cache.value.data && !resetPagination) {
       directories.value = cache.value.data;
       // Restore pagination state
       const totalPages = Math.ceil(cache.value.totalCount / pageSize.value);
-      currentPage.value = Math.max(0, Math.min(
-        Math.floor(directories.value.length / pageSize.value),
-        totalPages - 1,
-      ));
+      currentPage.value = Math.max(
+        0,
+        Math.min(
+          Math.floor(directories.value.length / pageSize.value),
+          totalPages - 1,
+        ),
+      );
       hasMore.value = directories.value.length < cache.value.totalCount;
       return;
     }

@@ -203,7 +203,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useAuth } from "../composables/useAuth";
+import { useAuth } from "@/composables/useAuth";
 
 const { user, signOut } = useAuth();
 

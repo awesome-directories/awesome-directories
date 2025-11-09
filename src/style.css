@@ -8,7 +8,9 @@
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
 
-  --font-family-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-sans:
+    "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 
   --max-width-8xl: 1280px;
 }
@@ -32,39 +34,37 @@
   .btn-secondary {
     @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-400;
   }
-  }
+}
 
-  .card {
-    @apply bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100;
-  }
+.card {
+  @apply bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100;
+}
 
-  .input {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
-  }
+.input {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+}
 
-  .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-  }
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
 
-  .badge-green {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-    @apply bg-green-100 text-green-800;
-  }
+.badge-green {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  @apply bg-green-100 text-green-800;
+}
 
-  .badge-blue {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-    @apply bg-blue-100 text-blue-800;
-  }
+.badge-blue {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  @apply bg-blue-100 text-blue-800;
+}
 
-  .badge-orange {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-    @apply bg-orange-100 text-orange-800;
-  }
+.badge-orange {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  @apply bg-orange-100 text-orange-800;
+}
 
-  .badge-gray {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800;
-  }
-  }
+.badge-gray {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800;
 }
 
 @layer utilities {

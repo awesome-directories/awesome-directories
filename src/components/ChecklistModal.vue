@@ -180,7 +180,7 @@
 import { ref, inject } from "vue";
 import { jsPDF } from "jspdf";
 import Papa from "papaparse";
-import { useMauticNewsletter } from "../composables/useMauticNewsletter";
+import { useMauticNewsletter } from "@/composables/useMauticNewsletter";
 
 const props = defineProps({
   selectedDirectories: {

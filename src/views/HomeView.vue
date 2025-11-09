@@ -275,7 +275,10 @@
             :disabled="loadingMore"
             class="btn-primary px-8 py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span v-if="loadingMore" class="flex items-center justify-center gap-2">
+            <span
+              v-if="loadingMore"
+              class="flex items-center justify-center gap-2"
+            >
               <div
                 class="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-white"
               ></div>
@@ -345,10 +348,10 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from "vue";
-import { useDirectories } from "../composables/useDirectories";
-import DirectoryCard from "../components/DirectoryCard.vue";
-import ChecklistModal from "../components/ChecklistModal.vue";
-import { supabase } from "../lib/supabase";
+import { useDirectories } from "@/composables/useDirectories";
+import DirectoryCard from "@/components/DirectoryCard.vue";
+import ChecklistModal from "@/components/ChecklistModal.vue";
+import { supabase } from "@/lib/supabase";
 
 const {
   directories,
@@ -400,7 +403,7 @@ const filteredCount = computed(() => filteredDirectories.value.length);
 
 // Use the actual total count from cache, fallback to loaded directories
 const totalDirectoriesCount = computed(() =>
-  totalCount.value > 0 ? totalCount.value : directories.value.length
+  totalCount.value > 0 ? totalCount.value : directories.value.length,
 );
 const withDRCount = computed(
   () => directories.value.filter((d) => d.domain_rating).length,

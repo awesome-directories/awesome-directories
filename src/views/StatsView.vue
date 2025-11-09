@@ -100,7 +100,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useDirectories } from "../composables/useDirectories";
+import { useDirectories } from "@/composables/useDirectories";
 
 const { directories, fetchDirectories } = useDirectories();
 
