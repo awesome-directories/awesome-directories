@@ -1,0 +1,21 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="thumbGradient" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="240" height="240" rx="24" fill="url(#thumbGradient)"/>
+
+  <!-- Large centered folder icon -->
+  <g transform="translate(60, 60)">
+    <!-- Folder tab -->
+    <path d="M0 15C0 10.0294 4.02944 6 9 6H27L36 22.5H72C76.9706 22.5 81 26.5294 81 31.5V40.5H0V15Z" fill="#ffffff"/>
+    <!-- Folder body -->
+    <path d="M0 27H81V99C81 103.971 76.9706 108 72 108H9C4.02944 108 0 103.971 0 99V27Z" fill="#ffffff"/>
+    <!-- Star -->
+    <path d="M40.5 45L45 57L57 61.5L45 66L40.5 78L36 66L24 61.5L36 57L40.5 45Z" fill="#3b82f6"/>
+  </g>
+</svg>

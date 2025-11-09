@@ -1,0 +1,220 @@
+<svg width="1270" height="760" viewBox="0 0 1270 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1270" height="760" fill="#f8fafc"/>
+
+  <!-- Browser chrome mockup -->
+  <g id="browser-chrome">
+    <rect x="40" y="40" width="1190" height="680" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <rect x="40" y="40" width="1190" height="48" rx="12" fill="#f1f5f9"/>
+    <rect x="40" y="76" width="1190" height="2" fill="#e2e8f0"/>
+    <circle cx="64" cy="64" r="6" fill="#ef4444"/>
+    <circle cx="88" cy="64" r="6" fill="#f59e0b"/>
+    <circle cx="112" cy="64" r="6" fill="#10b981"/>
+  </g>
+
+  <!-- Content -->
+  <g transform="translate(80, 120)">
+    <!-- Breadcrumb -->
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280">
+      Home / Directories /
+    </text>
+    <text x="145" y="0" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#3b82f6">
+      Product Hunt
+    </text>
+
+    <!-- Directory header -->
+    <g transform="translate(0, 40)">
+      <!-- Logo -->
+      <rect x="0" y="0" width="80" height="80" rx="12" fill="#da552f"/>
+      <text x="40" y="56" font-family="sans-serif" font-size="48" fill="#ffffff" text-anchor="middle">P</text>
+
+      <!-- Title and metrics -->
+      <text x="100" y="30" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="700" fill="#1f2937">
+        Product Hunt
+      </text>
+
+      <text x="100" y="58" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#6b7280">
+        The best new products in tech
+      </text>
+
+      <!-- Key badges -->
+      <g transform="translate(100, 68)">
+        <rect x="0" y="0" width="70" height="28" rx="14" fill="#10b981" opacity="0.15"/>
+        <text x="35" y="19" font-family="monospace" font-size="14" font-weight="700" fill="#10b981" text-anchor="middle">
+          DR 92
+        </text>
+
+        <rect x="85" y="0" width="100" height="28" rx="14" fill="#10b981" opacity="0.15"/>
+        <text x="135" y="19" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#10b981" text-anchor="middle">
+          ✓ Dofollow
+        </text>
+
+        <rect x="200" y="0" width="70" height="28" rx="14" fill="#3b82f6" opacity="0.15"/>
+        <text x="235" y="19" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#3b82f6" text-anchor="middle">
+          Free
+        </text>
+
+        <rect x="285" y="0" width="80" height="28" rx="14" fill="#6b7280" opacity="0.15"/>
+        <text x="325" y="19" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#6b7280" text-anchor="middle">
+          Tech
+        </text>
+      </g>
+
+      <!-- CTA button -->
+      <rect x="850" y="10" width="260" height="52" rx="10" fill="#3b82f6"/>
+      <text x="980" y="42" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#ffffff" text-anchor="middle">
+        Visit Directory →
+      </text>
+    </g>
+
+    <!-- Details section -->
+    <g transform="translate(0, 160)">
+      <rect x="0" y="0" width="1110" height="380" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+
+      <!-- Left column - Details -->
+      <g transform="translate(32, 32)">
+        <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="700" fill="#1f2937">
+          Details
+        </text>
+
+        <!-- Info grid -->
+        <g transform="translate(0, 30)">
+          <!-- Row 1 -->
+          <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+            Domain Rating
+          </text>
+          <text x="200" y="0" font-family="monospace" font-size="14" font-weight="700" fill="#10b981">
+            92 (High Authority)
+          </text>
+
+          <!-- Row 2 -->
+          <text x="0" y="35" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+            Link Type
+          </text>
+          <text x="200" y="35" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#10b981">
+            Dofollow ✓
+          </text>
+
+          <!-- Row 3 -->
+          <text x="0" y="70" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+            Pricing
+          </text>
+          <text x="200" y="70" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#1f2937">
+            Free (optional paid boost)
+          </text>
+
+          <!-- Row 4 -->
+          <text x="0" y="105" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+            Category
+          </text>
+          <text x="200" y="105" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#1f2937">
+            Tech, SaaS, Startups
+          </text>
+
+          <!-- Row 5 -->
+          <text x="0" y="140" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+            Submission URL
+          </text>
+          <text x="200" y="140" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#3b82f6" text-decoration="underline">
+            producthunt.com/ship
+          </text>
+
+          <!-- Row 6 -->
+          <text x="0" y="175" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+            Approval Time
+          </text>
+          <text x="200" y="175" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#1f2937">
+            Instant (launches next day 00:01 PT)
+          </text>
+
+          <!-- Row 7 -->
+          <text x="0" y="210" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#6b7280">
+            Best For
+          </text>
+          <text x="200" y="210" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#1f2937">
+            SaaS products, developer tools
+          </text>
+        </g>
+
+        <!-- Description -->
+        <text x="0" y="280" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="700" fill="#1f2937">
+          Description
+        </text>
+
+        <text x="0" y="310" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280" style="max-width: 480px;">
+          Product Hunt surfaces the best new products, every day. It's a place for
+        </text>
+        <text x="0" y="330" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280">
+          product-loving enthusiasts to share and geek out about the latest mobile
+        </text>
+        <text x="0" y="350" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280">
+          apps, websites, hardware projects, and tech creations.
+        </text>
+      </g>
+
+      <!-- Right column - Community feedback -->
+      <g transform="translate(580, 32)">
+        <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="700" fill="#1f2937">
+          Community Feedback
+        </text>
+
+        <!-- Helpful votes -->
+        <g transform="translate(0, 30)">
+          <rect x="0" y="0" width="470" height="80" rx="10" fill="#f8fafc"/>
+
+          <text x="20" y="30" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#6b7280">
+            Was this directory helpful?
+          </text>
+
+          <g transform="translate(20, 45)">
+            <rect x="0" y="0" width="120" height="40" rx="8" fill="#10b981"/>
+            <text x="60" y="26" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">
+              👍 Yes (142)
+            </text>
+
+            <rect x="135" y="0" width="100" height="40" rx="8" fill="#e2e8f0"/>
+            <text x="185" y="26" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#64748b" text-anchor="middle">
+              👎 No (3)
+            </text>
+          </g>
+        </g>
+
+        <!-- Top comment -->
+        <g transform="translate(0, 130)">
+          <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#1f2937">
+            Top Comment
+          </text>
+
+          <rect x="0" y="15" width="470" height="140" rx="10" fill="#f8fafc"/>
+
+          <text x="20" y="40" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#1f2937">
+            @meysam_io
+          </text>
+
+          <text x="120" y="40" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#6b7280">
+            2 days ago
+          </text>
+
+          <text x="20" y="65" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#374151">
+            Got 300+ upvotes and 50+ quality leads from
+          </text>
+          <text x="20" y="85" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#374151">
+            my PH launch. Definitely worth preparing for
+          </text>
+          <text x="20" y="105" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#374151">
+            this one. Post at 12:01 AM PT for best results!
+          </text>
+
+          <text x="20" y="135" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#3b82f6">
+            👍 24 helpful • Reply
+          </text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Caption -->
+  <text x="635" y="745" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#3b82f6" text-anchor="middle">
+    Directory Detail Page - Complete Information &amp; Community Feedback
+  </text>
+</svg>

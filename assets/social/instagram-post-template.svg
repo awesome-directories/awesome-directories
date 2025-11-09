@@ -1,0 +1,73 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="igGradient" x1="0" y1="0" x2="1080" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1080" height="1080" fill="url(#igGradient)"/>
+
+  <!-- Pattern overlay -->
+  <g opacity="0.08">
+    <circle cx="150" cy="150" r="100" fill="#ffffff"/>
+    <circle cx="930" cy="930" r="120" fill="#ffffff"/>
+    <circle cx="850" cy="200" r="80" fill="#ffffff"/>
+  </g>
+
+  <!-- Logo -->
+  <g transform="translate(90, 90)">
+    <path d="M0 15C0 10.0294 4.02944 6 9 6H27L36 22.5H72C76.9706 22.5 81 26.5294 81 31.5V40.5H0V15Z" fill="#ffffff"/>
+    <path d="M0 27H81V72C81 76.9706 76.9706 81 72 81H9C4.02944 81 0 76.9706 0 72V27Z" fill="#ffffff"/>
+    <path d="M40.5 38.25L43.875 48.375L54 51.75L43.875 55.125L40.5 65.25L37.125 55.125L27 51.75L37.125 48.375L40.5 38.25Z" fill="#3b82f6"/>
+  </g>
+
+  <!-- Content area (customizable) -->
+  <g transform="translate(90, 280)">
+    <!-- Main headline placeholder -->
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="800" fill="#ffffff">
+      [Your
+    </text>
+    <text x="0" y="85" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="800" fill="#ffffff">
+      Headline
+    </text>
+    <text x="0" y="170" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="800" fill="#ffffff">
+      Here]
+    </text>
+
+    <!-- Supporting text -->
+    <text x="0" y="250" font-family="Inter, system-ui, sans-serif" font-size="28" fill="#ffffff" opacity="0.95">
+      [Supporting text or key stat goes here]
+    </text>
+  </g>
+
+  <!-- Stats/Features -->
+  <g transform="translate(90, 700)">
+    <g>
+      <circle cx="16" cy="16" r="16" fill="#ffffff" opacity="0.2"/>
+      <text x="50" y="25" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" fill="#ffffff">
+        Feature or stat 1
+      </text>
+    </g>
+
+    <g transform="translate(0, 60)">
+      <circle cx="16" cy="16" r="16" fill="#ffffff" opacity="0.2"/>
+      <text x="50" y="25" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" fill="#ffffff">
+        Feature or stat 2
+      </text>
+    </g>
+
+    <g transform="translate(0, 120)">
+      <circle cx="16" cy="16" r="16" fill="#ffffff" opacity="0.2"/>
+      <text x="50" y="25" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" fill="#ffffff">
+        Feature or stat 3
+      </text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <text x="90" y="1000" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="600" fill="#ffffff">
+    awesome-directories.com
+  </text>
+</svg>

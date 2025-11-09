@@ -1,0 +1,61 @@
+<svg width="1200" height="300" viewBox="0 0 1200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Clean gradient background -->
+  <defs>
+    <linearGradient id="readmeGradient" x1="0" y1="0" x2="1200" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="300" fill="url(#readmeGradient)"/>
+
+  <!-- Decorative pattern -->
+  <g opacity="0.1">
+    <path d="M0 150 Q 300 100, 600 150 T 1200 150" stroke="#ffffff" stroke-width="3" fill="none"/>
+    <path d="M0 180 Q 300 130, 600 180 T 1200 180" stroke="#ffffff" stroke-width="2" fill="none"/>
+  </g>
+
+  <!-- Logo -->
+  <g transform="translate(80, 75)">
+    <path d="M0 15C0 10.0294 4.02944 6 9 6H27L36 22.5H72C76.9706 22.5 81 26.5294 81 31.5V40.5H0V15Z" fill="#ffffff"/>
+    <path d="M0 27H81V72C81 76.9706 76.9706 81 72 81H9C4.02944 81 0 76.9706 0 72V27Z" fill="#ffffff"/>
+    <path d="M40.5 38.25L43.875 48.375L54 51.75L43.875 55.125L40.5 65.25L37.125 55.125L27 51.75L37.125 48.375L40.5 38.25Z" fill="#3b82f6"/>
+  </g>
+
+  <!-- Title and tagline -->
+  <g transform="translate(190, 0)">
+    <text x="0" y="120" font-family="Inter, system-ui, sans-serif" font-size="64" font-weight="800" fill="#ffffff">
+      awesome-directories
+    </text>
+    <text x="0" y="165" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="400" fill="#ffffff" opacity="0.95">
+      300+ curated launch directories • DR filters • Dofollow badges • Community verified
+    </text>
+  </g>
+
+  <!-- Quick stats -->
+  <g transform="translate(190, 210)">
+    <g>
+      <text x="0" y="0" font-family="monospace" font-size="16" font-weight="600" fill="#ffffff">
+        🎯 300+ Directories
+      </text>
+    </g>
+
+    <g transform="translate(200, 0)">
+      <text x="0" y="0" font-family="monospace" font-size="16" font-weight="600" fill="#ffffff">
+        ⚡ DR 60-300+ Filter
+      </text>
+    </g>
+
+    <g transform="translate(420, 0)">
+      <text x="0" y="0" font-family="monospace" font-size="16" font-weight="600" fill="#ffffff">
+        🔗 Dofollow Badges
+      </text>
+    </g>
+
+    <g transform="translate(630, 0)">
+      <text x="0" y="0" font-family="monospace" font-size="16" font-weight="600" fill="#ffffff">
+        🆓 Free Forever
+      </text>
+    </g>
+  </g>
+</svg>

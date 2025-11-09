@@ -1,0 +1,21 @@
+<svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="linkedinGradient" x1="0" y1="0" x2="300" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="300" height="300" fill="url(#linkedinGradient)"/>
+
+  <!-- Large centered folder icon -->
+  <g transform="translate(75, 75)">
+    <!-- Folder tab -->
+    <path d="M0 19C0 12.3726 5.37258 7 12 7H36L45 26H112C118.627 26 124 31.3726 124 38V52H0V19Z" fill="#ffffff"/>
+    <!-- Folder body -->
+    <path d="M0 37H124V131C124 137.627 118.627 143 112 143H12C5.37258 143 0 137.627 0 131V37Z" fill="#ffffff"/>
+    <!-- Star -->
+    <path d="M62 60L67.5 78.5L86 84L67.5 89.5L62 108L56.5 89.5L38 84L56.5 78.5L62 60Z" fill="#3b82f6"/>
+  </g>
+</svg>

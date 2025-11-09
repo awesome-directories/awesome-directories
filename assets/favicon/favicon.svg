@@ -1,0 +1,8 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simplified folder for favicon - optimized for small sizes -->
+  <rect x="1" y="7" width="30" height="23" rx="2" fill="#3b82f6"/>
+  <path d="M1 7C1 5.89543 1.89543 5 3 5H10L13 9H30C31.1046 9 32 9.89543 32 11V13H1V7Z" fill="#2563eb"/>
+  <!-- Larger, simpler star for better visibility at small sizes -->
+  <circle cx="16" cy="19" r="5" fill="#ffffff"/>
+  <path d="M16 15.5L17 18.5L20 19.5L17 20.5L16 23.5L15 20.5L12 19.5L15 18.5L16 15.5Z" fill="#3b82f6"/>
+</svg>

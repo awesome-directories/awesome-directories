@@ -1,0 +1,25 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Empty state: No saved favorites -->
+
+  <!-- Empty folder with heart -->
+  <g transform="translate(60, 50)">
+    <!-- Folder -->
+    <path d="M0 20C0 13.3726 5.37258 8 12 8H36L48 30H96C102.627 30 108 35.3726 108 42V54H0V20Z" fill="#e2e8f0"/>
+    <path d="M0 42H108V96C108 102.627 102.627 108 96 108H12C5.37258 108 0 102.627 0 96V42Z" fill="#e2e8f0"/>
+
+    <!-- Heart icon (empty/outline) -->
+    <g transform="translate(30, 50)">
+      <path d="M24 42 L16 34 C10 28 10 19 16 13 C19 10 23 10 26 13 L24 15 L22 13 C19 10 15 10 12 13 C8 17 8 23 12 27 L24 39 L36 27 C40 23 40 17 36 13 C33 10 29 10 26 13 L24 15 L22 13 C25 10 29 10 32 13 C38 19 38 28 32 34 Z" fill="#cbd5e1"/>
+    </g>
+  </g>
+
+  <!-- Supporting text -->
+  <g transform="translate(60, 175)">
+    <text x="60" y="0" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#6b7280" text-anchor="middle">
+      No favorites yet
+    </text>
+    <text x="60" y="25" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#9ca3af" text-anchor="middle">
+      Save directories for later
+    </text>
+  </g>
+</svg>

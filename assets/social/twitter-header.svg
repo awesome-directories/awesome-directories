@@ -1,0 +1,65 @@
+<svg width="1500" height="500" viewBox="0 0 1500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="headerGradient" x1="0" y1="0" x2="1500" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1500" height="500" fill="url(#headerGradient)"/>
+
+  <!-- Decorative elements -->
+  <g opacity="0.4">
+    <circle cx="1350" cy="350" r="120" fill="#3b82f6" opacity="0.1"/>
+    <circle cx="150" cy="150" r="80" fill="#3b82f6" opacity="0.1"/>
+  </g>
+
+  <!-- Logo -->
+  <g transform="translate(100, 80)">
+    <path d="M0 20C0 13.3726 5.37258 8 12 8H36L48 30H96C102.627 30 108 35.3726 108 42V54H0V20Z" fill="#3b82f6"/>
+    <path d="M0 36H108V96C108 102.627 102.627 108 96 108H12C5.37258 108 0 102.627 0 96V36Z" fill="#3b82f6"/>
+    <path d="M54 51L58.5 64.5L72 69L58.5 73.5L54 87L49.5 73.5L36 69L49.5 64.5L54 51Z" fill="#ffffff"/>
+  </g>
+
+  <!-- Main headline -->
+  <text x="240" y="160" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="800" fill="#1f2937">
+    300+ Curated Launch Directories for Indie Hackers
+  </text>
+
+  <!-- Key features -->
+  <g transform="translate(240, 220)">
+    <g>
+      <rect x="0" y="0" width="180" height="50" rx="25" fill="#3b82f6" opacity="0.1"/>
+      <text x="90" y="33" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#3b82f6" text-anchor="middle">
+        DR 60-300+ Filter
+      </text>
+    </g>
+
+    <g transform="translate(200, 0)">
+      <rect x="0" y="0" width="180" height="50" rx="25" fill="#10b981" opacity="0.1"/>
+      <text x="90" y="33" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#10b981" text-anchor="middle">
+        Dofollow Badges
+      </text>
+    </g>
+
+    <g transform="translate(400, 0)">
+      <rect x="0" y="0" width="200" height="50" rx="25" fill="#1f2937" opacity="0.1"/>
+      <text x="100" y="33" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#1f2937" text-anchor="middle">
+        Community Voting
+      </text>
+    </g>
+
+    <g transform="translate(620, 0)">
+      <rect x="0" y="0" width="220" height="50" rx="25" fill="#3b82f6" opacity="0.1"/>
+      <text x="110" y="33" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#3b82f6" text-anchor="middle">
+        Free &amp; Open Source
+      </text>
+    </g>
+  </g>
+
+  <!-- CTA -->
+  <text x="240" y="350" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="#3b82f6">
+    → awesome-directories.com
+  </text>
+</svg>

@@ -1,0 +1,161 @@
+<svg width="1270" height="760" viewBox="0 0 1270 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1270" height="760" fill="#f8fafc"/>
+
+  <!-- Browser chrome mockup -->
+  <g id="browser-chrome">
+    <rect x="40" y="40" width="1190" height="680" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <rect x="40" y="40" width="1190" height="48" rx="12" fill="#f1f5f9"/>
+    <rect x="40" y="76" width="1190" height="2" fill="#e2e8f0"/>
+    <circle cx="64" cy="64" r="6" fill="#ef4444"/>
+    <circle cx="88" cy="64" r="6" fill="#f59e0b"/>
+    <circle cx="112" cy="64" r="6" fill="#10b981"/>
+  </g>
+
+  <!-- Modal overlay -->
+  <rect x="40" y="88" width="1190" height="632" fill="#1f2937" opacity="0.5"/>
+
+  <!-- Checklist Modal -->
+  <g transform="translate(235, 150)">
+    <rect x="0" y="0" width="800" height="520" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+
+    <!-- Modal header -->
+    <rect x="0" y="0" width="800" height="80" rx="16" fill="#f8fafc"/>
+    <rect x="0" y="64" width="800" height="2" fill="#e2e8f0"/>
+
+    <text x="32" y="45" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" fill="#1f2937">
+      Your Launch Checklist
+    </text>
+
+    <text x="32" y="70" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#6b7280">
+      15 directories selected
+    </text>
+
+    <!-- Close button -->
+    <circle cx="750" cy="40" r="20" fill="#e2e8f0"/>
+    <text x="750" y="46" font-family="sans-serif" font-size="20" fill="#64748b" text-anchor="middle">×</text>
+
+    <!-- Checklist items -->
+    <g transform="translate(32, 100)">
+      <!-- Item 1 - Checked -->
+      <g>
+        <rect x="0" y="0" width="736" height="56" rx="8" fill="#f8fafc"/>
+        <rect x="0" y="0" width="24" height="24" rx="6" fill="#10b981"/>
+        <path d="M 6 12 L 10 16 L 18 8" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <text x="36" y="17" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#10b981">
+          ✓ Product Hunt
+        </text>
+
+        <rect x="165" y="2" width="50" height="20" rx="10" fill="#10b981" opacity="0.1"/>
+        <text x="190" y="15" font-family="monospace" font-size="11" font-weight="700" fill="#10b981" text-anchor="middle">
+          DR 92
+        </text>
+
+        <text x="650" y="17" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#10b981">
+          Submitted ✓
+        </text>
+      </g>
+
+      <!-- Item 2 - Checked -->
+      <g transform="translate(0, 66)">
+        <rect x="0" y="0" width="736" height="56" rx="8" fill="#f8fafc"/>
+        <rect x="0" y="0" width="24" height="24" rx="6" fill="#10b981"/>
+        <path d="M 6 12 L 10 16 L 18 8" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <text x="36" y="17" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#10b981">
+          ✓ Hacker News
+        </text>
+
+        <rect x="175" y="2" width="50" height="20" rx="10" fill="#10b981" opacity="0.1"/>
+        <text x="200" y="15" font-family="monospace" font-size="11" font-weight="700" fill="#10b981" text-anchor="middle">
+          DR 93
+        </text>
+
+        <text x="650" y="17" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#10b981">
+          Submitted ✓
+        </text>
+      </g>
+
+      <!-- Item 3 - Unchecked -->
+      <g transform="translate(0, 132)">
+        <rect x="0" y="0" width="736" height="56" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+        <rect x="0" y="0" width="24" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+
+        <text x="36" y="17" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#1f2937">
+          Indie Hackers
+        </text>
+
+        <rect x="175" y="2" width="50" height="20" rx="10" fill="#10b981" opacity="0.1"/>
+        <text x="200" y="15" font-family="monospace" font-size="11" font-weight="700" fill="#10b981" text-anchor="middle">
+          DR 78
+        </text>
+
+        <text x="650" y="17" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#6b7280">
+          Pending
+        </text>
+      </g>
+
+      <!-- Item 4 - Unchecked -->
+      <g transform="translate(0, 198)">
+        <rect x="0" y="0" width="736" height="56" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+        <rect x="0" y="0" width="24" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+
+        <text x="36" y="17" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#1f2937">
+          BetaList
+        </text>
+
+        <rect x="110" y="2" width="50" height="20" rx="10" fill="#10b981" opacity="0.1"/>
+        <text x="135" y="15" font-family="monospace" font-size="11" font-weight="700" fill="#10b981" text-anchor="middle">
+          DR 74
+        </text>
+
+        <text x="650" y="17" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#6b7280">
+          Pending
+        </text>
+      </g>
+
+      <!-- Item 5 - Unchecked -->
+      <g transform="translate(0, 264)">
+        <rect x="0" y="0" width="736" height="56" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+        <rect x="0" y="0" width="24" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+
+        <text x="36" y="17" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#1f2937">
+          SaaSHub
+        </text>
+
+        <rect x="110" y="2" width="50" height="20" rx="10" fill="#10b981" opacity="0.1"/>
+        <text x="135" y="15" font-family="monospace" font-size="11" font-weight="700" fill="#10b981" text-anchor="middle">
+          DR 72
+        </text>
+
+        <text x="650" y="17" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#6b7280">
+          Pending
+        </text>
+      </g>
+    </g>
+
+    <!-- Action buttons -->
+    <g transform="translate(32, 450)">
+      <rect x="0" y="0" width="200" height="48" rx="10" fill="#3b82f6"/>
+      <text x="100" y="31" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#ffffff" text-anchor="middle">
+        Download CSV
+      </text>
+
+      <rect x="220" y="0" width="180" height="48" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+      <text x="310" y="31" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#64748b" text-anchor="middle">
+        Share List
+      </text>
+
+      <rect x="420" y="0" width="150" height="48" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+      <text x="495" y="31" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#64748b" text-anchor="middle">
+        Print
+      </text>
+    </g>
+  </g>
+
+  <!-- Caption -->
+  <text x="635" y="745" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="#3b82f6" text-anchor="middle">
+    Launch Checklist - Track Your Submissions
+  </text>
+</svg>

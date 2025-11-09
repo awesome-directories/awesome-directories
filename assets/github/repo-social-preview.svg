@@ -1,0 +1,93 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GitHub-style dark background -->
+  <rect width="1280" height="640" fill="#0d1117"/>
+
+  <!-- Border accent -->
+  <rect x="0" y="0" width="1280" height="4" fill="#3b82f6"/>
+
+  <!-- Logo -->
+  <g transform="translate(80, 100)">
+    <path d="M0 20C0 13.3726 5.37258 8 12 8H36L48 30H96C102.627 30 108 35.3726 108 42V54H0V20Z" fill="#3b82f6"/>
+    <path d="M0 36H108V96C108 102.627 102.627 108 96 108H12C5.37258 108 0 102.627 0 96V36Z" fill="#3b82f6"/>
+    <path d="M54 51L58.5 64.5L72 69L58.5 73.5L54 87L49.5 73.5L36 69L49.5 64.5L54 51Z" fill="#ffffff"/>
+  </g>
+
+  <!-- Repo name -->
+  <text x="220" y="150" font-family="Inter, system-ui, sans-serif" font-size="52" font-weight="700" fill="#c9d1d9">
+    awesome-directories
+  </text>
+
+  <!-- Description -->
+  <text x="220" y="210" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="400" fill="#8b949e">
+    Curated list of 300+ launch directories with DR filters, dofollow badges, and community voting
+  </text>
+
+  <!-- Tech stack badges -->
+  <g transform="translate(220, 260)">
+    <!-- Vue.js -->
+    <g>
+      <rect x="0" y="0" width="100" height="36" rx="6" fill="#42b883" opacity="0.15"/>
+      <rect x="0" y="0" width="100" height="36" rx="6" stroke="#42b883" stroke-width="2"/>
+      <text x="50" y="23" font-family="monospace" font-size="14" font-weight="600" fill="#42b883" text-anchor="middle">
+        Vue.js
+      </text>
+    </g>
+
+    <!-- Go -->
+    <g transform="translate(115, 0)">
+      <rect x="0" y="0" width="70" height="36" rx="6" fill="#00add8" opacity="0.15"/>
+      <rect x="0" y="0" width="70" height="36" rx="6" stroke="#00add8" stroke-width="2"/>
+      <text x="35" y="23" font-family="monospace" font-size="14" font-weight="600" fill="#00add8" text-anchor="middle">
+        Go
+      </text>
+    </g>
+
+    <!-- Supabase -->
+    <g transform="translate(200, 0)">
+      <rect x="0" y="0" width="120" height="36" rx="6" fill="#3ecf8e" opacity="0.15"/>
+      <rect x="0" y="0" width="120" height="36" rx="6" stroke="#3ecf8e" stroke-width="2"/>
+      <text x="60" y="23" font-family="monospace" font-size="14" font-weight="600" fill="#3ecf8e" text-anchor="middle">
+        Supabase
+      </text>
+    </g>
+
+    <!-- Apache-2.0 -->
+    <g transform="translate(335, 0)">
+      <rect x="0" y="0" width="130" height="36" rx="6" fill="#3b82f6" opacity="0.15"/>
+      <rect x="0" y="0" width="130" height="36" rx="6" stroke="#3b82f6" stroke-width="2"/>
+      <text x="65" y="23" font-family="monospace" font-size="14" font-weight="600" fill="#3b82f6" text-anchor="middle">
+        Apache-2.0
+      </text>
+    </g>
+  </g>
+
+  <!-- Key features -->
+  <g transform="translate(220, 340)" font-family="Inter, system-ui, sans-serif">
+    <text x="0" y="0" font-size="22" font-weight="600" fill="#c9d1d9">✨ Key Features</text>
+
+    <g transform="translate(0, 40)">
+      <circle cx="8" cy="-5" r="4" fill="#3b82f6"/>
+      <text x="25" y="0" font-size="18" fill="#8b949e">Filter directories by Domain Rating (60-300+)</text>
+    </g>
+
+    <g transform="translate(0, 75)">
+      <circle cx="8" cy="-5" r="4" fill="#3b82f6"/>
+      <text x="25" y="0" font-size="18" fill="#8b949e">Identify dofollow vs nofollow backlinks</text>
+    </g>
+
+    <g transform="translate(0, 110)">
+      <circle cx="8" cy="-5" r="4" fill="#3b82f6"/>
+      <text x="25" y="0" font-size="18" fill="#8b949e">Community-driven voting and verification</text>
+    </g>
+
+    <g transform="translate(0, 145)">
+      <circle cx="8" cy="-5" r="4" fill="#3b82f6"/>
+      <text x="25" y="0" font-size="18" fill="#8b949e">Multi-select checklist for launch planning</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <text x="640" y="600" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="500" fill="#58a6ff" text-anchor="middle">
+    → awesome-directories.com
+  </text>
+</svg>

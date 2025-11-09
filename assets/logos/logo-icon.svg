@@ -1,0 +1,8 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Folder tab -->
+  <path d="M2 8C2 6.89543 2.89543 6 4 6H12L16 10H32C33.1046 10 34 10.8954 34 12V14H2V8Z" fill="#3b82f6"/>
+  <!-- Folder body -->
+  <path d="M2 12H34V32C34 33.1046 33.1046 34 32 34H4C2.89543 34 2 33.1046 2 32V12Z" fill="#3b82f6"/>
+  <!-- Star/sparkle for "curated" -->
+  <path d="M18 17L19.5 21.5L24 23L19.5 24.5L18 29L16.5 24.5L12 23L16.5 21.5L18 17Z" fill="#ffffff"/>
+</svg>
