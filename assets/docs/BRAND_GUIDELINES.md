@@ -464,7 +464,7 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 
 ## Questions or Feedback?
 
-- **GitHub:** [github.com/yourusername/awesome-directories](https://github.com/yourusername/awesome-directories)
+- **GitHub:** [github.com/awesome-directories/awesome-directories](https://github.com/awesome-directories/awesome-directories)
 - **Twitter:** [@meysam_io](https://twitter.com/meysam_io)
 - **Email:** [Your email]
 
