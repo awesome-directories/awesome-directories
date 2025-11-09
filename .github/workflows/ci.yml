@@ -58,6 +58,7 @@ jobs:
         run: |
           bunx netlify-cli@v23 deploy \
             --site "$NETLIFY_SITE_ID" \
+            --no-build \
             --json \
             --dir './dist' \
             --message 'branch ${{ github.ref_name }} sha ${{ github.sha }}' \
