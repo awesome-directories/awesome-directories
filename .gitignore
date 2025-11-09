@@ -50,3 +50,4 @@ ignore
 .github/workflows/update-dr-scores.yml
 data
 dataset
+.secrets/
