@@ -41,7 +41,7 @@
     </text>
 
     <text x="0" y="190" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#6b7280">
-      Stop wasting time on dead links from 2012. Get dofollow backlinks from high-DR
+      Stop wasting time on dead links from 2023. Get dofollow backlinks from high-DR
     </text>
     <text x="0" y="220" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#6b7280">
       directories that actually drive traffic.
@@ -67,10 +67,10 @@
         <rect x="0" y="20" width="300" height="8" rx="4" fill="#3b82f6"/>
         <circle cx="300" cy="24" r="12" fill="#3b82f6" stroke="#ffffff" stroke-width="3"/>
 
-        <text x="0" y="60" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="#1f2937">
+        <text x="0" y="65" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="#1f2937">
           DR 70+
         </text>
-        <text x="120" y="60" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#6b7280">
+        <text x="120" y="65" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#6b7280">
           142 directories found
         </text>
 

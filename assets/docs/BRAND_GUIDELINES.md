@@ -26,6 +26,7 @@
 Awesome Directories is built by a founder, for founders. Our brand reflects authenticity, transparency, and peer-to-peer trust.
 
 **Brand Personality:**
+
 - Down-to-earth, transparent, no-BS (think Basecamp/37signals)
 - Not corporate or polished - relatable and human
 - Founder-to-founder communication
@@ -59,6 +60,7 @@ Awesome Directories is built by a founder, for founders. Our brand reflects auth
 The Awesome Directories logo consists of a **folder icon with a star**, representing curated directory organization.
 
 **Symbolism:**
+
 - **Folder:** Directories, organization, structure
 - **Star:** Curation, quality, highlighting the best
 - **Together:** Finding the best directories, organized and curated
@@ -93,22 +95,24 @@ Maintain clear space equal to the height of the icon around all sides of the log
 #### Logo Placement
 
 **Preferred Positions:**
+
 - Top left corner (primary)
 - Center (for hero sections, splash screens)
 - Bottom right watermark (small, 60% opacity)
 
 ### Logo Variations
 
-| Background | Logo Version | File |
-|------------|-------------|------|
-| White/Light | Primary Blue or Black | `logo-blue.svg` or `logo-black.svg` |
-| Dark | White | `logo-white.svg` |
-| Blue Gradient | White | `logo-white.svg` |
-| Photos | White with dark overlay | `logo-white.svg` |
+| Background    | Logo Version            | File                                |
+| ------------- | ----------------------- | ----------------------------------- |
+| White/Light   | Primary Blue or Black   | `logo-blue.svg` or `logo-black.svg` |
+| Dark          | White                   | `logo-white.svg`                    |
+| Blue Gradient | White                   | `logo-white.svg`                    |
+| Photos        | White with dark overlay | `logo-white.svg`                    |
 
 ### What NOT to Do
 
 ❌ **Don't:**
+
 - Rotate or skew the logo
 - Change the icon color independently from wordmark
 - Add drop shadows, outlines, or effects
@@ -118,6 +122,7 @@ Maintain clear space equal to the height of the icon around all sides of the log
 - Recreate or modify the logo
 
 ✅ **Do:**
+
 - Use approved logo files only
 - Maintain aspect ratio
 - Ensure sufficient contrast
@@ -129,13 +134,14 @@ Maintain clear space equal to the height of the icon around all sides of the log
 
 ### Primary Colors
 
-| Color | Hex | RGB | Usage |
-|-------|-----|-----|-------|
-| **Primary Blue** | `#3b82f6` | 59, 130, 246 | CTAs, links, primary actions, brand accent |
-| **Primary Dark** | `#2563eb` | 37, 99, 235 | Hover states, gradients |
-| **Primary Light** | `#60a5fa` | 96, 165, 250 | Backgrounds, tints |
+| Color             | Hex       | RGB          | Usage                                      |
+| ----------------- | --------- | ------------ | ------------------------------------------ |
+| **Primary Blue**  | `#3b82f6` | 59, 130, 246 | CTAs, links, primary actions, brand accent |
+| **Primary Dark**  | `#2563eb` | 37, 99, 235  | Hover states, gradients                    |
+| **Primary Light** | `#60a5fa` | 96, 165, 250 | Backgrounds, tints                         |
 
 **Usage:**
+
 - All primary call-to-action buttons
 - Interactive elements (links, buttons)
 - Brand accent throughout the site
@@ -143,24 +149,24 @@ Maintain clear space equal to the height of the icon around all sides of the log
 
 ### Semantic Colors
 
-| Color | Hex | Use Case | Examples |
-|-------|-----|----------|----------|
-| **Success Green** | `#10b981` | Positive states, dofollow badges, high DR (300+) | "Dofollow" badges, DR 300+ ratings, success messages |
-| **Warning Orange** | `#f59e0b` | Caution, paid directories, medium DR (60-79) | "Paid" badges, DR 60-79 ratings |
-| **Danger Red** | `#ef4444` | Errors, low DR (<60), destructive actions | Error messages, DR <60, delete actions |
+| Color              | Hex       | Use Case                                         | Examples                                             |
+| ------------------ | --------- | ------------------------------------------------ | ---------------------------------------------------- |
+| **Success Green**  | `#10b981` | Positive states, dofollow badges, high DR (300+) | "Dofollow" badges, DR 300+ ratings, success messages |
+| **Warning Orange** | `#f59e0b` | Caution, paid directories, medium DR (60-79)     | "Paid" badges, DR 60-79 ratings                      |
+| **Danger Red**     | `#ef4444` | Errors, low DR (<60), destructive actions        | Error messages, DR <60, delete actions               |
 
 ### Neutral Grays
 
-| Color | Hex | RGB | Usage |
-|-------|-----|-----|-------|
-| **Gray 900** | `#1f2937` | 31, 41, 55 | Headings, primary text |
-| **Gray 700** | `#374151` | 55, 65, 81 | Body text |
+| Color        | Hex       | RGB           | Usage                  |
+| ------------ | --------- | ------------- | ---------------------- |
+| **Gray 900** | `#1f2937` | 31, 41, 55    | Headings, primary text |
+| **Gray 700** | `#374151` | 55, 65, 81    | Body text              |
 | **Gray 600** | `#6b7280` | 107, 114, 128 | Secondary text, labels |
-| **Gray 500** | `#9ca3af` | 156, 163, 175 | Placeholder text |
-| **Gray 400** | `#cbd5e1` | 203, 213, 225 | Borders, dividers |
-| **Gray 200** | `#e2e8f0` | 226, 232, 240 | Subtle backgrounds |
-| **Gray 100** | `#f3f4f6` | 243, 244, 246 | Card backgrounds |
-| **Gray 50** | `#f8fafc` | 248, 250, 252 | Page background |
+| **Gray 500** | `#9ca3af` | 156, 163, 175 | Placeholder text       |
+| **Gray 400** | `#cbd5e1` | 203, 213, 225 | Borders, dividers      |
+| **Gray 200** | `#e2e8f0` | 226, 232, 240 | Subtle backgrounds     |
+| **Gray 100** | `#f3f4f6` | 243, 244, 246 | Card backgrounds       |
+| **Gray 50**  | `#f8fafc` | 248, 250, 252 | Page background        |
 
 ### Background Colors
 
@@ -170,12 +176,12 @@ Maintain clear space equal to the height of the icon around all sides of the log
 
 ### Color Psychology
 
-| Color | Emotion | When to Use |
-|-------|---------|-------------|
-| Blue | Trust, reliability, calm | Primary actions, brand identity |
-| Green | Success, growth, positive | Dofollow badges, high ratings, success states |
-| Orange | Attention, warning | Paid options, medium priority |
-| Red | Error, danger, stop | Errors, low ratings, destructive actions |
+| Color  | Emotion                   | When to Use                                   |
+| ------ | ------------------------- | --------------------------------------------- |
+| Blue   | Trust, reliability, calm  | Primary actions, brand identity               |
+| Green  | Success, growth, positive | Dofollow badges, high ratings, success states |
+| Orange | Attention, warning        | Paid options, medium priority                 |
+| Red    | Error, danger, stop       | Errors, low ratings, destructive actions      |
 
 ### Accessibility
 
@@ -186,6 +192,7 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 - UI components: Minimum 3:1
 
 **Tested Combinations:**
+
 - ✅ Primary Blue (#3b82f6) on White: 5.2:1
 - ✅ Gray 900 (#1f2937) on White: 15.5:1
 - ✅ White on Primary Blue: 5.2:1
@@ -200,6 +207,7 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 **Fallback Stack:** `Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`
 
 **Why Inter?**
+
 - Clean, modern, highly legible
 - Excellent at small sizes
 - Free and open source
@@ -208,15 +216,15 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 
 ### Type Scale
 
-| Element | Size | Weight | Line Height | Usage |
-|---------|------|--------|-------------|-------|
-| **H1** | 48px (3rem) | 800 (ExtraBold) | 1.2 | Page titles |
-| **H2** | 36px (2.25rem) | 700 (Bold) | 1.3 | Section headers |
-| **H3** | 28px (1.75rem) | 700 (Bold) | 1.4 | Subsection headers |
-| **H4** | 20px (1.25rem) | 600 (SemiBold) | 1.4 | Card titles |
-| **Body** | 16px (1rem) | 400 (Regular) | 1.6 | Paragraph text |
-| **Small** | 14px (0.875rem) | 400 (Regular) | 1.5 | Helper text, captions |
-| **Tiny** | 12px (0.75rem) | 500 (Medium) | 1.4 | Labels, badges |
+| Element   | Size            | Weight          | Line Height | Usage                 |
+| --------- | --------------- | --------------- | ----------- | --------------------- |
+| **H1**    | 48px (3rem)     | 800 (ExtraBold) | 1.2         | Page titles           |
+| **H2**    | 36px (2.25rem)  | 700 (Bold)      | 1.3         | Section headers       |
+| **H3**    | 28px (1.75rem)  | 700 (Bold)      | 1.4         | Subsection headers    |
+| **H4**    | 20px (1.25rem)  | 600 (SemiBold)  | 1.4         | Card titles           |
+| **Body**  | 16px (1rem)     | 400 (Regular)   | 1.6         | Paragraph text        |
+| **Small** | 14px (0.875rem) | 400 (Regular)   | 1.5         | Helper text, captions |
+| **Tiny**  | 12px (0.75rem)  | 500 (Medium)    | 1.4         | Labels, badges        |
 
 ### Font Weights
 
@@ -231,6 +239,7 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 **Font:** `ui-monospace, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Courier New, monospace`
 
 **Usage:**
+
 - Domain Rating scores (DR 92)
 - Code snippets
 - Technical data
@@ -245,6 +254,7 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 **Core Principle:** Founder-to-founder, peer-to-peer communication
 
 **Voice Characteristics:**
+
 - **Conversational:** Write like you're talking to a friend
 - **Transparent:** Share real numbers, struggles, lessons
 - **Helpful:** Focus on solving their problem
@@ -253,13 +263,13 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 
 ### Tone Guidelines
 
-| Situation | Tone | Example |
-|-----------|------|---------|
-| **Homepage Hero** | Confident, helpful | "Find the top 20 directories in under 3 minutes" |
-| **Feature Description** | Clear, benefit-focused | "Filter by Domain Rating (60-300+) to find high-authority directories" |
-| **Error Messages** | Empathetic, solution-oriented | "No results found. Try adjusting your filters or browse all directories." |
-| **Success Messages** | Encouraging, positive | "Checklist downloaded! Good luck with your launch 🚀" |
-| **About/Story** | Authentic, vulnerable | "I wasted 20 hours on this, so you don't have to." |
+| Situation               | Tone                          | Example                                                                   |
+| ----------------------- | ----------------------------- | ------------------------------------------------------------------------- |
+| **Homepage Hero**       | Confident, helpful            | "Find the top 20 directories in under 3 minutes"                          |
+| **Feature Description** | Clear, benefit-focused        | "Filter by Domain Rating (60-300+) to find high-authority directories"    |
+| **Error Messages**      | Empathetic, solution-oriented | "No results found. Try adjusting your filters or browse all directories." |
+| **Success Messages**    | Encouraging, positive         | "Checklist downloaded! Good luck with your launch 🚀"                     |
+| **About/Story**         | Authentic, vulnerable         | "I wasted 20 hours on this, so you don't have to."                        |
 
 ### Writing Examples
 
@@ -284,6 +294,7 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 **Tagline:** "Find the top 20 directories in under 3 minutes"
 
 **Supporting Messages:**
+
 - "300+ curated launch directories for indie hackers"
 - "Stop wasting time on dead links from 2012"
 - "Free & open source, forever"
@@ -292,12 +303,14 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 ### Emoji Usage
 
 **Sparingly and purposefully:**
+
 - ✅ Use in success messages, celebration moments
 - ✅ Use to add personality to social media
 - ❌ Don't use in error messages or serious communication
 - ❌ Don't overuse (max 1-2 per message)
 
 **Approved Emojis:**
+
 - 🚀 (launch, success)
 - ✓ (checkmark, confirmation)
 - 👍 (helpful votes)
@@ -313,6 +326,7 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 **Style:** Minimal, clean, 2-3 colors maximum
 
 **Characteristics:**
+
 - Simple geometric shapes
 - Flat design (no gradients in illustrations)
 - Limited color palette (primary blue + 1-2 accent colors)
@@ -322,12 +336,14 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 ### When to Use Illustrations
 
 ✅ **Use for:**
+
 - Empty states (no results, no favorites)
 - Hero sections (feature highlights)
 - Onboarding flows
 - 404/error pages
 
 ❌ **Avoid:**
+
 - Generic stock photos
 - Abstract meaningless shapes
 - Overly complex illustrations
@@ -338,11 +354,13 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 **Preferred:** None (minimalist approach)
 
 **If needed:**
+
 - Real founder photos (not stock)
 - Screenshots of actual product
 - User-submitted content (with permission)
 
 **Never:**
+
 - Generic stock photos of people in suits
 - Fake "diverse team" stock photos
 - Overused tech stock imagery
@@ -395,17 +413,20 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 ### Website
 
 **Header:**
+
 - Logo in top left
 - Primary navigation (minimal)
 - CTA button in primary blue
 
 **Hero Section:**
+
 - Large, bold headline
 - Clear value proposition
 - Primary CTA above the fold
 - Optional hero illustration
 
 **Directory Cards:**
+
 - Prominent DR badge (colored by tier)
 - Dofollow badge (green when applicable)
 - Clear pricing indicator
@@ -414,11 +435,13 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 ### Social Media
 
 **Profile Picture:**
+
 - Use `logo-icon.svg` (square)
 - Export at 400x400px minimum
 - Works in both light and dark themes
 
 **Cover/Header Images:**
+
 - Feature key value props
 - Include domain name
 - Maintain brand colors
@@ -427,12 +450,14 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 ### Email
 
 **Newsletter:**
+
 - Simple, text-focused layout
 - Minimal branding (logo at top)
 - Clear hierarchy
 - Single primary CTA per email
 
 **Signature:**
+
 - Name + role
 - Link to awesome-directories.com
 - Optional: Twitter handle
@@ -441,6 +466,7 @@ All color combinations meet **WCAG 2.1 AA** contrast ratios:
 ### Presentations
 
 **Slides:**
+
 - Minimal text (6 words per line max)
 - Large, bold headlines
 - One key point per slide

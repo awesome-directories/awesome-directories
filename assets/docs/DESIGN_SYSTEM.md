@@ -42,34 +42,34 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#3b82f6',
-          dark: '#2563eb',
-          light: '#60a5fa',
+          DEFAULT: "#3b82f6",
+          dark: "#2563eb",
+          light: "#60a5fa",
         },
-        success: '#10b981',
-        warning: '#f59e0b',
-        danger: '#ef4444',
+        success: "#10b981",
+        warning: "#f59e0b",
+        danger: "#ef4444",
         // Domain Rating tiers
         dr: {
-          high: '#10b981',    // 300+ (green)
-          medium: '#3b82f6',  // 70-79 (blue)
-          low: '#f59e0b',     // 60-69 (orange)
-          verylow: '#6b7280', // <60 (gray)
+          high: "#10b981", // 300+ (green)
+          medium: "#3b82f6", // 70-79 (blue)
+          low: "#f59e0b", // 60-69 (orange)
+          verylow: "#6b7280", // <60 (gray)
         },
       },
     },
   },
-}
+};
 ```
 
 ### Color Usage
 
-| Semantic Name | Hex | Tailwind Class | Usage |
-|---------------|-----|----------------|-------|
-| Primary | `#3b82f6` | `bg-primary` | CTAs, links, brand |
-| Success | `#10b981` | `bg-success` | Dofollow, DR 300+, success states |
-| Warning | `#f59e0b` | `bg-warning` | Paid directories, DR 60-79 |
-| Danger | `#ef4444` | `bg-danger` | Errors, DR <60 |
+| Semantic Name | Hex       | Tailwind Class | Usage                             |
+| ------------- | --------- | -------------- | --------------------------------- |
+| Primary       | `#3b82f6` | `bg-primary`   | CTAs, links, brand                |
+| Success       | `#10b981` | `bg-success`   | Dofollow, DR 300+, success states |
+| Warning       | `#f59e0b` | `bg-warning`   | Paid directories, DR 60-79        |
+| Danger        | `#ef4444` | `bg-danger`    | Errors, DR <60                    |
 
 ### Text Colors
 
@@ -95,10 +95,14 @@ export default {
 
 ```css
 /* globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: #374151; /* gray-700 */
@@ -124,9 +128,7 @@ body {
 </h3>
 
 <!-- H4 - Card Title -->
-<h4 class="text-xl font-semibold text-gray-900">
-  Product Hunt
-</h4>
+<h4 class="text-xl font-semibold text-gray-900">Product Hunt</h4>
 
 <!-- Body Text -->
 <p class="text-base text-gray-700 leading-relaxed">
@@ -134,9 +136,7 @@ body {
 </p>
 
 <!-- Small Text -->
-<p class="text-sm text-gray-600">
-  Helper text, captions, or metadata
-</p>
+<p class="text-sm text-gray-600">Helper text, captions, or metadata</p>
 
 <!-- Tiny Text -->
 <span class="text-xs font-medium text-gray-500 uppercase tracking-wide">
@@ -164,14 +164,14 @@ fontWeight: {
 
 Based on 8px (0.5rem) increments:
 
-| Token | Rem | Pixels | Tailwind Class | Usage |
-|-------|-----|--------|----------------|-------|
-| `xs` | 0.5rem | 8px | `p-2`, `m-2` | Tight spacing, badges |
-| `sm` | 1rem | 16px | `p-4`, `m-4` | Component padding |
-| `md` | 1.5rem | 24px | `p-6`, `m-6` | Card padding |
-| `lg` | 2rem | 32px | `p-8`, `m-8` | Section padding |
-| `xl` | 4rem | 64px | `p-16`, `m-16` | Page sections |
-| `2xl` | 6rem | 96px | `p-24`, `m-24` | Hero sections |
+| Token | Rem    | Pixels | Tailwind Class | Usage                 |
+| ----- | ------ | ------ | -------------- | --------------------- |
+| `xs`  | 0.5rem | 8px    | `p-2`, `m-2`   | Tight spacing, badges |
+| `sm`  | 1rem   | 16px   | `p-4`, `m-4`   | Component padding     |
+| `md`  | 1.5rem | 24px   | `p-6`, `m-6`   | Card padding          |
+| `lg`  | 2rem   | 32px   | `p-8`, `m-8`   | Section padding       |
+| `xl`  | 4rem   | 64px   | `p-16`, `m-16` | Page sections         |
+| `2xl` | 6rem   | 96px   | `p-24`, `m-24` | Hero sections         |
 
 ### Common Spacing Patterns
 
@@ -187,9 +187,7 @@ Based on 8px (0.5rem) increments:
 </section>
 
 <!-- Button -->
-<button class="px-6 py-3">
-  Click Me
-</button>
+<button class="px-6 py-3">Click Me</button>
 ```
 
 ---
@@ -201,14 +199,16 @@ Based on 8px (0.5rem) increments:
 #### Primary Button
 
 ```html
-<button class="
+<button
+  class="
   px-6 py-3
   bg-primary hover:bg-primary-dark
   text-white font-semibold
   rounded-xl
   transition-colors duration-200
   shadow-sm hover:shadow-md
-">
+"
+>
   Start Browsing
 </button>
 ```
@@ -216,14 +216,16 @@ Based on 8px (0.5rem) increments:
 #### Secondary Button
 
 ```html
-<button class="
+<button
+  class="
   px-6 py-3
   bg-white hover:bg-gray-50
   text-gray-700 font-semibold
   border-2 border-gray-300
   rounded-xl
   transition-colors duration-200
-">
+"
+>
   Learn More
 </button>
 ```
@@ -247,35 +249,41 @@ Based on 8px (0.5rem) increments:
 
 ```html
 <!-- High DR (300+) -->
-<span class="
+<span
+  class="
   inline-flex items-center
   px-3 py-1
   bg-success/10
   text-success font-bold text-sm
   rounded-full
-">
+"
+>
   DR 300+
 </span>
 
 <!-- Medium DR (70-79) -->
-<span class="
+<span
+  class="
   inline-flex items-center
   px-3 py-1
   bg-primary/10
   text-primary font-bold text-sm
   rounded-full
-">
+"
+>
   DR 78
 </span>
 
 <!-- Low DR (<60) -->
-<span class="
+<span
+  class="
   inline-flex items-center
   px-3 py-1
   bg-gray-500/10
   text-gray-600 font-bold text-sm
   rounded-full
-">
+"
+>
   DR 45
 </span>
 ```
@@ -283,13 +291,15 @@ Based on 8px (0.5rem) increments:
 #### Dofollow Badge
 
 ```html
-<span class="
+<span
+  class="
   inline-flex items-center gap-1
   px-3 py-1
   bg-success/10
   text-success font-semibold text-xs
   rounded-full
-">
+"
+>
   ✓ Dofollow
 </span>
 ```
@@ -298,32 +308,38 @@ Based on 8px (0.5rem) increments:
 
 ```html
 <!-- Free -->
-<span class="
+<span
+  class="
   px-3 py-1
   bg-primary/10
   text-primary font-semibold text-xs
   rounded-full
-">
+"
+>
   Free
 </span>
 
 <!-- Paid -->
-<span class="
+<span
+  class="
   px-3 py-1
   bg-warning/10
   text-warning font-semibold text-xs
   rounded-full
-">
+"
+>
   Paid
 </span>
 
 <!-- Freemium -->
-<span class="
+<span
+  class="
   px-3 py-1
   bg-gray-500/10
   text-gray-600 font-semibold text-xs
   rounded-full
-">
+"
+>
   Freemium
 </span>
 ```
@@ -333,7 +349,8 @@ Based on 8px (0.5rem) increments:
 #### Directory Card
 
 ```html
-<div class="
+<div
+  class="
   bg-white
   border-2 border-gray-200
   rounded-xl
@@ -341,7 +358,8 @@ Based on 8px (0.5rem) increments:
   hover:border-primary
   hover:shadow-lg
   transition-all duration-200
-">
+"
+>
   <!-- Card content -->
   <div class="flex items-start gap-4">
     <!-- Logo -->
@@ -349,12 +367,8 @@ Based on 8px (0.5rem) increments:
 
     <!-- Content -->
     <div class="flex-1">
-      <h3 class="text-lg font-bold text-gray-900 mb-1">
-        Directory Name
-      </h3>
-      <p class="text-sm text-gray-600 mb-3">
-        Description goes here
-      </p>
+      <h3 class="text-lg font-bold text-gray-900 mb-1">Directory Name</h3>
+      <p class="text-sm text-gray-600 mb-3">Description goes here</p>
 
       <!-- Badges -->
       <div class="flex flex-wrap gap-2">
@@ -365,9 +379,7 @@ Based on 8px (0.5rem) increments:
     </div>
 
     <!-- Helpful votes -->
-    <div class="text-sm text-gray-600">
-      👍 142 helpful
-    </div>
+    <div class="text-sm text-gray-600">👍 142 helpful</div>
   </div>
 </div>
 ```
@@ -396,7 +408,8 @@ Based on 8px (0.5rem) increments:
 #### Select/Dropdown
 
 ```html
-<select class="
+<select
+  class="
   w-full
   px-4 py-3
   border-2 border-gray-300
@@ -405,7 +418,8 @@ Based on 8px (0.5rem) increments:
   bg-white
   focus:border-primary focus:ring-2 focus:ring-primary/20
   transition-colors duration-200
-">
+"
+>
   <option>All Categories</option>
   <option>Tech</option>
   <option>SaaS</option>
@@ -416,43 +430,51 @@ Based on 8px (0.5rem) increments:
 
 ```html
 <!-- Modal Overlay -->
-<div class="
+<div
+  class="
   fixed inset-0
   bg-gray-900/50
   backdrop-blur-sm
   z-40
-"></div>
+"
+></div>
 
 <!-- Modal Content -->
-<div class="
+<div
+  class="
   fixed inset-0
   flex items-center justify-center
   z-50
   p-4
-">
-  <div class="
+"
+>
+  <div
+    class="
     bg-white
     rounded-2xl
     shadow-2xl
     max-w-2xl w-full
     max-h-[90vh]
     overflow-auto
-  ">
+  "
+  >
     <!-- Modal Header -->
-    <div class="
+    <div
+      class="
       px-6 py-4
       border-b border-gray-200
       flex items-center justify-between
-    ">
-      <h2 class="text-2xl font-bold text-gray-900">
-        Modal Title
-      </h2>
-      <button class="
+    "
+    >
+      <h2 class="text-2xl font-bold text-gray-900">Modal Title</h2>
+      <button
+        class="
         w-10 h-10
         rounded-full
         hover:bg-gray-100
         transition-colors
-      ">
+      "
+      >
         ×
       </button>
     </div>
@@ -463,11 +485,13 @@ Based on 8px (0.5rem) increments:
     </div>
 
     <!-- Modal Footer -->
-    <div class="
+    <div
+      class="
       px-6 py-4
       border-t border-gray-200
       flex gap-3 justify-end
-    ">
+    "
+    >
       <button class="secondary-button">Cancel</button>
       <button class="primary-button">Confirm</button>
     </div>
@@ -495,27 +519,29 @@ screens: {
 
 ```html
 <!-- Stack on mobile, grid on desktop -->
-<div class="
+<div
+  class="
   grid grid-cols-1
   md:grid-cols-2
   lg:grid-cols-3
   gap-6
-">
+"
+>
   <!-- Cards -->
 </div>
 
 <!-- Hidden on mobile, visible on desktop -->
-<div class="hidden lg:block">
-  Sidebar content
-</div>
+<div class="hidden lg:block">Sidebar content</div>
 
 <!-- Responsive text sizes -->
-<h1 class="
+<h1
+  class="
   text-3xl
   md:text-4xl
   lg:text-5xl
   font-bold
-">
+"
+>
   Responsive Heading
 </h1>
 ```
@@ -525,11 +551,13 @@ screens: {
 Minimum 44x44px for all interactive elements:
 
 ```html
-<button class="
+<button
+  class="
   min-h-[44px]
   px-6
   touch-manipulation
-">
+"
+>
   Tap Me
 </button>
 ```
@@ -558,8 +586,8 @@ All components meet minimum contrast ratios:
 
 <!-- Proper heading hierarchy -->
 <h1>Page Title</h1>
-  <h2>Section</h2>
-    <h3>Subsection</h3>
+<h2>Section</h2>
+<h3>Subsection</h3>
 ```
 
 ### ARIA Labels
@@ -571,27 +599,23 @@ All components meet minimum contrast ratios:
 </button>
 
 <!-- Search input -->
-<input
-  type="search"
-  aria-label="Search directories"
-  placeholder="Search..."
-/>
+<input type="search" aria-label="Search directories" placeholder="Search..." />
 
 <!-- Loading state -->
-<div aria-live="polite" aria-busy="true">
-  Loading directories...
-</div>
+<div aria-live="polite" aria-busy="true">Loading directories...</div>
 ```
 
 ### Focus States
 
 ```html
-<button class="
+<button
+  class="
   focus:outline-none
   focus:ring-2
   focus:ring-primary
   focus:ring-offset-2
-">
+"
+>
   Accessible Button
 </button>
 ```
@@ -610,7 +634,8 @@ All components meet minimum contrast ratios:
 ### Complete Directory Card Component
 
 ```html
-<article class="
+<article
+  class="
   bg-white
   border-2 border-gray-200
   rounded-xl
@@ -619,7 +644,8 @@ All components meet minimum contrast ratios:
   hover:shadow-lg
   transition-all duration-200
   focus-within:ring-2 focus-within:ring-primary/20
-">
+"
+>
   <div class="flex items-start gap-4">
     <!-- Logo -->
     <img
@@ -648,34 +674,40 @@ All components meet minimum contrast ratios:
       <!-- Badges -->
       <div class="flex flex-wrap gap-2">
         <!-- DR Badge -->
-        <span class="
+        <span
+          class="
           inline-flex items-center
           px-3 py-1
           bg-success/10
           text-success font-bold text-sm
           rounded-full
-        ">
+        "
+        >
           DR 92
         </span>
 
         <!-- Dofollow Badge -->
-        <span class="
+        <span
+          class="
           inline-flex items-center gap-1
           px-3 py-1
           bg-success/10
           text-success font-semibold text-xs
           rounded-full
-        ">
+        "
+        >
           ✓ Dofollow
         </span>
 
         <!-- Pricing Badge -->
-        <span class="
+        <span
+          class="
           px-3 py-1
           bg-primary/10
           text-primary font-semibold text-xs
           rounded-full
-        ">
+        "
+        >
           Free
         </span>
       </div>
@@ -712,34 +744,40 @@ All components meet minimum contrast ratios:
     </label>
 
     <div class="flex flex-wrap gap-2">
-      <button class="
+      <button
+        class="
         px-4 py-2
         bg-primary text-white
         font-semibold text-sm
         rounded-lg
         hover:bg-primary-dark
         transition-colors
-      ">
+      "
+      >
         70+
       </button>
-      <button class="
+      <button
+        class="
         px-4 py-2
         bg-gray-100 text-gray-700
         font-semibold text-sm
         rounded-lg
         hover:bg-gray-200
         transition-colors
-      ">
+      "
+      >
         80+
       </button>
-      <button class="
+      <button
+        class="
         px-4 py-2
         bg-gray-100 text-gray-700
         font-semibold text-sm
         rounded-lg
         hover:bg-gray-200
         transition-colors
-      ">
+      "
+      >
         300+
       </button>
     </div>
@@ -837,25 +875,31 @@ transitionDuration: {
 
 ```html
 <!-- Hover scale -->
-<div class="
+<div
+  class="
   transition-transform duration-200
   hover:scale-105
-">
+"
+>
   Card
 </div>
 
 <!-- Fade in -->
-<div class="
+<div
+  class="
   opacity-0 animate-fade-in
-">
+"
+>
   Content
 </div>
 
 <!-- Slide up -->
-<div class="
+<div
+  class="
   translate-y-4 opacity-0
   animate-slide-up
-">
+"
+>
   Modal
 </div>
 ```
@@ -864,8 +908,12 @@ transitionDuration: {
 
 ```css
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {

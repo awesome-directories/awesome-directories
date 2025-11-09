@@ -1,0 +1,78 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Pattern overlay for depth -->
+  <g opacity="0.1">
+    <circle cx="100" cy="100" r="80" fill="#ffffff"/>
+    <circle cx="1100" cy="530" r="100" fill="#ffffff"/>
+    <circle cx="900" cy="150" r="60" fill="#ffffff"/>
+  </g>
+
+  <!-- Logo (scaled up) -->
+  <g transform="translate(80, 80)">
+    <!-- Folder tab -->
+    <path d="M0 20C0 13.3726 5.37258 8 12 8H36L48 30H96C102.627 30 108 35.3726 108 42V54H0V20Z" fill="#ffffff"/>
+    <!-- Folder body -->
+    <path d="M0 36H108V96C108 102.627 102.627 108 96 108H12C5.37258 108 0 102.627 0 96V36Z" fill="#ffffff"/>
+    <!-- Star -->
+    <path d="M54 51L58.5 64.5L72 69L58.5 73.5L54 87L49.5 73.5L36 69L49.5 64.5L54 51Z" fill="#3b82f6"/>
+  </g>
+
+  <!-- Main Title -->
+  <text x="220" y="140" font-family="Inter, system-ui, sans-serif" font-size="56" font-weight="800" fill="#ffffff">
+    Awesome Directories
+  </text>
+
+  <!-- Subtitle -->
+  <text x="220" y="200" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="400" fill="#ffffff" opacity="0.95">
+    300+ curated launch directories for indie hackers
+  </text>
+
+  <!-- Key Features -->
+  <g transform="translate(220, 260)">
+    <!-- Feature 1 -->
+    <g>
+      <circle cx="12" cy="12" r="12" fill="#10b981"/>
+      <text x="40" y="20" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" fill="#ffffff">
+        Domain Rating Filters (60-300+)
+      </text>
+    </g>
+
+    <!-- Feature 2 -->
+    <g transform="translate(0, 50)">
+      <circle cx="12" cy="12" r="12" fill="#10b981"/>
+      <text x="40" y="20" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" fill="#ffffff">
+        Dofollow Badges
+      </text>
+    </g>
+
+    <!-- Feature 3 -->
+    <g transform="translate(0, 100)">
+      <circle cx="12" cy="12" r="12" fill="#10b981"/>
+      <text x="40" y="20" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" fill="#ffffff">
+        Community Voting
+      </text>
+    </g>
+
+    <!-- Feature 4 -->
+    <g transform="translate(0, 150)">
+      <circle cx="12" cy="12" r="12" fill="#10b981"/>
+      <text x="40" y="20" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" fill="#ffffff">
+        Free &amp; Open Source
+      </text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <text x="600" y="590" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="500" fill="#ffffff" text-anchor="middle" opacity="0.9">
+    awesome-directories.com • Free Forever • Apache-2.0 License
+  </text>
+</svg>

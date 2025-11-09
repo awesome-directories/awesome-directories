@@ -2,12 +2,14 @@
 
 > Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly.
 
+![Awesome Directories Banner](./assets/github/readme-header.svg)
+
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub Stars](https://img.shields.io/github/stars/awesome-directories/awesome-directories)](https://github.com/awesome-directories/awesome-directories)
 
 A curated directory aggregator that helps indie hackers, bootstrappers, and solopreneurs discover the highest-quality launch directories for their SaaS products. Built with Vue.js 3, Supabase, and deployed on GitHub Pages.
 
-🌐 **Live Site:** [awesome-directories.github.io/awesome-directories](https://awesome-directories.github.io/awesome-directories)
+🌐 **Live Site:** [awesome-directories.com](https://awesome-directories.com)
 
 ---
 
