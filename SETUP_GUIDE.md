@@ -16,8 +16,11 @@ Your complete Awesome Directories application has been built according to the te
 - Directory browsing with advanced filters (DR, category, pricing, dofollow)
 - Instant search functionality
 - Multi-select checklist with PDF/CSV export
-- Directory detail pages with Giscus comments
-- User authentication (Google + GitHub OAuth)
+- Directory detail pages with built-in review system
+- User authentication (Google OAuth, GitHub OAuth, Email/Password)
+- 1-5 star rating system with reviews and nested comments
+- Review voting (upvote/downvote) and flagging system
+- User profiles with customizable display names
 - Favorites and submission tracking
 - Responsive design with Tailwind CSS
 
@@ -33,7 +36,6 @@ Your complete Awesome Directories application has been built according to the te
 
 - Mautic newsletter forms (crm.meysam.io)
 - Pirsch analytics (privacy-first)
-- Giscus comments (GitHub Discussions)
 - Moz API for DR scores (optional)
 
 ✅ **CI/CD & Automation**
@@ -50,10 +52,10 @@ Your complete Awesome Directories application has been built according to the te
 
 1. **Create a Supabase project** at [supabase.com](https://supabase.com)
 
-2. **Run the database migration:**
+2. **Run the database migrations:**
    - Go to SQL Editor in Supabase
-   - Copy the entire contents of `supabase/migrations/001_initial_schema.sql`
-   - Paste and run
+   - Copy and run `supabase/migrations/001_initial_schema.sql` first
+   - Then copy and run `supabase/migrations/002_review_system.sql`
 
 3. **Seed the database:**
    - The seed data is in `supabase/seed-data.json` (388 directories)
@@ -70,10 +72,36 @@ Your complete Awesome Directories application has been built according to the te
    }
    ```
 
-4. **Enable OAuth Providers:**
-   - Go to Authentication → Providers
-   - Enable Google and GitHub
-   - Add redirect URLs: `http://localhost:3000/awesome-directories` and your production URL
+4. **Configure Authentication Providers:**
+
+   **Email/Password Authentication:**
+   - Go to Authentication → Providers → Email
+   - Enable "Email provider"
+   - Enable "Confirm email" (required for production)
+   - Configure email templates in Authentication → Email Templates:
+     - **Confirm signup**: Customize welcome message
+     - **Reset password**: Customize reset instructions
+
+   **Google OAuth:**
+   - Go to [Google Cloud Console](https://console.cloud.google.com)
+   - Create OAuth 2.0 credentials
+   - Add authorized redirect URIs:
+     - `http://localhost:3000/awesome-directories` (development)
+     - `https://YOUR_PROJECT.supabase.co/auth/v1/callback` (production)
+     - Your production domain callback URL
+   - Copy Client ID and Client Secret
+   - In Supabase: Authentication → Providers → Google
+   - Enable and paste credentials
+
+   **GitHub OAuth:**
+   - Go to [GitHub Developer Settings](https://github.com/settings/developers)
+   - Create new OAuth App
+   - Set Homepage URL: your production URL
+   - Set Authorization callback URL:
+     - `https://YOUR_PROJECT.supabase.co/auth/v1/callback`
+   - Copy Client ID and Client Secret
+   - In Supabase: Authentication → Providers → GitHub
+   - Enable and paste credentials
 
 5. **Get your credentials:**
    - Settings → API
@@ -100,7 +128,6 @@ Your complete Awesome Directories application has been built according to the te
 
    # Optional (can be added later)
    VITE_PIRSCH_SITE_ID=
-   VITE_GITHUB_REPO=awesome-directories/awesome-directories
    ```
 
 ### Step 3: Install and Run
@@ -141,10 +168,6 @@ Open http://localhost:3000 🎉
 
    ```
    VITE_PIRSCH_SITE_ID
-   VITE_GITHUB_REPO
-   VITE_GITHUB_REPO_ID
-   VITE_GITHUB_CATEGORY
-   VITE_GITHUB_CATEGORY_ID
    ```
 
    **For DR Updates (optional):**
@@ -178,14 +201,27 @@ Your Mautic instance is already configured at `https://mautic.your-domain.com`. 
 2. Get the form ID from Mautic dashboard
 3. Add to `VITE_MAUTIC_FORM_ID` in environment variables
 
-### Giscus Comments
+### Review System
 
-1. Install [Giscus app](https://github.com/apps/giscus) on your repository
-2. Enable Discussions in repository settings
-3. Get configuration from [giscus.app](https://giscus.app):
-   - Enter your repo
-   - Copy repo ID and category ID
-   - Add to environment variables
+The built-in review system allows users to:
+- Leave 1-5 star ratings on directories
+- Write detailed reviews and comments
+- Reply to reviews (max 2 levels of nesting)
+- Upvote/downvote helpful reviews
+- Flag inappropriate content
+- Edit and delete their own reviews
+
+**User Profiles:**
+- Users set a display name in Settings (defaults to email username)
+- Display name appears on all reviews and comments
+- Multi-provider login supported (can link Google, GitHub, and email accounts)
+
+**Email Verification:**
+- Email/password signups require email confirmation
+- Configure email templates in Supabase Dashboard
+- Password reset flow included
+
+No additional configuration needed - the system is ready after migrations!
 
 ### Pirsch Analytics (Optional)
 
@@ -202,7 +238,7 @@ Your Mautic instance is already configured at `https://mautic.your-domain.com`. 
 
 ```sql
 -- See all directories
-SELECT name, domain_rating, is_dofollow, pricing_type, helpful_count
+SELECT name, domain_rating, is_dofollow, pricing_type, average_rating, review_count
 FROM directories
 WHERE is_active = true
 ORDER BY domain_rating DESC NULLS LAST;
@@ -372,9 +408,9 @@ npm install
 
 1. **Customize branding** - Update colors, logos, content
 2. **Set up Mautic** - Create form and test newsletter
-3. **Configure Giscus** - Enable comments
-4. **Add Pirsch** - Set up analytics
-5. **Test locally** - Verify all features work
+3. **Configure authentication** - Set up Google & GitHub OAuth
+4. **Add Pirsch** - Set up analytics (optional)
+5. **Test locally** - Verify all features work (auth, reviews, ratings)
 6. **Deploy to GitHub Pages** - Push to main branch
 7. **Promote** - Share on Product Hunt, Indie Hackers, Twitter
 
@@ -391,19 +427,24 @@ npm install
 
 ## ✅ Checklist Before Launch
 
-- [ ] Supabase database set up and seeded
+- [ ] Supabase database set up with both migrations
+- [ ] Database seeded with directories
 - [ ] Environment variables configured
+- [ ] Email authentication enabled with verification
 - [ ] OAuth providers enabled (Google + GitHub)
+- [ ] Email templates configured (welcome, password reset)
 - [ ] Mautic form created and ID added
 - [ ] Local development tested
+- [ ] Auth flow tested (all 3 providers + password reset)
+- [ ] Review system tested (create, edit, delete, vote, flag)
+- [ ] User profiles tested (display name changes)
 - [ ] GitHub secrets added
 - [ ] GitHub Pages enabled
 - [ ] First deployment successful
 - [ ] All links working
 - [ ] Newsletter signup tested
-- [ ] Auth flow tested
 - [ ] Mobile responsive checked
-- [ ] Analytics tracking verified
+- [ ] Analytics tracking verified (if enabled)
 
 ---
 

@@ -84,17 +84,29 @@
     <div
       class="flex items-center justify-between pt-4 border-t border-gray-100"
     >
-      <div>
-        <button
-          v-if="directory?.helpful_count > 0"
-          @click="handleHelpfulClick"
-          :disabled="hasVoted"
-          class="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          :class="{ 'text-primary': hasVoted }"
-        >
-          <span>{{ hasVoted ? "✓" : "👍" }}</span>
-          <span>{{ directory.helpful_count || 0 }} helpful</span>
-        </button>
+      <div class="flex items-center space-x-1">
+        <!-- Star Rating Display -->
+        <div v-if="directory.review_count > 0" class="flex items-center space-x-1 text-sm">
+          <div class="flex items-center">
+            <span
+              v-for="star in 5"
+              :key="star"
+              class="text-base"
+              :class="star <= Math.round(directory.average_rating || 0) ? 'text-yellow-400' : 'text-gray-300'"
+            >
+              ★
+            </span>
+          </div>
+          <span class="text-gray-600 font-medium">
+            {{ (directory.average_rating || 0).toFixed(1) }}
+          </span>
+          <span class="text-gray-400">
+            ({{ directory.review_count }})
+          </span>
+        </div>
+        <div v-else class="text-sm text-gray-400">
+          No reviews yet
+        </div>
       </div>
 
       <router-link
@@ -108,7 +120,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   directory: {
@@ -125,9 +137,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["toggle-select", "vote"]);
-
-const hasVoted = ref(false);
+defineEmits(["toggle-select"]);
 
 const drBadgeClass = computed(() => {
   const dr = props.directory.domain_rating;
@@ -167,13 +177,6 @@ const displayCategories = computed(() => {
 
 const handleImageError = (e) => {
   e.target.style.display = "none";
-};
-
-const handleHelpfulClick = () => {
-  if (hasVoted.value) return;
-
-  hasVoted.value = true;
-  emit("vote", props.directory);
 };
 </script>
 

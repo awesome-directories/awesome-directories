@@ -69,16 +69,6 @@
             >
               Submit to {{ directory.name }} →
             </a>
-
-            <button
-              @click="handleHelpfulClick"
-              :disabled="hasVoted"
-              class="btn-secondary"
-              :class="{ 'opacity-50': hasVoted }"
-            >
-              {{ hasVoted ? "✓ Marked Helpful" : "👍 Mark as Helpful" }}
-              ({{ directory.helpful_count || 0 }})
-            </button>
           </div>
         </div>
 
@@ -115,23 +105,21 @@
 
           <div class="card p-4 text-center">
             <div class="text-2xl font-bold text-primary mb-1">
-              {{ directory.helpful_count || 0 }}
+              {{ directory.average_rating ? directory.average_rating.toFixed(1) : "N/A" }}
             </div>
-            <div class="text-sm text-gray-600">Helpful Votes</div>
+            <div class="text-sm text-gray-600">
+              Avg Rating ({{ directory.review_count || 0 }})
+            </div>
           </div>
         </div>
 
-        <!-- Giscus Comments -->
+        <!-- Reviews Section -->
         <div class="card p-6">
-          <h2 class="text-xl font-bold text-gray-900 mb-4">
-            Community Reviews & Success Stories
-          </h2>
-          <p class="text-gray-600 mb-6">
-            Launched on {{ directory.name }}? Share your results and help other
-            founders!
-          </p>
-
-          <div id="giscus-container"></div>
+          <ReviewSection
+            v-if="directory.id"
+            :directory-id="directory.id"
+            @show-auth-modal="showAuthModal = true"
+          />
         </div>
       </div>
 
@@ -141,6 +129,9 @@
         <router-link to="/" class="btn-primary">Back to Home</router-link>
       </div>
     </div>
+
+    <!-- Auth Modal -->
+    <AuthModal v-if="showAuthModal" @close="showAuthModal = false" />
   </div>
 </template>
 
@@ -148,97 +139,23 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useDirectories } from "@/composables/useDirectories";
-import { supabase } from "@/lib/supabase";
+import ReviewSection from "@/components/ReviewSection.vue";
+import AuthModal from "@/components/AuthModal.vue";
 
 const route = useRoute();
 const { getDirectoryBySlug } = useDirectories();
 
 const directory = ref(null);
 const loading = ref(true);
-const hasVoted = ref(false);
+const showAuthModal = ref(false);
 
 const loadDirectory = async () => {
   try {
     directory.value = await getDirectoryBySlug(route.params.slug);
-
-    // Load Giscus comments
-    loadGiscusComments();
   } catch (error) {
     console.error("Error loading directory:", error);
   } finally {
     loading.value = false;
-  }
-};
-
-const loadGiscusComments = () => {
-  const script = document.createElement("script");
-  script.src = "https://giscus.app/client.js";
-  script.setAttribute(
-    "data-repo",
-    import.meta.env.VITE_GITHUB_REPO ||
-      "awesome-directories/awesome-directories",
-  );
-  script.setAttribute(
-    "data-repo-id",
-    import.meta.env.VITE_GITHUB_REPO_ID || "",
-  );
-  script.setAttribute(
-    "data-category",
-    import.meta.env.VITE_GITHUB_CATEGORY || "Announcements",
-  );
-  script.setAttribute(
-    "data-category-id",
-    import.meta.env.VITE_GITHUB_CATEGORY_ID || "",
-  );
-  script.setAttribute("data-mapping", "pathname");
-  script.setAttribute("data-strict", "0");
-  script.setAttribute("data-reactions-enabled", "1");
-  script.setAttribute("data-emit-metadata", "0");
-  script.setAttribute("data-input-position", "bottom");
-  script.setAttribute("data-theme", "light");
-  script.setAttribute("data-lang", "en");
-  script.crossOrigin = "anonymous";
-  script.async = true;
-
-  const container = document.getElementById("giscus-container");
-  if (container) {
-    container.appendChild(script);
-  }
-};
-
-const handleHelpfulClick = async () => {
-  if (hasVoted.value || !directory.value) return;
-
-  try {
-    const response = await fetch("https://api.ipify.org?format=json");
-    const data = await response.json();
-    const ip = data.ip;
-
-    const encoder = new TextEncoder();
-    const data_encoded = encoder.encode(ip);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data_encoded);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const ipHash = hashArray
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-
-    const { error } = await supabase.from("directory_votes").insert({
-      directory_id: directory.value.id,
-      ip_hash: ipHash,
-    });
-
-    if (!error || error.code === "23505") {
-      hasVoted.value = true;
-      directory.value.helpful_count = (directory.value.helpful_count || 0) + 1;
-
-      if (window.pirsch) {
-        window.pirsch("Directory Helpful Vote", {
-          directory: directory.value.slug,
-        });
-      }
-    }
-  } catch (err) {
-    console.error("Error voting:", err);
   }
 };
 
