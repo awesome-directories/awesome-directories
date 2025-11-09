@@ -165,7 +165,8 @@ const fetchGitHubStats = async () => {
 };
 
 onMounted(async () => {
-  await fetchDirectories();
+  // Load all directories for accurate stats
+  await fetchDirectories(false, true);
   await fetchGitHubStats();
 
   if (window.pirsch) {

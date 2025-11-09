@@ -20,7 +20,7 @@
           class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
         >
           <div class="text-center">
-            <div class="text-3xl font-bold">{{ totalCount }}+</div>
+            <div class="text-3xl font-bold">{{ totalDirectoriesCount }}+</div>
             <div class="text-sm text-blue-100">Curated Directories</div>
           </div>
           <div class="hidden sm:block text-blue-200">•</div>
@@ -255,16 +255,51 @@
       </div>
 
       <!-- Directory Grid -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <DirectoryCard
-          v-for="directory in displayedDirectories"
-          :key="directory.id"
-          :directory="directory"
-          :selectable="true"
-          :is-selected="isDirectorySelected(directory)"
-          @toggle-select="toggleDirectorySelection"
-          @vote="handleVote"
-        />
+      <div v-else>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <DirectoryCard
+            v-for="directory in displayedDirectories"
+            :key="directory.id"
+            :directory="directory"
+            :selectable="true"
+            :is-selected="isDirectorySelected(directory)"
+            @toggle-select="toggleDirectorySelection"
+            @vote="handleVote"
+          />
+        </div>
+
+        <!-- Load More Button -->
+        <div v-if="hasMore && !loading" class="mt-8 text-center">
+          <button
+            @click="loadMore"
+            :disabled="loadingMore"
+            class="btn-primary px-8 py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span v-if="loadingMore" class="flex items-center justify-center gap-2">
+              <div
+                class="inline-block animate-spin rounded-full h-5 w-5 border-b-2 border-white"
+              ></div>
+              Loading more...
+            </span>
+            <span v-else>
+              Load More Directories
+              <span class="text-sm opacity-90">
+                ({{ directories.length }} of {{ totalCount }})
+              </span>
+            </span>
+          </button>
+        </div>
+
+        <!-- All Loaded Message -->
+        <div
+          v-if="!hasMore && directories.length > 0"
+          class="mt-8 text-center text-gray-600"
+        >
+          <p class="text-lg font-medium">All directories loaded!</p>
+          <p class="text-sm mt-1">
+            Showing all {{ directories.length }} directories
+          </p>
+        </div>
       </div>
     </div>
 
@@ -319,10 +354,15 @@ const {
   directories,
   loading,
   error,
+  loadingMore,
+  hasMore,
+  totalCount,
   fetchDirectories,
   filterDirectories,
   sortDirectories,
   uniqueCategories,
+  loadMore,
+  clearCache,
 } = useDirectories();
 
 const searchQuery = ref("");
@@ -358,7 +398,10 @@ const filteredDirectories = computed(() => {
 const displayedDirectories = computed(() => filteredDirectories.value);
 const filteredCount = computed(() => filteredDirectories.value.length);
 
-const totalCount = computed(() => directories.value.length);
+// Use the actual total count from cache, fallback to loaded directories
+const totalDirectoriesCount = computed(() =>
+  totalCount.value > 0 ? totalCount.value : directories.value.length
+);
 const withDRCount = computed(
   () => directories.value.filter((d) => d.domain_rating).length,
 );
@@ -430,8 +473,8 @@ const handleVote = async (directory) => {
       window.pirsch("Directory Helpful Vote", { directory: directory.slug });
     }
 
-    // Reload directories to get updated count
-    await fetchDirectories();
+    // Clear cache and reload to get updated count
+    await fetchDirectories(true);
   } catch (err) {
     console.error("Error voting:", err);
   }
