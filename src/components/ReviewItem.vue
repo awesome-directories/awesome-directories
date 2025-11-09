@@ -371,15 +371,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.review-item {
-  @apply mb-4;
-}
-
-/* Smooth transitions */
-button {
-  @apply transition-all duration-150;
-}
-
 /* Ensure text wraps properly */
 .whitespace-pre-wrap {
   white-space: pre-wrap;
