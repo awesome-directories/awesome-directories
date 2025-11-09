@@ -191,7 +191,7 @@ Monitor these metrics:
 Add to your website:
 
 ```html
-<a href="https://www.producthunt.com/posts/YOUR-PRODUCT?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-YOUR-PRODUCT" target="_blank">
+<a href="https://www.producthunt.com/posts/YOUR-PRODUCT?utm_source=badge-featured&utm_medium=badge&utm_source=badge-YOUR-PRODUCT" target="_blank">
   <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=YOUR-POST-ID&theme=light" alt="Awesome Directories - 300+ curated launch directories | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" />
 </a>
 ```
