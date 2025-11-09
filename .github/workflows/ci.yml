@@ -57,21 +57,17 @@ jobs:
         with:
           name: build-pr${{ github.event.pull_request.number }}
           path: dist
-      # - id: netlify
-      #   name: Deploy to Netlify
-      #   uses: jsmrcaga/action-netlify-deploy@v2.4.0
-      #   with:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_DEPLOY_TO_PROD: ${{ env.NETLIFY_DEPLOY_TO_PROD }}
-      #     NETLIFY_SITE_ID: ${{ env.NETLIFY_SITE_ID }}
-      #     build_command: echo Skipping building the web files
-      #     build_directory: dist
-      #     install_command: echo Skipping installing the dependencies
       - name: Deploy to Netlify
-        uses: South-Paw/action-netlify-cli@v2
         id: netlify
-        with:
-          args: deploy --json --dir './dist' --message 'branch ${{ github.ref_name }} sha ${{ github.sha }}'
+        run: |
+          bunx netlify-cli@v23 deploy \
+            --site "$NETLIFY_SITE_ID" \
+            --json \
+            --dir './dist' \
+            --message 'branch ${{ github.ref_name }} sha ${{ github.sha }}' \
+            | jq -r .deploy_url | tee deploy_url.txt
+          deploy_url="$(cat deploy_url.txt)"
+          echo "deploy_url=$deploy_url" >> "$GITHUB_OUTPUT"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -81,7 +77,7 @@ jobs:
           title: "# Live preview"
           content: |
             The live preview of the changes are available at the following URL:
-            <${{ fromJson(steps.netlify.outputs.NETLIFY_OUTPUT).url }}>
+            <${{ steps.netlify.outputs.deploy_url }}>
           token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
