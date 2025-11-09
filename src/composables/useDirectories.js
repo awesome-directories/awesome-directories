@@ -111,10 +111,10 @@ export function useDirectories() {
 
         if (fetchError) throw fetchError;
         data = pageData;
-        hasMore.value = (data?.length || 0) < totalCount;
       }
 
       directories.value = data || [];
+      hasMore.value = directories.value.length < totalCount;
 
       // Update cache
       cache.value = {
