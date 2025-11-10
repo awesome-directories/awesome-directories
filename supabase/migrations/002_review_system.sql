@@ -260,11 +260,9 @@ CREATE TRIGGER update_review_flags_count
   FOR EACH ROW
   EXECUTE FUNCTION update_review_flag_count();
 
--- Add rating_sum and review_count columns for incremental stats
+-- Add rating_sum column for incremental stats
 ALTER TABLE directories
-  ADD COLUMN IF NOT EXISTS rating_sum NUMERIC DEFAULT 0,
-  ADD COLUMN IF NOT EXISTS review_count INTEGER DEFAULT 0;
-
+  ADD COLUMN IF NOT EXISTS rating_sum NUMERIC DEFAULT 0;
 -- Backfill rating_sum and review_count for existing data
 UPDATE directories d SET
   rating_sum = COALESCE((
