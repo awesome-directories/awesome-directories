@@ -222,11 +222,12 @@ const availableProviders = computed(() => {
 
 const getInitials = (name) => {
   if (!name) return '?'
-  const parts = name.split(' ')
-  if (parts.length >= 2) {
+  const parts = name.trim().split(' ').filter(Boolean)
+  if (parts.length >= 2 && parts[0].length > 0 && parts[1].length > 0) {
     return (parts[0][0] + parts[1][0]).toUpperCase()
   }
-  return name.substring(0, 2).toUpperCase()
+  // Fallback: use first two non-space characters
+  return name.replace(/\s/g, '').substring(0, 2).toUpperCase()
 }
 
 const handleUpdateDisplayName = async () => {
