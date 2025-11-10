@@ -191,17 +191,22 @@ export function useReviews() {
         vote_type: voteType // 'upvote' or 'downvote'
       }
 
+      let onConflict = null;
       if (userId) {
         voteData.user_id = userId
-      } else {
+        onConflict = 'review_id,user_id'
+      } else if (ipHash) {
         voteData.ip_hash = ipHash
+        onConflict = 'review_id,ip_hash'
+      } else {
+        throw new Error('Either userId or ipHash must be provided to vote on a review.')
       }
 
       // Try to insert vote
       const { data, error: voteError } = await supabase
         .from('review_votes')
         .upsert(voteData, {
-          onConflict: userId ? 'review_id,user_id' : 'review_id,ip_hash'
+          onConflict: onConflict
         })
         .select()
         .single()
