@@ -274,12 +274,19 @@ const canFlag = computed(() => {
 })
 
 const getInitials = (name) => {
-  if (!name) return '?'
-  const parts = name.split(' ')
+  if (!name || typeof name !== 'string') return '?'
+  // Split and filter out empty parts (e.g., extra spaces)
+  const parts = name.split(' ').filter(part => part.length > 0)
   if (parts.length >= 2) {
-    return (parts[0][0] + parts[1][0]).toUpperCase()
+    const first = parts[0][0] ? parts[0][0] : ''
+    const second = parts[1][0] ? parts[1][0] : ''
+    const initials = (first + second).toUpperCase()
+    return initials || '?'
   }
-  return name.substring(0, 2).toUpperCase()
+  if (parts.length === 1 && parts[0].length > 0) {
+    return parts[0].substring(0, 2).toUpperCase()
+  }
+  return '?'
 }
 
 const formatDate = (dateString) => {
