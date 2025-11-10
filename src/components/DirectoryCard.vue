@@ -92,7 +92,7 @@
               v-for="star in 5"
               :key="star"
               class="text-base"
-              :class="star <= Math.round(directory.average_rating || 0) ? 'text-yellow-400' : 'text-gray-300'"
+              :class="star <= Math.floor(directory.average_rating || 0) ? 'text-yellow-400' : 'text-gray-300'"
             >
               ★
             </span>
