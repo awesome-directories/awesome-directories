@@ -46,12 +46,6 @@ const router = createRouter({
       component: () => import("../views/SubmissionsView.vue"),
       meta: { title: "My Submissions", requiresAuth: true },
     },
-    {
-      path: "/:pathMatch(.*)*",
-      name: "not-found",
-      component: () => import("../views/NotFoundView.vue"),
-      meta: { title: "404 - Page Not Found" },
-    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
