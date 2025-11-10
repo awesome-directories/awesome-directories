@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   -- Engagement metrics
   upvotes INTEGER DEFAULT 0,
   downvotes INTEGER DEFAULT 0,
-  helpfulness_score INTEGER DEFAULT 0, -- Computed: upvotes - downvotes
+  helpfulness_score INTEGER DEFAULT 0, -- Cached value: upvotes - downvotes, maintained by triggers
   flag_count INTEGER DEFAULT 0,
 
   -- Metadata
