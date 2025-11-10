@@ -257,27 +257,86 @@ CREATE TRIGGER update_review_flags_count
   FOR EACH ROW
   EXECUTE FUNCTION update_review_flag_count();
 
--- Update directory average rating and review count
+-- Add rating_sum and review_count columns for incremental stats
+ALTER TABLE directories
+  ADD COLUMN IF NOT EXISTS rating_sum NUMERIC DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS review_count INTEGER DEFAULT 0;
+
+-- Backfill rating_sum and review_count for existing data
+UPDATE directories d SET
+  rating_sum = COALESCE((
+    SELECT SUM(rating) FROM reviews r WHERE r.directory_id = d.id AND r.rating IS NOT NULL
+  ), 0),
+  review_count = COALESCE((
+    SELECT COUNT(*) FROM reviews r WHERE r.directory_id = d.id AND r.rating IS NOT NULL
+  ), 0);
+
+-- Update average_rating based on new columns
+UPDATE directories
+  SET average_rating = CASE
+    WHEN review_count > 0 THEN rating_sum::numeric / review_count
+    ELSE 0
+  END;
+
+-- Incremental update function for directory rating stats
 CREATE OR REPLACE FUNCTION update_directory_rating_stats()
 RETURNS TRIGGER AS $$
 DECLARE
   dir_id UUID;
+  old_rating NUMERIC;
+  new_rating NUMERIC;
 BEGIN
   -- Get directory_id from NEW or OLD
   dir_id := COALESCE(NEW.directory_id, OLD.directory_id);
+  old_rating := COALESCE(OLD.rating, NULL);
+  new_rating := COALESCE(NEW.rating, NULL);
 
-  -- Update directory stats
-  UPDATE directories
-  SET
-    average_rating = COALESCE(
-      (SELECT AVG(rating) FROM reviews WHERE directory_id = dir_id AND rating IS NOT NULL),
-      0
-    ),
-    review_count = (
-      SELECT COUNT(*) FROM reviews WHERE directory_id = dir_id AND rating IS NOT NULL
-    )
-  WHERE id = dir_id;
+  IF TG_OP = 'INSERT' THEN
+    IF new_rating IS NOT NULL THEN
+      UPDATE directories
+      SET
+        rating_sum = rating_sum + new_rating,
+        review_count = review_count + 1,
+        average_rating = (rating_sum + new_rating) / (review_count + 1)
+      WHERE id = dir_id;
+    END IF;
 
+  ELSIF TG_OP = 'UPDATE' THEN
+    IF old_rating IS NOT NULL AND new_rating IS NOT NULL THEN
+      -- Rating changed
+      UPDATE directories
+      SET
+        rating_sum = rating_sum - old_rating + new_rating,
+        average_rating = CASE WHEN review_count > 0 THEN (rating_sum - old_rating + new_rating) / review_count ELSE 0 END
+      WHERE id = dir_id;
+    ELSIF old_rating IS NULL AND new_rating IS NOT NULL THEN
+      -- Rating added
+      UPDATE directories
+      SET
+        rating_sum = rating_sum + new_rating,
+        review_count = review_count + 1,
+        average_rating = (rating_sum + new_rating) / (review_count + 1)
+      WHERE id = dir_id;
+    ELSIF old_rating IS NOT NULL AND new_rating IS NULL THEN
+      -- Rating removed
+      UPDATE directories
+      SET
+        rating_sum = rating_sum - old_rating,
+        review_count = GREATEST(review_count - 1, 0),
+        average_rating = CASE WHEN GREATEST(review_count - 1, 0) > 0 THEN (rating_sum - old_rating) / GREATEST(review_count - 1, 0) ELSE 0 END
+      WHERE id = dir_id;
+    END IF;
+
+  ELSIF TG_OP = 'DELETE' THEN
+    IF old_rating IS NOT NULL THEN
+      UPDATE directories
+      SET
+        rating_sum = rating_sum - old_rating,
+        review_count = GREATEST(review_count - 1, 0),
+        average_rating = CASE WHEN GREATEST(review_count - 1, 0) > 0 THEN (rating_sum - old_rating) / GREATEST(review_count - 1, 0) ELSE 0 END
+      WHERE id = dir_id;
+    END IF;
+  END IF;
   RETURN COALESCE(NEW, OLD);
 END;
 $$ LANGUAGE plpgsql;
