@@ -50,6 +50,7 @@
               :class="{ 'border-red-500': passwordError }"
               @input="passwordError = ''"
               required
+              autocomplete="new-password"
             />
             <p v-if="passwordError" class="text-xs text-red-600 mt-1">
               {{ passwordError }}
@@ -72,6 +73,7 @@
               :class="{ 'border-red-500': confirmError }"
               @input="confirmError = ''"
               required
+              autocomplete="new-password"
             />
             <p v-if="confirmError" class="text-xs text-red-600 mt-1">
               {{ confirmError }}
@@ -170,9 +172,19 @@ const handlePasswordReset = async () => {
     }, 2000);
   } catch (error) {
     console.error("Password reset error:", error);
-    errorMessage.value =
-      error.message || "Failed to update password. Please try again or request a new reset link.";
-  } finally {
+    // Check for invalid or expired reset token/session
+    const msg = (error && error.message) ? error.message.toLowerCase() : "";
+    if (
+      msg.includes("expired") ||
+      msg.includes("invalid") ||
+      msg.includes("recovery session") ||
+      msg.includes("reset token")
+    ) {
+      errorMessage.value = "Your password reset link is invalid or has expired. Please request a new reset link.";
+    } else {
+      errorMessage.value =
+        error.message || "Failed to update password. Please try again or request a new reset link.";
+    }
     isLoading.value = false;
   }
 };
