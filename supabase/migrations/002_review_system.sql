@@ -206,7 +206,10 @@ BEGIN
     SET
       upvotes = CASE WHEN OLD.vote_type = 'upvote' THEN GREATEST(upvotes - 1, 0) ELSE upvotes END,
       downvotes = CASE WHEN OLD.vote_type = 'downvote' THEN GREATEST(downvotes - 1, 0) ELSE downvotes END,
-      helpfulness_score = upvotes - downvotes
+      helpfulness_score = 
+        (CASE WHEN OLD.vote_type = 'upvote' THEN GREATEST(upvotes - 1, 0) ELSE upvotes END)
+        -
+        (CASE WHEN OLD.vote_type = 'downvote' THEN GREATEST(downvotes - 1, 0) ELSE downvotes END)
     WHERE id = OLD.review_id;
   ELSIF TG_OP = 'UPDATE' THEN
     UPDATE reviews
