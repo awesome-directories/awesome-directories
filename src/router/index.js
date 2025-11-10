@@ -46,6 +46,12 @@ const router = createRouter({
       component: () => import("../views/SubmissionsView.vue"),
       meta: { title: "My Submissions", requiresAuth: true },
     },
+    {
+      path: "/reset-password",
+      name: "reset-password",
+      component: () => import("../views/ResetPasswordView.vue"),
+      meta: { title: "Reset Password" },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

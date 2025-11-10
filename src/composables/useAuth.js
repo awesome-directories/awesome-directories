@@ -28,6 +28,41 @@ export function useAuth() {
     if (error) throw error;
   };
 
+  const signInWithEmail = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
+    return data;
+  };
+
+  const signUpWithEmail = async (email, password) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin + import.meta.env.BASE_URL,
+      },
+    });
+    if (error) throw error;
+    return data;
+  };
+
+  const resetPassword = async (email) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + import.meta.env.BASE_URL + '#/reset-password',
+    });
+    if (error) throw error;
+  };
+
+  const updatePassword = async (newPassword) => {
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+    if (error) throw error;
+  };
+
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
@@ -70,6 +105,10 @@ export function useAuth() {
     isAuthenticated,
     signInWithGoogle,
     signInWithGithub,
+    signInWithEmail,
+    signUpWithEmail,
+    resetPassword,
+    updatePassword,
     signOut,
     refreshSession,
   };

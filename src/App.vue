@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="min-h-screen flex flex-col">
-    <AppHeader />
+    <AppHeader @show-auth="showAuthModal = true" />
 
     <main class="flex-grow">
       <router-view v-slot="{ Component }">
