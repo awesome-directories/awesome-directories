@@ -9,8 +9,14 @@
           Enter your new password below
         </p>
 
+        <!-- Checking Token State -->
+        <div v-if="isCheckingToken" class="text-center py-8">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p class="text-gray-600">Validating reset link...</p>
+        </div>
+
         <!-- Success State -->
-        <div v-if="successMessage" class="text-center">
+        <div v-else-if="successMessage" class="text-center">
           <div class="mb-6 text-green-600 bg-green-50 border border-green-200 rounded-lg p-4">
             <svg
               class="w-12 h-12 mx-auto mb-3"
@@ -32,6 +38,30 @@
           </router-link>
         </div>
 
+        <!-- Invalid Token State -->
+        <div v-else-if="!hasValidToken" class="text-center">
+          <div class="mb-6 text-red-600 bg-red-50 border border-red-200 rounded-lg p-4">
+            <svg
+              class="w-12 h-12 mx-auto mb-3"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+            <p class="font-medium mb-4">{{ errorMessage }}</p>
+            <p class="text-sm text-gray-600">The reset link may have expired or is invalid.</p>
+          </div>
+          <router-link to="/" class="btn-primary">
+            Go to Home
+          </router-link>
+        </div>
+
         <!-- Password Reset Form -->
         <form v-else @submit.prevent="handlePasswordReset" class="space-y-4">
           <div>
@@ -45,12 +75,12 @@
               id="new-password"
               v-model="newPassword"
               type="password"
+              autocomplete="new-password"
               placeholder="At least 6 characters"
               class="input w-full"
               :class="{ 'border-red-500': passwordError }"
               @input="passwordError = ''"
               required
-              autocomplete="new-password"
             />
             <p v-if="passwordError" class="text-xs text-red-600 mt-1">
               {{ passwordError }}
@@ -68,12 +98,12 @@
               id="confirm-password"
               v-model="confirmPassword"
               type="password"
+              autocomplete="new-password"
               placeholder="Re-enter your password"
               class="input w-full"
               :class="{ 'border-red-500': confirmError }"
               @input="confirmError = ''"
               required
-              autocomplete="new-password"
             />
             <p v-if="confirmError" class="text-xs text-red-600 mt-1">
               {{ confirmError }}
@@ -113,11 +143,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useAuth } from "@/composables/useAuth";
+import { supabase } from "@/lib/supabase";
 
 const router = useRouter();
+const route = useRoute();
 const { updatePassword } = useAuth();
 
 const newPassword = ref("");
@@ -127,6 +159,11 @@ const errorMessage = ref("");
 const successMessage = ref("");
 const passwordError = ref("");
 const confirmError = ref("");
+const hasValidToken = ref(false);
+const isCheckingToken = ref(true);
+
+// Store timeout ID to clean up on unmount
+let redirectTimeoutId = null;
 
 const validatePasswords = () => {
   let isValid = true;
@@ -157,6 +194,12 @@ const validatePasswords = () => {
 const handlePasswordReset = async () => {
   if (!validatePasswords()) return;
 
+  // Double-check we have a valid recovery token
+  if (!hasValidToken.value) {
+    errorMessage.value = "Invalid or expired reset link. Please request a new password reset.";
+    return;
+  }
+
   isLoading.value = true;
   errorMessage.value = "";
 
@@ -166,32 +209,79 @@ const handlePasswordReset = async () => {
     newPassword.value = "";
     confirmPassword.value = "";
 
-    // Redirect to home after 2 seconds
-    setTimeout(() => {
+    // Redirect to home after 2 seconds - store timeout ID for cleanup
+    redirectTimeoutId = setTimeout(() => {
       router.push("/");
     }, 2000);
   } catch (error) {
     console.error("Password reset error:", error);
+
     // Check for invalid or expired reset token/session
     const msg = (error && error.message) ? error.message.toLowerCase() : "";
     if (
       msg.includes("expired") ||
       msg.includes("invalid") ||
       msg.includes("recovery session") ||
-      msg.includes("reset token")
+      msg.includes("reset token") ||
+      msg.includes("session") ||
+      msg.includes("token")
     ) {
       errorMessage.value = "Your password reset link is invalid or has expired. Please request a new reset link.";
     } else {
       errorMessage.value =
         error.message || "Failed to update password. Please try again or request a new reset link.";
     }
+  } finally {
     isLoading.value = false;
   }
 };
 
+/**
+ * Verify that the user has a valid recovery token from the password reset email
+ * Supabase automatically handles the token in the URL hash and sets the session
+ */
+const checkResetToken = async () => {
+  try {
+    // Get the current session - if user came from reset email, Supabase will have
+    // processed the token from the URL hash and created a recovery session
+    const { data: { session }, error } = await supabase.auth.getSession();
+
+    if (error) {
+      console.error("Error checking session:", error);
+      hasValidToken.value = false;
+      errorMessage.value = "Invalid or expired reset link. Please request a new password reset.";
+      return;
+    }
+
+    // Check if we have a session (indicating valid recovery token)
+    if (session) {
+      hasValidToken.value = true;
+    } else {
+      hasValidToken.value = false;
+      errorMessage.value = "Invalid or expired reset link. Please request a new password reset.";
+    }
+  } catch (error) {
+    console.error("Error validating reset token:", error);
+    hasValidToken.value = false;
+    errorMessage.value = "Unable to validate reset link. Please try again.";
+  } finally {
+    isCheckingToken.value = false;
+  }
+};
+
 onMounted(() => {
+  // Check for valid reset token
+  checkResetToken();
+
   if (window.pirsch) {
     window.pirsch("Reset Password Page View");
+  }
+});
+
+// Clean up timeout on component unmount to prevent navigation errors
+onBeforeUnmount(() => {
+  if (redirectTimeoutId !== null) {
+    clearTimeout(redirectTimeoutId);
   }
 });
 </script>

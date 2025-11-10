@@ -55,6 +55,7 @@
                 id="reset-email"
                 v-model="email"
                 type="email"
+                autocomplete="email"
                 placeholder="you@example.com"
                 class="input w-full"
                 @keyup.enter="handleResetPassword"
@@ -93,6 +94,7 @@
                   id="email"
                   v-model="email"
                   type="email"
+                  autocomplete="email"
                   placeholder="you@example.com"
                   class="input w-full"
                   :class="{ 'border-red-500': emailError }"
@@ -115,6 +117,7 @@
                   id="password"
                   v-model="password"
                   type="password"
+                  :autocomplete="mode === 'signup' ? 'new-password' : 'current-password'"
                   :placeholder="
                     mode === 'signup'
                       ? 'At least 6 characters'
@@ -257,6 +260,9 @@
 import { ref, computed } from "vue";
 import { useAuth } from "@/composables/useAuth";
 
+// Email validation regex constant
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const {
   signInWithGoogle,
   signInWithGithub,
@@ -289,12 +295,11 @@ const modalSubtitle = computed(() => {
 });
 
 const validateEmail = () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email.value) {
     emailError.value = "Email is required";
     return false;
   }
-  if (!emailRegex.test(email.value)) {
+  if (!EMAIL_REGEX.test(email.value)) {
     emailError.value = "Please enter a valid email address";
     return false;
   }
