@@ -79,12 +79,12 @@ export function useAuth() {
    *
    * @example
    * await resetPassword('user@example.com');
-   * // User receives email with link to: https://yoursite.com/#/reset-password
+   * // User receives email with link to: https://yoursite.com/reset-password
    * // The URL contains a recovery token handled by Supabase
    */
   const resetPassword = async (email) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + import.meta.env.BASE_URL + 'reset-password',
+      redirectTo: window.location.origin + import.meta.env.BASE_URL + '/reset-password',
     });
     if (error) throw error;
   };

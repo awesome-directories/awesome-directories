@@ -144,12 +144,11 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { useAuth } from "@/composables/useAuth";
 import { supabase } from "@/lib/supabase";
 
 const router = useRouter();
-const route = useRoute();
 const { updatePassword } = useAuth();
 
 const newPassword = ref("");
@@ -218,13 +217,14 @@ const handlePasswordReset = async () => {
 
     // Check for invalid or expired reset token/session
     const msg = (error && error.message) ? error.message.toLowerCase() : "";
+    // Prefer error.code if available (Supabase may provide codes like 'invalid_recovery_token')
     if (
-      msg.includes("expired") ||
-      msg.includes("invalid") ||
-      msg.includes("recovery session") ||
-      msg.includes("reset token") ||
-      msg.includes("session") ||
-      msg.includes("token")
+      (error && error.code === "invalid_recovery_token") ||
+      (error && error.code === "expired_recovery_token") ||
+      msg === "invalid recovery session" ||
+      msg === "invalid or expired token" ||
+      msg === "invalid recovery token" ||
+      msg === "expired recovery token"
     ) {
       errorMessage.value = "Your password reset link is invalid or has expired. Please request a new reset link.";
     } else {
@@ -238,12 +238,13 @@ const handlePasswordReset = async () => {
 
 /**
  * Verify that the user has a valid recovery token from the password reset email
- * Supabase automatically handles the token in the URL hash and sets the session
+ * Supabase automatically handles the token from the URL (query or fragment) and sets the session.
  */
 const checkResetToken = async () => {
   try {
     // Get the current session - if user came from reset email, Supabase will have
-    // processed the token from the URL hash and created a recovery session
+    // processed the token from the URL fragment (after '#') and created a recovery session.
+    // This is handled by Supabase and is unrelated to Vue Router's routing mode.
     const { data: { session }, error } = await supabase.auth.getSession();
 
     if (error) {

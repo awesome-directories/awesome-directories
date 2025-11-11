@@ -59,7 +59,7 @@
                 placeholder="you@example.com"
                 class="input w-full"
                 @keyup.enter="handleResetPassword"
-                autocomplete="email"
+
               />
             </div>
 
@@ -99,7 +99,7 @@
                   class="input w-full"
                   :class="{ 'border-red-500': emailError }"
                   @input="emailError = ''"
-                  autocomplete="email"
+
                 />
                 <p v-if="emailError" class="text-xs text-red-600 mt-1">
                   {{ emailError }}
@@ -406,26 +406,17 @@ const handleResetPassword = async () => {
     email.value = "";
   } catch (error) {
     console.error("Reset password error:", error);
-    // Provide more specific error messages based on error code/message
-    if (error && (error.code || error.message)) {
-      // Example error codes/messages, adjust as needed for your backend/auth provider
-      if (
-        error.code === "auth/user-not-found" ||
-        error.message?.toLowerCase().includes("user not found")
-      ) {
+    // Provide more specific error messages based on Supabase error structure
+    if (error && error.message) {
+      const msg = error.message.toLowerCase();
+      if (msg.includes("user not found") || msg.includes("no user found")) {
         errorMessage.value = "No account found with that email address.";
-      } else if (
-        error.code === "auth/too-many-requests" ||
-        error.message?.toLowerCase().includes("too many requests")
-      ) {
+      } else if (msg.includes("rate limit") || msg.includes("too many requests")) {
         errorMessage.value = "Too many reset attempts. Please try again later.";
-      } else if (
-        error.code === "auth/invalid-email" ||
-        error.message?.toLowerCase().includes("invalid email")
-      ) {
+      } else if (msg.includes("invalid email")) {
         errorMessage.value = "The email address is invalid.";
       } else {
-        errorMessage.value = "Failed to send reset link. Please try again.";
+        errorMessage.value = error.message || "Failed to send reset link. Please try again.";
       }
     } else {
       errorMessage.value = "Failed to send reset link. Please try again.";
