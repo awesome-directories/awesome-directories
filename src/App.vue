@@ -57,15 +57,15 @@ provide("hideAuthModal", handleHideAuthModal);
 provide("showChecklistModal", handleShowChecklistModal);
 provide("hideChecklistModal", handleHideChecklistModal);
 
-onMounted(function() {
-  supabase.auth.onAuthStateChange(function(event, _session) {
+onMounted(function () {
+  supabase.auth.onAuthStateChange(function (event, _session) {
     if (event === "SIGNED_IN") {
       showAuthModal.value = false;
     }
   });
 });
 
-router.beforeEach(function(to, from, next) {
+router.beforeEach(function (to, from, next) {
   if (to.meta.requiresAuth && !session.value) {
     showAuthModal.value = true;
     next(false);

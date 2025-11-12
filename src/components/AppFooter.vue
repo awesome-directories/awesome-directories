@@ -51,7 +51,7 @@
             </li>
             <li>
               <a
-                href="/terms.html"
+                href="/terms"
                 class="text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Terms of Service
@@ -59,7 +59,7 @@
             </li>
             <li>
               <a
-                href="/privacy.html"
+                href="/privacy"
                 class="text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Privacy Policy

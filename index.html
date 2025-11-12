@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
@@ -233,7 +233,7 @@
           window.history.replaceState(
             null,
             null,
-            l.pathname.slice(0, -1) + decoded + l.hash
+            l.pathname.slice(0, -1) + decoded + l.hash,
           );
         }
       })(window.location);
@@ -245,7 +245,10 @@
         style="
           padding: 20px;
           text-align: center;
-          font-family: system-ui, -apple-system, sans-serif;
+          font-family:
+            system-ui,
+            -apple-system,
+            sans-serif;
         "
       >
         <h1>Awesome Directories</h1>

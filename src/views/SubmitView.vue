@@ -52,8 +52,8 @@
                 />
               </svg>
               <span
-                >Your submission is now in our review queue and will be
-                reviewed by our team</span
+                >Your submission is now in our review queue and will be reviewed
+                by our team</span
               >
             </li>
             <li class="flex items-start">
@@ -107,11 +107,7 @@
       </div>
 
       <!-- Submission Form -->
-      <form
-        v-else
-        @submit.prevent="handleSubmit"
-        class="space-y-6"
-      >
+      <form v-else @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Guidelines Card -->
         <div class="card p-6 bg-blue-50 border-blue-200">
           <h3 class="font-semibold text-gray-900 mb-2">
@@ -134,7 +130,10 @@
 
           <div class="space-y-6">
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Directory Name <span class="text-red-500">*</span>
               </label>
               <input
@@ -148,7 +147,10 @@
             </div>
 
             <div>
-              <label for="url" class="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                for="url"
+                class="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Directory URL <span class="text-red-500">*</span>
               </label>
               <input
@@ -345,7 +347,9 @@
               >
                 <option value="">Select traffic level</option>
                 <option value="high">High (100K+ monthly visitors)</option>
-                <option value="medium">Medium (10K-100K monthly visitors)</option>
+                <option value="medium">
+                  Medium (10K-100K monthly visitors)
+                </option>
                 <option value="low">Low (<10K monthly visitors)</option>
               </select>
             </div>
@@ -370,10 +374,7 @@
         </div>
 
         <!-- Error Message -->
-        <div
-          v-if="errorMessage"
-          class="card p-4 bg-red-50 border-red-200"
-        >
+        <div v-if="errorMessage" class="card p-4 bg-red-50 border-red-200">
           <p class="text-sm text-red-600">{{ errorMessage }}</p>
         </div>
 
@@ -386,9 +387,7 @@
           >
             {{ isSubmitting ? "Submitting..." : "Submit Directory for Review" }}
           </button>
-          <router-link to="/" class="btn-secondary">
-            Cancel
-          </router-link>
+          <router-link to="/" class="btn-secondary"> Cancel </router-link>
         </div>
       </form>
 

@@ -107,7 +107,6 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
    ```
 
 4. **Set up Supabase database:**
-
    - Create a new Supabase project
    - Run the migration: `supabase/migrations/001_initial_schema.sql`
    - Seed the database with: `supabase/seed-data.json`
@@ -120,7 +119,6 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
    ```
 
 5. **Configure Supabase Auth:**
-
    - Go to Authentication → Providers in Supabase
    - Enable Google OAuth (add Client ID and Secret)
    - Enable GitHub OAuth (add Client ID and Secret)
@@ -141,12 +139,10 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 ### GitHub Pages Deployment
 
 1. **Enable GitHub Pages:**
-
    - Go to repository Settings → Pages
    - Source: GitHub Actions
 
 2. **Add GitHub Secrets:**
-
    - Go to Settings → Secrets and variables → Actions
    - Add the following secrets:
      ```
@@ -234,7 +230,6 @@ Output will be in `dist/` directory.
    Edit `supabase/seed-data.json` and re-import
 
 2. **Via Pull Request:**
-
    - Fork the repository
    - Add/update directory in `supabase/seed-data.json`
    - Create Pull Request
