@@ -46,18 +46,6 @@ const router = createRouter({
       component: () => import("../views/SubmissionsView.vue"),
       meta: { title: "My Submissions", requiresAuth: true },
     },
-    {
-      path: "/terms",
-      name: "terms",
-      component: () => import("../views/TermsView.vue"),
-      meta: { title: "Terms of Service" },
-    },
-    {
-      path: "/privacy",
-      name: "privacy",
-      component: () => import("../views/PrivacyView.vue"),
-      meta: { title: "Privacy Policy" },
-    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

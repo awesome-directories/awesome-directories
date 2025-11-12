@@ -70,7 +70,11 @@
 
             <div
               v-if="showUserMenu"
-              v-click-outside="() => { showUserMenu = false; }"
+              v-click-outside="
+                () => {
+                  showUserMenu = false;
+                }
+              "
               class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 border border-gray-200"
             >
               <router-link
@@ -211,7 +215,7 @@ var showUserMenu = ref(false);
 var showMobileMenu = ref(false);
 var githubStars = ref(null);
 
-var userInitial = computed(function() {
+var userInitial = computed(function () {
   if (!user.value) return "";
   var email = user.value.email || "";
   return email.charAt(0).toUpperCase();
@@ -223,7 +227,7 @@ async function handleSignOut() {
   showMobileMenu.value = false;
 }
 
-onMounted(async function() {
+onMounted(async function () {
   try {
     var response = await fetch(
       "https://api.github.com/repos/awesome-directories/awesome-directories",
@@ -246,7 +250,7 @@ const vClickOutside = {
     };
     document.addEventListener("click", el.clickOutsideEvent);
   },
-  unmounted: function(el) {
+  unmounted: function (el) {
     document.removeEventListener("click", el.clickOutsideEvent);
   },
 };

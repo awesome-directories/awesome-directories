@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -28,8 +28,13 @@
       }
 
       body {
-        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
         background-color: #f9fafb;
         color: #111827;
         line-height: 1.5;
@@ -50,7 +55,8 @@
       .card {
         background-color: white;
         border-radius: 1rem;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+        box-shadow:
+          0 1px 3px 0 rgba(0, 0, 0, 0.1),
           0 1px 2px 0 rgba(0, 0, 0, 0.06);
         border: 1px solid #f3f4f6;
         padding: 3rem 2rem;
@@ -59,7 +65,8 @@
       }
 
       .card:hover {
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1),
           0 2px 4px -1px rgba(0, 0, 0, 0.06);
       }
 
@@ -225,7 +232,7 @@
             .join("/")
             .replace(/&/g, "~and~") +
           (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
-          l.hash
+          l.hash,
       );
     </script>
   </head>

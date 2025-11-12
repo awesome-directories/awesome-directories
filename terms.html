@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Terms of Service | Awesome Directories</title>
+    <meta
+      name="description"
+      content="Terms of Service for Awesome Directories - Learn about our terms and conditions."
+    />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background-color: #f9fafb;
+        color: #111827;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background-color: white;
+        border-bottom: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .header-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 4rem;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+      }
+
+      .logo:hover {
+        opacity: 0.8;
+      }
+
+      .logo-icon {
+        font-size: 1.5rem;
+      }
+
+      .logo-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .nav-link {
+        color: #4b5563;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link:hover {
+        color: #111827;
+      }
+
+      /* Main Content */
+      .main {
+        min-height: calc(100vh - 4rem - 18rem);
+        padding: 3rem 0;
+      }
+
+      .container {
+        max-width: 56rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      h1 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 1rem;
+      }
+
+      .last-updated {
+        color: #4b5563;
+        margin-bottom: 2rem;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
+        padding: 2rem;
+      }
+
+      .card.card-blue {
+        background-color: #eff6ff;
+        border-color: #bfdbfe;
+      }
+
+      .card.card-yellow {
+        background-color: #fefce8;
+        border-color: #fde68a;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        color: #374151;
+        margin-bottom: 1rem;
+      }
+
+      ul,
+      ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      li {
+        color: #374151;
+        margin-bottom: 0.5rem;
+      }
+
+      a {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      a:hover {
+        color: #2563eb;
+      }
+
+      strong {
+        font-weight: 600;
+        color: #111827;
+      }
+
+      /* Footer */
+      .footer {
+        background-color: #111827;
+        color: #9ca3af;
+        padding: 3rem 0 2rem;
+        margin-top: 4rem;
+      }
+
+      .footer-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h3 {
+        color: white;
+        font-size: 1.125rem;
+        margin-bottom: 1rem;
+        margin-top: 0;
+      }
+
+      .footer-section p,
+      .footer-section li {
+        color: #9ca3af;
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      .footer-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-links a {
+        color: #9ca3af;
+        font-weight: 400;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid #374151;
+        padding-top: 2rem;
+        text-align: center;
+      }
+
+      .footer-bottom p {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin: 0;
+      }
+
+      .footer-bottom a {
+        color: #9ca3af;
+        font-weight: 400;
+      }
+
+      @media (min-width: 640px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .footer-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .nav-mobile {
+          display: none;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .nav-desktop {
+          display: none;
+        }
+
+        .nav-link {
+          font-size: 0.875rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <a href="/" class="logo">
+          <div class="logo-icon">📂</div>
+          <span class="logo-text">Awesome Directories</span>
+        </a>
+        <nav class="nav nav-desktop">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/about" class="nav-link">About</a>
+          <a href="/submit" class="nav-link">Submit</a>
+        </nav>
+        <nav class="nav nav-mobile">
+          <a href="/" class="nav-link">Home</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="container">
+        <h1>Terms of Service</h1>
+        <p class="last-updated">Last Updated: November 12, 2025</p>
+
+        <div class="content">
+          <!-- Introduction -->
+          <div class="card">
+            <h2>1. Acceptance of Terms</h2>
+            <p>
+              Welcome to Awesome Directories! By accessing or using our service,
+              you agree to be bound by these Terms of Service. If you disagree
+              with any part of these terms, please do not use our service.
+            </p>
+            <p>
+              Awesome Directories is an open-source project licensed under the
+              <a
+                href="https://github.com/awesome-directories/awesome-directories/blob/main/LICENSE"
+                target="_blank"
+                rel="noopener"
+                >Apache 2.0 License</a
+              >. The source code is publicly available and contributions are
+              welcome.
+            </p>
+          </div>
+
+          <!-- Service Description -->
+          <div class="card">
+            <h2>2. Service Description</h2>
+            <p>
+              Awesome Directories provides a curated database of launch
+              directories for SaaS products and startups. Our service includes:
+            </p>
+            <ul>
+              <li>Searchable directory of 388+ launch platforms</li>
+              <li>Quality metrics including Domain Ratings and SEO data</li>
+              <li>User authentication via Google and GitHub OAuth</li>
+              <li>
+                Community features (submissions, favorites, voting, reviews)
+              </li>
+              <li>Export functionality (PDF/CSV)</li>
+            </ul>
+            <p>
+              Directory data is collected from public sources, verified and
+              curated by our maintainers, with SEO metrics provided by public
+              search engine data providers. The project may transition to
+              community-driven curation in the future.
+            </p>
+          </div>
+
+          <!-- Open Source Disclaimer -->
+          <div class="card card-blue">
+            <h2>3. Open Source "As-Is" Disclaimer</h2>
+            <p>
+              <strong
+                >THIS SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT
+                WARRANTIES OF ANY KIND.</strong
+              >
+            </p>
+            <p>
+              As an open-source project, Awesome Directories is provided without
+              warranty of any kind, either express or implied, including but not
+              limited to:
+            </p>
+            <ul>
+              <li>Accuracy or completeness of directory information</li>
+              <li>Availability or uptime of the service</li>
+              <li>Fitness for a particular purpose</li>
+              <li>Non-infringement of third-party rights</li>
+              <li>Merchantability or quality</li>
+            </ul>
+            <p>
+              You use this service at your own risk. We make no guarantees about
+              the quality, relevance, or continued availability of listed
+              directories.
+            </p>
+          </div>
+
+          <!-- User Accounts -->
+          <div class="card">
+            <h2>4. User Accounts & Authentication</h2>
+            <p>
+              To access certain features (favorites, submissions, reviews), you
+              must create an account using OAuth authentication via:
+            </p>
+            <ul>
+              <li>Google OAuth</li>
+              <li>GitHub OAuth</li>
+            </ul>
+            <p>You are responsible for:</p>
+            <ul>
+              <li>Maintaining the security of your OAuth provider account</li>
+              <li>All activities that occur under your account</li>
+              <li>
+                Notifying us immediately of any unauthorized use of your account
+              </li>
+            </ul>
+            <p>
+              We reserve the right to suspend or terminate accounts that violate
+              these terms or engage in abusive behavior.
+            </p>
+          </div>
+
+          <!-- User Conduct -->
+          <div class="card">
+            <h2>5. User Conduct & Community Guidelines</h2>
+            <p>When using Awesome Directories, you agree NOT to:</p>
+            <ul>
+              <li>Submit false, misleading, or spam directory submissions</li>
+              <li>
+                Manipulate voting systems or artificially inflate directory
+                ratings
+              </li>
+              <li>
+                Post abusive, harassing, or inappropriate reviews or comments
+              </li>
+              <li>Scrape, harvest, or collect user data without permission</li>
+              <li>Attempt to circumvent rate limits or security measures</li>
+              <li>
+                Use automated tools (bots) to interact with the service without
+                authorization
+              </li>
+              <li>
+                Impersonate others or misrepresent your affiliation with any
+                directory
+              </li>
+              <li>
+                Upload or transmit viruses, malware, or any malicious code
+              </li>
+            </ul>
+            <p>
+              Violations may result in content removal, account suspension, or
+              permanent ban from the service.
+            </p>
+          </div>
+
+          <!-- Submissions & Contributions -->
+          <div class="card">
+            <h2>6. Directory Submissions & User Content</h2>
+            <p>
+              When you submit directories, reviews, or other content to Awesome
+              Directories:
+            </p>
+            <ul>
+              <li>
+                You grant us a non-exclusive, worldwide, royalty-free license to
+                use, display, and distribute your content
+              </li>
+              <li>You confirm that you have the right to submit the content</li>
+              <li>
+                You agree your submission does not infringe on any third-party
+                rights
+              </li>
+              <li>
+                Submissions may be reviewed, edited, or rejected at our
+                discretion
+              </li>
+              <li>
+                Approved submissions become part of the public open-source
+                dataset
+              </li>
+            </ul>
+            <p>
+              We reserve the right to remove any user-generated content without
+              notice if it violates these terms or community standards.
+            </p>
+          </div>
+
+          <!-- Data & Privacy -->
+          <div class="card">
+            <h2>7. Data Collection & Third-Party Services</h2>
+            <p>Our service integrates with third-party providers:</p>
+            <ul>
+              <li>
+                <strong>Supabase</strong> - Backend database, authentication,
+                and hosting
+              </li>
+              <li>
+                <strong>Pirsch Analytics</strong> - Privacy-first analytics
+                (cookie-free)
+              </li>
+              <li>
+                <strong>Mautic</strong> - Newsletter subscription management
+              </li>
+            </ul>
+            <p>
+              Your use of these services is subject to their respective terms
+              and privacy policies. Please review our
+              <a href="/privacy">Privacy Policy</a>
+              for detailed information about data collection and usage.
+            </p>
+          </div>
+
+          <!-- Intellectual Property -->
+          <div class="card">
+            <h2>8. Intellectual Property</h2>
+            <p>
+              The Awesome Directories source code is licensed under the Apache
+              2.0 License. However:
+            </p>
+            <ul>
+              <li>
+                The "Awesome Directories" name and branding remain our property
+              </li>
+              <li>
+                Directory data is collected from public sources and provided
+                as-is
+              </li>
+              <li>
+                User-generated content (submissions, reviews) is publicly
+                accessible
+              </li>
+              <li>
+                Third-party trademarks and logos belong to their respective
+                owners
+              </li>
+            </ul>
+            <p>
+              You may not use our branding to create derivative services that
+              could be confused with Awesome Directories without permission.
+            </p>
+          </div>
+
+          <!-- Limitation of Liability -->
+          <div class="card card-yellow">
+            <h2>9. Limitation of Liability</h2>
+            <p>
+              <strong
+                >TO THE MAXIMUM EXTENT PERMITTED BY LAW, AWESOME DIRECTORIES
+                SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM YOUR USE OF THE
+                SERVICE.</strong
+              >
+            </p>
+            <p>This includes but is not limited to:</p>
+            <ul>
+              <li>
+                Lost revenue, profits, or business opportunities from using
+                listed directories
+              </li>
+              <li>Inaccurate or outdated directory information</li>
+              <li>Service interruptions or data loss</li>
+              <li>Issues with third-party directories or services</li>
+              <li>Costs of procuring substitute services</li>
+            </ul>
+            <p>
+              As a free, community-driven open-source project, we provide this
+              service without charge and cannot be held liable for its use or
+              results.
+            </p>
+          </div>
+
+          <!-- Changes to Service -->
+          <div class="card">
+            <h2>10. Changes to Service & Terms</h2>
+            <p>We reserve the right to:</p>
+            <ul>
+              <li>
+                Modify, suspend, or discontinue any part of the service at any
+                time
+              </li>
+              <li>Update these Terms of Service with or without notice</li>
+              <li>Change our data sources, features, or service providers</li>
+              <li>Implement rate limits or usage restrictions</li>
+            </ul>
+            <p>
+              Continued use of the service after changes constitutes acceptance
+              of the updated terms. Major changes will be communicated via our
+              GitHub repository and newsletter.
+            </p>
+          </div>
+
+          <!-- Termination -->
+          <div class="card">
+            <h2>11. Account Termination</h2>
+            <p>You may terminate your account at any time by:</p>
+            <ul>
+              <li>
+                Contacting us at
+                <a href="mailto:contact@awesome-directories.com"
+                  >contact@awesome-directories.com</a
+                >
+              </li>
+              <li>
+                Revoking OAuth access through your Google or GitHub account
+                settings
+              </li>
+            </ul>
+            <p>
+              We may terminate or suspend your account immediately if you
+              violate these terms or engage in prohibited conduct. Upon
+              termination, your right to use the service ceases immediately.
+            </p>
+          </div>
+
+          <!-- Governing Law -->
+          <div class="card">
+            <h2>12. Governing Law & Disputes</h2>
+            <p>
+              These terms shall be governed by and construed in accordance with
+              applicable international laws and regulations. Disputes will be
+              resolved through good-faith negotiation first.
+            </p>
+            <p>
+              For any questions, concerns, or legal inquiries, please contact us
+              at
+              <a href="mailto:contact@awesome-directories.com"
+                >contact@awesome-directories.com</a
+              >
+              or open an issue on our
+              <a
+                href="https://github.com/awesome-directories/awesome-directories/issues"
+                target="_blank"
+                rel="noopener"
+                >GitHub repository</a
+              >.
+            </p>
+          </div>
+
+          <!-- Contact -->
+          <div class="card card-blue">
+            <h2>13. Contact Information</h2>
+            <p>
+              For questions about these Terms of Service, please contact us:
+            </p>
+            <ul style="list-style: none; margin-left: 0">
+              <li>
+                <strong>Email:</strong>
+                <a href="mailto:contact@awesome-directories.com"
+                  >contact@awesome-directories.com</a
+                >
+              </li>
+              <li>
+                <strong>GitHub:</strong>
+                <a
+                  href="https://github.com/awesome-directories/awesome-directories"
+                  target="_blank"
+                  rel="noopener"
+                  >awesome-directories/awesome-directories</a
+                >
+              </li>
+              <li>
+                <strong>Issues:</strong>
+                <a
+                  href="https://github.com/awesome-directories/awesome-directories/issues"
+                  target="_blank"
+                  rel="noopener"
+                  >Report issues on GitHub</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Acknowledgment -->
+          <div class="card">
+            <h2>Acknowledgment</h2>
+            <p>
+              By using Awesome Directories, you acknowledge that you have read,
+              understood, and agree to be bound by these Terms of Service. Thank
+              you for being part of our open-source community! 🚀
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <!-- About Section -->
+          <div class="footer-section">
+            <h3>Awesome Directories</h3>
+            <p>
+              Find the top 20 launch directories worth your time in under 3
+              minutes—curated, verified, and updated weekly.
+            </p>
+          </div>
+
+          <!-- Links Section -->
+          <div class="footer-section">
+            <h3>Links</h3>
+            <ul class="footer-links">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/submit">Submit Directory</a></li>
+              <li><a href="/stats">Public Stats</a></li>
+              <li><a href="/terms">Terms of Service</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li>
+                <a
+                  href="https://github.com/awesome-directories/awesome-directories"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub Repository</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact Section -->
+          <div class="footer-section">
+            <h3>Contact</h3>
+            <ul class="footer-links">
+              <li>
+                <a href="mailto:contact@awesome-directories.com"
+                  >contact@awesome-directories.com</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/awesome-directories/awesome-directories/issues"
+                  target="_blank"
+                  rel="noopener"
+                  >Report an Issue</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://github.com/sponsors/meysam81"
+                  target="_blank"
+                  rel="noopener"
+                  >💝 GitHub Sponsors</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="footer-bottom">
+          <p>
+            © <span id="current-year"></span> Awesome Directories. Open source
+            under
+            <a
+              href="https://github.com/awesome-directories/awesome-directories/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener"
+              >Apache 2.0 License</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Analytics -->
+    <script
+      async
+      defer
+      src="https://analytics.awesome-directories.com/pa.js"
+    ></script>
+    <script>
+      // Set current year
+      document.getElementById("current-year").textContent =
+        new Date().getFullYear();
+
+      // Track page view
+      if (window.pirsch) {
+        window.pirsch("Terms of Service View");
+      }
+    </script>
+  </body>
+</html>
