@@ -50,20 +50,20 @@
               </router-link>
             </li>
             <li>
-              <router-link
-                to="/terms"
+              <a
+                href="/terms.html"
                 class="text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Terms of Service
-              </router-link>
+              </a>
             </li>
             <li>
-              <router-link
-                to="/privacy"
+              <a
+                href="/privacy.html"
                 class="text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Privacy Policy
-              </router-link>
+              </a>
             </li>
             <li>
               <a
