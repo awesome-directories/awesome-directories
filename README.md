@@ -371,7 +371,7 @@ Apache 2.0 License - see [LICENSE](LICENSE) file for details
 - 📢 Share with fellow founders
 - 🐛 [Report bugs](https://github.com/awesome-directories/awesome-directories/issues)
 - 💡 [Suggest features](https://github.com/awesome-directories/awesome-directories/issues)
-- 💝 [Sponsor on GitHub](https://github.com/sponsors/meysam)
+- 💝 [Sponsor on GitHub](https://github.com/sponsors/meysam81)
 
 ---
 

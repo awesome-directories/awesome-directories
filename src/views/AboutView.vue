@@ -110,7 +110,7 @@
             <li>💝 Sponsoring via GitHub Sponsors</li>
           </ul>
           <a
-            href="https://github.com/sponsors/meysam"
+            href="https://github.com/sponsors/meysam81"
             target="_blank"
             rel="noopener"
             class="btn-primary inline-block"
