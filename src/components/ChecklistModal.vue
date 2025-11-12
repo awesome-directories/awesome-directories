@@ -188,7 +188,7 @@ const emit = defineEmits(["close", "clear-selection"]);
 
 var completedDirectories = ref(new Set());
 
-var completedCount = computed(function() {
+const completedCount = computed(function() {
   return completedDirectories.value.size;
 });
 

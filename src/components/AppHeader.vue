@@ -237,9 +237,9 @@ onMounted(async function() {
   }
 });
 
-var vClickOutside = {
-  mounted: function(el, binding) {
-    el.clickOutsideEvent = function(event) {
+const vClickOutside = {
+  mounted(el, binding) {
+    el.clickOutsideEvent = (event) => {
       if (!(el === event.target || el.contains(event.target))) {
         binding.value();
       }
