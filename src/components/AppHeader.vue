@@ -70,7 +70,7 @@
 
             <div
               v-if="showUserMenu"
-              v-click-outside="function() { showUserMenu = false; }"
+              v-click-outside="() => { showUserMenu = false; }"
               class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 border border-gray-200"
             >
               <router-link
@@ -205,7 +205,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useAuth } from "@/composables/useAuth";
 
-var { user, signOut } = useAuth();
+const { user, signOut } = useAuth();
 
 var showUserMenu = ref(false);
 var showMobileMenu = ref(false);

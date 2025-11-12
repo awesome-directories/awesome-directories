@@ -177,14 +177,14 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
 
-var props = defineProps({
+const props = defineProps({
   selectedDirectories: {
     type: Array,
     required: true,
   },
 });
 
-var emit = defineEmits(["close", "clear-selection"]);
+const emit = defineEmits(["close", "clear-selection"]);
 
 var completedDirectories = ref(new Set());
 
@@ -198,7 +198,7 @@ var progressPercentage = computed(function() {
 });
 
 var sortedDirectories = computed(function() {
-  return [...props.selectedDirectories].sort(function(a, b) {
+  return [...props.selectedDirectories].sort((a, b) => {
     var aCompleted = completedDirectories.value.has(a.id);
     var bCompleted = completedDirectories.value.has(b.id);
 

@@ -31,7 +31,7 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/composables/useAuth";
 
 var router = useRouter();
-var { user, session } = useAuth();
+const { user, session } = useAuth();
 
 var showAuthModal = ref(false);
 var showChecklistModal = ref(false);

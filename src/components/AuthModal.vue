@@ -112,7 +112,7 @@
 import { ref } from "vue";
 import { useAuth } from "@/composables/useAuth";
 
-var { signInWithGoogle, signInWithGithub } = useAuth();
+const { signInWithGoogle, signInWithGithub } = useAuth();
 
 var isLoading = ref(false);
 var errorMessage = ref("");
