@@ -48,6 +48,8 @@ ignore
 
 .github/workflows/deploy.yml
 .github/workflows/update-dr-scores.yml
-data
+data/*
+!data/.gitkeep
+!data/seo-cache.json
 dataset
 .secrets/

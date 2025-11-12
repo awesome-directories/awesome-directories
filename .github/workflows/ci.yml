@@ -13,10 +13,11 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * *"  # Daily for deploy
+    - cron: "0 2 * * 0"  # Weekly on Sundays at 2 AM UTC for SEO update
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -118,3 +119,41 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-actions-${{ github.run_id }}-${{ github.run_attempt }}
+
+  update-seo:
+    # Run weekly on Sundays at 2 AM UTC
+    if: github.event.schedule == '0 2 * * 0' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run SEO data update
+        env:
+          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
+          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
+          OPENPAGERANK_API_KEY: ${{ secrets.OPENPAGERANK_API_KEY }}
+          SEOREVIEWTOOLS_API_KEY: ${{ secrets.SEOREVIEWTOOLS_API_KEY }}
+        run: |
+          node scripts/update-seo-data.js
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.git-check.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add supabase/seeds/directories.json data/seo-cache.json
+          git commit -m "chore: update weekly SEO data [skip ci]"
+          git push

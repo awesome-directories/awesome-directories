@@ -21,7 +21,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 - 🔍 **Advanced Filtering** - Filter by DR, category, pricing, dofollow status
 - ⚡ **Instant Search** - Real-time search across names, descriptions, categories
 - 📋 **Multi-Select Checklist** - Select directories and export as PDF or CSV
-- 📊 **Domain Ratings** - Weekly automated DR updates via Moz API
+- 📊 **SEO Metrics** - Weekly automated updates (Domain Rank, PageRank, Moz DA)
 - 👍 **Community Voting** - IP-based "helpful" voting system
 - 💬 **Giscus Comments** - Community reviews powered by GitHub Discussions
 

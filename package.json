@@ -28,7 +28,8 @@
     "build": "vite build",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "preview": "vite preview",
-    "start": "vite"
+    "start": "vite",
+    "update-seo": "node scripts/update-seo-data.js"
   },
   "type": "module",
   "version": "1.0.0"
