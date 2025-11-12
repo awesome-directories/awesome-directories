@@ -176,6 +176,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
+import Papa from "papaparse";
 
 const props = defineProps({
   selectedDirectories: {
@@ -263,21 +264,18 @@ function getPricingClass(pricing) {
 }
 
 function handleExport() {
-  var csv = "Name,URL,Domain Rating,Pricing,Link Type,Category\n";
-
-  props.selectedDirectories.forEach(function(dir) {
-    var row = [
-      dir.name,
-      dir.url,
-      dir.domain_rating || "N/A",
-      dir.pricing || "N/A",
-      dir.is_dofollow ? "Dofollow" : "Nofollow",
-      dir.category || "N/A"
-    ];
-    csv += row.map(function(field) {
-      return '"' + String(field).replace(/"/g, '""') + '"';
-    }).join(",") + "\n";
+  var data = props.selectedDirectories.map(function(dir) {
+    return {
+      Name: dir.name,
+      URL: dir.url,
+      "Domain Rating": dir.domain_rating || "N/A",
+      Pricing: dir.pricing || "N/A",
+      "Link Type": dir.is_dofollow ? "Dofollow" : "Nofollow",
+      Category: dir.category || "N/A"
+    };
   });
+
+  var csv = Papa.unparse(data);
 
   var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   var link = document.createElement("a");
