@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS pending_directories (
 
   -- SEO Metrics (optional)
   domain_rating INTEGER,
-  is_dofollow BOOLEAN,
+  is_dofollow BOOLEAN DEFAULT false,
 
   -- Categorization
   categories TEXT[] DEFAULT '{}',
@@ -60,14 +60,12 @@ CREATE POLICY "Authenticated users can submit directories"
 -- Users can update their own pending submissions (before review)
 CREATE POLICY "Users can update their own pending submissions"
   ON pending_directories FOR UPDATE
-  USING (auth.uid() = user_id AND status = 'pending');
+  USING (auth.uid() = user_id AND status = 'pending')
+  WITH CHECK (auth.uid() = user_id AND status = 'pending');
 
 -- Users can delete their own pending submissions (before review)
 CREATE POLICY "Users can delete their own pending submissions"
   ON pending_directories FOR DELETE
   USING (auth.uid() = user_id AND status = 'pending');
 
--- Service role can do everything (for admin actions)
-CREATE POLICY "Service role has full access to pending directories"
-  ON pending_directories FOR ALL
-  USING (auth.jwt()->>'role' = 'service_role');
+

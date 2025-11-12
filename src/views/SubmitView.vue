@@ -287,6 +287,7 @@
                 min="0"
                 placeholder="99"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                :required="formData.pricing_type === 'paid'"
               />
             </div>
           </div>
@@ -345,7 +346,7 @@
                 <option value="">Select traffic level</option>
                 <option value="high">High (100K+ monthly visitors)</option>
                 <option value="medium">Medium (10K-100K monthly visitors)</option>
-                <option value="low">Low (&lt;10K monthly visitors)</option>
+                <option value="low">Low (<10K monthly visitors)</option>
               </select>
             </div>
 
@@ -398,7 +399,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useAuth } from "@/composables/useAuth";
 import { supabase } from "@/lib/supabase";
 import AuthModal from "@/components/AuthModal.vue";
