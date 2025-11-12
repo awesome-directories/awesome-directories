@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>404 - Page Not Found | Awesome Directories</title>
+    <meta
+      name="description"
+      content="The page you're looking for doesn't exist. Find curated launch directories at Awesome Directories."
+    />
+    <meta name="robots" content="noindex, follow" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background-color: #f9fafb;
+        color: #111827;
+        line-height: 1.5;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .container {
+        max-width: 56rem;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 1rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        border: 1px solid #f3f4f6;
+        padding: 3rem 2rem;
+        text-align: center;
+        transition: box-shadow 0.2s ease;
+      }
+
+      .card:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      .emoji {
+        font-size: 6rem;
+        line-height: 1;
+        margin-bottom: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 1rem;
+      }
+
+      .description {
+        font-size: 1.25rem;
+        color: #4b5563;
+        margin-bottom: 2rem;
+        max-width: 42rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .btn-primary {
+        display: inline-block;
+        background-color: #3b82f6;
+        color: white;
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        margin-bottom: 2rem;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .btn-primary:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      .divider {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 2rem;
+        margin-top: 2rem;
+      }
+
+      .helpful-links-title {
+        color: #374151;
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+
+      .links-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+      }
+
+      .link {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      .link:hover {
+        color: #2563eb;
+        text-decoration: underline;
+      }
+
+      .separator {
+        color: #d1d5db;
+        display: none;
+      }
+
+      .error-code {
+        margin-top: 1.5rem;
+        text-align: center;
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+
+      .error-code code {
+        background-color: #f3f4f6;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        color: #374151;
+        font-family: "Courier New", monospace;
+      }
+
+      @media (min-width: 640px) {
+        .card {
+          padding: 3rem;
+        }
+
+        h1 {
+          font-size: 3rem;
+        }
+
+        .links-container {
+          flex-direction: row;
+          justify-content: center;
+        }
+
+        .separator {
+          display: inline;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .emoji {
+          font-size: 9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <!-- Large emoji icon -->
+        <div class="emoji">🗺️</div>
+
+        <!-- 404 heading -->
+        <h1>Page Not Found</h1>
+
+        <!-- Description -->
+        <p class="description">
+          Oops! Looks like you've wandered off the map. The page you're looking
+          for doesn't exist in our directory.
+        </p>
+
+        <!-- Primary CTA -->
+        <a href="/" class="btn-primary"> 📂 Back to Home </a>
+
+        <!-- Helpful links section -->
+        <div class="divider">
+          <p class="helpful-links-title">Here are some helpful links instead:</p>
+
+          <div class="links-container">
+            <a href="/" class="link">🏠 Browse Directories</a>
+            <span class="separator">|</span>
+            <a href="/submit" class="link">➕ Submit a Directory</a>
+            <span class="separator">|</span>
+            <a href="/about" class="link">ℹ️ About Us</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error code display -->
+      <div class="error-code">
+        <p>
+          Error code: 404 • Path:
+          <code id="current-path">/unknown</code>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Display current path
+      document.getElementById("current-path").textContent =
+        window.location.pathname;
+    </script>
+  </body>
+</html>
