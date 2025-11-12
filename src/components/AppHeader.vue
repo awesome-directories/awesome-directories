@@ -70,7 +70,7 @@
 
             <div
               v-if="showUserMenu"
-              v-click-outside="() => (showUserMenu = false)"
+              v-click-outside="() => { showUserMenu = false; }"
               class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 border border-gray-200"
             >
               <router-link
@@ -207,30 +207,29 @@ import { useAuth } from "@/composables/useAuth";
 
 const { user, signOut } = useAuth();
 
-const showUserMenu = ref(false);
-const showMobileMenu = ref(false);
-const githubStars = ref(null);
+var showUserMenu = ref(false);
+var showMobileMenu = ref(false);
+var githubStars = ref(null);
 
-const userInitial = computed(() => {
+var userInitial = computed(function() {
   if (!user.value) return "";
-  const email = user.value.email || "";
+  var email = user.value.email || "";
   return email.charAt(0).toUpperCase();
 });
 
-const handleSignOut = async () => {
+async function handleSignOut() {
   await signOut();
   showUserMenu.value = false;
   showMobileMenu.value = false;
-};
+}
 
-// Fetch GitHub stars
-onMounted(async () => {
+onMounted(async function() {
   try {
-    const response = await fetch(
+    var response = await fetch(
       "https://api.github.com/repos/awesome-directories/awesome-directories",
     );
     if (response.ok) {
-      const data = await response.json();
+      var data = await response.json();
       githubStars.value = data.stargazers_count;
     }
   } catch (error) {
@@ -238,7 +237,6 @@ onMounted(async () => {
   }
 });
 
-// Click outside directive
 const vClickOutside = {
   mounted(el, binding) {
     el.clickOutsideEvent = (event) => {
@@ -248,7 +246,7 @@ const vClickOutside = {
     };
     document.addEventListener("click", el.clickOutsideEvent);
   },
-  unmounted(el) {
+  unmounted: function(el) {
     document.removeEventListener("click", el.clickOutsideEvent);
   },
 };

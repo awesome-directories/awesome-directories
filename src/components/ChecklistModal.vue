@@ -1,22 +1,28 @@
 <template>
-  <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="$emit('close')">
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
     <div
-      class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0"
-    >
-      <!-- Background overlay -->
-      <div
-        class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75"
-        @click="$emit('close')"
-      ></div>
+      class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"
+      @click="handleClose"
+    ></div>
 
-      <!-- Modal panel -->
-      <div
-        class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
-      >
-        <!-- Close button -->
+    <div
+      class="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col transform transition-all"
+    >
+      <div class="flex items-center justify-between p-6 border-b border-gray-200">
+        <div class="flex items-center space-x-3">
+          <div class="text-3xl">✅</div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900">
+              Your Submission Checklist
+            </h2>
+            <p class="text-sm text-gray-600">
+              {{ selectedDirectories.length }} director{{ selectedDirectories.length !== 1 ? 'ies' : 'y' }} selected
+            </p>
+          </div>
+        </div>
         <button
-          @click="$emit('close')"
-          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+          @click="handleClose"
+          class="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-lg hover:bg-gray-100"
         >
           <svg
             class="w-6 h-6"
@@ -32,142 +38,134 @@
             />
           </svg>
         </button>
+      </div>
 
-        <!-- Modal content -->
-        <div>
-          <h2 class="text-2xl font-bold text-gray-900 mb-2">
-            Your Launch Checklist ({{ selectedCount }} selected)
-          </h2>
-          <p class="text-gray-600 mb-6">
-            Download or export your selected directories
+      <div class="flex-1 overflow-y-auto p-6">
+        <div v-if="selectedDirectories.length === 0" class="text-center py-12">
+          <div class="text-6xl mb-4">📋</div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            No directories selected
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Select directories from the list to create your submission checklist
           </p>
+          <button @click="handleClose" class="btn-primary">
+            Browse Directories
+          </button>
+        </div>
 
-          <!-- Download Checklist Section -->
-          <div class="mb-6 p-4 bg-blue-50 rounded-lg">
-            <div class="flex items-start space-x-3 mb-4">
-              <div class="text-2xl">📋</div>
+        <div v-else class="space-y-4">
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div class="flex items-start space-x-3">
+              <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               <div class="flex-1">
-                <h3 class="font-semibold text-gray-900 mb-1">
-                  Download My Launch Checklist
-                </h3>
-                <p class="text-sm text-gray-600">
-                  Get a PDF checklist emailed to you with all
-                  {{ selectedCount }} directories.
-                </p>
+                <h4 class="font-semibold text-blue-900 mb-1">Pro Tips</h4>
+                <ul class="text-sm text-blue-800 space-y-1">
+                  <li>• Check each directory as you complete the submission</li>
+                  <li>• Click directory names to open them in a new tab</li>
+                  <li>• Your progress is saved automatically</li>
+                  <li>• Focus on high DR directories first for best SEO impact</li>
+                </ul>
               </div>
             </div>
-
-            <form @submit.prevent="handleDownloadChecklist" class="space-y-3">
-              <input
-                v-model="email"
-                type="email"
-                required
-                placeholder="Your email (required)"
-                class="input"
-                :disabled="isDownloading"
-              />
-              <input
-                v-model="name"
-                type="text"
-                placeholder="Your name (optional)"
-                class="input"
-                :disabled="isDownloading"
-              />
-              <input
-                v-model="productName"
-                type="text"
-                placeholder="Product name (optional)"
-                class="input"
-                :disabled="isDownloading"
-              />
-
-              <label class="flex items-start space-x-2 text-sm">
-                <input
-                  v-model="subscribeNewsletter"
-                  type="checkbox"
-                  class="mt-0.5"
-                  :disabled="isDownloading"
-                />
-                <span class="text-gray-700">
-                  Subscribe to newsletter (new directories, launch tips, founder
-                  stories)
-                </span>
-              </label>
-
-              <button
-                type="submit"
-                class="w-full btn-primary"
-                :disabled="isDownloading"
-              >
-                {{ isDownloading ? "Generating..." : "Get My Checklist" }}
-              </button>
-
-              <p v-if="downloadSuccess" class="text-sm text-success">
-                ✅ {{ downloadSuccess }}
-              </p>
-              <p v-if="downloadError" class="text-sm text-danger">
-                {{ downloadError }}
-              </p>
-
-              <p class="text-xs text-gray-500">No spam. Unsubscribe anytime.</p>
-            </form>
           </div>
 
-          <!-- Divider -->
-          <div class="relative my-6">
-            <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-300"></div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="text-sm text-gray-600">
+              <span class="font-semibold">{{ completedCount }}</span> of
+              <span class="font-semibold">{{ selectedDirectories.length }}</span> completed
             </div>
-            <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-white text-gray-500">or</span>
-            </div>
-          </div>
-
-          <!-- Export Section -->
-          <div class="p-4 bg-gray-50 rounded-lg">
-            <div class="flex items-start space-x-3 mb-4">
-              <div class="text-2xl">💾</div>
-              <div class="flex-1">
-                <h3 class="font-semibold text-gray-900 mb-1">
-                  Export to Notion/Airtable
-                </h3>
-                <p class="text-sm text-gray-600">
-                  Download CSV or JSON for import
-                </p>
+            <div class="flex items-center space-x-2">
+              <div class="w-32 bg-gray-200 rounded-full h-2">
+                <div
+                  class="bg-green-500 h-2 rounded-full transition-all duration-300"
+                  :style="{ width: progressPercentage + '%' }"
+                ></div>
               </div>
-            </div>
-
-            <div class="flex space-x-3">
-              <button
-                @click="exportToCSV"
-                class="flex-1 btn-secondary text-sm"
-                :disabled="isExporting"
-              >
-                Export CSV
-              </button>
-              <button
-                @click="exportToJSON"
-                class="flex-1 btn-secondary text-sm"
-                :disabled="isExporting"
-              >
-                Export JSON
-              </button>
+              <span class="text-sm font-semibold text-gray-700">
+                {{ progressPercentage }}%
+              </span>
             </div>
           </div>
 
-          <!-- Actions -->
-          <div class="mt-6 flex justify-between">
-            <button
-              @click="$emit('clear-selection')"
-              class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          <div class="space-y-3">
+            <div
+              v-for="directory in sortedDirectories"
+              :key="directory.id"
+              class="flex items-center space-x-4 p-4 border rounded-lg transition-all"
+              :class="isCompleted(directory.id) ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200 hover:border-gray-300'"
             >
-              Clear Selection
+              <input
+                type="checkbox"
+                :id="'check-' + directory.id"
+                :checked="isCompleted(directory.id)"
+                @change="toggleCompletion(directory.id)"
+                class="w-5 h-5 text-primary rounded focus:ring-2 focus:ring-primary cursor-pointer"
+              />
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center space-x-2 mb-1">
+                  <a
+                    :href="directory.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-semibold text-gray-900 hover:text-primary transition-colors"
+                    @click.stop
+                  >
+                    {{ directory.name }}
+                  </a>
+                  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </div>
+                <div class="flex flex-wrap gap-2 text-xs">
+                  <span
+                    v-if="directory.domain_rating"
+                    class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-medium"
+                  >
+                    DR {{ directory.domain_rating }}
+                  </span>
+                  <span
+                    v-if="directory.pricing"
+                    class="px-2 py-1 rounded-full font-medium"
+                    :class="getPricingClass(directory.pricing)"
+                  >
+                    {{ directory.pricing }}
+                  </span>
+                  <span
+                    v-if="directory.is_dofollow"
+                    class="px-2 py-1 bg-green-100 text-green-700 rounded-full font-medium"
+                  >
+                    Dofollow
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-200 p-6 bg-gray-50">
+        <div class="flex flex-col sm:flex-row gap-3 justify-between">
+          <button
+            @click="handleClearSelection"
+            class="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+          >
+            Clear Selection
+          </button>
+          <div class="flex gap-3">
+            <button
+              @click="handleExport"
+              class="px-4 py-2 text-primary bg-white border border-primary rounded-lg hover:bg-blue-50 transition-colors font-medium"
+            >
+              📥 Export List
             </button>
             <button
-              @click="$emit('close')"
-              class="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              @click="handleClose"
+              class="btn-primary px-6"
             >
-              Close
+              Done
             </button>
           </div>
         </div>
@@ -177,10 +175,7 @@
 </template>
 
 <script setup>
-import { ref, inject } from "vue";
-import { jsPDF } from "jspdf";
-import Papa from "papaparse";
-import { useMauticNewsletter } from "@/composables/useMauticNewsletter";
+import { ref, computed, watch, onMounted } from "vue";
 
 const props = defineProps({
   selectedDirectories: {
@@ -191,168 +186,134 @@ const props = defineProps({
 
 const emit = defineEmits(["close", "clear-selection"]);
 
-const email = ref("");
-const name = ref("");
-const productName = ref("");
-const subscribeNewsletter = ref(true);
-const isDownloading = ref(false);
-const isExporting = ref(false);
-const downloadSuccess = ref("");
-const downloadError = ref("");
+var completedDirectories = ref(new Set());
 
-const { subscribe } = useMauticNewsletter();
+const completedCount = computed(function() {
+  return completedDirectories.value.size;
+});
 
-const selectedCount = ref(props.selectedDirectories.length);
+var progressPercentage = computed(function() {
+  if (props.selectedDirectories.length === 0) return 0;
+  return Math.round((completedCount.value / props.selectedDirectories.length) * 100);
+});
 
-const handleDownloadChecklist = async () => {
-  if (!email.value) return;
+var sortedDirectories = computed(function() {
+  return [...props.selectedDirectories].sort((a, b) => {
+    var aCompleted = completedDirectories.value.has(a.id);
+    var bCompleted = completedDirectories.value.has(b.id);
 
-  isDownloading.value = true;
-  downloadSuccess.value = "";
-  downloadError.value = "";
+    if (aCompleted && !bCompleted) return 1;
+    if (!aCompleted && bCompleted) return -1;
 
-  try {
-    // Subscribe to newsletter if opted in
-    if (subscribeNewsletter.value) {
-      await subscribe({
-        email: email.value,
-        name: name.value,
-        product_name: productName.value,
-        source: "checklist",
-      });
-    }
+    var aDR = a.domain_rating || 0;
+    var bDR = b.domain_rating || 0;
+    return bDR - aDR;
+  });
+});
 
-    // Generate PDF
-    generatePDF();
+function handleClose() {
+  emit("close");
+}
 
-    downloadSuccess.value =
-      "✅ Checklist downloaded! Check your email for updates.";
-
-    // Track with Pirsch
-    if (window.pirsch) {
-      window.pirsch("Checklist Downloaded", {
-        email_captured: true,
-        selected_count: selectedCount.value,
-      });
-    }
-  } catch (error) {
-    downloadError.value = "Failed to process request. Please try again.";
-    console.error("Checklist download error:", error);
-  } finally {
-    isDownloading.value = false;
+function handleClearSelection() {
+  if (confirm("Are you sure you want to clear your selection? This will remove all selected directories.")) {
+    completedDirectories.value.clear();
+    saveProgress();
+    emit("clear-selection");
+    emit("close");
   }
-};
+}
 
-const generatePDF = () => {
-  const doc = new jsPDF();
+function isCompleted(directoryId) {
+  return completedDirectories.value.has(directoryId);
+}
 
-  // Header
-  doc.setFontSize(20);
-  doc.text("My Launch Checklist", 20, 20);
+function toggleCompletion(directoryId) {
+  if (completedDirectories.value.has(directoryId)) {
+    completedDirectories.value.delete(directoryId);
+  } else {
+    completedDirectories.value.add(directoryId);
+  }
+  saveProgress();
+}
 
-  doc.setFontSize(10);
-  doc.text("Generated by awesome-directories.com", 20, 28);
+function saveProgress() {
+  var completed = Array.from(completedDirectories.value);
+  localStorage.setItem("completedDirectories", JSON.stringify(completed));
+}
 
-  let yPos = 40;
-
-  // Directory list
-  doc.setFontSize(12);
-  props.selectedDirectories.forEach((dir, index) => {
-    if (yPos > 270) {
-      doc.addPage();
-      yPos = 20;
+function loadProgress() {
+  var stored = localStorage.getItem("completedDirectories");
+  if (stored) {
+    try {
+      var completed = JSON.parse(stored);
+      completedDirectories.value = new Set(completed);
+    } catch (e) {
+      console.error("Error loading progress:", e);
     }
+  }
+}
 
-    // Checkbox
-    doc.rect(20, yPos - 4, 4, 4);
+function getPricingClass(pricing) {
+  var lower = pricing.toLowerCase();
+  if (lower === "free") return "bg-green-100 text-green-700";
+  if (lower === "paid") return "bg-orange-100 text-orange-700";
+  if (lower === "freemium") return "bg-purple-100 text-purple-700";
+  return "bg-gray-100 text-gray-700";
+}
 
-    // Directory name
-    doc.text(`${index + 1}. ${dir.name}`, 28, yPos);
+function handleExport() {
+  var csv = "Name,URL,Domain Rating,Pricing,Link Type,Category\n";
 
-    // DR and pricing
-    const details = [];
-    if (dir.domain_rating) details.push(`DR: ${dir.domain_rating}`);
-    if (dir.is_dofollow) details.push("Dofollow");
-    if (dir.pricing_type) details.push(dir.pricing_type);
-
-    doc.setFontSize(9);
-    doc.setTextColor(100);
-    doc.text(details.join(" • "), 28, yPos + 5);
-
-    // URL
-    doc.text(dir.url, 28, yPos + 10);
-
-    doc.setFontSize(12);
-    doc.setTextColor(0);
-
-    yPos += 20;
+  props.selectedDirectories.forEach(function(dir) {
+    var row = [
+      dir.name,
+      dir.url,
+      dir.domain_rating || "N/A",
+      dir.pricing || "N/A",
+      dir.is_dofollow ? "Dofollow" : "Nofollow",
+      dir.category || "N/A"
+    ];
+    csv += row.map(function(field) {
+      return '"' + String(field).replace(/"/g, '""') + '"';
+    }).join(",") + "\n";
   });
 
-  // Footer
-  doc.setFontSize(8);
-  doc.setTextColor(150);
-  doc.text("Made with awesome-directories.com by Meysam", 20, 285);
+  var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  var link = document.createElement("a");
+  var url = URL.createObjectURL(blob);
 
-  doc.save("launch-checklist.pdf");
-};
+  link.setAttribute("href", url);
+  link.setAttribute("download", "directory-checklist.csv");
+  link.style.visibility = "hidden";
 
-const exportToCSV = () => {
-  isExporting.value = true;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
-  try {
-    const data = props.selectedDirectories.map((dir) => ({
-      Name: dir.name,
-      URL: dir.url,
-      "Domain Rating": dir.domain_rating || "",
-      Dofollow: dir.is_dofollow ? "Yes" : "No",
-      Pricing: dir.pricing_type || "",
-      Categories: dir.categories ? dir.categories.join(", ") : "",
-      Description: dir.description || "",
-    }));
+onMounted(function() {
+  loadProgress();
+});
 
-    const csv = Papa.unparse(data);
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "directories-export.csv";
-    link.click();
+watch(function() {
+  return props.selectedDirectories;
+}, function(newDirs) {
+  var validIds = new Set(newDirs.map(function(d) { return d.id; }));
+  var toRemove = [];
 
-    // Track with Pirsch
-    if (window.pirsch) {
-      window.pirsch("Export", {
-        format: "csv",
-        selected_count: selectedCount.value,
-      });
+  completedDirectories.value.forEach(function(id) {
+    if (!validIds.has(id)) {
+      toRemove.push(id);
     }
-  } catch (error) {
-    console.error("CSV export error:", error);
-  } finally {
-    isExporting.value = false;
+  });
+
+  toRemove.forEach(function(id) {
+    completedDirectories.value.delete(id);
+  });
+
+  if (toRemove.length > 0) {
+    saveProgress();
   }
-};
-
-const exportToJSON = () => {
-  isExporting.value = true;
-
-  try {
-    const data = JSON.stringify(props.selectedDirectories, null, 2);
-    const blob = new Blob([data], { type: "application/json" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "directories-export.json";
-    link.click();
-
-    // Track with Pirsch
-    if (window.pirsch) {
-      window.pirsch("Export", {
-        format: "json",
-        selected_count: selectedCount.value,
-      });
-    }
-  } catch (error) {
-    console.error("JSON export error:", error);
-  } finally {
-    isExporting.value = false;
-  }
-};
+}, { deep: true });
 </script>
