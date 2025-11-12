@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="min-h-screen flex flex-col">
-    <AppHeader />
+    <AppHeader @show-auth="showAuthModal = true" />
 
     <main class="flex-grow">
       <router-view v-slot="{ Component }">
@@ -12,7 +12,6 @@
 
     <AppFooter />
 
-    <!-- Modals -->
     <AuthModal v-if="showAuthModal" @close="showAuthModal = false" />
     <ChecklistModal
       v-if="showChecklistModal"
@@ -31,37 +30,42 @@ import ChecklistModal from "@/components/ChecklistModal.vue";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/composables/useAuth";
 
-const router = useRouter();
-const { user, session } = useAuth();
+var router = useRouter();
+var { user, session } = useAuth();
 
-const showAuthModal = ref(false);
-const showChecklistModal = ref(false);
+var showAuthModal = ref(false);
+var showChecklistModal = ref(false);
 
-// Provide global modal controls
-provide("showAuthModal", () => {
+function handleShowAuthModal() {
   showAuthModal.value = true;
-});
-provide("hideAuthModal", () => {
-  showAuthModal.value = false;
-});
-provide("showChecklistModal", () => {
-  showChecklistModal.value = true;
-});
-provide("hideChecklistModal", () => {
-  showChecklistModal.value = false;
-});
+}
 
-// Handle auth state changes
-onMounted(() => {
-  supabase.auth.onAuthStateChange((event, _session) => {
+function handleHideAuthModal() {
+  showAuthModal.value = false;
+}
+
+function handleShowChecklistModal() {
+  showChecklistModal.value = true;
+}
+
+function handleHideChecklistModal() {
+  showChecklistModal.value = false;
+}
+
+provide("showAuthModal", handleShowAuthModal);
+provide("hideAuthModal", handleHideAuthModal);
+provide("showChecklistModal", handleShowChecklistModal);
+provide("hideChecklistModal", handleHideChecklistModal);
+
+onMounted(function() {
+  supabase.auth.onAuthStateChange(function(event, _session) {
     if (event === "SIGNED_IN") {
       showAuthModal.value = false;
     }
   });
 });
 
-// Protected route handling
-router.beforeEach((to, from, next) => {
+router.beforeEach(function(to, from, next) {
   if (to.meta.requiresAuth && !session.value) {
     showAuthModal.value = true;
     next(false);

@@ -353,7 +353,7 @@ import DirectoryCard from "@/components/DirectoryCard.vue";
 import ChecklistModal from "@/components/ChecklistModal.vue";
 import { supabase } from "@/lib/supabase";
 
-const {
+var {
   directories,
   loading,
   error,
@@ -368,21 +368,23 @@ const {
   clearCache,
 } = useDirectories();
 
-const searchQuery = ref("");
-const filters = ref({
+var searchQuery = ref("");
+var filters = ref({
   category: "All",
   drRange: "All",
   linkType: "All",
   pricing: "All",
 });
-const sortBy = ref("Most Helpful");
-const selectedDirectories = ref([]);
-const showChecklistModalLocal = ref(false);
+var sortBy = ref("Most Helpful");
+var selectedDirectories = ref([]);
+var showChecklistModalLocal = ref(false);
 
-const categories = computed(() => uniqueCategories.value);
+var categories = computed(function() {
+  return uniqueCategories.value;
+});
 
-const activeFilterCount = computed(() => {
-  let count = 0;
+var activeFilterCount = computed(function() {
+  var count = 0;
   if (filters.value.category !== "All") count++;
   if (filters.value.drRange !== "All") count++;
   if (filters.value.linkType !== "All") count++;
@@ -390,60 +392,72 @@ const activeFilterCount = computed(() => {
   return count;
 });
 
-const filteredDirectories = computed(() => {
-  const filtered = filterDirectories({
+var filteredDirectories = computed(function() {
+  var filtered = filterDirectories({
     ...filters.value,
     search: searchQuery.value,
   });
   return sortDirectories(filtered, sortBy.value);
 });
 
-const displayedDirectories = computed(() => filteredDirectories.value);
-const filteredCount = computed(() => filteredDirectories.value.length);
+var displayedDirectories = computed(function() {
+  return filteredDirectories.value;
+});
 
-// Use the actual total count from cache, fallback to loaded directories
-const totalDirectoriesCount = computed(() =>
-  totalCount.value > 0 ? totalCount.value : directories.value.length,
-);
-const withDRCount = computed(
-  () => directories.value.filter((d) => d.domain_rating).length,
-);
+var filteredCount = computed(function() {
+  return filteredDirectories.value.length;
+});
 
-const isDirectorySelected = (directory) => {
-  return selectedDirectories.value.some((d) => d.id === directory.id);
-};
+var totalDirectoriesCount = computed(function() {
+  return totalCount.value > 0 ? totalCount.value : directories.value.length;
+});
 
-const toggleDirectorySelection = (directory) => {
-  const index = selectedDirectories.value.findIndex(
-    (d) => d.id === directory.id,
-  );
+var withDRCount = computed(function() {
+  return directories.value.filter(function(d) {
+    return d.domain_rating;
+  }).length;
+});
+
+function isDirectorySelected(directory) {
+  return selectedDirectories.value.some(function(d) {
+    return d.id === directory.id;
+  });
+}
+
+function toggleDirectorySelection(directory) {
+  var index = selectedDirectories.value.findIndex(function(d) {
+    return d.id === directory.id;
+  });
   if (index > -1) {
     selectedDirectories.value.splice(index, 1);
   } else {
     selectedDirectories.value.push(directory);
   }
 
-  // Store in localStorage
   localStorage.setItem(
     "selectedDirectories",
-    JSON.stringify(selectedDirectories.value.map((d) => d.id)),
+    JSON.stringify(selectedDirectories.value.map(function(d) {
+      return d.id;
+    }))
   );
-};
+}
 
-const selectAll = () => {
+function selectAll() {
   selectedDirectories.value = [...filteredDirectories.value];
   localStorage.setItem(
     "selectedDirectories",
-    JSON.stringify(selectedDirectories.value.map((d) => d.id)),
+    JSON.stringify(selectedDirectories.value.map(function(d) {
+      return d.id;
+    }))
   );
-};
+}
 
-const deselectAll = () => {
+function deselectAll() {
   selectedDirectories.value = [];
   localStorage.removeItem("selectedDirectories");
-};
+}
 
-const clearFilters = () => {
+function clearFilters() {
   searchQuery.value = "";
   filters.value = {
     category: "All",
@@ -451,96 +465,15 @@ const clearFilters = () => {
     linkType: "All",
     pricing: "All",
   };
-};
+}
 
-const handleVote = async (directory) => {
+async function handleVote(directory) {
   try {
-    // Get IP hash (simplified - in production use proper IP detection)
-    const ipHash = await getIPHash();
+    var ipHash = await getIPHash();
 
-    const { error: voteError } = await supabase.from("directory_votes").insert({
+    var { error: voteError } = await supabase.from("directory_votes").insert({
       directory_id: directory.id,
       ip_hash: ipHash,
     });
 
-    if (voteError) {
-      if (voteError.code === "23505") {
-        console.log("Already voted for this directory");
-      } else {
-        throw voteError;
-      }
-    }
-
-    // Track with Pirsch
-    if (window.pirsch) {
-      window.pirsch("Directory Helpful Vote", { directory: directory.slug });
-    }
-
-    // Clear cache and reload to get updated count
-    await fetchDirectories(true);
-  } catch (err) {
-    console.error("Error voting:", err);
-  }
-};
-
-const getIPHash = async () => {
-  // Simplified IP hash - in production, use server-side IP detection
-  const response = await fetch("https://api.ipify.org?format=json");
-  const data = await response.json();
-  const ip = data.ip;
-
-  // Create simple hash
-  const encoder = new TextEncoder();
-  const data_encoded = encoder.encode(ip);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data_encoded);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-
-  return hashHex;
-};
-
-const loadDirectories = async () => {
-  await fetchDirectories();
-
-  // Restore selection from localStorage
-  const storedSelection = localStorage.getItem("selectedDirectories");
-  if (storedSelection) {
-    try {
-      const ids = JSON.parse(storedSelection);
-      selectedDirectories.value = directories.value.filter((d) =>
-        ids.includes(d.id),
-      );
-    } catch (e) {
-      console.error("Error restoring selection:", e);
-    }
-  }
-};
-
-onMounted(() => {
-  loadDirectories();
-
-  // Track page view with Pirsch
-  if (window.pirsch) {
-    window.pirsch("Page View");
-  }
-});
-
-// Track filter changes with Pirsch
-watch(
-  [filters, searchQuery],
-  () => {
-    if (window.pirsch && activeFilterCount.value > 0) {
-      window.pirsch("Filter Applied", {
-        category: filters.value.category,
-        dr: filters.value.drRange,
-        link_type: filters.value.linkType,
-        pricing: filters.value.pricing,
-        has_search: !!searchQuery.value,
-      });
-    }
-  },
-  { deep: true },
-);
-</script>
+    if
