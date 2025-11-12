@@ -116,7 +116,7 @@ bun install  # or: npm install
 cp .env.example .env
 
 # Start dev server
-bun run dev  # Runs on http://localhost:3000
+bun start  # Runs on http://localhost:3000
 
 # Build for production
 bun run build
@@ -145,7 +145,7 @@ VITE_GITHUB_CATEGORY_ID=<category-id>
 ```
 
 ### Available Scripts
-- `bun run dev` - Start development server (port 3000)
+- `bun start` - Start development server (port 3000)
 - `bun run build` - Build for production
 - `bun run preview` - Preview production build locally
 - `bun run lint` - Run ESLint with auto-fix
