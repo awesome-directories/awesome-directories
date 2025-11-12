@@ -28,7 +28,7 @@
 - `@supabase/supabase-js` - Database and auth client
 - `@vueuse/core` - Vue composition utilities
 - `html2canvas + jsPDF` - PDF export functionality
-- `PapaParse` - CSV parsing/export
+- `papaparse` - CSV parsing/export
 - `slugify` - URL slug generation
 
 ### Backend & Services
@@ -259,7 +259,6 @@ Newsletter subscription to Mautic CRM:
 - Automatic deployment
 
 **Scheduled (daily at midnight UTC):**
-- Potential DR score updates
 
 ### Required Secrets
 - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`
