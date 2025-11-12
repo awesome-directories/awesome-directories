@@ -50,6 +50,22 @@
               </router-link>
             </li>
             <li>
+              <router-link
+                to="/terms"
+                class="text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                Terms of Service
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                to="/privacy"
+                class="text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </router-link>
+            </li>
+            <li>
               <a
                 href="https://github.com/awesome-directories/awesome-directories"
                 target="_blank"
