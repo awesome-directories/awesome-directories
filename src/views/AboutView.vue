@@ -85,7 +85,7 @@
               Website →
             </a>
             <a
-              href="https://twitter.com/meysam"
+              href="https://x.com/meysamazing"
               target="_blank"
               rel="noopener"
               class="text-primary hover:text-primary-dark font-medium"

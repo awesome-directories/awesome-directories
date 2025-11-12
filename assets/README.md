@@ -385,7 +385,7 @@ A: Yes! Licensed under Apache-2.0. Attribution appreciated but not required.
 
 - **Documentation**: `docs/BRAND_GUIDELINES.md` and `docs/DESIGN_SYSTEM.md`
 - **GitHub Issues**: [Report problems or request assets](https://github.com/awesome-directories/awesome-directories/issues)
-- **Twitter**: [@meysam_io](https://twitter.com/meysam_io)
+- **Twitter**: [@meysam_io](https://x.com/meysamazing)
 
 ---
 
