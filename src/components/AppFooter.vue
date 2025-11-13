@@ -130,17 +130,30 @@
         <div
           class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
         >
-          <p class="text-sm text-gray-500">
-            © {{ currentYear }} Awesome Directories. Open source under
-            <a
-              href="https://github.com/awesome-directories/awesome-directories/blob/main/LICENSE"
-              target="_blank"
-              rel="noopener"
-              class="text-gray-400 hover:text-white transition-colors"
-            >
-              Apache 2.0 License
-            </a>
-          </p>
+          <div class="text-sm text-gray-500 space-y-1">
+            <p>
+              © {{ currentYear }} Awesome Directories. Open source under
+              <a
+                href="https://github.com/awesome-directories/awesome-directories/blob/main/LICENSE"
+                target="_blank"
+                rel="noopener"
+                class="text-gray-400 hover:text-white transition-colors"
+              >
+                Apache 2.0 License
+              </a>
+            </p>
+            <p class="text-xs text-gray-600">
+              PageRank data by
+              <a
+                href="https://www.domcop.com/openpagerank/what-is-openpagerank"
+                target="_blank"
+                rel="noopener"
+                class="text-gray-500 hover:text-gray-300 transition-colors underline"
+              >
+                Open PageRank
+              </a>
+            </p>
+          </div>
 
           <div class="flex items-center space-x-6">
             <a
