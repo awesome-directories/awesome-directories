@@ -5,12 +5,9 @@
         <!-- Logo -->
         <router-link
           to="/"
-          class="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+          class="flex items-center hover:opacity-80 transition-opacity"
         >
-          <div class="text-2xl font-bold text-primary">📂</div>
-          <span class="text-xl font-bold text-gray-900">
-            Awesome Directories
-          </span>
+          <Logo size="md" spacing="lg" />
         </router-link>
 
         <!-- Desktop Navigation -->
@@ -208,6 +205,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useAuth } from "@/composables/useAuth";
+import Logo from "./Logo.vue";
 
 const { user, signOut } = useAuth();
 

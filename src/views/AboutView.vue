@@ -72,7 +72,7 @@
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Built By</h2>
           <p class="text-gray-700 mb-4">
             Hi, I'm <strong>Meysam</strong> - an indie hacker, solopreneur, and
-            full-stack developer building in public. I'm passionate about
+            SRE engineer building in public. I'm passionate about
             helping other founders succeed with their launches.
           </p>
           <div class="flex space-x-4">
@@ -85,7 +85,7 @@
               Website →
             </a>
             <a
-              href="https://twitter.com/meysam"
+              href="https://x.com/meysamazing"
               target="_blank"
               rel="noopener"
               class="text-primary hover:text-primary-dark font-medium"
@@ -110,7 +110,7 @@
             <li>💝 Sponsoring via GitHub Sponsors</li>
           </ul>
           <a
-            href="https://github.com/sponsors/meysam"
+            href="https://github.com/sponsors/meysam81"
             target="_blank"
             rel="noopener"
             class="btn-primary inline-block"
