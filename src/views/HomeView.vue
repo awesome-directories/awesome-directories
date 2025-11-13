@@ -520,11 +520,6 @@ const loadDirectories = async () => {
 
 onMounted(() => {
   loadDirectories();
-
-  // Track page view with Pirsch
-  if (window.pirsch) {
-    window.pirsch("Page View");
-  }
 });
 
 // Track filter changes with Pirsch
