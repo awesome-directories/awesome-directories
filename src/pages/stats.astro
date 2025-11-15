@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.astro';
+import StatsView from '../views/StatsView.vue';
+
+const title = 'Public Stats - Awesome Directories';
+const description = 'View public statistics and analytics for Awesome Directories.';
+---
+
+<Layout title={title} description={description} canonical="https://awesome-directories.com/stats">
+  <div id="app" class="min-h-screen flex flex-col">
+    <AppHeader client:load />
+
+    <main class="flex-grow">
+      <StatsView client:load />
+    </main>
+
+    <AppFooter />
+  </div>
+</Layout>

@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.astro';
+import SubmitView from '../views/SubmitView.vue';
+
+const title = 'Submit a Directory - Awesome Directories';
+const description = 'Submit a new launch directory to our curated collection.';
+---
+
+<Layout title={title} description={description} canonical="https://awesome-directories.com/submit">
+  <div id="app" class="min-h-screen flex flex-col">
+    <AppHeader client:load />
+
+    <main class="flex-grow">
+      <SubmitView client:load />
+    </main>
+
+    <AppFooter />
+  </div>
+</Layout>

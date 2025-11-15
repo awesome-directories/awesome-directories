@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.astro';
+import DirectoryList from '../components/DirectoryList.vue';
+import { getAllDirectories, getUniqueCategories } from '../lib/data';
+
+// Fetch all directories at build time
+const directories = await getAllDirectories();
+const categories = getUniqueCategories(directories);
+
+const title = 'Awesome Directories - Curated Launch Directories for SaaS';
+const description = 'Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly.';
+---
+
+<Layout title={title} description={description} canonical="https://awesome-directories.com/">
+  <div id="app" class="min-h-screen flex flex-col">
+    <AppHeader client:load />
+
+    <main class="flex-grow">
+      <DirectoryList
+        client:load
+        directories={directories}
+        categories={categories}
+      />
+    </main>
+
+    <AppFooter />
+  </div>
+</Layout>

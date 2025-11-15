@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.astro';
+import SubmissionsView from '../views/SubmissionsView.vue';
+
+const title = 'My Submissions - Awesome Directories';
+const description = 'View your submitted directories.';
+---
+
+<Layout title={title} description={description} canonical="https://awesome-directories.com/submissions">
+  <div id="app" class="min-h-screen flex flex-col">
+    <AppHeader client:load />
+
+    <main class="flex-grow">
+      <SubmissionsView client:load />
+    </main>
+
+    <AppFooter />
+  </div>
+</Layout>

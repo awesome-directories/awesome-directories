@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.astro';
+import FavoritesView from '../views/FavoritesView.vue';
+
+const title = 'My Favorites - Awesome Directories';
+const description = 'View your favorite directories.';
+---
+
+<Layout title={title} description={description} canonical="https://awesome-directories.com/favorites">
+  <div id="app" class="min-h-screen flex flex-col">
+    <AppHeader client:load />
+
+    <main class="flex-grow">
+      <FavoritesView client:load />
+    </main>
+
+    <AppFooter />
+  </div>
+</Layout>
