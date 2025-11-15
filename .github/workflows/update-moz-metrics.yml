@@ -1,0 +1,90 @@
+name: Update Moz Metrics
+
+on:
+  # Run weekly on Sundays at 2 AM UTC
+  schedule:
+    - cron: '0 2 * * 0'
+
+  # Allow manual triggering from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Number of directories to update (leave empty for all)'
+        required: false
+        default: ''
+      batch_size:
+        description: 'Batch size (max 3)'
+        required: false
+        default: '3'
+
+jobs:
+  update-metrics:
+    runs-on: ubuntu-latest
+    name: Update Moz Domain Authority Metrics
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update Moz Metrics via Edge Function
+        id: update
+        run: |
+          # Prepare request body
+          if [ -n "${{ github.event.inputs.limit }}" ]; then
+            BODY='{"limit": ${{ github.event.inputs.limit }}, "batchSize": ${{ github.event.inputs.batch_size }}}'
+          else
+            BODY='{"batchSize": ${{ github.event.inputs.batch_size || 3 }}}'
+          fi
+
+          echo "Calling edge function with body: $BODY"
+
+          # Call the Supabase Edge Function
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "${{ secrets.SUPABASE_URL }}/functions/v1/update-moz-metrics" \
+            -H "Authorization: Bearer ${{ secrets.FUNCTION_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "$BODY")
+
+          # Extract HTTP code and body
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          # Check if request was successful
+          if [ "$HTTP_CODE" -ne 200 ]; then
+            echo "Error: Edge function returned HTTP $HTTP_CODE"
+            echo "$BODY"
+            exit 1
+          fi
+
+          # Parse and display results
+          echo "$BODY" | jq '.'
+
+          # Extract metrics for summary
+          TOTAL=$(echo "$BODY" | jq -r '.totalDirectories // 0')
+          UPDATED=$(echo "$BODY" | jq -r '.totalUpdated // 0')
+          FAILED=$(echo "$BODY" | jq -r '.totalFailed // 0')
+
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "updated=$UPDATED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+
+      - name: Create Job Summary
+        run: |
+          echo "## Moz Metrics Update Results 📊" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Directories | ${{ steps.update.outputs.total }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Successfully Updated | ${{ steps.update.outputs.updated }} ✅ |" >> $GITHUB_STEP_SUMMARY
+          echo "| Failed | ${{ steps.update.outputs.failed }} ❌ |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Triggered by:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Run time:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify on Failure
+        if: failure()
+        run: |
+          echo "::error::Moz metrics update failed. Check the logs for details."
