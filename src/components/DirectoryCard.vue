@@ -108,7 +108,9 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { supabase } from "@/lib/supabase-client.js";
+import { $user } from "@/stores/auth.js";
 
 const props = defineProps({
   directory: {
@@ -128,6 +130,35 @@ const props = defineProps({
 const emit = defineEmits(["toggle-select", "vote"]);
 
 const hasVoted = ref(false);
+const currentUser = ref(null);
+
+// Subscribe to auth state
+$user.subscribe((user) => {
+  currentUser.value = user;
+  if (user) {
+    checkUserVote(user.id);
+  } else {
+    hasVoted.value = false;
+  }
+});
+
+// Check if current user has voted on this directory
+async function checkUserVote(userId) {
+  if (!userId || !props.directory?.id) return;
+
+  try {
+    const { data } = await supabase
+      .from("directory_votes")
+      .select("id")
+      .eq("directory_id", props.directory.id)
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    hasVoted.value = data !== null;
+  } catch (error) {
+    console.error("Error checking vote:", error);
+  }
+}
 
 const drBadgeClass = computed(() => {
   const dr = props.directory.domain_rating;
@@ -172,8 +203,22 @@ const handleImageError = (e) => {
 const handleHelpfulClick = async () => {
   if (hasVoted.value) return;
 
+  // Require authentication
+  if (!currentUser.value) {
+    window.dispatchEvent(new CustomEvent("show-auth-modal"));
+    return;
+  }
+
   emit("vote", props.directory);
 };
+
+// Initialize on mount
+onMounted(() => {
+  currentUser.value = $user.get();
+  if (currentUser.value) {
+    checkUserVote(currentUser.value.id);
+  }
+});
 </script>
 
 <style scoped>

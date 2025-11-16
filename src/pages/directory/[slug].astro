@@ -263,43 +263,70 @@ const pageDescription = directory.description || `Discover ${directory.name}, a 
   <AppFooter />
 
   <script>
-    // Client-side voting functionality
+    // Client-side voting functionality - requires authentication
     import { supabase } from '@/lib/supabase-client.js';
+    import { $user } from '@/stores/auth.js';
 
-    // Generate a simple browser fingerprint for anonymous voting
-    function getBrowserFingerprint() {
-      const fingerprint = localStorage.getItem('browser_fingerprint');
-      if (fingerprint) return fingerprint;
-
-      // Create a simple fingerprint using available browser info
-      const fp = btoa(
-        navigator.userAgent +
-        navigator.language +
-        new Date().getTimezoneOffset() +
-        Math.random().toString(36).substring(7)
-      );
-
-      localStorage.setItem('browser_fingerprint', fp);
-      return fp;
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       const helpfulBtn = document.getElementById('helpful-btn');
       if (!helpfulBtn) return;
 
       const directoryId = helpfulBtn.dataset.directoryId;
-      const votedKey = `voted_${directoryId}`;
 
       // Check if user has already voted
-      const hasVoted = localStorage.getItem(votedKey) === 'true';
-      if (hasVoted) {
-        helpfulBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        helpfulBtn.disabled = true;
-        helpfulBtn.querySelector('span:first-child').textContent = '✓';
+      async function checkExistingVote(userId) {
+        if (!userId) return false;
+
+        const { data, error } = await supabase
+          .from('directory_votes')
+          .select('id')
+          .eq('directory_id', directoryId)
+          .eq('user_id', userId)
+          .maybeSingle();
+
+        return !error && data !== null;
       }
 
+      // Update UI based on auth state and vote status
+      async function updateVoteUI() {
+        const currentUser = $user.get();
+
+        if (!currentUser) {
+          // Not logged in - show sign in prompt on click
+          helpfulBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+          helpfulBtn.disabled = false;
+          return;
+        }
+
+        // Check if user has already voted
+        const hasVoted = await checkExistingVote(currentUser.id);
+
+        if (hasVoted) {
+          helpfulBtn.classList.add('opacity-50', 'cursor-not-allowed');
+          helpfulBtn.disabled = true;
+          helpfulBtn.querySelector('span:first-child').textContent = '✓';
+        } else {
+          helpfulBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+          helpfulBtn.disabled = false;
+        }
+      }
+
+      // Initial UI update
+      await updateVoteUI();
+
+      // Listen for auth changes
+      $user.subscribe(updateVoteUI);
+
       helpfulBtn.addEventListener('click', async () => {
-        if (hasVoted || helpfulBtn.disabled) return;
+        const currentUser = $user.get();
+
+        // Require authentication
+        if (!currentUser) {
+          window.dispatchEvent(new CustomEvent('show-auth-modal'));
+          return;
+        }
+
+        if (helpfulBtn.disabled) return;
 
         try {
           helpfulBtn.disabled = true;
@@ -309,21 +336,18 @@ const pageDescription = directory.description || `Discover ${directory.name}, a 
           const currentCount = parseInt(helpfulBtn.dataset.helpfulCount || 0);
           countSpan.textContent = `${currentCount + 1} helpful`;
 
-          // Get browser fingerprint for anonymous voting
-          const ipHash = getBrowserFingerprint();
-
           // Insert vote record (trigger will increment helpful_count)
           const { error } = await supabase
             .from('directory_votes')
             .insert({
               directory_id: directoryId,
-              ip_hash: ipHash
+              user_id: currentUser.id,
+              ip_hash: 'authenticated' // Required by schema, but not used for auth users
             });
 
           if (error) {
             // Check if it's a duplicate vote error
             if (error.code === '23505') {
-              localStorage.setItem(votedKey, 'true');
               helpfulBtn.classList.add('opacity-50', 'cursor-not-allowed');
               helpfulBtn.querySelector('span:first-child').textContent = '✓';
               return;
@@ -332,7 +356,6 @@ const pageDescription = directory.description || `Discover ${directory.name}, a 
           }
 
           // Mark as voted
-          localStorage.setItem(votedKey, 'true');
           helpfulBtn.classList.add('opacity-50', 'cursor-not-allowed');
           helpfulBtn.querySelector('span:first-child').textContent = '✓';
 
