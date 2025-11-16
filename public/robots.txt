@@ -4,7 +4,7 @@ Disallow: /api/
 Disallow: /admin/
 Disallow: /*.json$
 
-Sitemap: https://awesome-directories.com/sitemap.xml
+Sitemap: https://awesome-directories.com/sitemap-index.xml
 
 User-agent: Googlebot
 Allow: /
