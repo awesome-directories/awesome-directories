@@ -1,4 +1,4 @@
-import { supabase, type Directory } from './supabase';
+import { supabase, type Directory } from "./supabase";
 
 /**
  * Fetch all directories at build time
@@ -7,20 +7,20 @@ import { supabase, type Directory } from './supabase';
 export async function getAllDirectories(): Promise<Directory[]> {
   try {
     const { data, error } = await supabase
-      .from('directories')
-      .select('*')
-      .eq('is_active', true)
-      .order('domain_rating', { ascending: false, nullsFirst: false })
-      .order('helpful_count', { ascending: false });
+      .from("directories")
+      .select("*")
+      .eq("is_active", true)
+      .order("domain_rating", { ascending: false, nullsFirst: false })
+      .order("helpful_count", { ascending: false });
 
     if (error) {
-      console.error('Error fetching directories:', error);
+      console.error("Error fetching directories:", error);
       throw error;
     }
 
     return data || [];
   } catch (err) {
-    console.error('Failed to fetch directories:', err);
+    console.error("Failed to fetch directories:", err);
     return [];
   }
 }
@@ -28,23 +28,25 @@ export async function getAllDirectories(): Promise<Directory[]> {
 /**
  * Get a single directory by slug
  */
-export async function getDirectoryBySlug(slug: string): Promise<Directory | null> {
+export async function getDirectoryBySlug(
+  slug: string,
+): Promise<Directory | null> {
   try {
     const { data, error } = await supabase
-      .from('directories')
-      .select('*')
-      .eq('slug', slug)
-      .eq('is_active', true)
+      .from("directories")
+      .select("*")
+      .eq("slug", slug)
+      .eq("is_active", true)
       .single();
 
     if (error) {
-      console.error('Error fetching directory:', error);
+      console.error("Error fetching directory:", error);
       return null;
     }
 
     return data;
   } catch (err) {
-    console.error('Failed to fetch directory:', err);
+    console.error("Failed to fetch directory:", err);
     return null;
   }
 }
@@ -59,7 +61,7 @@ export function getUniqueCategories(directories: Directory[]): string[] {
       dir.categories.forEach((cat) => categories.add(cat));
     }
   });
-  return ['All', ...Array.from(categories).sort()];
+  return ["All", ...Array.from(categories).sort()];
 }
 
 /**
@@ -68,14 +70,14 @@ export function getUniqueCategories(directories: Directory[]): string[] {
 export async function getTotalDirectoriesCount(): Promise<number> {
   try {
     const { count, error } = await supabase
-      .from('directories')
-      .select('*', { count: 'exact', head: true })
-      .eq('is_active', true);
+      .from("directories")
+      .select("*", { count: "exact", head: true })
+      .eq("is_active", true);
 
     if (error) throw error;
     return count || 0;
   } catch (err) {
-    console.error('Failed to fetch count:', err);
+    console.error("Failed to fetch count:", err);
     return 0;
   }
 }

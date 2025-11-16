@@ -13,11 +13,7 @@
         :disabled="isSubmitting"
       />
 
-      <button
-        type="submit"
-        class="w-full btn-primary"
-        :disabled="isSubmitting"
-      >
+      <button type="submit" class="w-full btn-primary" :disabled="isSubmitting">
         {{ isSubmitting ? "Subscribing..." : "Subscribe" }}
       </button>
 

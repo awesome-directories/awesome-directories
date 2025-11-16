@@ -171,7 +171,8 @@
         >
           <div class="text-sm text-gray-600">
             Showing
-            <span class="font-semibold">{{ filteredDirectories.length }}</span> directories
+            <span class="font-semibold">{{ filteredDirectories.length }}</span>
+            directories
             <span v-if="activeFilterCount > 0">
               ({{ activeFilterCount }} filter{{
                 activeFilterCount > 1 ? "s" : ""
@@ -223,10 +224,7 @@
     <!-- Directory Grid -->
     <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Empty State -->
-      <div
-        v-if="filteredDirectories.length === 0"
-        class="text-center py-12"
-      >
+      <div v-if="filteredDirectories.length === 0" class="text-center py-12">
         <div class="text-6xl mb-4">🔍</div>
         <h3 class="text-xl font-semibold text-gray-900 mb-2">
           No directories found
@@ -343,7 +341,8 @@ const filterDirectories = (dirs) => {
   // Category filter
   if (filters.value.category && filters.value.category !== "All") {
     filtered = filtered.filter(
-      (dir) => dir.categories && dir.categories.includes(filters.value.category),
+      (dir) =>
+        dir.categories && dir.categories.includes(filters.value.category),
     );
   }
 
@@ -378,7 +377,9 @@ const filterDirectories = (dirs) => {
   if (filters.value.pricing && filters.value.pricing !== "All") {
     filtered = filtered.filter((dir) => {
       if (!dir.pricing_type) return false;
-      return dir.pricing_type.toLowerCase() === filters.value.pricing.toLowerCase();
+      return (
+        dir.pricing_type.toLowerCase() === filters.value.pricing.toLowerCase()
+      );
     });
   }
 

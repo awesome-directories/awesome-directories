@@ -1,4 +1,10 @@
-import { extractDomain, batchArray, pollApifyRun, fetchDirectoriesFromDatabase, createDomainMapping } from "./utils.ts";
+import {
+  extractDomain,
+  batchArray,
+  pollApifyRun,
+  fetchDirectoriesFromDatabase,
+  createDomainMapping,
+} from "./utils.ts";
 
 interface Directory {
   id: string;
@@ -34,7 +40,10 @@ interface AhrefsMetrics {
   };
 }
 
-async function fetchAhrefsMetrics(urls: string[], apifyToken: string): Promise<AhrefsMetrics[]> {
+async function fetchAhrefsMetrics(
+  urls: string[],
+  apifyToken: string,
+): Promise<AhrefsMetrics[]> {
   var input = {
     urls: urls,
     include_web_authority: true,
@@ -63,11 +72,13 @@ async function fetchAhrefsMetrics(urls: string[], apifyToken: string): Promise<A
           Authorization: `Bearer ${apifyToken}`,
         },
         body: JSON.stringify(input),
-      }
+      },
     );
 
     if (!runResponse.ok) {
-      throw new Error(`Apify API error: ${runResponse.status} ${runResponse.statusText}`);
+      throw new Error(
+        `Apify API error: ${runResponse.status} ${runResponse.statusText}`,
+      );
     }
 
     var runData = await runResponse.json();
@@ -83,7 +94,11 @@ async function fetchAhrefsMetrics(urls: string[], apifyToken: string): Promise<A
   }
 }
 
-async function updateDirectoryMetrics(supabaseClient, directoryId: string, metricsArray: AhrefsMetrics[]) {
+async function updateDirectoryMetrics(
+  supabaseClient,
+  directoryId: string,
+  metricsArray: AhrefsMetrics[],
+) {
   var domainRating = null;
   var backlinksCount = null;
   var referringDomains = null;
@@ -93,25 +108,32 @@ async function updateDirectoryMetrics(supabaseClient, directoryId: string, metri
   for (var i = 0; i < metricsArray.length; i++) {
     var metrics = metricsArray[i];
 
-    if (metrics.type === 'authority' && metrics.website_authority) {
+    if (metrics.type === "authority" && metrics.website_authority) {
       domainRating = metrics.website_authority.domainRating ?? domainRating;
       backlinksCount = metrics.website_authority.backlinks ?? backlinksCount;
-      referringDomains = metrics.website_authority.refdomains ?? referringDomains;
+      referringDomains =
+        metrics.website_authority.refdomains ?? referringDomains;
       consolidatedData.authority = metrics.website_authority;
     }
 
-    if (metrics.type === 'backlinks' && metrics.backlink_check) {
-      domainRating = domainRating ?? metrics.backlink_check.domainRating ?? null;
-      backlinksCount = backlinksCount ?? metrics.backlink_check.backlinks ?? null;
-      referringDomains = referringDomains ?? metrics.backlink_check.refdomains ?? null;
+    if (metrics.type === "backlinks" && metrics.backlink_check) {
+      domainRating =
+        domainRating ?? metrics.backlink_check.domainRating ?? null;
+      backlinksCount =
+        backlinksCount ?? metrics.backlink_check.backlinks ?? null;
+      referringDomains =
+        referringDomains ?? metrics.backlink_check.refdomains ?? null;
       consolidatedData.backlinks = metrics.backlink_check;
       if (metrics.top_backlinks) {
         consolidatedData.top_backlinks = metrics.top_backlinks;
       }
     }
 
-    if (metrics.type === 'traffic') {
-      if (metrics.website_traffic && metrics.website_traffic.trafficMonthlyAvg !== undefined) {
+    if (metrics.type === "traffic") {
+      if (
+        metrics.website_traffic &&
+        metrics.website_traffic.trafficMonthlyAvg !== undefined
+      ) {
         organicTraffic = metrics.website_traffic.trafficMonthlyAvg;
       }
       consolidatedData.traffic = {
@@ -119,7 +141,7 @@ async function updateDirectoryMetrics(supabaseClient, directoryId: string, metri
         history: metrics.website_traffic_history,
         by_country: metrics.website_traffic_by_country,
         top_pages: metrics.website_traffic_top_pages,
-        top_keywords: metrics.website_traffic_top_keywords
+        top_keywords: metrics.website_traffic_top_keywords,
       };
     }
   }
@@ -147,8 +169,16 @@ async function updateDirectoryMetrics(supabaseClient, directoryId: string, metri
   console.log(`Updated directory ${directoryId} with new metrics`);
 }
 
-export async function updateAhrefsMetrics(supabase, apifyToken: string, batchSize: number, limitDirectories: number | null) {
-  var directories = await fetchDirectoriesFromDatabase(supabase, limitDirectories);
+export async function updateAhrefsMetrics(
+  supabase,
+  apifyToken: string,
+  batchSize: number,
+  limitDirectories: number | null,
+) {
+  var directories = await fetchDirectoriesFromDatabase(
+    supabase,
+    limitDirectories,
+  );
 
   if (!directories || directories.length === 0) {
     return {
@@ -166,7 +196,9 @@ export async function updateAhrefsMetrics(supabase, apifyToken: string, batchSiz
   var totalFailed = 0;
   var errors = [];
 
-  console.log(`Processing ${batches.length} batches of up to ${batchSize} URLs each`);
+  console.log(
+    `Processing ${batches.length} batches of up to ${batchSize} URLs each`,
+  );
 
   for (var i = 0; i < batches.length; i++) {
     var batch = batches[i];
@@ -209,7 +241,9 @@ export async function updateAhrefsMetrics(supabase, apifyToken: string, batchSiz
       }
 
       if (i < batches.length - 1) {
-        await new Promise(function wait(resolve) { setTimeout(resolve, 3000); });
+        await new Promise(function wait(resolve) {
+          setTimeout(resolve, 3000);
+        });
       }
     } catch (error) {
       console.error(`Error processing batch ${i + 1}:`, error);
