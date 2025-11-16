@@ -60,6 +60,8 @@ import Logo from './Logo.astro';
           <button
             id="user-menu-button"
             class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors"
+            aria-label="User menu"
+            aria-expanded="false"
           >
             <div
               id="user-avatar"
@@ -105,6 +107,8 @@ import Logo from './Logo.astro';
       <button
         id="mobile-menu-button"
         class="md:hidden p-2 text-gray-600 hover:text-gray-900"
+        aria-label="Toggle mobile menu"
+        aria-expanded="false"
       >
         <svg
           id="menu-icon-open"
