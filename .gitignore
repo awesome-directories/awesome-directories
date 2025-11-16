@@ -59,3 +59,4 @@ supabase/functions/update-seo-data/ahrefs-docs.md
 DEPLOYMENT_GUIDE_MOZ_METRICS.md
 .github/workflows/update-moz-metrics.yml
 supabase/functions/update-seo-data/README.md
+.astro/

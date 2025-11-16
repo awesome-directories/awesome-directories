@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 /**
  * Client-side Supabase client for runtime interactions
@@ -6,13 +6,16 @@ import { createClient } from '@supabase/supabase-js';
  */
 
 // Get environment variables from window (injected by Astro)
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl =
+  import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey =
+  import.meta.env.PUBLIC_SUPABASE_ANON_KEY ||
+  import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error(
-    'Missing Supabase environment variables. Please check your configuration.\n' +
-      'Required: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY'
+    "Missing Supabase environment variables. Please check your configuration.\n" +
+      "Required: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY",
   );
 }
 
@@ -21,7 +24,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: true,
-    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+    storage: typeof window !== "undefined" ? window.localStorage : undefined,
   },
 });
 
@@ -31,7 +34,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 export async function getSession() {
   const { data, error } = await supabase.auth.getSession();
   if (error) {
-    console.error('Error getting session:', error);
+    console.error("Error getting session:", error);
     return null;
   }
   return data.session;
@@ -43,7 +46,7 @@ export async function getSession() {
 export async function getUser() {
   const { data, error } = await supabase.auth.getUser();
   if (error) {
-    console.error('Error getting user:', error);
+    console.error("Error getting user:", error);
     return null;
   }
   return data.user;
@@ -72,7 +75,7 @@ export async function signInWithOAuth(provider) {
 export async function signOut() {
   const { error } = await supabase.auth.signOut();
   if (error) {
-    console.error('Error signing out:', error);
+    console.error("Error signing out:", error);
     return { error };
   }
   return { error: null };

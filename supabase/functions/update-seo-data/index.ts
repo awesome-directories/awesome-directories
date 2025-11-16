@@ -10,7 +10,8 @@ serve(async function handleRequest(req) {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST",
-        "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+        "Access-Control-Allow-Headers":
+          "authorization, x-client-info, apikey, content-type",
       },
     });
   }
@@ -53,11 +54,15 @@ serve(async function handleRequest(req) {
         if (body.limit) {
           limitDirectories = body.limit;
         }
-      } catch {
-      }
+      } catch {}
     }
 
-    var result = await updateAhrefsMetrics(supabase, apifyToken, batchSize, limitDirectories);
+    var result = await updateAhrefsMetrics(
+      supabase,
+      apifyToken,
+      batchSize,
+      limitDirectories,
+    );
 
     return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
@@ -72,7 +77,7 @@ serve(async function handleRequest(req) {
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   }
 });

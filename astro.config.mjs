@@ -1,20 +1,23 @@
-import sitemap from '@astrojs/sitemap';
-import compress from '@playform/compress';
-import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig } from 'astro/config';
-import { fileURLToPath } from 'node:url';
+import sitemap from "@astrojs/sitemap";
+import compress from "@playform/compress";
+import { visualizer } from "rollup-plugin-visualizer";
+import { defineConfig } from "astro/config";
+import { fileURLToPath } from "node:url";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://awesome-directories.github.io',
-  base: '/awesome-directories',
+  site: "https://awesome-directories.com",
+  base: "/",
+  server: {
+    port: 3000,
+  },
 
   integrations: [
     sitemap(),
     compress({
       CSS: true,
       HTML: {
-        'html-minifier-terser': {
+        "html-minifier-terser": {
           removeAttributeQuotes: false,
         },
       },
@@ -24,26 +27,26 @@ export default defineConfig({
     }),
   ],
 
-  output: 'static',
+  output: "static",
 
   vite: {
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url)),
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
 
     build: {
-      outDir: 'dist',
-      assetsDir: 'assets',
+      outDir: "dist",
+      assetsDir: "assets",
       sourcemap: false,
       chunkSizeWarningLimit: 600,
-      minify: 'terser',
+      minify: "terser",
       terserOptions: {
         compress: {
           drop_console: true,
           drop_debugger: true,
-          pure_funcs: ['console.log', 'console.info', 'console.debug'],
+          pure_funcs: ["console.log", "console.info", "console.debug"],
           passes: 2,
         },
         mangle: {
@@ -53,49 +56,45 @@ export default defineConfig({
           comments: false,
         },
       },
-      cssMinify: 'lightningcss',
+      cssMinify: "lightningcss",
       rollupOptions: {
         treeshake: {
-          preset: 'recommended',
+          preset: "recommended",
           moduleSideEffects: false,
         },
         output: {
           manualChunks(id) {
             // Manual chunking strategy for optimal code splitting
-            if (id.includes('node_modules')) {
-              if (id.includes('@supabase/supabase-js')) {
-                return 'supabase';
+            if (id.includes("node_modules")) {
+              if (id.includes("@supabase/supabase-js")) {
+                return "supabase";
               }
-              if (id.includes('html2canvas')) {
-                return 'html2canvas';
+              if (id.includes("html2canvas")) {
+                return "html2canvas";
               }
-              if (id.includes('jspdf')) {
-                return 'jspdf';
+              if (id.includes("jspdf")) {
+                return "jspdf";
               }
-              if (id.includes('papaparse')) {
-                return 'papaparse';
+              if (id.includes("papaparse")) {
+                return "papaparse";
               }
-              if (id.includes('nanostores')) {
-                return 'nanostores';
+              if (id.includes("nanostores")) {
+                return "nanostores";
               }
-              return 'vendor';
+              return "vendor";
             }
           },
           compact: true,
         },
         plugins: [
           visualizer({
-            filename: 'bundle-analysis.html',
+            filename: "bundle-analysis.html",
             open: false,
             gzipSize: true,
             brotliSize: true,
           }),
         ],
       },
-    },
-
-    server: {
-      port: 3000,
     },
   },
 });

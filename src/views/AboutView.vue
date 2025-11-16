@@ -72,8 +72,8 @@
           <h2 class="text-2xl font-bold text-gray-900 mb-4">Built By</h2>
           <p class="text-gray-700 mb-4">
             Hi, I'm <strong>Meysam</strong> - an indie hacker, solopreneur, and
-            SRE engineer building in public. I'm passionate about
-            helping other founders succeed with their launches.
+            SRE engineer building in public. I'm passionate about helping other
+            founders succeed with their launches.
           </p>
           <div class="flex space-x-4">
             <a
