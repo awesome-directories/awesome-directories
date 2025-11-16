@@ -137,7 +137,7 @@ import AppFooter from '@/components/AppFooter.astro';
 
 <script>
   // Track page view with Pirsch
-  if (typeof window !== 'undefined' && (window as any).pirsch) {
-    (window as any).pirsch('About Page View');
+  if (typeof window !== 'undefined' && typeof window.pirsch === 'function') {
+    window.pirsch('About Page View');
   }
 </script>

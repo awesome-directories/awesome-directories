@@ -208,9 +208,19 @@ const currentYear = new Date().getFullYear();
           source: 'footer',
         });
 
-      if (dbError && dbError.code !== '23505') {
-        // Ignore unique constraint errors
-        throw dbError;
+      if (dbError) {
+        if (dbError.code === '23505') {
+          // Unique constraint violation: already subscribed
+          if (successMessage) {
+            successMessage.textContent = 'You are already subscribed!';
+            successMessage.classList.remove('hidden');
+          }
+          emailInput.value = '';
+          // Do not proceed with Mautic or Pirsch tracking
+          return;
+        } else {
+          throw dbError;
+        }
       }
 
       // Submit to Mautic if configured

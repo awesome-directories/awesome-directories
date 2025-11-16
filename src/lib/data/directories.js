@@ -11,7 +11,7 @@ export async function getAllDirectories() {
   }
 
   try {
-    const { data, error} = await supabase
+    const { data, error } = await supabase
       .from('directories')
       .select('*')
       .eq('is_active', true)

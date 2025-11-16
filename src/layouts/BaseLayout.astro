@@ -18,7 +18,7 @@ const {
   keywords = 'launch directories, SaaS, startup directories, product launch, directory submission, curated directories',
   ogImage = 'https://awesome-directories.com/og-image.jpg',
   ogType = 'website',
-  canonicalUrl = 'https://awesome-directories.com' + Astro.url.pathname,
+  canonicalUrl = Astro.url.href,
   structuredData,
   noIndex = false,
 } = Astro.props;
