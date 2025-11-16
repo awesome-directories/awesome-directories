@@ -1,0 +1,195 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.astro';
+
+const title = 'Terms of Service | Awesome Directories';
+const description = 'Terms of Service for Awesome Directories - Learn about our terms and conditions.';
+---
+
+<Layout title={title} description={description} canonical="https://awesome-directories.com/terms">
+  <div id="app" class="min-h-screen flex flex-col">
+    <AppHeader client:load />
+
+    <main class="flex-grow bg-gray-50 py-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Terms of Service</h1>
+        <p class="text-sm text-gray-600 mb-8">Last Updated: November 12, 2024</p>
+
+        <div class="space-y-8">
+          <!-- Introduction -->
+          <div class="card p-6 bg-blue-50 border-blue-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Agreement to Terms</h2>
+            <p class="text-gray-700">
+              By accessing and using Awesome Directories ("the Service"), you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not access the Service. As an open-source project under the Apache 2.0 License, we're committed to transparency and community-driven development.
+            </p>
+          </div>
+
+          <!-- Service Description -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Service Description</h2>
+            <p class="text-gray-700 mb-3">
+              Awesome Directories is a free, open-source directory aggregator that helps users discover curated launch directories for their SaaS products. The Service includes:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>Curated directory listings with ratings and metadata</li>
+              <li>Search and filtering capabilities</li>
+              <li>User accounts for saving favorites and submissions</li>
+              <li>Community voting and reviews</li>
+              <li>Directory submission system</li>
+            </ul>
+          </div>
+
+          <!-- User Accounts -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">2. User Accounts</h2>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">2.1 Account Creation</h3>
+            <p class="text-gray-700 mb-3">
+              You can create an account using OAuth authentication (Google or GitHub). By creating an account, you agree to:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+              <li>Provide accurate information</li>
+              <li>Maintain the security of your account</li>
+              <li>Not share your account with others</li>
+              <li>Notify us immediately of any unauthorized access</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">2.2 Account Termination</h3>
+            <p class="text-gray-700">
+              You may delete your account at any time. We reserve the right to suspend or terminate accounts that violate these terms or engage in abusive behavior.
+            </p>
+          </div>
+
+          <!-- User Conduct -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">3. Acceptable Use</h2>
+            <p class="text-gray-700 mb-3">You agree NOT to:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>Submit spam, fake, or misleading directory information</li>
+              <li>Abuse the voting system (bot voting, multiple accounts)</li>
+              <li>Harass or abuse other users</li>
+              <li>Attempt to hack, disrupt, or compromise the Service</li>
+              <li>Scrape data without permission (API coming soon!)</li>
+              <li>Use the Service for illegal purposes</li>
+              <li>Impersonate others or misrepresent your affiliation</li>
+            </ul>
+          </div>
+
+          <!-- Content and Submissions -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">4. User Content</h2>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">4.1 Your Content</h3>
+            <p class="text-gray-700 mb-3">
+              When you submit directories, reviews, or comments:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+              <li>You retain ownership of your content</li>
+              <li>You grant us a license to use, display, and distribute it</li>
+              <li>You confirm you have the right to share this content</li>
+              <li>You're responsible for the accuracy of your submissions</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">4.2 Content Moderation</h3>
+            <p class="text-gray-700">
+              We reserve the right to remove content that violates these terms, is spam, or is otherwise inappropriate. As an open-source project, moderation decisions are transparent and can be reviewed on GitHub.
+            </p>
+          </div>
+
+          <!-- Intellectual Property -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">5. Intellectual Property</h2>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">5.1 Open Source License</h3>
+            <p class="text-gray-700 mb-3">
+              Awesome Directories is licensed under the <a href="https://github.com/awesome-directories/awesome-directories/blob/main/LICENSE" target="_blank" rel="noopener" class="text-primary hover:text-primary-dark">Apache 2.0 License</a>. You are free to:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+              <li>Use the code commercially</li>
+              <li>Modify and distribute the code</li>
+              <li>Use the code privately</li>
+              <li>Contribute back to the project</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-4 mb-3">5.2 Trademarks</h3>
+            <p class="text-gray-700">
+              "Awesome Directories" and our logo are trademarks. You may not use them to imply endorsement without permission.
+            </p>
+          </div>
+
+          <!-- Disclaimers -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Disclaimers</h2>
+            <p class="text-gray-700 mb-3">
+              THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND. WE DO NOT GUARANTEE:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>The accuracy of directory information</li>
+              <li>Availability or uptime of the Service</li>
+              <li>Results from using listed directories</li>
+              <li>That the Service will be error-free</li>
+            </ul>
+            <p class="text-gray-700 mt-4">
+              <strong>Directory Listings:</strong> We curate directories to the best of our ability, but we cannot guarantee their quality, safety, or effectiveness. Always verify directory information before submitting your product.
+            </p>
+          </div>
+
+          <!-- Limitation of Liability -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">7. Limitation of Liability</h2>
+            <p class="text-gray-700">
+              To the maximum extent permitted by law, Awesome Directories and its contributors shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the Service.
+            </p>
+          </div>
+
+          <!-- Data and Privacy -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">8. Privacy</h2>
+            <p class="text-gray-700">
+              Your privacy is important to us. Please review our <a href="/privacy" class="text-primary hover:text-primary-dark">Privacy Policy</a> to understand how we collect and use your data.
+            </p>
+          </div>
+
+          <!-- Changes to Terms -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">9. Changes to Terms</h2>
+            <p class="text-gray-700">
+              We may update these terms from time to time. Changes will be posted on this page with an updated "Last Updated" date. Continued use of the Service after changes constitutes acceptance of the new terms.
+            </p>
+          </div>
+
+          <!-- Governing Law -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">10. Governing Law</h2>
+            <p class="text-gray-700">
+              These terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law provisions.
+            </p>
+          </div>
+
+          <!-- Contact -->
+          <div class="card p-6 bg-gray-50">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">11. Contact Us</h2>
+            <p class="text-gray-700 mb-3">
+              Questions about these terms? Contact us:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>GitHub: <a href="https://github.com/awesome-directories/awesome-directories/issues" target="_blank" rel="noopener" class="text-primary hover:text-primary-dark">Open an Issue</a></li>
+              <li>Website: <a href="/about" class="text-primary hover:text-primary-dark">About Page</a></li>
+            </ul>
+          </div>
+
+          <!-- Open Source Notice -->
+          <div class="card p-6 bg-green-50 border-green-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Open Source Notice</h2>
+            <p class="text-gray-700">
+              Awesome Directories is a community-driven, open-source project. We welcome contributions, feedback, and improvements from everyone. Join us on <a href="https://github.com/awesome-directories/awesome-directories" target="_blank" rel="noopener" class="text-primary hover:text-primary-dark font-semibold">GitHub</a>!
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <AppFooter />
+  </div>
+</Layout>

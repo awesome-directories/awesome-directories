@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AppHeader from '../components/AppHeader.vue';
+import AppFooter from '../components/AppFooter.astro';
+
+const title = 'Privacy Policy | Awesome Directories';
+const description = 'Privacy Policy for Awesome Directories - Learn how we collect, use, and protect your data.';
+---
+
+<Layout title={title} description={description} canonical="https://awesome-directories.com/privacy">
+  <div id="app" class="min-h-screen flex flex-col">
+    <AppHeader client:load />
+
+    <main class="flex-grow bg-gray-50 py-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
+        <p class="text-sm text-gray-600 mb-8">Last Updated: November 12, 2024</p>
+
+        <div class="space-y-8">
+          <!-- Introduction -->
+          <div class="card p-6 bg-blue-50 border-blue-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Our Commitment to Privacy</h2>
+            <p class="text-gray-700 mb-4">
+              Awesome Directories is an open-source project that respects your privacy. We collect minimal data necessary to provide our service and never sell your personal information to third parties.
+            </p>
+            <p class="text-gray-700">
+              This privacy policy explains what data we collect, how we use it, and your rights regarding your personal information. As an open-source project, we prioritize transparency and user control.
+            </p>
+          </div>
+
+          <!-- Data We Collect -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Information We Collect</h2>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">1.1 Authentication Data</h3>
+            <p class="text-gray-700 mb-3">When you create an account using OAuth authentication, we collect:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+              <li><strong>Email address</strong> - From your Google or GitHub account</li>
+              <li><strong>OAuth provider ID</strong> - Unique identifier from Google or GitHub</li>
+              <li><strong>Display name/username</strong> - Public profile information</li>
+              <li><strong>Profile picture</strong> - Avatar from your OAuth provider (if available)</li>
+            </ul>
+            <p class="text-gray-700">
+              This data is securely stored and managed by <a href="https://supabase.com/privacy" target="_blank" rel="noopener" class="text-primary hover:text-primary-dark">Supabase</a>, our backend infrastructure provider.
+            </p>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">1.2 User-Generated Content</h3>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>Directory submissions</li>
+              <li>Favorites and bookmarks</li>
+              <li>Helpful votes on directories</li>
+              <li>Comments and reviews (via Giscus/GitHub Discussions)</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">1.3 Analytics Data</h3>
+            <p class="text-gray-700 mb-3">We use privacy-first analytics (Pirsch) to collect:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>Page views and navigation patterns</li>
+              <li>Device type and browser</li>
+              <li>Approximate location (country/city level)</li>
+              <li>Referrer information</li>
+            </ul>
+          </div>
+
+          <!-- How We Use Data -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">2. How We Use Your Information</h2>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>Provide and maintain our service</li>
+              <li>Authenticate your account</li>
+              <li>Save your preferences and favorites</li>
+              <li>Improve our service through analytics</li>
+              <li>Send important service updates (if subscribed to newsletter)</li>
+              <li>Prevent abuse and maintain security</li>
+            </ul>
+          </div>
+
+          <!-- Data Sharing -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">3. Data Sharing and Third Parties</h2>
+            <p class="text-gray-700 mb-4"><strong>We do NOT sell your personal data.</strong> We share limited data with:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li><strong>Supabase</strong> - Authentication and database hosting</li>
+              <li><strong>Pirsch</strong> - Privacy-first analytics</li>
+              <li><strong>Mautic</strong> - Newsletter management (only if you subscribe)</li>
+              <li><strong>GitHub</strong> - Comments via Giscus (uses GitHub Discussions)</li>
+            </ul>
+          </div>
+
+          <!-- Your Rights -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">4. Your Rights</h2>
+            <p class="text-gray-700 mb-3">You have the right to:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>Access your personal data</li>
+              <li>Correct inaccurate data</li>
+              <li>Delete your account and data</li>
+              <li>Export your data</li>
+              <li>Opt-out of analytics (use Do Not Track)</li>
+              <li>Unsubscribe from newsletters at any time</li>
+            </ul>
+          </div>
+
+          <!-- Cookies -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">5. Cookies and Local Storage</h2>
+            <p class="text-gray-700 mb-3">We use minimal cookies and browser storage for:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>Authentication session (Supabase)</li>
+              <li>Your selected directories and preferences</li>
+              <li>Analytics (privacy-first, no tracking)</li>
+            </ul>
+          </div>
+
+          <!-- Data Security -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Data Security</h2>
+            <p class="text-gray-700">
+              We implement industry-standard security measures to protect your data. All data is encrypted in transit (HTTPS) and at rest. Our database is hosted on Supabase with enterprise-grade security.
+            </p>
+          </div>
+
+          <!-- Children's Privacy -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">7. Children's Privacy</h2>
+            <p class="text-gray-700">
+              Our service is not intended for users under 13 years of age. We do not knowingly collect personal information from children under 13.
+            </p>
+          </div>
+
+          <!-- Changes to Policy -->
+          <div class="card p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">8. Changes to This Policy</h2>
+            <p class="text-gray-700">
+              We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last Updated" date.
+            </p>
+          </div>
+
+          <!-- Contact -->
+          <div class="card p-6 bg-gray-50">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">9. Contact Us</h2>
+            <p class="text-gray-700 mb-3">
+              If you have questions about this privacy policy or want to exercise your data rights, you can:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>Open an issue on <a href="https://github.com/awesome-directories/awesome-directories" target="_blank" rel="noopener" class="text-primary hover:text-primary-dark">GitHub</a></li>
+              <li>Contact us via our website at <a href="https://awesome-directories.com/about" class="text-primary hover:text-primary-dark">awesome-directories.com/about</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <AppFooter />
+  </div>
+</Layout>
