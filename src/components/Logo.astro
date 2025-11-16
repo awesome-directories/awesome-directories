@@ -1,0 +1,70 @@
+---
+interface Props {
+  variant?: 'default' | 'icon' | 'full' | 'white' | 'black' | 'blue';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  showText?: boolean;
+  showIcon?: boolean;
+  text?: string;
+  alt?: string;
+  spacing?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+const {
+  variant = 'default',
+  size = 'md',
+  showText = true,
+  showIcon = true,
+  text = 'Awesome Directories',
+  alt = 'Awesome Directories Logo',
+  spacing = 'md',
+} = Astro.props;
+
+const variantMap: Record<string, string> = {
+  default: '/logo-icon.svg',
+  icon: '/logo-icon.svg',
+  full: '/logo-full.svg',
+  white: '/logo-icon-white.svg',
+  black: '/logo-icon-black.svg',
+  blue: '/logo-icon.svg',
+};
+
+const spacingMap: Record<string, string> = {
+  sm: 'space-x-1',
+  md: 'space-x-2',
+  lg: 'space-x-3',
+  xl: 'space-x-4',
+};
+
+const sizeMap: Record<string, string> = {
+  sm: 'w-6 h-6',
+  md: 'w-8 h-8',
+  lg: 'w-10 h-10',
+  xl: 'w-12 h-12',
+};
+
+const textSizeMap: Record<string, string> = {
+  sm: 'text-base font-bold',
+  md: 'text-xl font-bold',
+  lg: 'text-2xl font-bold',
+  xl: 'text-3xl font-bold',
+};
+
+const colorMap: Record<string, string> = {
+  white: 'text-white',
+  black: 'text-black',
+  blue: 'text-primary',
+  default: 'text-gray-900',
+};
+
+const iconSrc = variantMap[variant] || variantMap.default;
+const containerClass = spacingMap[spacing] || spacingMap.md;
+const iconClass = sizeMap[size] || sizeMap.md;
+const textSizeClass = textSizeMap[size] || textSizeMap.md;
+const textColorClass = colorMap[variant] || colorMap.default;
+const textClass = `${textSizeClass} ${textColorClass}`;
+---
+
+<div class:list={['flex items-center', containerClass]}>
+  {showIcon && <img src={iconSrc} alt={alt} class={iconClass} />}
+  {showText && <span class={textClass}>{text}</span>}
+</div>

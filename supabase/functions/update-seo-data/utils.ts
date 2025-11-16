@@ -4,7 +4,7 @@ export function extractDomain(url: string): string {
     return urlObj.hostname.replace(/^www\./, "");
   } catch (error) {
     console.error(`Failed to extract domain from ${url}:`, error);
-    return '';
+    return "";
   }
 }
 
@@ -16,7 +16,12 @@ export function batchArray(array, size) {
   return batches;
 }
 
-export async function pollApifyRun(runId: string, datasetId: string, apifyToken: string, maxWaitMinutes: number) {
+export async function pollApifyRun(
+  runId: string,
+  datasetId: string,
+  apifyToken: string,
+  maxWaitMinutes: number,
+) {
   var maxWaitTime = maxWaitMinutes * 60 * 1000;
   var pollInterval = 5000;
   var startTime = Date.now();
@@ -28,7 +33,7 @@ export async function pollApifyRun(runId: string, datasetId: string, apifyToken:
         headers: {
           Authorization: `Bearer ${apifyToken}`,
         },
-      }
+      },
     );
 
     var statusData = await statusResponse.json();
@@ -43,23 +48,32 @@ export async function pollApifyRun(runId: string, datasetId: string, apifyToken:
           headers: {
             Authorization: `Bearer ${apifyToken}`,
           },
-        }
+        },
       );
 
       var results = await datasetResponse.json();
       console.log(`Retrieved ${results.length} results from Apify`);
       return results;
-    } else if (status === "FAILED" || status === "ABORTED" || status === "TIMED-OUT") {
+    } else if (
+      status === "FAILED" ||
+      status === "ABORTED" ||
+      status === "TIMED-OUT"
+    ) {
       throw new Error(`Actor run ${status.toLowerCase()}`);
     }
 
-    await new Promise(function wait(resolve) { setTimeout(resolve, pollInterval); });
+    await new Promise(function wait(resolve) {
+      setTimeout(resolve, pollInterval);
+    });
   }
 
   throw new Error("Actor run timed out");
 }
 
-export async function fetchDirectoriesFromDatabase(supabase, limitDirectories: number | null) {
+export async function fetchDirectoriesFromDatabase(
+  supabase,
+  limitDirectories: number | null,
+) {
   console.log("Fetching directories from database...");
   var query = supabase
     .from("directories")
@@ -88,7 +102,9 @@ export function createDomainMapping(directories) {
     var dir = directories[i];
     var domain = extractDomain(dir.url);
     if (!domain) {
-      console.error(`Skipping directory ${dir.id} due to invalid URL: ${dir.url}`);
+      console.error(
+        `Skipping directory ${dir.id} due to invalid URL: ${dir.url}`,
+      );
       continue;
     }
     var fullUrl = dir.url.startsWith("http") ? dir.url : `https://${dir.url}`;

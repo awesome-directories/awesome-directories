@@ -1,0 +1,168 @@
+---
+import '@/style.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalUrl?: string;
+  structuredData?: object | object[];
+  noIndex?: boolean;
+}
+
+const {
+  title = 'Awesome Directories - Curated Launch Directories for SaaS',
+  description = 'Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly.',
+  keywords = 'launch directories, SaaS, startup directories, product launch, directory submission, curated directories',
+  ogImage = 'https://awesome-directories.com/og-image.jpg',
+  ogType = 'website',
+  canonicalUrl = Astro.url.href,
+  structuredData,
+  noIndex = false,
+} = Astro.props;
+
+const siteUrl = 'https://awesome-directories.com';
+const siteName = 'Awesome Directories';
+const twitterHandle = '@awesome_dirs';
+---
+
+<!doctype html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={siteName} />
+    <meta
+      name="robots"
+      content={noIndex
+        ? 'noindex, nofollow'
+        : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'}
+    />
+    <meta
+      name="googlebot"
+      content={noIndex
+        ? 'noindex, nofollow'
+        : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'}
+    />
+    <meta
+      name="bingbot"
+      content={noIndex
+        ? 'noindex, nofollow'
+        : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'}
+    />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Security Headers -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="geolocation=(), microphone=(), camera=()"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+
+    <!-- DNS Prefetch & Preconnect -->
+    <link rel="dns-prefetch" href="https://analytics.awesome-directories.com" />
+    <link
+      rel="preconnect"
+      href="https://analytics.awesome-directories.com"
+      crossorigin
+    />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta
+      name="theme-color"
+      content="#ffffff"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#1a1a1a"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content={siteName} />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content={siteName} />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={twitterHandle} />
+    <meta name="twitter:creator" content={twitterHandle} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={title} />
+
+    <!-- Alternate Languages -->
+    <link rel="alternate" hreflang="en" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+
+    <!-- Webmention -->
+    <link
+      rel="webmention"
+      href="https://webmention.io/awesome-directories.com/webmention"
+    />
+
+    <!-- Mastodon & IndieAuth -->
+    <meta name="fediverse:creator" content="@meysam81@mastodon.social" />
+    <link rel="me" href="https://mastodon.social/@meysam81" />
+    <link rel="me" href="https://github.com/meysam81" />
+
+    <!-- Structured Data -->
+    {
+      structuredData && (
+        <script type="application/ld+json" set:html={JSON.stringify(Array.isArray(structuredData) ? structuredData : [structuredData])} />
+      )
+    }
+
+    <!-- Pirsch Analytics -->
+    <script
+      is:inline
+      async
+      defer
+      src="https://analytics.awesome-directories.com/pa.js"
+      id="pianjs"
+      data-code="D4R3WDGkZAf9IXFOvMp9cYnDeNSWlrwn"
+      data-hit-endpoint="https://analytics.awesome-directories.com/hit"
+      data-event-endpoint="https://analytics.awesome-directories.com/event"
+      data-session-endpoint="https://analytics.awesome-directories.com/session"
+    ></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
