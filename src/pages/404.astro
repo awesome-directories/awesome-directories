@@ -1,0 +1,67 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+---
+
+<BaseLayout
+  title="Page Not Found | Awesome Directories"
+  description="The page you're looking for doesn't exist."
+  noIndex={true}
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50 flex items-center justify-center py-12">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="mb-8">
+        <h1 class="text-9xl font-bold text-primary mb-4">404</h1>
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+          Page Not Found
+        </h2>
+        <p class="text-lg text-gray-600 mb-8">
+          Oops! The page you're looking for doesn't exist or has been moved.
+        </p>
+      </div>
+
+      <div class="card p-8 mb-8">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          Here's what you can do:
+        </h3>
+        <div class="space-y-4">
+          <a
+            href="/"
+            class="block btn-primary text-center"
+          >
+            🏠 Go to Homepage
+          </a>
+          <a
+            href="/about"
+            class="block btn-secondary text-center"
+          >
+            ℹ️ Learn About Us
+          </a>
+          <a
+            href="/submit"
+            class="block btn-secondary text-center"
+          >
+            📝 Submit a Directory
+          </a>
+        </div>
+      </div>
+
+      <div class="text-gray-600">
+        <p class="mb-2">Need help?</p>
+        <a
+          href="https://github.com/awesome-directories/awesome-directories/issues"
+          target="_blank"
+          rel="noopener"
+          class="text-primary hover:text-primary-dark font-medium"
+        >
+          Report an issue on GitHub →
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <AppFooter />
+</BaseLayout>
