@@ -117,7 +117,7 @@
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="dir in filteredData" :key="dir.slug" class="card p-6">
+        <div v-for="dir in filteredData" :key="dir.slug" class="card p-6 flex flex-col">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-lg font-semibold text-gray-900">
               <a
@@ -127,11 +127,22 @@
                 {{ dir.name }}
               </a>
             </h3>
-            <span v-if="dir.domain_rating" class="badge badge-blue"
-              >DR {{ dir.domain_rating }}</span
-            >
+            <div class="flex items-center gap-2">
+              <button
+                @click="toggleFavorite(dir)"
+                :data-directory-id="dir.id"
+                :data-favorited="isFavorited(dir.id)"
+                class="favorite-btn text-xl hover:scale-110 transition-transform"
+                :title="isFavorited(dir.id) ? 'Remove from favorites' : 'Add to favorites'"
+              >
+                {{ isFavorited(dir.id) ? '❤️' : '🤍' }}
+              </button>
+              <span v-if="dir.domain_rating" class="badge badge-blue"
+                >DR {{ dir.domain_rating }}</span
+              >
+            </div>
           </div>
-          <p v-if="dir.description" class="text-sm text-gray-600 mb-4">
+          <p v-if="dir.description" class="text-sm text-gray-600 mb-4 flex-grow">
             {{
               dir.description.length > 150
                 ? dir.description.substring(0, 150) + "..."
@@ -142,14 +153,26 @@
             <span
               v-for="cat in dir.categories"
               :key="cat"
-              class="badge badge-gray"
+              class="badge badge-gray text-xs"
               >{{ cat }}</span
             >
           </div>
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-gray-600">{{ dir.pricing_type || "Free" }}</span>
-            <span v-if="dir.is_dofollow" class="text-success">✓ Dofollow</span>
-            <span v-else class="text-gray-400">Nofollow</span>
+          <div class="flex items-center justify-between text-sm border-t border-gray-100 pt-3">
+            <div class="flex items-center gap-3">
+              <span class="text-gray-600">{{ dir.pricing_type || "Free" }}</span>
+              <span v-if="dir.is_dofollow" class="text-success">✓ Dofollow</span>
+            </div>
+            <button
+              @click="toggleUpvote(dir)"
+              :data-directory-id="dir.id"
+              :data-upvoted="hasUpvoted(dir.id)"
+              :disabled="hasUpvoted(dir.id)"
+              class="upvote-btn flex items-center gap-1 text-gray-600 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              :class="{ 'text-primary': hasUpvoted(dir.id) }"
+            >
+              <span>{{ hasUpvoted(dir.id) ? '✓' : '👍' }}</span>
+              <span class="text-xs">{{ dir.helpful_count || 0 }}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -159,6 +182,8 @@
 
 <script>
 import httpClient from "@/lib/httpclient.js";
+import { supabase, getUser } from "@/lib/supabase-client.js";
+import { $user } from "@/stores/auth.js";
 
 export default {
   name: "DirectoryFilter",
@@ -175,6 +200,9 @@ export default {
       allData: [],
       filteredData: [],
       isLoading: true,
+      user: null,
+      userFavorites: [],
+      userUpvotes: [],
       currentFilters: {
         search: "",
         category: "All",
@@ -199,6 +227,8 @@ export default {
   mounted: function mounted() {
     this.loadDirectories();
     this.setupSearchListener();
+    this.loadUserData();
+    this.listenToAuthChanges();
   },
   methods: {
     loadDirectories: async function loadDirectories() {
@@ -332,6 +362,164 @@ export default {
         sortBy: "Most Helpful",
       };
       self.applyFilters();
+    },
+    loadUserData: async function loadUserData() {
+      var self = this;
+      try {
+        var user = await getUser();
+        self.user = user;
+
+        if (user) {
+          // Load user favorites
+          var { data: favorites, error: favError } = await supabase
+            .from("user_favorites")
+            .select("directory_id")
+            .eq("user_id", user.id);
+
+          if (!favError && favorites) {
+            self.userFavorites = favorites.map(function mapFavorite(f) {
+              return f.directory_id;
+            });
+          }
+
+          // Load user upvotes
+          var { data: upvotes, error: upvoteError } = await supabase
+            .from("directory_votes")
+            .select("directory_id")
+            .eq("user_id", user.id);
+
+          if (!upvoteError && upvotes) {
+            self.userUpvotes = upvotes.map(function mapUpvote(v) {
+              return v.directory_id;
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to load user data:", error);
+      }
+    },
+    listenToAuthChanges: function listenToAuthChanges() {
+      var self = this;
+      supabase.auth.onAuthStateChange(async function handleAuthChange(event, session) {
+        if (session?.user) {
+          self.user = session.user;
+          await self.loadUserData();
+        } else {
+          self.user = null;
+          self.userFavorites = [];
+          self.userUpvotes = [];
+        }
+      });
+    },
+    isFavorited: function isFavorited(directoryId) {
+      return this.userFavorites.includes(directoryId);
+    },
+    hasUpvoted: function hasUpvoted(directoryId) {
+      return this.userUpvotes.includes(directoryId);
+    },
+    toggleFavorite: async function toggleFavorite(directory) {
+      var self = this;
+
+      if (!self.user) {
+        window.dispatchEvent(new CustomEvent("show-auth-modal"));
+        return;
+      }
+
+      var isFavorited = self.isFavorited(directory.id);
+
+      try {
+        if (isFavorited) {
+          // Remove favorite
+          var { error } = await supabase
+            .from("user_favorites")
+            .delete()
+            .eq("user_id", self.user.id)
+            .eq("directory_id", directory.id);
+
+          if (error) throw error;
+
+          self.userFavorites = self.userFavorites.filter(function removeFavorite(id) {
+            return id !== directory.id;
+          });
+        } else {
+          // Add favorite
+          var { error: insertError } = await supabase
+            .from("user_favorites")
+            .insert({
+              user_id: self.user.id,
+              directory_id: directory.id,
+            });
+
+          if (insertError) {
+            if (insertError.code === "23505") {
+              // Already favorited
+              if (!self.userFavorites.includes(directory.id)) {
+                self.userFavorites.push(directory.id);
+              }
+            } else {
+              throw insertError;
+            }
+          } else {
+            self.userFavorites.push(directory.id);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to toggle favorite:", error);
+        alert("Failed to update favorite. Please try again.");
+      }
+    },
+    toggleUpvote: async function toggleUpvote(directory) {
+      var self = this;
+
+      if (!self.user) {
+        window.dispatchEvent(new CustomEvent("show-auth-modal"));
+        return;
+      }
+
+      if (self.hasUpvoted(directory.id)) {
+        return; // Already voted
+      }
+
+      try {
+        var { error } = await supabase
+          .from("directory_votes")
+          .insert({
+            directory_id: directory.id,
+            user_id: self.user.id,
+          });
+
+        if (error) {
+          if (error.code === "23505") {
+            // Already voted
+            if (!self.userUpvotes.includes(directory.id)) {
+              self.userUpvotes.push(directory.id);
+            }
+          } else {
+            throw error;
+          }
+        } else {
+          self.userUpvotes.push(directory.id);
+
+          // Update count optimistically
+          var dirIndex = self.filteredData.findIndex(function findDir(d) {
+            return d.id === directory.id;
+          });
+
+          if (dirIndex !== -1) {
+            self.filteredData[dirIndex].helpful_count = (self.filteredData[dirIndex].helpful_count || 0) + 1;
+          }
+
+          // Track in analytics
+          if (window.pirsch) {
+            window.pirsch("Directory Helpful Vote", {
+              directory: directory.slug,
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to upvote:", error);
+        alert("Failed to submit vote. Please try again.");
+      }
     },
   },
 };

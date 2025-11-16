@@ -1,0 +1,496 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import { getAllDirectories, getDirectoryBySlug } from '@/lib/data/directories.js';
+import log from '@/lib/logger.js';
+
+export async function getStaticPaths() {
+  const directories = await getAllDirectories();
+
+  log.info(`Generating ${directories.length} directory detail pages...`);
+
+  return directories.map((directory) => ({
+    params: { slug: directory.slug },
+    props: { directory },
+  }));
+}
+
+const { directory } = Astro.props;
+
+if (!directory) {
+  return Astro.redirect('/404');
+}
+
+// Generate structured data for SEO
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: directory.name,
+  url: directory.url,
+  description: directory.description || `Submit your product to ${directory.name}`,
+  applicationCategory: 'BusinessApplication',
+  ...(directory.domain_rating && {
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: Math.min(directory.domain_rating / 20, 5).toFixed(1),
+      bestRating: '5',
+      worstRating: '1',
+    },
+  }),
+};
+
+// Badge classes
+function getDRBadgeClass(dr: number | null) {
+  if (!dr) return 'badge-gray';
+  if (dr >= 80) return 'badge-green';
+  if (dr >= 70) return 'badge-blue';
+  if (dr >= 60) return 'badge-orange';
+  return 'badge-gray';
+}
+
+function getPricingBadgeClass(pricing: string | null) {
+  if (pricing === 'free') return 'badge-green';
+  if (pricing === 'paid') return 'badge-orange';
+  if (pricing === 'freemium') return 'badge-blue';
+  return 'badge-gray';
+}
+
+function getPricingLabel(directory: any) {
+  const pricing = directory.pricing_type;
+  if (pricing === 'free') return '💰 Free';
+  if (pricing === 'paid' && directory.pricing_amount) {
+    return `💰 $${directory.pricing_amount}`;
+  }
+  if (pricing === 'paid') return '💰 Paid';
+  if (pricing === 'freemium') return '💰 Freemium';
+  return '';
+}
+
+const pageTitle = `${directory.name} - Directory Details | Awesome Directories`;
+const pageDescription = directory.description || `Learn more about ${directory.name} and submit your product today.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  structuredData={structuredData}
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-6">
+        <a href="/" class="text-primary hover:text-primary-dark transition-colors">
+          ← Back to All Directories
+        </a>
+      </nav>
+
+      <!-- Directory Details -->
+      <div class="space-y-8">
+        <!-- Hero Card -->
+        <div class="card p-8">
+          <div class="flex items-start space-x-6 mb-6">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+              {directory.logo_url ? (
+                <div class="w-24 h-24 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
+                  <img
+                    src={directory.logo_url}
+                    alt={directory.name}
+                    class="w-full h-full object-cover"
+                    loading="eager"
+                  />
+                </div>
+              ) : (
+                <div class="w-24 h-24 rounded-xl bg-primary bg-opacity-10 flex items-center justify-center text-4xl">
+                  📂
+                </div>
+              )}
+            </div>
+
+            <!-- Info -->
+            <div class="flex-1 min-w-0">
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                {directory.name}
+              </h1>
+
+              <div class="flex items-center flex-wrap gap-3 mb-4">
+                {directory.domain_rating && (
+                  <span class={`${getDRBadgeClass(directory.domain_rating)} font-semibold`}>
+                    ⭐ DR: {directory.domain_rating}
+                  </span>
+                )}
+
+                {directory.is_dofollow && (
+                  <span class="badge-green">
+                    🔗 Dofollow
+                  </span>
+                )}
+
+                {directory.pricing_type && (
+                  <span class={getPricingBadgeClass(directory.pricing_type)}>
+                    {getPricingLabel(directory)}
+                  </span>
+                )}
+              </div>
+
+              <a
+                href={directory.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary hover:text-primary-dark break-all inline-flex items-center gap-1 transition-colors"
+              >
+                {directory.url}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap gap-4">
+            <a
+              href={directory.submission_url || directory.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+              data-track-click="submit-to-directory"
+              data-directory={directory.slug}
+            >
+              Submit to {directory.name} →
+            </a>
+
+            <button
+              class="btn-secondary"
+              data-favorite-button
+              data-directory-id={directory.id}
+              data-directory-name={directory.name}
+            >
+              <span data-favorite-icon>❤️</span>
+              <span data-favorite-text>Add to Favorites</span>
+            </button>
+
+            <button
+              class="btn-secondary"
+              data-upvote-button
+              data-directory-id={directory.id}
+              data-directory-slug={directory.slug}
+            >
+              <span data-upvote-icon>👍</span>
+              <span data-upvote-text>Upvote</span>
+              <span data-upvote-count>({directory.helpful_count || 0})</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Description -->
+        {directory.description && (
+          <div class="card p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">About</h2>
+            <p class="text-gray-700 leading-relaxed whitespace-pre-wrap">
+              {directory.description}
+            </p>
+          </div>
+        )}
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-bold text-primary mb-1">
+              {directory.domain_rating || 'N/A'}
+            </div>
+            <div class="text-sm text-gray-600">Domain Rating</div>
+          </div>
+
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-bold text-primary mb-1">
+              {directory.is_dofollow ? '✅' : '❌'}
+            </div>
+            <div class="text-sm text-gray-600">Dofollow</div>
+          </div>
+
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-bold text-primary mb-1">
+              {directory.pricing_type || 'N/A'}
+            </div>
+            <div class="text-sm text-gray-600">Pricing</div>
+          </div>
+
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-bold text-primary mb-1">
+              <span data-helpful-count-display>{directory.helpful_count || 0}</span>
+            </div>
+            <div class="text-sm text-gray-600">Helpful Votes</div>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        {directory.categories && directory.categories.length > 0 && (
+          <div class="card p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Categories</h2>
+            <div class="flex flex-wrap gap-2">
+              {directory.categories.map((category: string) => (
+                <span class="badge-gray">
+                  {category}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Additional Info -->
+        {(directory.traffic_estimate || directory.avg_approval_days) && (
+          <div class="card p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Additional Information</h2>
+            <dl class="space-y-3">
+              {directory.traffic_estimate && (
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">Traffic Estimate</dt>
+                  <dd class="text-base text-gray-900 capitalize">{directory.traffic_estimate}</dd>
+                </div>
+              )}
+              {directory.avg_approval_days && (
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">Average Approval Time</dt>
+                  <dd class="text-base text-gray-900">{directory.avg_approval_days} days</dd>
+                </div>
+              )}
+            </dl>
+          </div>
+        )}
+
+        <!-- Community Reviews (Giscus) -->
+        <div class="card p-6">
+          <h2 class="text-xl font-bold text-gray-900 mb-4">
+            Community Reviews & Success Stories
+          </h2>
+          <p class="text-gray-600 mb-6">
+            Launched on {directory.name}? Share your results and help other founders!
+          </p>
+          <div id="giscus-container"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <AppFooter />
+</BaseLayout>
+
+<script>
+  import { supabase, getUser } from '@/lib/supabase-client';
+  import { $user } from '@/stores/auth';
+
+  // Load Giscus comments
+  function loadGiscusComments() {
+    const container = document.getElementById('giscus-container');
+    if (!container) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', import.meta.env.VITE_GITHUB_REPO || 'awesome-directories/awesome-directories');
+    script.setAttribute('data-repo-id', import.meta.env.VITE_GITHUB_REPO_ID || '');
+    script.setAttribute('data-category', import.meta.env.VITE_GITHUB_CATEGORY || 'Announcements');
+    script.setAttribute('data-category-id', import.meta.env.VITE_GITHUB_CATEGORY_ID || '');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'bottom');
+    script.setAttribute('data-theme', 'light');
+    script.setAttribute('data-lang', 'en');
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+
+    container.appendChild(script);
+  }
+
+  // Handle favorite button
+  const favoriteButton = document.querySelector('[data-favorite-button]') as HTMLButtonElement;
+  const favoriteIcon = document.querySelector('[data-favorite-icon]');
+  const favoriteText = document.querySelector('[data-favorite-text]');
+
+  if (favoriteButton) {
+    let isFavorited = false;
+    let isLoading = false;
+
+    // Check if already favorited
+    async function checkFavoriteStatus() {
+      const user = $user.get();
+      if (!user) return;
+
+      const directoryId = favoriteButton.dataset.directoryId;
+      if (!directoryId) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('user_favorites')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('directory_id', directoryId)
+          .maybeSingle();
+
+        if (!error && data) {
+          isFavorited = true;
+          updateFavoriteUI();
+        }
+      } catch (err) {
+        console.error('Error checking favorite status:', err);
+      }
+    }
+
+    function updateFavoriteUI() {
+      if (isFavorited) {
+        if (favoriteIcon) favoriteIcon.textContent = '❤️';
+        if (favoriteText) favoriteText.textContent = 'Favorited';
+        favoriteButton.classList.add('bg-red-50', 'border-red-200', 'text-red-600');
+        favoriteButton.classList.remove('hover:bg-gray-50');
+      } else {
+        if (favoriteIcon) favoriteIcon.textContent = '🤍';
+        if (favoriteText) favoriteText.textContent = 'Add to Favorites';
+        favoriteButton.classList.remove('bg-red-50', 'border-red-200', 'text-red-600');
+        favoriteButton.classList.add('hover:bg-gray-50');
+      }
+    }
+
+    favoriteButton.addEventListener('click', async () => {
+      if (isLoading) return;
+
+      const user = $user.get();
+      if (!user) {
+        window.dispatchEvent(new CustomEvent('show-auth-modal'));
+        return;
+      }
+
+      const directoryId = favoriteButton.dataset.directoryId;
+      if (!directoryId) return;
+
+      isLoading = true;
+      favoriteButton.disabled = true;
+
+      try {
+        if (isFavorited) {
+          // Remove favorite
+          const { error } = await supabase
+            .from('user_favorites')
+            .delete()
+            .eq('user_id', user.id)
+            .eq('directory_id', directoryId);
+
+          if (error) throw error;
+
+          isFavorited = false;
+          updateFavoriteUI();
+        } else {
+          // Add favorite
+          const { error } = await supabase
+            .from('user_favorites')
+            .insert({
+              user_id: user.id,
+              directory_id: directoryId,
+            });
+
+          if (error) {
+            if (error.code === '23505') {
+              // Already favorited
+              isFavorited = true;
+              updateFavoriteUI();
+            } else {
+              throw error;
+            }
+          } else {
+            isFavorited = true;
+            updateFavoriteUI();
+          }
+        }
+      } catch (err) {
+        console.error('Error toggling favorite:', err);
+        alert('Failed to update favorite. Please try again.');
+      } finally {
+        isLoading = false;
+        favoriteButton.disabled = false;
+      }
+    });
+
+    // Check favorite status on load
+    checkFavoriteStatus();
+  }
+
+  // Handle upvote button
+  const upvoteButton = document.querySelector('[data-upvote-button]') as HTMLButtonElement;
+  const upvoteIcon = document.querySelector('[data-upvote-icon]');
+  const upvoteText = document.querySelector('[data-upvote-text]');
+  const upvoteCount = document.querySelector('[data-upvote-count]');
+  const helpfulCountDisplay = document.querySelector('[data-helpful-count-display]');
+
+  if (upvoteButton) {
+    let hasVoted = false;
+    let isLoading = false;
+
+    upvoteButton.addEventListener('click', async () => {
+      if (isLoading || hasVoted) return;
+
+      const user = $user.get();
+      if (!user) {
+        window.dispatchEvent(new CustomEvent('show-auth-modal'));
+        return;
+      }
+
+      const directoryId = upvoteButton.dataset.directoryId;
+      const directorySlug = upvoteButton.dataset.directorySlug;
+      if (!directoryId) return;
+
+      isLoading = true;
+      upvoteButton.disabled = true;
+
+      try {
+        const { error } = await supabase
+          .from('directory_votes')
+          .insert({
+            directory_id: directoryId,
+            user_id: user.id,
+          });
+
+        if (error) {
+          if (error.code === '23505') {
+            // Already voted
+            hasVoted = true;
+            if (upvoteIcon) upvoteIcon.textContent = '✓';
+            if (upvoteText) upvoteText.textContent = 'Upvoted';
+            upvoteButton.classList.add('opacity-50', 'cursor-not-allowed');
+          } else {
+            throw error;
+          }
+        } else {
+          hasVoted = true;
+          if (upvoteIcon) upvoteIcon.textContent = '✓';
+          if (upvoteText) upvoteText.textContent = 'Upvoted';
+          upvoteButton.classList.add('opacity-50', 'cursor-not-allowed');
+
+          // Update count optimistically
+          const currentCount = parseInt(upvoteCount?.textContent?.replace(/[()]/g, '') || '0');
+          const newCount = currentCount + 1;
+          if (upvoteCount) upvoteCount.textContent = `(${newCount})`;
+          if (helpfulCountDisplay) helpfulCountDisplay.textContent = String(newCount);
+
+          // Track in analytics
+          if (window.pirsch) {
+            window.pirsch('Directory Helpful Vote', {
+              directory: directorySlug,
+            });
+          }
+        }
+      } catch (err) {
+        console.error('Error voting:', err);
+        alert('Failed to submit vote. Please try again.');
+        isLoading = false;
+        upvoteButton.disabled = false;
+      }
+    });
+  }
+
+  // Load Giscus on page load
+  loadGiscusComments();
+</script>

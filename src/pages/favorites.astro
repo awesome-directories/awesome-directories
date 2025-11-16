@@ -1,0 +1,255 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import AuthGate from '@/components/AuthGate.astro';
+---
+
+<BaseLayout
+  title="My Favorites | Awesome Directories"
+  description="View and manage your favorite directories"
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-8">My Favorites</h1>
+
+      <!-- Auth Gate (shown when not authenticated) -->
+      <div id="auth-gate-container">
+        <AuthGate
+          title="Authentication Required"
+          description="Please sign in to view your favorite directories"
+          icon="❤️"
+        />
+      </div>
+
+      <!-- Loading State -->
+      <div id="loading-state" class="hidden text-center py-12">
+        <div
+          class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"
+        >
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden card p-12 text-center">
+        <div class="text-6xl mb-4">❤️</div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">No favorites yet</h2>
+        <p class="text-gray-600 mb-6">
+          Start adding directories to your favorites by clicking the heart icon
+          on directory cards
+        </p>
+        <a href="/" class="btn-primary"> Browse Directories </a>
+      </div>
+
+      <!-- Favorites Grid -->
+      <div
+        id="favorites-grid"
+        class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Directories will be inserted here -->
+      </div>
+    </div>
+  </main>
+
+  <AppFooter />
+</BaseLayout>
+
+<script>
+  import { supabase, getUser } from '@/lib/supabase-client';
+  import { $user } from '@/stores/auth';
+
+  // DOM elements
+  const authGateContainer = document.getElementById('auth-gate-container');
+  const loadingState = document.getElementById('loading-state');
+  const emptyState = document.getElementById('empty-state');
+  const favoritesGrid = document.getElementById('favorites-grid');
+
+  let user: any = null;
+  let favorites: any[] = [];
+
+  // Check auth and load favorites
+  async function loadFavorites() {
+    user = await getUser();
+
+    if (!user) {
+      authGateContainer?.classList.remove('hidden');
+      loadingState?.classList.add('hidden');
+      emptyState?.classList.add('hidden');
+      favoritesGrid?.classList.add('hidden');
+      return;
+    }
+
+    // Hide auth gate, show loading
+    authGateContainer?.classList.add('hidden');
+    loadingState?.classList.remove('hidden');
+
+    try {
+      const { data, error } = await supabase
+        .from('user_favorites')
+        .select('directory_id, directories(*)')
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      favorites = data?.map((f) => f.directories).filter(Boolean) || [];
+
+      if (favorites.length === 0) {
+        loadingState?.classList.add('hidden');
+        emptyState?.classList.remove('hidden');
+      } else {
+        loadingState?.classList.add('hidden');
+        renderFavorites();
+        favoritesGrid?.classList.remove('hidden');
+      }
+    } catch (err) {
+      console.error('Error loading favorites:', err);
+      loadingState?.classList.add('hidden');
+      emptyState?.classList.remove('hidden');
+    }
+  }
+
+  // Render favorites
+  function renderFavorites() {
+    if (!favoritesGrid) return;
+
+    favoritesGrid.innerHTML = favorites
+      .map((dir) => {
+        const drBadge = dir.domain_rating
+          ? `<span class="badge badge-blue">DR ${dir.domain_rating}</span>`
+          : '';
+
+        const description = dir.description
+          ? dir.description.length > 150
+            ? dir.description.substring(0, 150) + '...'
+            : dir.description
+          : 'No description available.';
+
+        const categories =
+          dir.categories && dir.categories.length > 0
+            ? dir.categories
+                .map(
+                  (cat: string) =>
+                    `<span class="badge badge-gray text-xs">${cat}</span>`
+                )
+                .join('')
+            : '';
+
+        const dofollow = dir.is_dofollow
+          ? '<span class="text-success">✓ Dofollow</span>'
+          : '';
+
+        return `
+          <div class="card p-6 flex flex-col" data-directory-id="${dir.id}">
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="text-lg font-semibold text-gray-900">
+                <a href="/directory/${dir.slug}" class="hover:text-primary transition-colors">
+                  ${dir.name}
+                </a>
+              </h3>
+              <div class="flex items-center gap-2">
+                <button
+                  class="unfavorite-btn text-xl hover:scale-110 transition-transform"
+                  data-directory-id="${dir.id}"
+                  data-directory-name="${dir.name}"
+                  title="Remove from favorites"
+                >
+                  ❤️
+                </button>
+                ${drBadge}
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mb-4 flex-grow">
+              ${description}
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              ${categories}
+            </div>
+            <div class="flex items-center justify-between text-sm border-t border-gray-100 pt-3">
+              <div class="flex items-center gap-3">
+                <span class="text-gray-600">${dir.pricing_type || 'Free'}</span>
+                ${dofollow}
+              </div>
+              <a
+                href="/directory/${dir.slug}"
+                class="text-primary hover:text-primary-dark font-medium"
+              >
+                View Details →
+              </a>
+            </div>
+          </div>
+        `;
+      })
+      .join('');
+
+    // Attach event listeners to unfavorite buttons
+    document.querySelectorAll('.unfavorite-btn').forEach((btn) => {
+      btn.addEventListener('click', handleUnfavorite);
+    });
+  }
+
+  // Handle unfavorite
+  async function handleUnfavorite(e: Event) {
+    const button = e.currentTarget as HTMLButtonElement;
+    const directoryId = button.dataset.directoryId;
+    const directoryName = button.dataset.directoryName;
+
+    if (!user || !directoryId) return;
+
+    const confirmRemove = confirm(
+      `Remove ${directoryName} from your favorites?`
+    );
+    if (!confirmRemove) return;
+
+    button.disabled = true;
+
+    try {
+      const { error } = await supabase
+        .from('user_favorites')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('directory_id', directoryId);
+
+      if (error) throw error;
+
+      // Remove from favorites array and re-render
+      favorites = favorites.filter((f) => f.id !== directoryId);
+
+      if (favorites.length === 0) {
+        favoritesGrid?.classList.add('hidden');
+        emptyState?.classList.remove('hidden');
+      } else {
+        renderFavorites();
+      }
+    } catch (err) {
+      console.error('Error removing favorite:', err);
+      alert('Failed to remove favorite. Please try again.');
+      button.disabled = false;
+    }
+  }
+
+  // Listen to auth state changes
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (session?.user && !user) {
+      // User just logged in
+      loadFavorites();
+    } else if (!session?.user && user) {
+      // User just logged out
+      user = null;
+      favorites = [];
+      authGateContainer?.classList.remove('hidden');
+      loadingState?.classList.add('hidden');
+      emptyState?.classList.add('hidden');
+      favoritesGrid?.classList.add('hidden');
+    }
+  });
+
+  // Load favorites on page load
+  loadFavorites();
+
+  // Track page view
+  if (window.pirsch) {
+    window.pirsch('Favorites Page View');
+  }
+</script>

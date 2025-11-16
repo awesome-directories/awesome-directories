@@ -1,5 +1,6 @@
 ---
 import '@/style.css';
+import AuthModal from '@/components/AuthModal.astro';
 
 interface Props {
   title?: string;
@@ -164,5 +165,6 @@ const twitterHandle = '@awesome_dirs';
   </head>
   <body>
     <slot />
+    <AuthModal />
   </body>
 </html>

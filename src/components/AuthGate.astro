@@ -1,0 +1,37 @@
+---
+// Auth Gate Component - Shows when authentication is required
+interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+const { title, description, icon = "🔐" } = Astro.props;
+---
+
+<div
+  class="card p-8 text-center auth-gate"
+  data-auth-gate
+>
+  <div class="text-6xl mb-4">{icon}</div>
+  <h2 class="text-2xl font-bold text-gray-900 mb-2">
+    {title}
+  </h2>
+  <p class="text-gray-600 mb-6">
+    {description}
+  </p>
+  <button class="btn-primary" data-show-auth-modal>
+    Sign In to Continue
+  </button>
+</div>
+
+<script>
+  // Handle sign in button clicks
+  const authGateButtons = document.querySelectorAll("[data-show-auth-modal]");
+
+  authGateButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      window.dispatchEvent(new CustomEvent("show-auth-modal"));
+    });
+  });
+</script>

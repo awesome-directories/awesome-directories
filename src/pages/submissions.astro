@@ -1,0 +1,267 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import AuthGate from '@/components/AuthGate.astro';
+---
+
+<BaseLayout
+  title="My Submissions | Awesome Directories"
+  description="Track your directory submissions and their status"
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">My Submissions</h1>
+      <p class="text-gray-600 mb-8">
+        Track which directories you've submitted to
+      </p>
+
+      <!-- Auth Gate (shown when not authenticated) -->
+      <div id="auth-gate-container">
+        <AuthGate
+          title="Authentication Required"
+          description="Please sign in to view your submission history"
+          icon="✅"
+        />
+      </div>
+
+      <!-- Loading State -->
+      <div id="loading-state" class="hidden text-center py-12">
+        <div
+          class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"
+        >
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden card p-12 text-center">
+        <div class="text-6xl mb-4">✅</div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">
+          No submissions tracked yet
+        </h2>
+        <p class="text-gray-600 mb-6">
+          Start tracking your directory submissions to stay organized
+        </p>
+        <a href="/" class="btn-primary"> Browse Directories </a>
+      </div>
+
+      <!-- Progress Card -->
+      <div id="progress-card" class="hidden mb-6 card p-4">
+        <div class="flex items-center justify-between">
+          <div class="text-lg font-semibold text-gray-900">
+            Progress: <span id="progress-text">0/0</span> submitted (<span
+              id="progress-percentage">0</span>%)
+          </div>
+          <div class="w-48 bg-gray-200 rounded-full h-3">
+            <div
+              id="progress-bar"
+              class="bg-primary rounded-full h-3 transition-all duration-500"
+              style="width: 0%"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submissions List -->
+      <div id="submissions-list" class="hidden space-y-4">
+        <!-- Submissions will be inserted here -->
+      </div>
+    </div>
+  </main>
+
+  <AppFooter />
+</BaseLayout>
+
+<script>
+  import { supabase, getUser } from '@/lib/supabase-client';
+  import { $user } from '@/stores/auth';
+
+  // DOM elements
+  const authGateContainer = document.getElementById('auth-gate-container');
+  const loadingState = document.getElementById('loading-state');
+  const emptyState = document.getElementById('empty-state');
+  const progressCard = document.getElementById('progress-card');
+  const progressText = document.getElementById('progress-text');
+  const progressPercentage = document.getElementById('progress-percentage');
+  const progressBar = document.getElementById('progress-bar');
+  const submissionsList = document.getElementById('submissions-list');
+
+  let user: any = null;
+  let submissions: any[] = [];
+
+  // Format date
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return 'today';
+    if (diffDays === 1) return 'yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30)
+      return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''} ago`;
+    return date.toLocaleDateString();
+  }
+
+  // Check auth and load submissions
+  async function loadSubmissions() {
+    user = await getUser();
+
+    if (!user) {
+      authGateContainer?.classList.remove('hidden');
+      loadingState?.classList.add('hidden');
+      emptyState?.classList.add('hidden');
+      progressCard?.classList.add('hidden');
+      submissionsList?.classList.add('hidden');
+      return;
+    }
+
+    // Hide auth gate, show loading
+    authGateContainer?.classList.add('hidden');
+    loadingState?.classList.remove('hidden');
+
+    try {
+      const { data, error } = await supabase
+        .from('user_submissions')
+        .select('*, directories(*)')
+        .eq('user_id', user.id)
+        .order('submitted_at', { ascending: false });
+
+      if (error) throw error;
+
+      submissions = data || [];
+
+      if (submissions.length === 0) {
+        loadingState?.classList.add('hidden');
+        emptyState?.classList.remove('hidden');
+      } else {
+        loadingState?.classList.add('hidden');
+        updateProgress();
+        renderSubmissions();
+        progressCard?.classList.remove('hidden');
+        submissionsList?.classList.remove('hidden');
+      }
+    } catch (err) {
+      console.error('Error loading submissions:', err);
+      loadingState?.classList.add('hidden');
+      emptyState?.classList.remove('hidden');
+    }
+  }
+
+  // Update progress
+  function updateProgress() {
+    const submittedCount = submissions.filter(
+      (s) => s.status === 'submitted' || s.status === 'approved'
+    ).length;
+
+    const percentage = submissions.length > 0
+      ? Math.round((submittedCount / submissions.length) * 100)
+      : 0;
+
+    if (progressText)
+      progressText.textContent = `${submittedCount}/${submissions.length}`;
+    if (progressPercentage) progressPercentage.textContent = String(percentage);
+    if (progressBar) progressBar.style.width = `${percentage}%`;
+  }
+
+  // Get status badge class
+  function getStatusBadgeClass(status: string): string {
+    switch (status) {
+      case 'approved':
+        return 'badge-green';
+      case 'submitted':
+        return 'badge-blue';
+      case 'pending':
+        return 'badge-orange';
+      case 'rejected':
+        return 'badge-gray';
+      default:
+        return 'badge-gray';
+    }
+  }
+
+  // Render submissions
+  function renderSubmissions() {
+    if (!submissionsList) return;
+
+    submissionsList.innerHTML = submissions
+      .map((submission) => {
+        const directory = submission.directories;
+        const statusBadge = getStatusBadgeClass(submission.status);
+        const drBadge = directory.domain_rating
+          ? `<span class="badge-green">DR: ${directory.domain_rating}</span>`
+          : '';
+
+        const notes = submission.notes
+          ? `<p class="text-sm text-gray-600 mt-2">${submission.notes}</p>`
+          : '';
+
+        return `
+          <div class="card p-6">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <a
+                  href="/directory/${directory.slug}"
+                  class="text-xl font-bold text-gray-900 hover:text-primary"
+                >
+                  ${directory.name}
+                </a>
+
+                <div class="flex items-center space-x-3 mt-2">
+                  ${drBadge}
+                  <span class="${statusBadge}">
+                    ${submission.status.toUpperCase()}
+                  </span>
+                </div>
+
+                ${notes}
+
+                <p class="text-xs text-gray-500 mt-2">
+                  Submitted ${formatDate(submission.submitted_at)}
+                </p>
+              </div>
+
+              <a
+                href="${directory.submission_url || directory.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary text-sm ml-4"
+              >
+                Visit Directory
+              </a>
+            </div>
+          </div>
+        `;
+      })
+      .join('');
+  }
+
+  // Listen to auth state changes
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (session?.user && !user) {
+      // User just logged in
+      loadSubmissions();
+    } else if (!session?.user && user) {
+      // User just logged out
+      user = null;
+      submissions = [];
+      authGateContainer?.classList.remove('hidden');
+      loadingState?.classList.add('hidden');
+      emptyState?.classList.add('hidden');
+      progressCard?.classList.add('hidden');
+      submissionsList?.classList.add('hidden');
+    }
+  });
+
+  // Load submissions on page load
+  loadSubmissions();
+
+  // Track page view
+  if (window.pirsch) {
+    window.pirsch('Submissions Page View');
+  }
+</script>
