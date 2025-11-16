@@ -5,6 +5,8 @@ import AppFooter from '@/components/AppFooter.astro';
 import DirectoryFilter from '@/components/DirectoryFilter.vue';
 import { getAllDirectories, getUniqueCategories } from '@/lib/data/directories.js';
 import log from "@/lib/logger.js";
+import "@/style.css";
+
 
 var allDirectories = await getAllDirectories();
 var categories = getUniqueCategories(allDirectories);
