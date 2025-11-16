@@ -1,8 +1,10 @@
 import sitemap from "@astrojs/sitemap";
 import compress from "@playform/compress";
+import vue from "@astrojs/vue";
 import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "astro/config";
 import { fileURLToPath } from "node:url";
+import { saveDirectoriesIntegration } from "./src/integrations/save-directories.js";
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,6 +15,8 @@ export default defineConfig({
   },
 
   integrations: [
+    saveDirectoriesIntegration(),
+    vue(),
     sitemap(),
     compress({
       CSS: true,

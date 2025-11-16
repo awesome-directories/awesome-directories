@@ -1,12 +1,14 @@
-import { supabase } from '@/lib/supabase-server.js';
+import { supabase } from '../supabase-server.js';
+import log from '../logger.js';
 
 /**
  * Fetch all active directories from Supabase
  * This is used at build time to generate static pages
  */
 export async function getAllDirectories() {
+  log.info('Fetching all active directories from Supabase...');
   if (!supabase) {
-    console.warn('Supabase client not configured. Returning empty directories list.');
+    log.warn('Supabase client not configured. Returning empty directories list.');
     return [];
   }
 
@@ -19,13 +21,15 @@ export async function getAllDirectories() {
       .order('helpful_count', { ascending: false });
 
     if (error) {
-      console.error('Error fetching directories:', error);
+      log.error('Error fetching directories:', error);
       throw error;
     }
 
+    log.info(`Fetched ${data.length} active directories.`);
+
     return data || [];
   } catch (err) {
-    console.error('Failed to fetch directories:', err);
+    log.error('Failed to fetch directories:', err);
     return [];
   }
 }
@@ -43,13 +47,13 @@ export async function getDirectoryBySlug(slug) {
       .single();
 
     if (error) {
-      console.error(`Error fetching directory with slug "${slug}":`, error);
+      log.error(`Error fetching directory with slug "${slug}":`, error);
       return null;
     }
 
     return data;
   } catch (err) {
-    console.error(`Failed to fetch directory with slug "${slug}":`, err);
+    log.error(`Failed to fetch directory with slug "${slug}":`, err);
     return null;
   }
 }
@@ -100,7 +104,7 @@ export async function getDirectoryStats() {
 
     return stats;
   } catch (err) {
-    console.error('Failed to get directory stats:', err);
+    log.error('Failed to get directory stats:', err);
     return null;
   }
 }

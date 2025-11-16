@@ -2,17 +2,19 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppHeader from '@/components/AppHeader.astro';
 import AppFooter from '@/components/AppFooter.astro';
+import DirectoryFilter from '@/components/DirectoryFilter.vue';
 import { getAllDirectories, getUniqueCategories } from '@/lib/data/directories.js';
+import log from "@/lib/logger.js";
 
-// Fetch ALL directories at build time - this fixes the filtering bug!
-const allDirectories = await getAllDirectories();
-const categories = getUniqueCategories(allDirectories);
+var allDirectories = await getAllDirectories();
+var categories = getUniqueCategories(allDirectories);
 
-const totalCount = allDirectories.length;
-const drCount = allDirectories.filter(d => d.domain_rating).length;
+log.info(`Total directories fetched: ${allDirectories.length}`);
 
-// Structured data for SEO
-const structuredData = [
+var totalCount = allDirectories.length;
+var drCount = allDirectories.filter(function countDR(d) { return d.domain_rating; }).length;
+
+var structuredData = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -73,7 +75,6 @@ const structuredData = [
   <AppHeader />
 
   <main class="min-h-screen bg-gray-50">
-    <!-- Hero Section -->
     <section class="bg-gradient-to-br from-primary to-blue-600 text-white py-16 px-4">
       <div class="max-w-8xl mx-auto text-center">
         <h1 class="text-4xl md:text-5xl font-bold mb-4">
@@ -104,7 +105,6 @@ const structuredData = [
           </div>
         </div>
 
-        <!-- Search Bar -->
         <div class="max-w-2xl mx-auto">
           <div class="relative">
             <input
@@ -149,363 +149,8 @@ const structuredData = [
       </div>
     </section>
 
-    <!-- Filter Bar -->
-    <div class="bg-white border-b border-gray-200 sticky top-16 z-40 shadow-sm">
-      <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <!-- Category Filter -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-            <select
-              id="filter-category"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              {categories.map((cat) => <option value={cat}>{cat}</option>)}
-            </select>
-          </div>
-
-          <!-- Domain Rating Filter -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Domain Rating</label>
-            <select
-              id="filter-dr"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option value="All">All DR</option>
-              <option value="80+">80+</option>
-              <option value="70-79">70-79</option>
-              <option value="60-69">60-69</option>
-              <option value="<60">&lt;60</option>
-            </select>
-          </div>
-
-          <!-- Link Type Filter -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Link Type</label>
-            <select
-              id="filter-linktype"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option value="All">All</option>
-              <option value="Dofollow Only">Dofollow Only</option>
-            </select>
-          </div>
-
-          <!-- Pricing Filter -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Pricing</label>
-            <select
-              id="filter-pricing"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option value="All">All</option>
-              <option value="free">Free</option>
-              <option value="paid">Paid</option>
-              <option value="freemium">Freemium</option>
-            </select>
-          </div>
-
-          <!-- Sort -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
-            <select
-              id="sort-by"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option>Most Helpful</option>
-              <option>Highest DR</option>
-              <option>Newest</option>
-              <option>Alphabetical</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Active Filters Info -->
-        <div id="filter-info" class="hidden mt-4 flex items-center justify-between">
-          <div class="text-sm text-gray-600">
-            Showing <span id="filtered-count" class="font-semibold">0</span> directories
-            <span id="filter-description"></span>
-          </div>
-
-          <button
-            id="clear-filters"
-            class="text-sm text-primary hover:text-primary-dark font-medium"
-          >
-            Clear all filters
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Directory List -->
-    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div id="directory-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Directories will be rendered here by JavaScript -->
-      </div>
-
-      <!-- Loading State -->
-      <div id="loading-state" class="text-center py-12">
-        <div class="text-gray-600">Loading directories...</div>
-      </div>
-
-      <!-- Empty State -->
-      <div id="empty-state" class="hidden text-center py-12">
-        <div class="text-gray-600 mb-4">No directories found matching your filters.</div>
-        <button
-          id="reset-filters"
-          class="btn-primary"
-        >
-          Reset Filters
-        </button>
-      </div>
-    </div>
+    <DirectoryFilter client:load categories={categories} />
   </main>
 
   <AppFooter />
-
-  <!-- Embed ALL directory data for client-side filtering - THIS FIXES THE BUG! -->
-  <script is:inline define:vars={{ allDirectories }}>
-    window.__DIRECTORIES_DATA__ = allDirectories;
-  </script>
-
-  <script>
-    import { render, html } from 'uhtml';
-
-    var allData = (window as any).__DIRECTORIES_DATA__ || [];
-    var filteredData = [...allData];
-    var currentFilters = {
-      search: '',
-      category: 'All',
-      drRange: 'All',
-      linkType: 'All',
-      pricing: 'All',
-      sortBy: 'Most Helpful'
-    };
-
-    // Filter functions
-    function applyFilters() {
-      let filtered = [...allData];
-
-      // Search filter
-      if (currentFilters.search) {
-        const searchLower = currentFilters.search.toLowerCase();
-        filtered = filtered.filter(
-          (dir: any) =>
-            dir.name.toLowerCase().includes(searchLower) ||
-            (dir.description && dir.description.toLowerCase().includes(searchLower)) ||
-            (dir.categories && dir.categories.some((cat: string) => cat.toLowerCase().includes(searchLower)))
-        );
-      }
-
-      // Category filter
-      if (currentFilters.category !== 'All') {
-        filtered = filtered.filter(
-          (dir: any) => dir.categories && dir.categories.includes(currentFilters.category)
-        );
-      }
-
-      // DR filter
-      if (currentFilters.drRange !== 'All') {
-        filtered = filtered.filter((dir: any) => {
-          if (!dir.domain_rating) return false;
-          const dr = dir.domain_rating;
-          switch (currentFilters.drRange) {
-            case '80+':
-              return dr >= 80;
-            case '70-79':
-              return dr >= 70 && dr < 80;
-            case '60-69':
-              return dr >= 60 && dr < 70;
-            case '<60':
-              return dr < 60;
-            default:
-              return true;
-          }
-        });
-      }
-
-      // Link type filter
-      if (currentFilters.linkType === 'Dofollow Only') {
-        filtered = filtered.filter((dir: any) => dir.is_dofollow === true);
-      }
-
-      // Pricing filter
-      if (currentFilters.pricing !== 'All') {
-        filtered = filtered.filter(
-          (dir: any) => dir.pricing_type && dir.pricing_type.toLowerCase() === currentFilters.pricing
-        );
-      }
-
-      // Sort
-      filtered = sortDirectories(filtered, currentFilters.sortBy);
-
-      filteredData = filtered;
-      renderDirectories();
-      updateFilterInfo();
-    }
-
-    function sortDirectories(dirs: any[], sortBy: string) {
-      const sorted = [...dirs];
-      switch (sortBy) {
-        case 'Most Helpful':
-          return sorted.sort((a, b) => (b.helpful_count || 0) - (a.helpful_count || 0));
-        case 'Highest DR':
-          return sorted.sort((a, b) => {
-            if (!a.domain_rating && !b.domain_rating) return 0;
-            if (!a.domain_rating) return 1;
-            if (!b.domain_rating) return -1;
-            return b.domain_rating - a.domain_rating;
-          });
-        case 'Newest':
-          return sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        case 'Alphabetical':
-          return sorted.sort((a, b) => a.name.localeCompare(b.name));
-        default:
-          return sorted;
-      }
-    }
-
-    function renderDirectories() {
-      var container = document.getElementById('directory-list');
-      var loadingState = document.getElementById('loading-state');
-      var emptyState = document.getElementById('empty-state');
-
-      if (!container || !loadingState || !emptyState) return;
-
-      loadingState.classList.add('hidden');
-
-      if (filteredData.length === 0) {
-        container.classList.add('hidden');
-        emptyState.classList.remove('hidden');
-        return;
-      }
-
-      container.classList.remove('hidden');
-      emptyState.classList.add('hidden');
-
-      render(container, html`
-        ${filteredData.map(function renderCard(dir) {
-          return html`
-            <div class="card p-6">
-              <div class="flex items-start justify-between mb-3">
-                <h3 class="text-lg font-semibold text-gray-900">
-                  <a href=${`/directory/${dir.slug}`} class="hover:text-primary transition-colors">
-                    ${dir.name}
-                  </a>
-                </h3>
-                ${dir.domain_rating ? html`<span class="badge badge-blue">DR ${dir.domain_rating}</span>` : ''}
-              </div>
-              ${dir.description ? html`<p class="text-sm text-gray-600 mb-4">${dir.description.length > 150 ? dir.description.substring(0, 150) + '...' : dir.description}</p>` : ''}
-              <div class="flex flex-wrap gap-2 mb-4">
-                ${dir.categories ? dir.categories.map(function renderCategory(cat) {
-                  return html`<span class="badge badge-gray">${cat}</span>`;
-                }) : ''}
-              </div>
-              <div class="flex items-center justify-between text-sm">
-                <span class="text-gray-600">${dir.pricing_type || 'Free'}</span>
-                ${dir.is_dofollow ? html`<span class="text-success">✓ Dofollow</span>` : html`<span class="text-gray-400">Nofollow</span>`}
-              </div>
-            </div>
-          `;
-        })}
-      `);
-    }
-
-    function updateFilterInfo() {
-      const filterInfo = document.getElementById('filter-info');
-      const filteredCount = document.getElementById('filtered-count');
-
-      if (!filterInfo || !filteredCount) return;
-
-      filteredCount.textContent = filteredData.length.toString();
-
-      const hasActiveFilters =
-        currentFilters.search ||
-        currentFilters.category !== 'All' ||
-        currentFilters.drRange !== 'All' ||
-        currentFilters.linkType !== 'All' ||
-        currentFilters.pricing !== 'All';
-
-      if (hasActiveFilters) {
-        filterInfo.classList.remove('hidden');
-      } else {
-        filterInfo.classList.add('hidden');
-      }
-    }
-
-    // Event listeners
-    const searchInput = document.getElementById('search-input') as HTMLInputElement;
-    const clearSearch = document.getElementById('clear-search');
-    const filterCategory = document.getElementById('filter-category') as HTMLSelectElement;
-    const filterDR = document.getElementById('filter-dr') as HTMLSelectElement;
-    const filterLinkType = document.getElementById('filter-linktype') as HTMLSelectElement;
-    const filterPricing = document.getElementById('filter-pricing') as HTMLSelectElement;
-    const sortBy = document.getElementById('sort-by') as HTMLSelectElement;
-    const clearFilters = document.getElementById('clear-filters');
-    const resetFilters = document.getElementById('reset-filters');
-
-    searchInput?.addEventListener('input', (e) => {
-      const target = e.target as HTMLInputElement;
-      currentFilters.search = target.value;
-      clearSearch?.classList.toggle('hidden', !target.value);
-      applyFilters();
-    });
-
-    clearSearch?.addEventListener('click', () => {
-      searchInput.value = '';
-      currentFilters.search = '';
-      clearSearch.classList.add('hidden');
-      applyFilters();
-    });
-
-    filterCategory?.addEventListener('change', (e) => {
-      currentFilters.category = (e.target as HTMLSelectElement).value;
-      applyFilters();
-    });
-
-    filterDR?.addEventListener('change', (e) => {
-      currentFilters.drRange = (e.target as HTMLSelectElement).value;
-      applyFilters();
-    });
-
-    filterLinkType?.addEventListener('change', (e) => {
-      currentFilters.linkType = (e.target as HTMLSelectElement).value;
-      applyFilters();
-    });
-
-    filterPricing?.addEventListener('change', (e) => {
-      currentFilters.pricing = (e.target as HTMLSelectElement).value;
-      applyFilters();
-    });
-
-    sortBy?.addEventListener('change', (e) => {
-      currentFilters.sortBy = (e.target as HTMLSelectElement).value;
-      applyFilters();
-    });
-
-    function resetAllFilters() {
-      searchInput.value = '';
-      filterCategory.value = 'All';
-      filterDR.value = 'All';
-      filterLinkType.value = 'All';
-      filterPricing.value = 'All';
-      sortBy.value = 'Most Helpful';
-      currentFilters = {
-        search: '',
-        category: 'All',
-        drRange: 'All',
-        linkType: 'All',
-        pricing: 'All',
-        sortBy: 'Most Helpful'
-      };
-      clearSearch?.classList.add('hidden');
-      applyFilters();
-    }
-
-    clearFilters?.addEventListener('click', resetAllFilters);
-    resetFilters?.addEventListener('click', resetAllFilters);
-
-    // Initial render
-    applyFilters();
-  </script>
 </BaseLayout>
