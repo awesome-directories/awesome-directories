@@ -164,5 +164,40 @@ const twitterHandle = '@awesome_dirs';
   </head>
   <body>
     <slot />
+
+    <!-- Auth Modal Container -->
+    <div id="auth-modal-container"></div>
+
+    <script>
+      // Auth Modal Handler
+      import AuthModal from '@/components/AuthModal.vue';
+      import { createApp } from 'vue';
+
+      let modalApp = null;
+
+      function showAuthModal() {
+        const container = document.getElementById('auth-modal-container');
+        if (!container) return;
+
+        if (modalApp) {
+          modalApp.unmount();
+        }
+
+        modalApp = createApp(AuthModal, {
+          onClose: () => {
+            if (modalApp) {
+              modalApp.unmount();
+              modalApp = null;
+            }
+          }
+        });
+
+        modalApp.mount(container);
+      }
+
+      // Listen for show auth modal events
+      window.addEventListener('show-auth-modal', showAuthModal);
+      window.addEventListener('open-auth-modal', showAuthModal);
+    </script>
   </body>
 </html>

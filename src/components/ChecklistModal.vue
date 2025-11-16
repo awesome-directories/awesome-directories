@@ -189,12 +189,34 @@
             Clear Selection
           </button>
           <div class="flex gap-3">
-            <button
-              @click="handleExport"
-              class="px-4 py-2 text-primary bg-white border border-primary rounded-lg hover:bg-blue-50 transition-colors font-medium"
-            >
-              📥 Export List
-            </button>
+            <div class="relative">
+              <button
+                @click="toggleExportMenu"
+                class="px-4 py-2 text-primary bg-white border border-primary rounded-lg hover:bg-blue-50 transition-colors font-medium flex items-center gap-2"
+              >
+                📥 Export
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div
+                v-if="showExportMenu"
+                class="absolute bottom-full right-0 mb-2 w-48 bg-white rounded-lg shadow-lg py-1 border border-gray-200"
+              >
+                <button
+                  @click="handleExportCSV"
+                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  📄 Export as CSV
+                </button>
+                <button
+                  @click="handleExportPDF"
+                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  📑 Export as PDF
+                </button>
+              </div>
+            </div>
             <button @click="handleClose" class="btn-primary px-6">Done</button>
           </div>
         </div>
@@ -206,6 +228,8 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
 import Papa from "papaparse";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const props = defineProps({
   selectedDirectories: {
@@ -217,6 +241,7 @@ const props = defineProps({
 const emit = defineEmits(["close", "clear-selection"]);
 
 var completedDirectories = ref(new Set());
+var showExportMenu = ref(false);
 
 const completedCount = computed(function () {
   return completedDirectories.value.size;
@@ -298,15 +323,27 @@ function getPricingClass(pricing) {
   return "bg-gray-100 text-gray-700";
 }
 
-function handleExport() {
+function toggleExportMenu() {
+  showExportMenu.value = !showExportMenu.value;
+}
+
+function handleExportCSV() {
   var data = props.selectedDirectories.map(function (dir) {
     return {
       Name: dir.name,
+      Description: dir.description || "N/A",
       URL: dir.url,
+      "Submission URL": dir.submission_url || dir.url,
       "Domain Rating": dir.domain_rating || "N/A",
-      Pricing: dir.pricing || "N/A",
+      "Organic Traffic": dir.organic_search_traffic || "N/A",
+      "Backlinks": dir.backlinks_count || "N/A",
+      "Referring Domains": dir.referring_domains || "N/A",
+      "Spam Score": dir.spam_score !== null ? dir.spam_score : "N/A",
+      "Pricing Type": dir.pricing_type || "N/A",
+      "Pricing Amount": dir.pricing_amount || "N/A",
       "Link Type": dir.is_dofollow ? "Dofollow" : "Nofollow",
-      Category: dir.category || "N/A",
+      Categories: Array.isArray(dir.categories) ? dir.categories.join(", ") : "N/A",
+      "Helpful Count": dir.helpful_count || 0,
     };
   });
 
@@ -317,12 +354,80 @@ function handleExport() {
   var url = URL.createObjectURL(blob);
 
   link.setAttribute("href", url);
-  link.setAttribute("download", "directory-checklist.csv");
+  link.setAttribute("download", "awesome-directories-checklist.csv");
   link.style.visibility = "hidden";
 
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+
+  showExportMenu.value = false;
+}
+
+function handleExportPDF() {
+  const doc = new jsPDF();
+
+  // Add title
+  doc.setFontSize(18);
+  doc.text("Awesome Directories - Submission Checklist", 14, 20);
+
+  doc.setFontSize(10);
+  doc.text(`${props.selectedDirectories.length} directories selected`, 14, 28);
+  doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 34);
+
+  // Prepare table data
+  const tableData = props.selectedDirectories.map((dir) => [
+    dir.name,
+    dir.domain_rating || "N/A",
+    dir.pricing_type || "N/A",
+    dir.is_dofollow ? "Yes" : "No",
+    dir.url,
+  ]);
+
+  // Add table
+  doc.autoTable({
+    startY: 40,
+    head: [["Directory", "DR", "Pricing", "Dofollow", "URL"]],
+    body: tableData,
+    styles: { fontSize: 8 },
+    headStyles: { fillColor: [59, 130, 246] },
+    columnStyles: {
+      4: { cellWidth: 60 },
+    },
+  });
+
+  // Add summary on second page if needed
+  const finalY = doc.lastAutoTable.finalY || 40;
+
+  if (finalY + 40 > 280) {
+    doc.addPage();
+  }
+
+  doc.setFontSize(12);
+  doc.text("Directory Statistics:", 14, finalY + 15);
+
+  doc.setFontSize(10);
+  const stats = {
+    total: props.selectedDirectories.length,
+    avgDR: Math.round(
+      props.selectedDirectories
+        .filter((d) => d.domain_rating)
+        .reduce((sum, d) => sum + d.domain_rating, 0) /
+        props.selectedDirectories.filter((d) => d.domain_rating).length || 0
+    ),
+    dofollowCount: props.selectedDirectories.filter((d) => d.is_dofollow).length,
+    freeCount: props.selectedDirectories.filter((d) => d.pricing_type === "free").length,
+  };
+
+  doc.text(`• Total Directories: ${stats.total}`, 14, finalY + 25);
+  doc.text(`• Average Domain Rating: ${stats.avgDR}`, 14, finalY + 32);
+  doc.text(`• Dofollow Directories: ${stats.dofollowCount}`, 14, finalY + 39);
+  doc.text(`• Free Directories: ${stats.freeCount}`, 14, finalY + 46);
+
+  // Save PDF
+  doc.save("awesome-directories-checklist.pdf");
+
+  showExportMenu.value = false;
 }
 
 onMounted(function () {

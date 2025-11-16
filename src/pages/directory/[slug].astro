@@ -1,0 +1,351 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import { getDirectoryPaths } from '@/lib/getStaticPaths.js';
+import "@/style.css";
+
+export async function getStaticPaths() {
+  return await getDirectoryPaths();
+}
+
+const { directory } = Astro.props;
+
+// Format numbers for display
+const formatNumber = (num) => {
+  if (!num) return 'N/A';
+  if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+  if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+  return num.toString();
+};
+
+// DR Badge Color
+const getDRBadgeClass = (dr) => {
+  if (!dr) return 'bg-gray-100 text-gray-700';
+  if (dr >= 80) return 'bg-green-100 text-green-700';
+  if (dr >= 70) return 'bg-blue-100 text-blue-700';
+  if (dr >= 60) return 'bg-orange-100 text-orange-700';
+  return 'bg-gray-100 text-gray-700';
+};
+
+// Pricing Badge Class
+const getPricingBadgeClass = (pricing) => {
+  if (pricing === 'free') return 'bg-green-100 text-green-700';
+  if (pricing === 'paid') return 'bg-orange-100 text-orange-700';
+  if (pricing === 'freemium') return 'bg-blue-100 text-blue-700';
+  return 'bg-gray-100 text-gray-700';
+};
+
+const getPricingLabel = () => {
+  if (directory.pricing_type === 'free') return '💰 Free';
+  if (directory.pricing_type === 'paid' && directory.pricing_amount) {
+    return `💰 $${directory.pricing_amount}`;
+  }
+  if (directory.pricing_type === 'paid') return '💰 Paid';
+  if (directory.pricing_type === 'freemium') return '💰 Freemium';
+  return '';
+};
+
+// Structured data for SEO
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: directory.name,
+    description: directory.description,
+    url: `https://awesome-directories.com/directory/${directory.slug}`,
+    mainEntity: {
+      '@type': 'Product',
+      name: directory.name,
+      description: directory.description,
+      url: directory.url,
+      image: directory.logo_url,
+      offers: {
+        '@type': 'Offer',
+        price: directory.pricing_type === 'free' ? '0' : directory.pricing_amount || '0',
+        priceCurrency: 'USD',
+      },
+      aggregateRating: directory.helpful_count > 0 ? {
+        '@type': 'AggregateRating',
+        ratingValue: '4.5',
+        ratingCount: directory.helpful_count,
+      } : undefined,
+    },
+  },
+];
+
+const pageTitle = `${directory.name} - Awesome Directories`;
+const pageDescription = directory.description || `Discover ${directory.name}, a curated directory for launching your SaaS product.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  structuredData={structuredData}
+  ogImage={directory.logo_url}
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-5xl mx-auto px-4">
+      <!-- Breadcrumb -->
+      <nav class="mb-6 text-sm">
+        <a href="/" class="text-primary hover:text-primary-dark">← Back to all directories</a>
+      </nav>
+
+      <!-- Main Card -->
+      <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+        <!-- Header -->
+        <div class="flex items-start gap-6 mb-6">
+          <!-- Logo -->
+          {directory.logo_url ? (
+            <div class="flex-shrink-0">
+              <img
+                src={directory.logo_url}
+                alt={directory.name}
+                class="w-20 h-20 rounded-lg object-cover bg-gray-100"
+              />
+            </div>
+          ) : (
+            <div class="w-20 h-20 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-4xl flex-shrink-0">
+              📂
+            </div>
+          )}
+
+          <!-- Title and Badges -->
+          <div class="flex-1 min-w-0">
+            <h1 class="text-3xl font-bold text-gray-900 mb-3">{directory.name}</h1>
+
+            <div class="flex items-center flex-wrap gap-2 mb-4">
+              {directory.domain_rating && (
+                <span class={`px-3 py-1 rounded-full text-sm font-semibold ${getDRBadgeClass(directory.domain_rating)}`}>
+                  ⭐ DR: {directory.domain_rating}
+                </span>
+              )}
+
+              {directory.is_dofollow && (
+                <span class="px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-700">
+                  🔗 Dofollow
+                </span>
+              )}
+
+              {directory.pricing_type && (
+                <span class={`px-3 py-1 rounded-full text-sm font-semibold ${getPricingBadgeClass(directory.pricing_type)}`}>
+                  {getPricingLabel()}
+                </span>
+              )}
+            </div>
+
+            <!-- Categories -->
+            {directory.categories && directory.categories.length > 0 && (
+              <div class="flex flex-wrap gap-2">
+                {directory.categories.map((category) => (
+                  <span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">
+                    {category}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">About</h2>
+          <p class="text-gray-700 leading-relaxed">
+            {directory.description || 'No description available.'}
+          </p>
+        </div>
+
+        <!-- Stats Grid -->
+        {(directory.domain_rating || directory.organic_search_traffic || directory.backlinks_count || directory.referring_domains) && (
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">SEO Metrics</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {directory.domain_rating && (
+                <div class="bg-gray-50 rounded-lg p-4 text-center">
+                  <div class="text-2xl font-bold text-primary">{directory.domain_rating}</div>
+                  <div class="text-sm text-gray-600">Domain Rating</div>
+                </div>
+              )}
+
+              {directory.organic_search_traffic !== null && (
+                <div class="bg-gray-50 rounded-lg p-4 text-center">
+                  <div class="text-2xl font-bold text-primary">{formatNumber(directory.organic_search_traffic)}</div>
+                  <div class="text-sm text-gray-600">Monthly Traffic</div>
+                </div>
+              )}
+
+              {directory.backlinks_count !== null && (
+                <div class="bg-gray-50 rounded-lg p-4 text-center">
+                  <div class="text-2xl font-bold text-primary">{formatNumber(directory.backlinks_count)}</div>
+                  <div class="text-sm text-gray-600">Backlinks</div>
+                </div>
+              )}
+
+              {directory.referring_domains !== null && (
+                <div class="bg-gray-50 rounded-lg p-4 text-center">
+                  <div class="text-2xl font-bold text-primary">{formatNumber(directory.referring_domains)}</div>
+                  <div class="text-sm text-gray-600">Referring Domains</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <!-- Additional Metrics -->
+        {(directory.spam_score !== null || directory.linking_root_domains) && (
+          <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Quality Indicators</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {directory.spam_score !== null && (
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <div class="text-sm text-gray-600 mb-1">Spam Score</div>
+                  <div class="text-lg font-bold text-gray-900">
+                    {directory.spam_score}%
+                    {directory.spam_score < 30 && <span class="text-green-600 text-sm ml-2">✓ Low</span>}
+                    {directory.spam_score >= 30 && directory.spam_score < 60 && <span class="text-orange-600 text-sm ml-2">⚠ Medium</span>}
+                    {directory.spam_score >= 60 && <span class="text-red-600 text-sm ml-2">✕ High</span>}
+                  </div>
+                </div>
+              )}
+
+              {directory.linking_root_domains !== null && (
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <div class="text-sm text-gray-600 mb-1">Root Domains</div>
+                  <div class="text-lg font-bold text-gray-900">{formatNumber(directory.linking_root_domains)}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <!-- Actions -->
+        <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+          <div>
+            <button
+              id="helpful-btn"
+              data-directory-id={directory.id}
+              data-helpful-count={directory.helpful_count || 0}
+              class="helpful-button flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-primary hover:text-white rounded-lg transition-colors font-medium"
+            >
+              <span>👍</span>
+              <span class="helpful-count">{directory.helpful_count || 0} helpful</span>
+            </button>
+          </div>
+
+          <a
+            href={directory.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors font-semibold"
+          >
+            Visit Directory
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+        <h3 class="font-semibold text-blue-900 mb-2">💡 Pro Tip</h3>
+        <p class="text-blue-800">
+          When submitting to {directory.name}, make sure your product description is clear and concise.
+          {directory.is_dofollow && "This directory offers dofollow links, which can boost your SEO! "}
+          Check their submission guidelines for the best results.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <AppFooter />
+
+  <script>
+    // Client-side voting functionality
+    import { supabase } from '@/lib/supabase-client.js';
+
+    // Generate a simple browser fingerprint for anonymous voting
+    function getBrowserFingerprint() {
+      const fingerprint = localStorage.getItem('browser_fingerprint');
+      if (fingerprint) return fingerprint;
+
+      // Create a simple fingerprint using available browser info
+      const fp = btoa(
+        navigator.userAgent +
+        navigator.language +
+        new Date().getTimezoneOffset() +
+        Math.random().toString(36).substring(7)
+      );
+
+      localStorage.setItem('browser_fingerprint', fp);
+      return fp;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const helpfulBtn = document.getElementById('helpful-btn');
+      if (!helpfulBtn) return;
+
+      const directoryId = helpfulBtn.dataset.directoryId;
+      const votedKey = `voted_${directoryId}`;
+
+      // Check if user has already voted
+      const hasVoted = localStorage.getItem(votedKey) === 'true';
+      if (hasVoted) {
+        helpfulBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        helpfulBtn.disabled = true;
+        helpfulBtn.querySelector('span:first-child').textContent = '✓';
+      }
+
+      helpfulBtn.addEventListener('click', async () => {
+        if (hasVoted || helpfulBtn.disabled) return;
+
+        try {
+          helpfulBtn.disabled = true;
+
+          // Optimistic update
+          const countSpan = helpfulBtn.querySelector('.helpful-count');
+          const currentCount = parseInt(helpfulBtn.dataset.helpfulCount || 0);
+          countSpan.textContent = `${currentCount + 1} helpful`;
+
+          // Get browser fingerprint for anonymous voting
+          const ipHash = getBrowserFingerprint();
+
+          // Insert vote record (trigger will increment helpful_count)
+          const { error } = await supabase
+            .from('directory_votes')
+            .insert({
+              directory_id: directoryId,
+              ip_hash: ipHash
+            });
+
+          if (error) {
+            // Check if it's a duplicate vote error
+            if (error.code === '23505') {
+              localStorage.setItem(votedKey, 'true');
+              helpfulBtn.classList.add('opacity-50', 'cursor-not-allowed');
+              helpfulBtn.querySelector('span:first-child').textContent = '✓';
+              return;
+            }
+            throw error;
+          }
+
+          // Mark as voted
+          localStorage.setItem(votedKey, 'true');
+          helpfulBtn.classList.add('opacity-50', 'cursor-not-allowed');
+          helpfulBtn.querySelector('span:first-child').textContent = '✓';
+
+        } catch (error) {
+          console.error('Error voting:', error);
+          // Revert on error
+          const countSpan = helpfulBtn.querySelector('.helpful-count');
+          const currentCount = parseInt(helpfulBtn.dataset.helpfulCount || 0);
+          countSpan.textContent = `${currentCount} helpful`;
+          helpfulBtn.disabled = false;
+          alert('Failed to register vote. Please try again.');
+        }
+      });
+    });
+  </script>
+</BaseLayout>

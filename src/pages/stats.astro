@@ -1,0 +1,305 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import { getDirectoryStats, getAllDirectories } from '@/lib/data/directories.js';
+import "@/style.css";
+
+const stats = await getDirectoryStats();
+const allDirectories = await getAllDirectories();
+
+// Calculate additional stats
+const topByDR = [...allDirectories]
+  .filter(d => d.domain_rating)
+  .sort((a, b) => b.domain_rating - a.domain_rating)
+  .slice(0, 10);
+
+const topByTraffic = [...allDirectories]
+  .filter(d => d.organic_search_traffic)
+  .sort((a, b) => b.organic_search_traffic - a.organic_search_traffic)
+  .slice(0, 10);
+
+const topByHelpful = [...allDirectories]
+  .filter(d => d.helpful_count > 0)
+  .sort((a, b) => b.helpful_count - a.helpful_count)
+  .slice(0, 10);
+
+// Prepare data for charts
+const pricingData = {
+  labels: Object.keys(stats.byPricing),
+  values: Object.values(stats.byPricing)
+};
+
+const topCategoriesData = Object.entries(stats.byCategory)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 10);
+
+const categoryLabels = topCategoriesData.map(([label]) => label);
+const categoryValues = topCategoriesData.map(([, value]) => value);
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Directory Statistics - Awesome Directories',
+    description: 'Comprehensive statistics and insights about curated launch directories.',
+    url: 'https://awesome-directories.com/stats',
+  },
+];
+---
+
+<BaseLayout
+  title="Directory Statistics - Awesome Directories"
+  description="Comprehensive statistics and insights about curated launch directories for SaaS products."
+  structuredData={structuredData}
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-7xl mx-auto px-4">
+      <!-- Header -->
+      <div class="mb-8">
+        <nav class="mb-4 text-sm">
+          <a href="/" class="text-primary hover:text-primary-dark">← Back to home</a>
+        </nav>
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">Directory Statistics</h1>
+        <p class="text-lg text-gray-600">Insights and metrics from our curated directory collection</p>
+      </div>
+
+      <!-- Key Metrics -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="text-sm text-gray-600 mb-1">Total Directories</div>
+          <div class="text-3xl font-bold text-primary">{stats.total}</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="text-sm text-gray-600 mb-1">Average Domain Rating</div>
+          <div class="text-3xl font-bold text-primary">{stats.averageDR}</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="text-sm text-gray-600 mb-1">Dofollow Links</div>
+          <div class="text-3xl font-bold text-primary">{stats.dofollowCount}</div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="text-sm text-gray-600 mb-1">Categories</div>
+          <div class="text-3xl font-bold text-primary">{Object.keys(stats.byCategory).length}</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- Pricing Distribution -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Pricing Distribution</h2>
+          <canvas id="pricingChart" class="max-h-64"></canvas>
+        </div>
+
+        <!-- Top Categories -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Top 10 Categories</h2>
+          <canvas id="categoryChart" class="max-h-64"></canvas>
+        </div>
+      </div>
+
+      <!-- Top Directories Tables -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Top by DR -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Top by Domain Rating</h2>
+          <div class="space-y-3">
+            {topByDR.map((dir, index) => (
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <div class="flex items-center gap-3 flex-1 min-w-0">
+                  <span class="text-gray-500 text-sm font-medium">{index + 1}</span>
+                  <a
+                    href={`/directory/${dir.slug}`}
+                    class="text-primary hover:text-primary-dark font-medium truncate"
+                  >
+                    {dir.name}
+                  </a>
+                </div>
+                <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-semibold">
+                  DR {dir.domain_rating}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Top by Traffic -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Top by Organic Traffic</h2>
+          <div class="space-y-3">
+            {topByTraffic.map((dir, index) => {
+              const formatTraffic = (num) => {
+                if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+                if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+                return num.toString();
+              };
+              return (
+                <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                  <div class="flex items-center gap-3 flex-1 min-w-0">
+                    <span class="text-gray-500 text-sm font-medium">{index + 1}</span>
+                    <a
+                      href={`/directory/${dir.slug}`}
+                      class="text-primary hover:text-primary-dark font-medium truncate"
+                    >
+                      {dir.name}
+                    </a>
+                  </div>
+                  <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-semibold">
+                    {formatTraffic(dir.organic_search_traffic)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <!-- Top by Community Votes -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Most Helpful</h2>
+          <div class="space-y-3">
+            {topByHelpful.map((dir, index) => (
+              <div class="flex items-center justify-between py-2 border-b border-gray-100">
+                <div class="flex items-center gap-3 flex-1 min-w-0">
+                  <span class="text-gray-500 text-sm font-medium">{index + 1}</span>
+                  <a
+                    href={`/directory/${dir.slug}`}
+                    class="text-primary hover:text-primary-dark font-medium truncate"
+                  >
+                    {dir.name}
+                  </a>
+                </div>
+                <span class="px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-semibold">
+                  👍 {dir.helpful_count}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Insights -->
+      <div class="bg-gradient-to-br from-primary to-blue-600 text-white rounded-lg shadow-md p-8">
+        <h2 class="text-2xl font-bold mb-4">Key Insights</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-semibold mb-2">📊 Quality Score</h3>
+            <p class="text-blue-100">
+              {((stats.dofollowCount / stats.total) * 100).toFixed(0)}% of directories offer dofollow links,
+              with an average domain rating of {stats.averageDR}.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">🎯 Coverage</h3>
+            <p class="text-blue-100">
+              Our collection spans {Object.keys(stats.byCategory).length} categories, ensuring diverse
+              opportunities for every type of SaaS product.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">💰 Value Mix</h3>
+            <p class="text-blue-100">
+              {stats.byPricing.free || 0} free directories available, plus {stats.byPricing.freemium || 0} freemium
+              options for budget-conscious founders.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-2">⚡ Fresh Data</h3>
+            <p class="text-blue-100">
+              All metrics are automatically updated weekly to ensure you're working with the most
+              current and accurate information.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <AppFooter />
+
+  <script define:vars={{ pricingData, categoryLabels, categoryValues }}>
+    import { Chart, registerables } from 'chart.js';
+    Chart.register(...registerables);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pricing Distribution Chart (Doughnut)
+      const pricingCtx = document.getElementById('pricingChart');
+      if (pricingCtx) {
+        new Chart(pricingCtx, {
+          type: 'doughnut',
+          data: {
+            labels: pricingData.labels.map(l => l.charAt(0).toUpperCase() + l.slice(1)),
+            datasets: [{
+              data: pricingData.values,
+              backgroundColor: [
+                'rgba(16, 185, 129, 0.8)', // green
+                'rgba(59, 130, 246, 0.8)', // blue
+                'rgba(251, 146, 60, 0.8)', // orange
+                'rgba(139, 92, 246, 0.8)', // purple
+              ],
+              borderWidth: 2,
+              borderColor: '#fff',
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                position: 'bottom',
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    const label = context.label || '';
+                    const value = context.parsed || 0;
+                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                    const percentage = ((value / total) * 100).toFixed(1);
+                    return `${label}: ${value} (${percentage}%)`;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Category Distribution Chart (Bar)
+      const categoryCtx = document.getElementById('categoryChart');
+      if (categoryCtx) {
+        new Chart(categoryCtx, {
+          type: 'bar',
+          data: {
+            labels: categoryLabels,
+            datasets: [{
+              label: 'Directories',
+              data: categoryValues,
+              backgroundColor: 'rgba(59, 130, 246, 0.8)',
+              borderColor: 'rgba(59, 130, 246, 1)',
+              borderWidth: 1,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 1,
+                }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</BaseLayout>

@@ -113,9 +113,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useAuth } from "@/composables/useAuth";
-
-const { signInWithGoogle, signInWithGithub } = useAuth();
+import { supabase } from "@/lib/supabase-client.js";
 
 var isLoading = ref(false);
 var errorMessage = ref("");
@@ -133,7 +131,17 @@ async function handleGoogleSignIn() {
   errorMessage.value = "";
 
   try {
-    await signInWithGoogle();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+
+    if (error) throw error;
+
+    // Close modal on successful OAuth initiation
+    emit("close");
   } catch (error) {
     errorMessage.value = "Failed to sign in with Google. Please try again.";
     console.error("Google sign in error:", error);
@@ -149,7 +157,17 @@ async function handleGithubSignIn() {
   errorMessage.value = "";
 
   try {
-    await signInWithGithub();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+
+    if (error) throw error;
+
+    // Close modal on successful OAuth initiation
+    emit("close");
   } catch (error) {
     errorMessage.value = "Failed to sign in with GitHub. Please try again.";
     console.error("GitHub sign in error:", error);

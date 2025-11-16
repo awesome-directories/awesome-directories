@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import FavoritesPage from '@/components/FavoritesPage.vue';
+import "@/style.css";
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'My Favorites - Awesome Directories',
+    description: 'Your saved directories for quick access.',
+    url: 'https://awesome-directories.com/favorites',
+  },
+];
+---
+
+<BaseLayout
+  title="My Favorites - Awesome Directories"
+  description="Access your saved directories and export them for easy reference."
+  structuredData={structuredData}
+>
+  <AppHeader />
+
+  <FavoritesPage client:only="vue" />
+
+  <AppFooter />
+</BaseLayout>

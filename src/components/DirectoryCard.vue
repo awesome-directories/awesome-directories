@@ -97,12 +97,12 @@
         </button>
       </div>
 
-      <router-link
-        :to="`/directory/${directory.slug}`"
+      <a
+        :href="`/directory/${directory.slug}`"
         class="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
       >
         View Details →
-      </router-link>
+      </a>
     </div>
   </div>
 </template>
@@ -169,10 +169,9 @@ const handleImageError = (e) => {
   e.target.style.display = "none";
 };
 
-const handleHelpfulClick = () => {
+const handleHelpfulClick = async () => {
   if (hasVoted.value) return;
 
-  hasVoted.value = true;
   emit("vote", props.directory);
 };
 </script>
