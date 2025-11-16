@@ -269,12 +269,11 @@ const structuredData = [
   </script>
 
   <script>
-    // Client-side filtering and rendering
-    // This works on the COMPLETE dataset, not just 50 items!
+    import { render, html } from 'uhtml';
 
-    const allData = (window as any).__DIRECTORIES_DATA__ || [];
-    let filteredData = [...allData];
-    let currentFilters = {
+    var allData = (window as any).__DIRECTORIES_DATA__ || [];
+    var filteredData = [...allData];
+    var currentFilters = {
       search: '',
       category: 'All',
       drRange: 'All',
@@ -367,9 +366,9 @@ const structuredData = [
     }
 
     function renderDirectories() {
-      const container = document.getElementById('directory-list');
-      const loadingState = document.getElementById('loading-state');
-      const emptyState = document.getElementById('empty-state');
+      var container = document.getElementById('directory-list');
+      var loadingState = document.getElementById('loading-state');
+      var emptyState = document.getElementById('empty-state');
 
       if (!container || !loadingState || !emptyState) return;
 
@@ -384,27 +383,32 @@ const structuredData = [
       container.classList.remove('hidden');
       emptyState.classList.add('hidden');
 
-      // Render directory cards (simplified for now)
-      container.innerHTML = filteredData.map((dir: any) => `
-        <div class="card p-6">
-          <div class="flex items-start justify-between mb-3">
-            <h3 class="text-lg font-semibold text-gray-900">
-              <a href="/directory/${dir.slug}" class="hover:text-primary transition-colors">
-                ${dir.name}
-              </a>
-            </h3>
-            ${dir.domain_rating ? `<span class="badge badge-blue">DR ${dir.domain_rating}</span>` : ''}
-          </div>
-          ${dir.description ? `<p class="text-sm text-gray-600 mb-4">${dir.description.length > 150 ? dir.description.substring(0, 150) + '...' : dir.description}</p>` : ''}
-          <div class="flex flex-wrap gap-2 mb-4">
-            ${dir.categories ? dir.categories.map((cat: string) => `<span class="badge badge-gray">${cat}</span>`).join('') : ''}
-          </div>
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-gray-600">${dir.pricing_type || 'Free'}</span>
-            ${dir.is_dofollow ? '<span class="text-success">✓ Dofollow</span>' : '<span class="text-gray-400">Nofollow</span>'}
-          </div>
-        </div>
-      `).join('');
+      render(container, html`
+        ${filteredData.map(function renderCard(dir) {
+          return html`
+            <div class="card p-6">
+              <div class="flex items-start justify-between mb-3">
+                <h3 class="text-lg font-semibold text-gray-900">
+                  <a href=${`/directory/${dir.slug}`} class="hover:text-primary transition-colors">
+                    ${dir.name}
+                  </a>
+                </h3>
+                ${dir.domain_rating ? html`<span class="badge badge-blue">DR ${dir.domain_rating}</span>` : ''}
+              </div>
+              ${dir.description ? html`<p class="text-sm text-gray-600 mb-4">${dir.description.length > 150 ? dir.description.substring(0, 150) + '...' : dir.description}</p>` : ''}
+              <div class="flex flex-wrap gap-2 mb-4">
+                ${dir.categories ? dir.categories.map(function renderCategory(cat) {
+                  return html`<span class="badge badge-gray">${cat}</span>`;
+                }) : ''}
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-600">${dir.pricing_type || 'Free'}</span>
+                ${dir.is_dofollow ? html`<span class="text-success">✓ Dofollow</span>` : html`<span class="text-gray-400">Nofollow</span>`}
+              </div>
+            </div>
+          `;
+        })}
+      `);
     }
 
     function updateFilterInfo() {

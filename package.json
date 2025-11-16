@@ -5,7 +5,8 @@
     "jspdf": "^2.5.1",
     "nanostores": "^0.10.0",
     "papaparse": "^5.4.1",
-    "slugify": "^1.6.6"
+    "slugify": "^1.6.6",
+    "uhtml": "^5.0.9"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.0.0",
@@ -23,11 +24,11 @@
   },
   "name": "awesome-directories",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
+    "astro": "astro",
     "build": "astro build",
+    "dev": "astro dev",
     "preview": "astro preview",
-    "astro": "astro"
+    "start": "astro dev"
   },
   "type": "module",
   "version": "1.0.0"
