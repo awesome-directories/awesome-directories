@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getServerSession } from "@/lib/getServerSession";
+import SubmissionTracker from "@/components/SubmissionTracker.vue";
+import "@/style.css";
+
+// Check authentication on server-side
+const session = await getServerSession(Astro.cookies);
+const isAuthenticated = session !== null;
+
+// Redirect to home if not authenticated
+if (!isAuthenticated) {
+  return Astro.redirect("/");
+}
+
+const title = "My Submissions - Awesome Directories";
+const description = "Track your submissions to directories";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+          Submission Tracker
+        </h1>
+        <p class="text-xl text-gray-600">
+          Keep track of where you've submitted your product
+        </p>
+      </div>
+
+      <!-- Submission Tracker -->
+      <SubmissionTracker client:load />
+
+      <!-- Help Section -->
+      <div class="mt-12 card p-6 bg-blue-50 border-blue-200">
+        <h3 class="font-semibold text-gray-900 mb-2">
+          About Submission Tracking
+        </h3>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li>
+            📝 Track which directories you've submitted your product to
+          </li>
+          <li>
+            ⏱️ Update submission status as you progress (pending → submitted →
+            approved)
+          </li>
+          <li>
+            📊 Add notes about each submission for future reference
+          </li>
+          <li>
+            ✅ Never submit to the same directory twice - keep organized!
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

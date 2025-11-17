@@ -1,0 +1,54 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getServerSession } from "@/lib/getServerSession";
+import FavoritesList from "@/components/FavoritesList.vue";
+import "@/style.css";
+
+// Check authentication on server-side
+const session = await getServerSession(Astro.cookies);
+const isAuthenticated = session !== null;
+
+// Redirect to home if not authenticated
+if (!isAuthenticated) {
+  return Astro.redirect("/");
+}
+
+const title = "My Favorites - Awesome Directories";
+const description = "View and manage your favorite directories";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">My Favorites</h1>
+        <p class="text-xl text-gray-600">
+          Quick access to your saved directories
+        </p>
+      </div>
+
+      <!-- Favorites List -->
+      <FavoritesList client:load />
+
+      <!-- Help Section -->
+      <div class="mt-12 card p-6 bg-blue-50 border-blue-200">
+        <h3 class="font-semibold text-gray-900 mb-2">About Favorites</h3>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li>
+            ⭐ Save directories you want to submit to or reference later
+          </li>
+          <li>
+            📱 Access your favorites from any device when signed in
+          </li>
+          <li>
+            🗑️ Remove directories from favorites anytime with one click
+          </li>
+          <li>
+            🔄 Your favorites sync across all your sessions
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
