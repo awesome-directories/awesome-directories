@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppHeader from '@/components/AppHeader.astro';
 import AppFooter from '@/components/AppFooter.astro';
-import DirectoryFilter from '@/components/DirectoryFilter.vue';
+import DirectoryListContent from '@/components/DirectoryListContent.vue';
 import { getAllDirectories, getUniqueCategories } from '@/lib/data/directories.js';
 import log from "@/lib/logger.js";
 import "@/style.css";
@@ -151,7 +151,7 @@ var structuredData = [
       </div>
     </section>
 
-    <DirectoryFilter client:load categories={categories} />
+    <DirectoryListContent client:load categories={categories} />
   </main>
 
   <AppFooter />

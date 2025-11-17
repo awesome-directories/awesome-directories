@@ -46,10 +46,10 @@
 - **PostgreSQL** with Row Level Security (RLS)
 - **Supabase Edge Functions** (Deno runtime)
   - `update-seo-data` - Updates Ahrefs metrics via pg_cron scheduled jobs
-- **Mautic** - Self-hosted CRM for newsletter (crm.meysam.io) - *planned/optional*
-- **Pirsch** - Privacy-first analytics - *optional*
+- **Mautic** - Self-hosted CRM for newsletter (crm.meysam.io) - _planned/optional_
+- **Pirsch** - Privacy-first analytics - _optional_
 - **Ahrefs API** - SEO metrics (DR, traffic estimates)
-- **Giscus** - GitHub Discussions for comments - *optional*
+- **Giscus** - GitHub Discussions for comments - _optional_
 
 ### Package Management
 
@@ -244,12 +244,14 @@ FUNCTION_SECRET=<optional-secret>  # For function authentication
 ### Build-time vs Runtime
 
 **Build-time** (Astro SSG):
+
 - Fetch all directories from Supabase during build
 - Generate static HTML pages with full content
 - Save directories.json to `public/data/` for client-side filtering
 - SEO metadata embedded in static HTML
 
 **Runtime** (Client-side):
+
 - Load directories.json for filtering/search
 - Interactive Vue components for filters, modals
 - Optional: Auth, favorites, voting (requires Supabase client)
@@ -257,11 +259,13 @@ FUNCTION_SECRET=<optional-secret>  # For function authentication
 ### Data Flow
 
 1. **Build Process**:
+
    ```
    Supabase DB → Astro Build → Static HTML + directories.json → GitHub Pages
    ```
 
 2. **Client Interaction**:
+
    ```
    User → Vue Component → directories.json → Filtered Results
    User → Vote/Favorite → Supabase API → Database
@@ -277,6 +281,7 @@ FUNCTION_SECRET=<optional-secret>  # For function authentication
 #### Save Directories Integration
 
 Custom Astro integration (`src/integrations/save-directories.js`):
+
 - Hooks into `astro:server:setup` and `astro:build:done`
 - Fetches all directories from Supabase
 - Saves to `public/data/directories.json` for client-side use
@@ -285,6 +290,7 @@ Custom Astro integration (`src/integrations/save-directories.js`):
 #### Supabase Edge Function
 
 `supabase/functions/update-seo-data/`:
+
 - Deno-based serverless function
 - Triggered by Supabase pg_cron (scheduled jobs)
 - Fetches Ahrefs metrics via Apify API
@@ -537,10 +543,12 @@ import AppFooter from '@/components/AppFooter.astro';
 ### Updating SEO Metrics
 
 **Automated** (Recommended):
+
 - Configure Supabase pg_cron to trigger `update-seo-data` Edge Function
 - Metrics update automatically on schedule
 
 **Manual**:
+
 ```bash
 # Call Edge Function directly
 curl -X POST https://your-project.supabase.co/functions/v1/update-seo-data \

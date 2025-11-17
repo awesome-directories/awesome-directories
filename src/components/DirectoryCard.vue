@@ -1,8 +1,17 @@
 <template>
   <div class="card p-5 h-full flex flex-col relative">
+    <!-- Pending Submission Badge -->
+    <div
+      v-if="isPendingSubmission"
+      class="absolute top-4 right-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-300"
+      title="This is your pending submission, visible only to you"
+    >
+      ⏳ Pending Review
+    </div>
+
     <!-- Checkbox for selection -->
     <input
-      v-if="selectable"
+      v-if="selectable && !isPendingSubmission"
       type="checkbox"
       :checked="isSelected"
       @change="$emit('toggle-select', directory)"
@@ -81,25 +90,38 @@
     </div>
 
     <!-- Footer -->
-    <div
-      class="flex items-center justify-between pt-4 border-t border-gray-100"
-    >
-      <div>
+    <div class="pt-4 border-t border-gray-100">
+      <div class="flex items-center justify-between mb-3">
         <button
-          v-if="directory?.helpful_count > 0"
           @click="handleHelpfulClick"
-          :disabled="hasVoted"
+          :disabled="isVoting || isPendingSubmission"
           class="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          :class="{ 'text-primary': hasVoted }"
+          :class="{ 'text-primary font-semibold': hasVoted }"
+          :title="
+            isPendingSubmission
+              ? 'Cannot vote on pending submissions'
+              : hasVoted
+                ? 'Remove vote'
+                : 'Mark as helpful'
+          "
         >
           <span>{{ hasVoted ? "✓" : "👍" }}</span>
           <span>{{ directory.helpful_count || 0 }} helpful</span>
         </button>
+
+        <FavoriteButton
+          v-if="directory.id"
+          :directoryId="directory.id"
+          variant="icon-only"
+          :isDisabled="isPendingSubmission"
+          :disabledReason="'Cannot favorite pending submissions'"
+          :initialFavorited="userFavoriteIds.includes(directory.id)"
+        />
       </div>
 
       <a
         :href="`/directory/${directory.slug}`"
-        class="text-sm font-medium text-primary hover:text-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+        class="inline-block w-full text-center text-sm font-medium text-primary hover:text-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded py-2"
       >
         View Details →
       </a>
@@ -108,7 +130,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useStore } from "@nanostores/vue";
+import { $user } from "@/stores/auth";
+import { useDirectory } from "@/composables/useDirectory";
+import { requireAuth } from "@/utils/auth";
+import FavoriteButton from "./FavoriteButton.vue";
 
 const props = defineProps({
   directory: {
@@ -123,11 +150,27 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  userVotedIds: {
+    type: Array,
+    default: () => [],
+  },
+  userFavoriteIds: {
+    type: Array,
+    default: () => [],
+  },
+  isPendingSubmission: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const emit = defineEmits(["toggle-select", "vote"]);
+const emit = defineEmits(["toggle-select", "vote-updated"]);
+
+const user = useStore($user);
+const { voteDirectory, hasVoted: checkVoted } = useDirectory();
 
 const hasVoted = ref(false);
+const isVoting = ref(false);
 
 const drBadgeClass = computed(() => {
   const dr = props.directory.domain_rating;
@@ -169,11 +212,47 @@ const handleImageError = (e) => {
   e.target.style.display = "none";
 };
 
-const handleHelpfulClick = () => {
-  if (hasVoted.value) return;
+// Check if user has voted on mount
+onMounted(async () => {
+  if (user.value && props.directory.id) {
+    // Check from passed prop first (optimization)
+    if (props.userVotedIds.includes(props.directory.id)) {
+      hasVoted.value = true;
+    } else {
+      // Fallback to API check
+      hasVoted.value = await checkVoted(props.directory.id, user.value);
+    }
+  }
+});
 
-  hasVoted.value = true;
-  emit("vote", props.directory);
+const handleHelpfulClick = async () => {
+  // Require authentication
+  if (!requireAuth(user.value)) {
+    return;
+  }
+
+  if (isVoting.value) return;
+
+  try {
+    isVoting.value = true;
+
+    const result = await voteDirectory(props.directory.id, user.value);
+
+    if (result.success) {
+      // Toggle vote state
+      hasVoted.value = result.action === "added";
+
+      // Emit event to parent to refresh data
+      emit("vote-updated", {
+        directoryId: props.directory.id,
+        action: result.action,
+      });
+    }
+  } catch (error) {
+    console.error("Failed to vote:", error);
+  } finally {
+    isVoting.value = false;
+  }
 };
 </script>
 
