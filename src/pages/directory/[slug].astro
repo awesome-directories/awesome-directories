@@ -1,0 +1,357 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import { getAllDirectories } from '@/lib/data/directories.js';
+import log from '@/lib/logger.js';
+import '@/style.css';
+
+// Generate static paths for all directories at build time
+export async function getStaticPaths() {
+  const directories = await getAllDirectories();
+
+  log.info(`Generating ${directories.length} directory detail pages...`);
+
+  return directories.map((directory) => ({
+    params: { slug: directory.slug },
+    props: { directory, allDirectories: directories },
+  }));
+}
+
+const { directory, allDirectories } = Astro.props;
+
+// Find related directories (same category, exclude current)
+const relatedDirectories = allDirectories
+  .filter((d) => {
+    if (d.slug === directory.slug) return false;
+    if (!directory.categories || !d.categories) return false;
+    return directory.categories.some((cat) => d.categories.includes(cat));
+  })
+  .slice(0, 6);
+
+// Helper functions for badges and labels
+function getDrBadgeClass(dr) {
+  if (!dr) return 'bg-gray-100 text-gray-700';
+  if (dr >= 80) return 'bg-green-100 text-green-800';
+  if (dr >= 70) return 'bg-blue-100 text-blue-800';
+  if (dr >= 60) return 'bg-orange-100 text-orange-800';
+  return 'bg-gray-100 text-gray-700';
+}
+
+function getPricingBadgeClass(pricing) {
+  if (pricing === 'free') return 'bg-green-100 text-green-800';
+  if (pricing === 'paid') return 'bg-orange-100 text-orange-800';
+  if (pricing === 'freemium') return 'bg-blue-100 text-blue-800';
+  return 'bg-gray-100 text-gray-700';
+}
+
+function getPricingLabel(directory) {
+  const pricing = directory.pricing_type;
+  if (pricing === 'free') return '💰 Free';
+  if (pricing === 'paid' && directory.pricing_amount) {
+    return `💰 $${directory.pricing_amount}`;
+  }
+  if (pricing === 'paid') return '💰 Paid';
+  if (pricing === 'freemium') return '💰 Freemium';
+  return '';
+}
+
+// SEO metadata
+const title = `${directory.name} - Submit Your Product | Awesome Directories`;
+const description = directory.description || `Submit your SaaS product to ${directory.name}. Find submission guidelines, pricing, and domain authority information.`;
+const canonicalUrl = `https://awesome-directories.com/directory/${directory.slug}`;
+const ogImage = directory.logo_url || 'https://awesome-directories.com/og-image.jpg';
+
+// Structured Data - Product Schema with AggregateRating
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: directory.name,
+    description: directory.description || `Submit your product to ${directory.name}`,
+    url: canonicalUrl,
+    image: directory.logo_url || 'https://awesome-directories.com/logo.png',
+    brand: {
+      '@type': 'Organization',
+      name: directory.name,
+    },
+    offers: {
+      '@type': 'Offer',
+      price: directory.pricing_type === 'free' ? '0' : directory.pricing_amount || '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: directory.submission_url,
+    },
+    aggregateRating: directory.helpful_count > 0 ? {
+      '@type': 'AggregateRating',
+      ratingValue: '4.5',
+      ratingCount: directory.helpful_count,
+      bestRating: '5',
+      worstRating: '1',
+    } : undefined,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://awesome-directories.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Directories',
+        item: 'https://awesome-directories.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: directory.name,
+        item: canonicalUrl,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  ogImage={ogImage}
+  ogType="product"
+  structuredData={structuredData}
+  keywords={`${directory.name}, directory submission, product launch, SaaS directory, ${directory.categories?.join(', ') || ''}`}
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="bg-white border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <ol class="flex items-center space-x-2 text-sm" itemscope itemtype="https://schema.org/BreadcrumbList">
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="/" class="text-primary hover:text-primary-dark transition-colors" itemprop="item">
+              <span itemprop="name">Home</span>
+            </a>
+            <meta itemprop="position" content="1" />
+          </li>
+          <li aria-hidden="true" class="text-gray-400">/</li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="/" class="text-primary hover:text-primary-dark transition-colors" itemprop="item">
+              <span itemprop="name">Directories</span>
+            </a>
+            <meta itemprop="position" content="2" />
+          </li>
+          <li aria-hidden="true" class="text-gray-400">/</li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span class="text-gray-700 font-medium" itemprop="name" aria-current="page">{directory.name}</span>
+            <meta itemprop="position" content="3" />
+          </li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- Directory Detail Section -->
+    <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" itemscope itemtype="https://schema.org/Product">
+      <!-- Header with Logo and Title -->
+      <header class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <!-- Logo -->
+          <div class="flex-shrink-0">
+            {directory.logo_url ? (
+              <img
+                src={directory.logo_url}
+                alt={`${directory.name} logo`}
+                class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover bg-gray-100 ring-2 ring-gray-200"
+                width="96"
+                height="96"
+                loading="eager"
+                itemprop="image"
+              />
+            ) : (
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-primary bg-opacity-10 flex items-center justify-center text-4xl sm:text-5xl ring-2 ring-gray-200" aria-label="Default directory icon">
+                📂
+              </div>
+            )}
+          </div>
+
+          <!-- Title and Meta -->
+          <div class="flex-1 min-w-0">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-3" itemprop="name">
+              {directory.name}
+            </h1>
+
+            <!-- Badges -->
+            <div class="flex flex-wrap items-center gap-2 mb-4">
+              {directory.domain_rating && (
+                <span class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getDrBadgeClass(directory.domain_rating)}`}>
+                  ⭐ DR: {directory.domain_rating}
+                </span>
+              )}
+
+              {directory.is_dofollow && (
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                  🔗 Dofollow
+                </span>
+              )}
+
+              {directory.pricing_type && (
+                <span class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getPricingBadgeClass(directory.pricing_type)}`}>
+                  {getPricingLabel(directory)}
+                </span>
+              )}
+            </div>
+
+            <!-- Categories -->
+            {directory.categories && directory.categories.length > 0 && (
+              <div class="flex flex-wrap gap-2">
+                {directory.categories.map((category) => (
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+                    {category}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <!-- Primary CTA -->
+          <div class="flex-shrink-0 w-full sm:w-auto">
+            <a
+              href={directory.submission_url}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50"
+              itemprop="url"
+            >
+              Visit Directory →
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Stats Grid -->
+      {(directory.domain_rating || directory.organic_traffic || directory.organic_keywords) && (
+        <section class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6" aria-labelledby="stats-heading">
+          <h2 id="stats-heading" class="text-xl font-bold text-gray-900 mb-4">SEO Metrics</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {directory.domain_rating && (
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-3xl font-bold text-primary">{directory.domain_rating}</div>
+                <div class="text-sm text-gray-600 mt-1">Domain Rating</div>
+              </div>
+            )}
+
+            {directory.organic_traffic && (
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-3xl font-bold text-primary">{directory.organic_traffic.toLocaleString()}</div>
+                <div class="text-sm text-gray-600 mt-1">Organic Traffic</div>
+              </div>
+            )}
+
+            {directory.organic_keywords && (
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <div class="text-3xl font-bold text-primary">{directory.organic_keywords.toLocaleString()}</div>
+                <div class="text-sm text-gray-600 mt-1">Organic Keywords</div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <!-- Description -->
+      {directory.description && (
+        <section class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6" aria-labelledby="description-heading">
+          <h2 id="description-heading" class="text-xl font-bold text-gray-900 mb-4">About {directory.name}</h2>
+          <p class="text-gray-700 leading-relaxed" itemprop="description">
+            {directory.description}
+          </p>
+        </section>
+      )}
+
+      <!-- Helpful Count -->
+      {directory.helpful_count > 0 && (
+        <section class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6" aria-labelledby="community-heading">
+          <h2 id="community-heading" class="text-xl font-bold text-gray-900 mb-4">Community Feedback</h2>
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">👍</span>
+            <span class="text-gray-700">
+              <strong>{directory.helpful_count}</strong> {directory.helpful_count === 1 ? 'person found' : 'people found'} this directory helpful
+            </span>
+          </div>
+        </section>
+      )}
+    </article>
+
+    <!-- Related Directories -->
+    {relatedDirectories.length > 0 && (
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-gray-200" aria-labelledby="related-heading">
+        <h2 id="related-heading" class="text-2xl font-bold text-gray-900 mb-6">Related Directories</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {relatedDirectories.map((related) => (
+            <article class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+              <a href={`/directory/${related.slug}`} class="block group">
+                <!-- Logo and Title -->
+                <div class="flex items-center gap-4 mb-3">
+                  {related.logo_url ? (
+                    <img
+                      src={related.logo_url}
+                      alt={`${related.name} logo`}
+                      class="w-12 h-12 rounded-lg object-cover bg-gray-100"
+                      width="48"
+                      height="48"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="w-12 h-12 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-2xl" aria-label="Default directory icon">
+                      📂
+                    </div>
+                  )}
+                  <h3 class="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors">
+                    {related.name}
+                  </h3>
+                </div>
+
+                <!-- Description -->
+                {related.description && (
+                  <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                    {related.description}
+                  </p>
+                )}
+
+                <!-- Badges -->
+                <div class="flex flex-wrap items-center gap-2">
+                  {related.domain_rating && (
+                    <span class={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${getDrBadgeClass(related.domain_rating)}`}>
+                      ⭐ DR: {related.domain_rating}
+                    </span>
+                  )}
+
+                  {related.is_dofollow && (
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                      🔗 Dofollow
+                    </span>
+                  )}
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+
+  <AppFooter />
+</BaseLayout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
