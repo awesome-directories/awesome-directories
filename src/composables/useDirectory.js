@@ -54,7 +54,7 @@ export function useDirectory() {
         .insert({
           directory_id: directoryId,
           user_id: userId,
-          ip_hash: "auth", // Authenticated votes use "auth" as ip_hash
+          ip_hash: null, // Authenticated votes use null as ip_hash
         });
 
       if (insertError) throw insertError;

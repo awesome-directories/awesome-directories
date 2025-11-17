@@ -54,26 +54,4 @@ export function getUserEmail(user) {
   return user?.email || null;
 }
 
-/**
- * Create IP hash for anonymous voting (fallback)
- * @returns {Promise<string>}
- */
-export async function getClientIpHash() {
-  // Simple client-side hash based on user agent and screen resolution
-  // Note: This is not secure but serves as a basic identifier
-  const data = `${navigator.userAgent}-${screen.width}x${screen.height}`;
 
-  try {
-    const msgUint8 = new TextEncoder().encode(data);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-    return hashHex;
-  } catch (error) {
-    console.error("Failed to generate IP hash:", error);
-    // Fallback to simple hash
-    return btoa(data).slice(0, 32);
-  }
-}

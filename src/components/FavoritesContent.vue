@@ -225,7 +225,7 @@ function handleExportFavorites() {
     const dir = f.directory;
     return [
       dir?.name || "",
-      dir?.slug ? `https://awesome-directories.com/directory/${dir.slug}` : "",
+      dir?.slug ? `/directory/${dir.slug}` : "",
       dir?.domain_rating || "",
       dir?.pricing_type || "",
       dir?.categories?.join("; ") || "",

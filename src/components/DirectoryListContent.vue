@@ -261,7 +261,7 @@ async function loadUserData() {
 function convertPendingToDirectory(pending) {
   return {
     id: pending.id,
-    slug: pending.url, // Use URL as temporary slug
+    slug: pending.id, // Use id as a safe, unique slug for pending submissions
     name: pending.name,
     description: pending.description,
     url: pending.url,
