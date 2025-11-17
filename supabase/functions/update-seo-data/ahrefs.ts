@@ -43,6 +43,7 @@ interface AhrefsMetrics {
 async function fetchAhrefsMetrics(
   urls: string[],
   apifyToken: string,
+  proxyUrl: string,
 ): Promise<AhrefsMetrics[]> {
   var input = {
     urls: urls,
@@ -59,6 +60,10 @@ async function fetchAhrefsMetrics(
     mode: "subdomains",
     country: "us",
   };
+
+  if (proxyUrl) {
+    input.proxy = proxyUrl;
+  }
 
   try {
     console.log(`Calling Apify for URLs: ${urls.join(", ")}`);
@@ -174,6 +179,7 @@ export async function updateAhrefsMetrics(
   apifyToken: string,
   batchSize: number,
   limitDirectories: number | null,
+  proxyUrl: string,
 ) {
   var directories = await fetchDirectoriesFromDatabase(
     supabase,
@@ -205,7 +211,7 @@ export async function updateAhrefsMetrics(
     console.log(`Processing batch ${i + 1}/${batches.length}`);
 
     try {
-      var results = await fetchAhrefsMetrics(batch, apifyToken);
+      var results = await fetchAhrefsMetrics(batch, apifyToken, proxyUrl);
 
       var domainMetrics = new Map();
 

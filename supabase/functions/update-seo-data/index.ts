@@ -2,6 +2,15 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { updateAhrefsMetrics } from "./ahrefs.ts";
 
+addEventListener('unhandledrejection', function handleUnhandledRejection(ev) {
+  console.error('unhandledrejection', ev.reason);
+  ev.preventDefault();
+});
+
+addEventListener('beforeunload', function handleBeforeUnload(ev) {
+  console.log('Function will be shutdown due to', ev.detail?.reason);
+});
+
 serve(async function handleRequest(req) {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
 
@@ -21,6 +30,7 @@ serve(async function handleRequest(req) {
     var supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     var apifyToken = Deno.env.get("APIFY_API_TOKEN");
     var functionSecret = Deno.env.get("FUNCTION_SECRET");
+    var proxyUrl = Deno.env.get("PROXY_URL") || "";
 
     if (!supabaseUrl || !supabaseServiceKey) {
       throw new Error("Missing Supabase credentials");
@@ -54,17 +64,40 @@ serve(async function handleRequest(req) {
         if (body.limit) {
           limitDirectories = body.limit;
         }
+        if (body.proxyUrl !== undefined) {
+          proxyUrl = body.proxyUrl;
+        }
       } catch {}
     }
 
-    var result = await updateAhrefsMetrics(
-      supabase,
-      apifyToken,
-      batchSize,
-      limitDirectories,
+    EdgeRuntime.waitUntil(
+      (async function processBackgroundTask() {
+        try {
+          console.log('[Background] Starting SEO data update task');
+          if (proxyUrl) {
+            console.log('[Background] Using proxy:', proxyUrl);
+          }
+          var result = await updateAhrefsMetrics(
+            supabase,
+            apifyToken,
+            batchSize,
+            limitDirectories,
+            proxyUrl,
+          );
+          console.log('[Background] SEO data update completed:', result);
+        } catch (error) {
+          console.error('[Background] Error processing SEO data update:', error);
+        }
+      })()
     );
 
-    return new Response(JSON.stringify(result), {
+    return new Response(JSON.stringify({
+      success: true,
+      message: "SEO data update task started in background",
+      batchSize: batchSize,
+      limit: limitDirectories,
+      proxyUrl: proxyUrl ? "configured" : "none",
+    }), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
