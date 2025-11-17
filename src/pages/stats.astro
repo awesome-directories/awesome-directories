@@ -1,0 +1,269 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { supabase } from "@/lib/supabase-server";
+import GitHubStats from "@/components/GitHubStats.vue";
+import "@/style.css";
+
+const title = "Public Stats - Awesome Directories";
+const description = "View statistics and insights about directories in our curated collection";
+
+// Fetch all active directories at build time
+let directories = [];
+let stats = {
+  totalDirectories: 0,
+  withDR: 0,
+  dofollowCount: 0,
+  freeCount: 0,
+};
+let topDirectories = [];
+let lastUpdated = "Unknown";
+
+if (supabase) {
+  try {
+    const { data, error } = await supabase
+      .from("directories")
+      .select("*")
+      .eq("is_active", true)
+      .order("helpful_count", { ascending: false, nullsFirst: false });
+
+    if (!error && data) {
+      directories = data;
+
+      // Calculate stats
+      stats = {
+        totalDirectories: directories.length,
+        withDR: directories.filter((d) => d.domain_rating).length,
+        dofollowCount: directories.filter((d) => d.is_dofollow).length,
+        freeCount: directories.filter((d) => d.pricing_type === "free").length,
+      };
+
+      // Get top 10 most helpful
+      topDirectories = directories
+        .sort((a, b) => (b.helpful_count || 0) - (a.helpful_count || 0))
+        .slice(0, 10);
+
+      // Calculate last updated
+      const dates = directories
+        .map((d) => d.updated_at)
+        .filter(Boolean)
+        .map((d) => new Date(d));
+
+      if (dates.length > 0) {
+        const latest = new Date(Math.max(...dates));
+        const daysAgo = Math.floor(
+          (Date.now() - latest.getTime()) / (1000 * 60 * 60 * 24)
+        );
+
+        if (daysAgo === 0) lastUpdated = "Today";
+        else if (daysAgo === 1) lastUpdated = "Yesterday";
+        else lastUpdated = `${daysAgo} days ago`;
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching stats:", error);
+  }
+}
+
+// Calculate category breakdown
+const categoryBreakdown = directories.reduce((acc, dir) => {
+  if (dir.categories) {
+    dir.categories.forEach((cat) => {
+      acc[cat] = (acc[cat] || 0) + 1;
+    });
+  }
+  return acc;
+}, {} as Record<string, number>);
+
+const topCategories = Object.entries(categoryBreakdown)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 10);
+
+// Calculate pricing breakdown
+const pricingBreakdown = {
+  free: directories.filter((d) => d.pricing_type === "free").length,
+  freemium: directories.filter((d) => d.pricing_type === "freemium").length,
+  paid: directories.filter((d) => d.pricing_type === "paid").length,
+};
+
+// Calculate DR distribution
+const drDistribution = {
+  "80+": directories.filter((d) => d.domain_rating >= 80).length,
+  "70-79": directories.filter((d) => d.domain_rating >= 70 && d.domain_rating < 80).length,
+  "60-69": directories.filter((d) => d.domain_rating >= 60 && d.domain_rating < 70).length,
+  "<60": directories.filter((d) => d.domain_rating > 0 && d.domain_rating < 60).length,
+  "No DR": directories.filter((d) => !d.domain_rating).length,
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Public Stats</h1>
+        <p class="text-xl text-gray-600">
+          Insights and statistics about our directory collection
+        </p>
+      </div>
+
+      <!-- Key Metrics -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="card p-6">
+          <div class="text-3xl font-bold text-primary mb-2">
+            {stats.totalDirectories}
+          </div>
+          <div class="text-gray-600">Total Directories</div>
+        </div>
+
+        <div class="card p-6">
+          <div class="text-3xl font-bold text-primary mb-2">
+            {stats.withDR}
+          </div>
+          <div class="text-gray-600">With DR Ratings</div>
+        </div>
+
+        <div class="card p-6">
+          <div class="text-3xl font-bold text-primary mb-2">
+            {stats.dofollowCount}
+          </div>
+          <div class="text-gray-600">Dofollow Links</div>
+        </div>
+
+        <div class="card p-6">
+          <div class="text-3xl font-bold text-primary mb-2">
+            {stats.freeCount}
+          </div>
+          <div class="text-gray-600">Free to Submit</div>
+        </div>
+      </div>
+
+      <!-- Last Updated -->
+      <div class="card p-8 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Last Updated</h2>
+        <p class="text-gray-700">
+          <strong>{lastUpdated}</strong>
+        </p>
+        <p class="text-sm text-gray-500 mt-2">
+          Directory ratings are updated weekly via automated GitHub Actions
+        </p>
+      </div>
+
+      <!-- Top Directories -->
+      <div class="card p-8 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+          Most Helpful Directories
+        </h2>
+        <div class="space-y-4">
+          {topDirectories.map((dir) => (
+            <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+              <a
+                href={`/directory/${dir.slug}`}
+                class="text-lg font-medium text-gray-900 hover:text-primary"
+              >
+                {dir.name}
+              </a>
+              <div class="flex items-center space-x-4">
+                {dir.domain_rating && (
+                  <span class="badge-green">DR: {dir.domain_rating}</span>
+                )}
+                <span class="text-gray-600">👍 {dir.helpful_count || 0}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Category Breakdown -->
+      <div class="card p-8 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+          Top Categories
+        </h2>
+        <div class="space-y-3">
+          {topCategories.map(([category, count]) => (
+            <div class="flex items-center justify-between">
+              <span class="text-gray-900">{category}</span>
+              <div class="flex items-center space-x-3">
+                <div class="flex-1 h-2 bg-gray-200 rounded-full w-32">
+                  <div
+                    class="h-2 bg-primary rounded-full"
+                    style={`width: ${(count / stats.totalDirectories) * 100}%`}
+                  ></div>
+                </div>
+                <span class="text-gray-600 text-sm font-medium w-8 text-right">
+                  {count}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Pricing Breakdown -->
+      <div class="card p-8 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+          Pricing Distribution
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-green-600 mb-2">
+              {pricingBreakdown.free}
+            </div>
+            <div class="text-gray-600">Free</div>
+            <div class="text-sm text-gray-500">
+              {Math.round((pricingBreakdown.free / stats.totalDirectories) * 100)}%
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-600 mb-2">
+              {pricingBreakdown.freemium}
+            </div>
+            <div class="text-gray-600">Freemium</div>
+            <div class="text-sm text-gray-500">
+              {Math.round((pricingBreakdown.freemium / stats.totalDirectories) * 100)}%
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-orange-600 mb-2">
+              {pricingBreakdown.paid}
+            </div>
+            <div class="text-gray-600">Paid</div>
+            <div class="text-sm text-gray-500">
+              {Math.round((pricingBreakdown.paid / stats.totalDirectories) * 100)}%
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DR Distribution -->
+      <div class="card p-8 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+          Domain Rating Distribution
+        </h2>
+        <div class="space-y-3">
+          {Object.entries(drDistribution).map(([range, count]) => (
+            <div class="flex items-center justify-between">
+              <span class="text-gray-900 font-medium">{range}</span>
+              <div class="flex items-center space-x-3">
+                <div class="flex-1 h-2 bg-gray-200 rounded-full w-32">
+                  <div
+                    class="h-2 bg-primary rounded-full"
+                    style={`width: ${(count / stats.totalDirectories) * 100}%`}
+                  ></div>
+                </div>
+                <span class="text-gray-600 text-sm font-medium w-8 text-right">
+                  {count}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- GitHub Stats (Client-side) -->
+      <div class="card p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">GitHub Stats</h2>
+        <GitHubStats client:load />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
