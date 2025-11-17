@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getServerSession } from "@/lib/getServerSession";
 import DirectorySubmissionForm from "@/components/DirectorySubmissionForm.vue";
+import AuthModal from "@/components/AuthModal.vue";
 import "@/style.css";
 
 // Check authentication on server-side
@@ -37,6 +38,8 @@ const description = "Help the community by contributing high-quality directories
           >
             Sign In to Submit
           </button>
+          <!-- Auth Modal Container -->
+          <div id="auth-modal-container"></div>
         </div>
       ) : (
         <!-- Submission Form (client-side Vue component) -->
@@ -49,12 +52,30 @@ const description = "Help the community by contributing high-quality directories
   </div>
 
   <script>
-    // Handle auth modal trigger (will be implemented in Phase 6)
+    import { createApp } from 'vue';
+    import AuthModal from '@/components/AuthModal.vue';
+
+    // Handle auth modal trigger
     const authButton = document.getElementById('show-auth-modal');
-    if (authButton) {
+    const modalContainer = document.getElementById('auth-modal-container');
+
+    if (authButton && modalContainer) {
+      let modalApp = null;
+
       authButton.addEventListener('click', () => {
-        alert('Auth modal will be implemented in Phase 6. For now, please sign in from another page.');
-        window.location.href = '/';
+        // Create and mount the modal
+        modalApp = createApp(AuthModal, {
+          onClose: () => {
+            // Unmount and remove the modal
+            if (modalApp) {
+              modalApp.unmount();
+              modalApp = null;
+              modalContainer.innerHTML = '';
+            }
+          }
+        });
+
+        modalApp.mount(modalContainer);
       });
     }
   </script>

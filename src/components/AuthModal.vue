@@ -113,15 +113,14 @@
 
 <script setup>
 import { ref } from "vue";
-import { useAuth } from "@/composables/useAuth";
+import { supabase } from "@/lib/supabase-client";
+import { $user, $session } from "@/stores/auth";
 
-const { signInWithGoogle, signInWithGithub } = useAuth();
+const isLoading = ref(false);
+const errorMessage = ref("");
+const activeProvider = ref("");
 
-var isLoading = ref(false);
-var errorMessage = ref("");
-var activeProvider = ref("");
-
-var emit = defineEmits(["close"]);
+const emit = defineEmits(["close"]);
 
 function handleClose() {
   emit("close");
@@ -133,14 +132,28 @@ async function handleGoogleSignIn() {
   errorMessage.value = "";
 
   try {
-    await signInWithGoogle();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+
+    if (error) throw error;
+
+    // Track in analytics
+    if (window.pirsch) {
+      window.pirsch("User Sign In", {
+        provider: "google",
+      });
+    }
   } catch (error) {
     errorMessage.value = "Failed to sign in with Google. Please try again.";
     console.error("Google sign in error:", error);
-  } finally {
     isLoading.value = false;
     activeProvider.value = "";
   }
+  // Note: Don't set loading to false here - page will redirect
 }
 
 async function handleGithubSignIn() {
@@ -149,13 +162,27 @@ async function handleGithubSignIn() {
   errorMessage.value = "";
 
   try {
-    await signInWithGithub();
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+
+    if (error) throw error;
+
+    // Track in analytics
+    if (window.pirsch) {
+      window.pirsch("User Sign In", {
+        provider: "github",
+      });
+    }
   } catch (error) {
     errorMessage.value = "Failed to sign in with GitHub. Please try again.";
     console.error("GitHub sign in error:", error);
-  } finally {
     isLoading.value = false;
     activeProvider.value = "";
   }
+  // Note: Don't set loading to false here - page will redirect
 }
 </script>
