@@ -53,5 +53,3 @@ export function getUserId(user) {
 export function getUserEmail(user) {
   return user?.email || null;
 }
-
-

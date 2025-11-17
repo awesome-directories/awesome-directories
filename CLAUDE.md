@@ -624,6 +624,7 @@ import AppFooter from '@/components/AppFooter.astro';
 ### Adding a New Directory
 
 **Option 1: Via User Submission (Recommended)**
+
 1. Use the `/submit` page to submit a directory
 2. Directory appears in `pending_directories` table with status 'pending'
 3. Admin reviews and approves via Supabase dashboard
@@ -631,6 +632,7 @@ import AppFooter from '@/components/AppFooter.astro';
 5. Site rebuild required to reflect changes
 
 **Option 2: Direct Database Insert**
+
 1. Update `supabase/seeds/directories.json`
 2. Run seed script or manually insert via Supabase SQL Editor
 3. Verify on dev/staging before deploying
@@ -652,17 +654,20 @@ Directory detail pages are generated statically:
 ### Managing User Features
 
 **Favorites:**
+
 - User clicks favorite button → stored in `user_favorites` table
 - View all favorites at `/favorites`
 - Managed via `useDirectory.js` composable
 
 **Submissions Tracking:**
+
 - User tracks which directories they've submitted to
 - Stored in `user_submissions` table
 - Status: pending, submitted, approved, rejected
 - View and manage at `/submissions`
 
 **Directory Submission:**
+
 - Users submit new directories via `/submit`
 - Stored in `pending_directories` table
 - Admin reviews in Supabase dashboard
@@ -806,6 +811,7 @@ supabase db push
 ### Testing Checklist
 
 **Build & Basic Functionality:**
+
 - [ ] Build succeeds without errors (`bun run build`)
 - [ ] Preview works locally (`bun run preview`)
 - [ ] All pages load correctly (/, /about, /terms, /privacy, /404)
@@ -816,6 +822,7 @@ supabase db push
 - [ ] Lighthouse score > 90 (Performance, SEO, Accessibility)
 
 **Directory Detail Pages:**
+
 - [ ] All directory detail pages generate correctly
 - [ ] Related directories show up based on categories
 - [ ] Breadcrumb navigation works
@@ -823,12 +830,14 @@ supabase db push
 - [ ] Social sharing metadata (OG, Twitter) is correct
 
 **Authentication & Protected Pages:**
+
 - [ ] OAuth sign-in works (Google & GitHub)
 - [ ] Auth state persists across page reloads
 - [ ] Protected pages redirect to auth when not logged in
 - [ ] Sign out works correctly
 
 **User Features:**
+
 - [ ] Favorite button toggles correctly
 - [ ] Favorites page shows user's saved directories
 - [ ] Submission tracker works and saves status
@@ -836,6 +845,7 @@ supabase db push
 - [ ] Helpful voting works (anonymous and authenticated)
 
 **Database & State:**
+
 - [ ] Favorites sync with `user_favorites` table
 - [ ] Submissions sync with `user_submissions` table
 - [ ] Pending directories appear in `pending_directories` table

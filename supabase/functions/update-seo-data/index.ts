@@ -2,13 +2,13 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { updateAhrefsMetrics } from "./ahrefs.ts";
 
-addEventListener('unhandledrejection', function handleUnhandledRejection(ev) {
-  console.error('unhandledrejection', ev.reason);
+addEventListener("unhandledrejection", function handleUnhandledRejection(ev) {
+  console.error("unhandledrejection", ev.reason);
   ev.preventDefault();
 });
 
-addEventListener('beforeunload', function handleBeforeUnload(ev) {
-  console.log('Function will be shutdown due to', ev.detail?.reason);
+addEventListener("beforeunload", function handleBeforeUnload(ev) {
+  console.log("Function will be shutdown due to", ev.detail?.reason);
 });
 
 serve(async function handleRequest(req) {
@@ -73,9 +73,9 @@ serve(async function handleRequest(req) {
     EdgeRuntime.waitUntil(
       (async function processBackgroundTask() {
         try {
-          console.log('[Background] Starting SEO data update task');
+          console.log("[Background] Starting SEO data update task");
           if (proxyUrl) {
-            console.log('[Background] Using proxy:', proxyUrl);
+            console.log("[Background] Using proxy:", proxyUrl);
           }
           var result = await updateAhrefsMetrics(
             supabase,
@@ -84,22 +84,28 @@ serve(async function handleRequest(req) {
             limitDirectories,
             proxyUrl,
           );
-          console.log('[Background] SEO data update completed:', result);
+          console.log("[Background] SEO data update completed:", result);
         } catch (error) {
-          console.error('[Background] Error processing SEO data update:', error);
+          console.error(
+            "[Background] Error processing SEO data update:",
+            error,
+          );
         }
-      })()
+      })(),
     );
 
-    return new Response(JSON.stringify({
-      success: true,
-      message: "SEO data update task started in background",
-      batchSize: batchSize,
-      limit: limitDirectories,
-      proxyUrl: proxyUrl ? "configured" : "none",
-    }), {
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: "SEO data update task started in background",
+        batchSize: batchSize,
+        limit: limitDirectories,
+        proxyUrl: proxyUrl ? "configured" : "none",
+      }),
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   } catch (error) {
     console.error("Error in update-seo-data function:", error);
     return new Response(

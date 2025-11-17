@@ -23,6 +23,10 @@ export default defineConfig({
       HTML: {
         "html-minifier-terser": {
           removeAttributeQuotes: false,
+          collapseWhitespace: true,
+          removeComments: true,
+          minifyCSS: true,
+          minifyJS: true,
         },
       },
       Image: false, // Disable image compression as we're using sharp
@@ -44,14 +48,15 @@ export default defineConfig({
       outDir: "dist",
       assetsDir: "assets",
       sourcemap: false,
-      chunkSizeWarningLimit: 600,
+      chunkSizeWarningLimit: 500,
       minify: "terser",
       terserOptions: {
         compress: {
           drop_console: true,
           drop_debugger: true,
           pure_funcs: ["console.log", "console.info", "console.debug"],
-          passes: 2,
+          passes: 3,
+          ecma: 2020,
         },
         mangle: {
           safari10: true,
@@ -85,6 +90,9 @@ export default defineConfig({
               if (id.includes("nanostores")) {
                 return "nanostores";
               }
+              if (id.includes("vue")) {
+                return "vue";
+              }
               return "vendor";
             }
           },
@@ -100,5 +108,12 @@ export default defineConfig({
         ],
       },
     },
+
+    optimizeDeps: {
+      include: ["vue", "@supabase/supabase-js"],
+    },
   },
+
+  compressHTML: true,
+  scopedStyleStrategy: "class",
 });

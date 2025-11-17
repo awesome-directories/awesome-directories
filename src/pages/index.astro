@@ -95,12 +95,12 @@ var structuredData = [
             <div class="text-3xl font-bold">{totalCount}+</div>
             <div class="text-sm text-blue-100">Curated Directories</div>
           </div>
-          <div class="hidden sm:block text-blue-200">•</div>
+          <div class="hidden sm:block text-blue-200" aria-hidden="true">•</div>
           <div class="text-center">
             <div class="text-3xl font-bold">{drCount}+</div>
             <div class="text-sm text-blue-100">With DR Ratings</div>
           </div>
-          <div class="hidden sm:block text-blue-200">•</div>
+          <div class="hidden sm:block text-blue-200" aria-hidden="true">•</div>
           <div class="text-center">
             <div class="text-3xl font-bold">Open Source</div>
             <div class="text-sm text-blue-100">Apache 2.0 License ❤️</div>
@@ -108,19 +108,22 @@ var structuredData = [
         </div>
 
         <div class="max-w-2xl mx-auto">
+          <label for="search-input" class="sr-only">Search directories</label>
           <div class="relative">
             <input
               id="search-input"
-              type="text"
+              type="search"
               placeholder="Search directories... (e.g., 'Product Hunt', 'reddit', 'dev tools')"
               class="w-full px-6 py-4 pr-12 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg"
               aria-label="Search directories"
+              autocomplete="off"
             />
             <svg
-              class="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400"
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400 pointer-events-none"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 stroke-linecap="round"
@@ -130,7 +133,7 @@ var structuredData = [
             </svg>
             <button
               id="clear-search"
-              class="hidden absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              class="hidden absolute right-12 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300 rounded"
               aria-label="Clear search"
             >
               <svg

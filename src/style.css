@@ -20,6 +20,60 @@
     @apply bg-gray-50 text-gray-900;
     font-family: var(--font-family-sans);
   }
+
+  :root {
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .link-style {
+    color: #1e40af;
+    text-decoration: underline;
+    text-decoration-color: #1e40af;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+  }
+
+  .link-style:hover {
+    color: #1e3a8a;
+    text-decoration-color: #1e3a8a;
+  }
+
+  .link-style:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  select {
+    min-height: 44px;
+    padding: 0.5rem;
+  }
+
+  button {
+    min-height: 44px;
+  }
+
+  input[type="search"] {
+    min-height: 44px;
+  }
+
+  .text-gray-600 {
+    color: #4b5563;
+  }
+
+  .text-gray-500 {
+    color: #6b7280;
+  }
+
+  .bg-gray-50 {
+    background-color: #f9fafb;
+  }
 }
 
 @layer components {
