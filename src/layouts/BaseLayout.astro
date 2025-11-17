@@ -1,5 +1,6 @@
 ---
 import '@/style.css';
+import AuthModalWrapper from '@/components/AuthModalWrapper.vue';
 
 interface Props {
   title?: string;
@@ -164,5 +165,7 @@ const twitterHandle = '@awesome_dirs';
   </head>
   <body>
     <slot />
+    <!-- Global Auth Modal -->
+    <AuthModalWrapper client:load />
   </body>
 </html>

@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppHeader from '@/components/AppHeader.astro';
 import AppFooter from '@/components/AppFooter.astro';
+import DirectoryDetailActions from '@/components/DirectoryDetailActions.vue';
 import { getAllDirectories } from '@/lib/data/directories.js';
 import log from '@/lib/logger.js';
 import '@/style.css';
@@ -159,7 +160,10 @@ const structuredData = [
     </nav>
 
     <!-- Directory Detail Section -->
-    <article class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" itemscope itemtype="https://schema.org/Product">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Content (Left Column) -->
+        <article class="lg:col-span-2" itemscope itemtype="https://schema.org/Product">
       <!-- Header with Logo and Title -->
       <header class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6">
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
@@ -277,19 +281,20 @@ const structuredData = [
         </section>
       )}
 
-      <!-- Helpful Count -->
-      {directory.helpful_count > 0 && (
-        <section class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6" aria-labelledby="community-heading">
-          <h2 id="community-heading" class="text-xl font-bold text-gray-900 mb-4">Community Feedback</h2>
-          <div class="flex items-center gap-2">
-            <span class="text-2xl">👍</span>
-            <span class="text-gray-700">
-              <strong>{directory.helpful_count}</strong> {directory.helpful_count === 1 ? 'person found' : 'people found'} this directory helpful
-            </span>
+        </article>
+
+        <!-- Actions Sidebar (Right Column) -->
+        <aside class="lg:col-span-1">
+          <div class="sticky top-24">
+            <DirectoryDetailActions
+              client:load
+              directoryId={directory.id}
+              helpfulCount={directory.helpful_count || 0}
+            />
           </div>
-        </section>
-      )}
-    </article>
+        </aside>
+      </div>
+    </div>
 
     <!-- Related Directories -->
     {relatedDirectories.length > 0 && (
