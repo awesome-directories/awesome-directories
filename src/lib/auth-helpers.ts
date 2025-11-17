@@ -6,27 +6,48 @@ import type { APIContext } from "astro";
  * Verifies JWT tokens from Supabase Auth
  */
 
-const supabaseUrl =
-  import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey =
-  import.meta.env.PUBLIC_SUPABASE_ANON_KEY ||
-  import.meta.env.VITE_SUPABASE_ANON_KEY;
+let supabaseAdminInstance: ReturnType<typeof createClient> | null = null;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    "Missing Supabase environment variables. Required: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY"
-  );
+/**
+ * Get or create Supabase admin client for API routes
+ * Lazy initialization to avoid build-time errors when env vars are not available
+ */
+function getSupabaseAdmin() {
+  if (supabaseAdminInstance) {
+    return supabaseAdminInstance;
+  }
+
+  const supabaseUrl =
+    import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey =
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY ||
+    import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error(
+      "Missing Supabase environment variables. Required: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY"
+    );
+  }
+
+  supabaseAdminInstance = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+      detectSessionInUrl: false,
+    },
+  });
+
+  return supabaseAdminInstance;
 }
 
 /**
- * Create Supabase client for API routes
- * This client can verify JWTs and perform server-side operations
+ * Export supabaseAdmin using a getter to ensure lazy initialization
+ * This prevents build-time errors when environment variables are not available
  */
-export const supabaseAdmin = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-    detectSessionInUrl: false,
+export const supabaseAdmin = new Proxy({} as ReturnType<typeof createClient>, {
+  get(_target, prop) {
+    const client = getSupabaseAdmin();
+    return (client as any)[prop];
   },
 });
 
@@ -47,6 +68,7 @@ export async function getAuthenticatedUser(context: APIContext) {
   const token = authHeader.replace("Bearer ", "");
 
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const {
       data: { user },
       error,

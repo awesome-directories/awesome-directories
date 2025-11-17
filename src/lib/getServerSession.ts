@@ -6,16 +6,28 @@ import type { AstroCookies } from "astro";
  * Reads auth session from cookies for SSR
  */
 
-const supabaseUrl =
-  import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey =
-  import.meta.env.PUBLIC_SUPABASE_ANON_KEY ||
-  import.meta.env.VITE_SUPABASE_ANON_KEY;
+/**
+ * Get Supabase URL and key from environment variables
+ * Throws error only when actually called, not at module load time
+ */
+function getSupabaseConfig() {
+  const supabaseUrl =
+    import.meta.env.PUBLIC_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey =
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY ||
+    import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    "Missing Supabase environment variables. Required: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY"
-  );
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error(
+      "Missing Supabase environment variables. Please check your configuration."
+    );
+    console.error("Required: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY");
+    throw new Error(
+      "Missing Supabase environment variables. Required: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY"
+    );
+  }
+
+  return { supabaseUrl, supabaseAnonKey };
 }
 
 /**
@@ -35,6 +47,9 @@ export async function getServerSession(cookies: AstroCookies) {
   }
 
   try {
+    // Get Supabase config (lazy initialization)
+    const { supabaseUrl, supabaseAnonKey } = getSupabaseConfig();
+
     // Create a Supabase client for this request
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {

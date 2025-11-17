@@ -19,7 +19,12 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// Use placeholder values during build if env vars are missing
+// These will be replaced with actual values in the browser at runtime
+const buildUrl = supabaseUrl || "https://placeholder.supabase.co";
+const buildKey = supabaseAnonKey || "placeholder-key";
+
+export const supabase = createClient(buildUrl, buildKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
