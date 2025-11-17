@@ -97,12 +97,12 @@
         </button>
       </div>
 
-      <router-link
-        :to="`/directory/${directory.slug}`"
-        class="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
+      <a
+        :href="`/directory/${directory.slug}`"
+        class="text-sm font-medium text-primary hover:text-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
       >
         View Details →
-      </router-link>
+      </a>
     </div>
   </div>
 </template>
