@@ -1,0 +1,61 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getServerSession } from "@/lib/getServerSession";
+import DirectorySubmissionForm from "@/components/DirectorySubmissionForm.vue";
+import "@/style.css";
+
+// Check authentication on server-side
+const session = await getServerSession(Astro.cookies);
+const isAuthenticated = session !== null;
+const user = session?.user || null;
+
+const title = "Submit a Directory - Awesome Directories";
+const description = "Help the community by contributing high-quality directories to Awesome Directories";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Submit a Directory</h1>
+      <p class="text-xl text-gray-600 mb-8">
+        Help the community by contributing high-quality directories
+      </p>
+
+      {!isAuthenticated ? (
+        <!-- Auth Required Message -->
+        <div class="card p-8 text-center">
+          <div class="text-6xl mb-4">🔐</div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">
+            Authentication Required
+          </h2>
+          <p class="text-gray-600 mb-6">
+            Please sign in to submit a directory for review
+          </p>
+          <button
+            id="show-auth-modal"
+            class="btn-primary"
+          >
+            Sign In to Submit
+          </button>
+        </div>
+      ) : (
+        <!-- Submission Form (client-side Vue component) -->
+        <DirectorySubmissionForm
+          userEmail={user.email}
+          client:load
+        />
+      )}
+    </div>
+  </div>
+
+  <script>
+    // Handle auth modal trigger (will be implemented in Phase 6)
+    const authButton = document.getElementById('show-auth-modal');
+    if (authButton) {
+      authButton.addEventListener('click', () => {
+        alert('Auth modal will be implemented in Phase 6. For now, please sign in from another page.');
+        window.location.href = '/';
+      });
+    }
+  </script>
+</BaseLayout>

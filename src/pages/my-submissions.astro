@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getServerSession } from "@/lib/getServerSession";
+import PendingSubmissionsList from "@/components/PendingSubmissionsList.vue";
+import "@/style.css";
+
+// Check authentication on server-side
+const session = await getServerSession(Astro.cookies);
+const isAuthenticated = session !== null;
+
+// Redirect to home if not authenticated
+if (!isAuthenticated) {
+  return Astro.redirect("/");
+}
+
+const title = "My Submissions - Awesome Directories";
+const description = "View and manage your directory submissions";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+          My Directory Submissions
+        </h1>
+        <p class="text-xl text-gray-600">
+          Track the status of your submitted directories
+        </p>
+      </div>
+
+      <!-- Pending Submissions List -->
+      <PendingSubmissionsList client:load />
+
+      <!-- Help Section -->
+      <div class="mt-12 card p-6 bg-blue-50 border-blue-200">
+        <h3 class="font-semibold text-gray-900 mb-2">About Submission Status</h3>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li><strong>Pending:</strong> Your submission is in the review queue</li>
+          <li><strong>Approved:</strong> Your directory has been approved and will appear on the site after the next build</li>
+          <li><strong>Rejected:</strong> Your submission did not meet our criteria. Check admin notes for details</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
