@@ -14,7 +14,9 @@
 
 - Curated, verified directories updated weekly
 - Advanced filtering by Domain Rating (DR), category, pricing, and link type
-- Submission tracking and favorites management (planned/in development)
+- User authentication with favorites and submission tracking (implemented)
+- Directory detail pages with related directories and voting
+- User directory submission system with review workflow
 - Automated SEO metrics updates via Ahrefs API and Supabase Edge Functions
 
 ## Technology Stack
@@ -78,7 +80,12 @@
 │   │   ├── about.astro            # About page
 │   │   ├── terms.astro            # Terms of Service
 │   │   ├── privacy.astro          # Privacy Policy
-│   │   └── 404.astro              # 404 error page
+│   │   ├── favorites.astro        # User favorites page (auth required)
+│   │   ├── submissions.astro      # User submissions tracker (auth required)
+│   │   ├── submit.astro           # Submit new directory form (auth required)
+│   │   ├── 404.astro              # 404 error page
+│   │   └── directory/
+│   │       └── [slug].astro       # Dynamic directory detail pages
 │   ├── layouts/
 │   │   └── BaseLayout.astro       # Base HTML layout with SEO
 │   ├── components/
@@ -87,16 +94,25 @@
 │   │   ├── Logo.astro             # Logo component
 │   │   ├── DirectoryCard.vue      # Directory item (Vue island)
 │   │   ├── DirectoryFilter.vue    # Filters sidebar (Vue island)
+│   │   ├── DirectoryListContent.vue # Main directory listing (Vue island)
+│   │   ├── DirectoryDetailActions.vue # Favorite/vote actions on detail page
 │   │   ├── AuthModal.vue          # OAuth modal (Vue island)
+│   │   ├── AuthModalWrapper.vue   # Auth modal wrapper component
 │   │   ├── ChecklistModal.vue     # Export modal (Vue island)
+│   │   ├── FavoriteButton.vue     # Favorite button component
+│   │   ├── FavoritesContent.vue   # Favorites page content
+│   │   ├── SubmissionsContent.vue # Submissions tracker content
+│   │   ├── SubmitDirectoryForm.vue # Directory submission form
 │   │   └── GithubStars.vue        # GitHub stars badge (Vue island)
 │   ├── composables/                # Vue Composition API logic
 │   │   ├── useAuth.js             # Authentication (client-side)
 │   │   ├── useDirectories.js      # Data filtering (client-side)
+│   │   ├── useDirectory.js        # Single directory operations (favorite, vote)
 │   │   └── useMauticNewsletter.js # Newsletter subscription
 │   ├── lib/
 │   │   ├── supabase-server.js     # Supabase client (build-time)
 │   │   ├── supabase-client.js     # Supabase client (runtime)
+│   │   ├── supabase.js            # Shared Supabase utilities
 │   │   ├── logger.js              # Logging utility
 │   │   ├── httpclient.js          # HTTP client wrapper
 │   │   └── data/
@@ -105,14 +121,27 @@
 │   │   └── auth.js                # Nanostores for auth state
 │   ├── integrations/
 │   │   └── save-directories.js    # Astro integration to save data
-│   ├── router/index.js            # Legacy Vue Router (may be removed)
+│   ├── utils/
+│   │   └── auth.js                # Authentication utilities
+│   ├── views/                      # Legacy Vue SPA views (from migration)
+│   │   ├── HomeView.vue           # Legacy home view
+│   │   ├── AboutView.vue          # Legacy about view
+│   │   ├── DirectoryDetailView.vue # Legacy detail view
+│   │   ├── FavoritesView.vue      # Legacy favorites view
+│   │   ├── SubmissionsView.vue    # Legacy submissions view
+│   │   ├── SubmitView.vue         # Legacy submit view
+│   │   └── StatsView.vue          # Legacy stats view
+│   ├── router/index.js            # Legacy Vue Router (from migration, not used)
 │   ├── env.d.ts                   # TypeScript environment types
 │   └── style.css                  # Global Tailwind imports
 ├── supabase/
 │   ├── config.toml                # Supabase project config
 │   ├── migrations/
-│   │   ├── 001_initial_schema.sql
-│   │   └── 002_pending_directories.sql
+│   │   ├── 001_initial_schema.sql # Core schema (directories, votes, favorites, etc.)
+│   │   ├── 002_pending_directories.sql # User directory submissions
+│   │   ├── 003_add_moz_metrics.sql # Moz API integration fields
+│   │   ├── 004_setup_cron_jobs.sql # pg_cron for automated updates
+│   │   └── 005_setup_http_extension.sql # HTTP extension for webhooks
 │   ├── seeds/
 │   │   ├── directories.sql        # SQL seed data
 │   │   └── directories.json       # JSON seed data
@@ -212,21 +241,36 @@ FUNCTION_SECRET=<optional-secret>  # For function authentication
    - Engagement: helpful_count, view_count
    - Status tracking and timestamps
    - SEO fields: domain_rating, organic_traffic, organic_keywords
+   - Metadata: is_affiliate, affiliate_url, github_pr_number, added_by
 
 2. **directory_votes**
    - IP-based voting for "helpful" clicks
    - One vote per IP per directory
+   - Supports both authenticated and anonymous voting
+   - Auto-increments/decrements helpful_count via triggers
 
-3. **user_favorites** (planned/optional)
-   - User-specific saved directories
-   - Requires authentication
+3. **user_favorites**
+   - User-specific saved directories (auth required)
+   - One-to-many relationship: user → directories
+   - Unique constraint per user/directory pair
 
-4. **user_submissions** (planned/optional)
-   - Track user submission status (pending/submitted/approved/rejected)
-   - Personal notes field
+4. **user_submissions**
+   - Track user submission status per directory
+   - Status: pending, submitted, approved, rejected
+   - Personal notes field for tracking
+   - Unique constraint per user/directory pair
 
-5. **newsletter_signups** (optional)
+5. **pending_directories**
+   - User-submitted directories awaiting admin review
+   - Full directory information (name, URL, description, categories, etc.)
+   - Review workflow: pending → approved/rejected
+   - Admin notes and reviewer tracking
+   - Unique constraint per user/URL to prevent duplicates
+
+6. **newsletter_signups**
    - Email capture with Mautic integration
+   - Tracks subscription/unsubscription status
+   - Mautic contact ID for synchronization
 
 ### Key Indexes
 
@@ -309,7 +353,7 @@ Client-side data filtering and search:
 - Sorting: Most Helpful, Highest DR, Newest, Alphabetical
 - Client-side pagination
 
-### useAuth.js (Optional)
+### useAuth.js
 
 Manages authentication state:
 
@@ -317,6 +361,18 @@ Manages authentication state:
 - Methods: `signInWithGoogle()`, `signInWithGithub()`, `signOut()`, `refreshSession()`
 - Auto-refresh token and persistent session
 - Auth state change listener
+- Used by protected pages (favorites, submissions, submit)
+
+### useDirectory.js
+
+Single directory operations and state management:
+
+- Methods: `toggleFavorite()`, `toggleHelpful()`, `checkFavoriteStatus()`, `checkVoteStatus()`
+- Manages user interactions with individual directories
+- Handles favorite/unfavorite actions with optimistic updates
+- IP-based voting for anonymous users
+- User-based voting for authenticated users
+- Real-time state synchronization with Supabase
 
 ### useMauticNewsletter.js (Optional)
 
@@ -333,13 +389,28 @@ Newsletter subscription to Mautic CRM:
 - `/about` - About page (about.astro)
 - `/terms` - Terms of Service (terms.astro)
 - `/privacy` - Privacy Policy (privacy.astro)
+- `/favorites` - User favorites page (favorites.astro) - requires authentication
+- `/submissions` - User submissions tracker (submissions.astro) - requires authentication
+- `/submit` - Submit new directory form (submit.astro) - requires authentication
+- `/directory/[slug]` - Dynamic directory detail pages (directory/[slug].astro)
+  - Generated statically at build time via `getStaticPaths()`
+  - Includes SEO metrics, related directories, and user actions
+  - Breadcrumb navigation and structured data
 - `/404` - 404 error page (404.astro)
 
-**Note**: Directory detail pages, favorites, and submissions are planned features. Current implementation focuses on the directory listing and filtering.
+### Dynamic Route Generation
+
+The `/directory/[slug]` route uses Astro's static path generation:
+
+- All directory pages are pre-rendered at build time
+- Uses `getStaticPaths()` to fetch all directories from Supabase
+- Each page includes full SEO metadata and structured data (Product schema)
+- Related directories are computed based on shared categories
+- Supports social sharing with OpenGraph and Twitter Cards
 
 ### Legacy Vue Router
 
-The `src/router/index.js` file may still exist from the Vue.js migration but is likely not used in the Astro build. Astro uses file-based routing instead.
+The `src/router/index.js` file still exists from the Vue.js migration but is **not used** in the Astro build. Astro uses file-based routing instead. The `src/views/` directory contains legacy Vue SPA views that are no longer active but kept for reference during the migration period.
 
 ## Build Configuration
 
@@ -472,6 +543,21 @@ For Supabase Edge Functions:
 - Composables for shared logic
 - Prop validation and TypeScript types where applicable
 
+### Key Vue Island Components
+
+1. **DirectoryListContent.vue** - Main directory listing with filters and search
+2. **DirectoryDetailActions.vue** - Favorite/vote actions on directory detail pages
+3. **FavoritesContent.vue** - User's saved directories with management
+4. **SubmissionsContent.vue** - User's submission tracking dashboard
+5. **SubmitDirectoryForm.vue** - Directory submission form with validation
+6. **FavoriteButton.vue** - Reusable favorite toggle button
+7. **DirectoryFilter.vue** - Advanced filtering sidebar
+8. **DirectoryCard.vue** - Individual directory card component
+9. **AuthModal.vue** / **AuthModalWrapper.vue** - Authentication modals
+10. **ChecklistModal.vue** - Multi-select export functionality
+
+All Vue components use `client:load` directive in Astro pages for client-side hydration.
+
 ### State Management
 
 - **Nanostores** for minimal global state (auth)
@@ -494,12 +580,14 @@ For Supabase Edge Functions:
 - WCAG 2.1 AA accessibility compliance (goal)
 - Semantic HTML structure
 
-### Authentication (Optional)
+### Authentication
 
 - Google & GitHub OAuth via Supabase
 - Session persistence in localStorage
 - Auth state reactivity via nanostores
-- Protected features require auth (favorites, submissions)
+- Protected pages: `/favorites`, `/submissions`, `/submit`
+- Auth utilities in `src/utils/auth.js`
+- Client-side auth checks in Vue components
 
 ## Common Development Tasks
 
@@ -535,10 +623,50 @@ import AppFooter from '@/components/AppFooter.astro';
 
 ### Adding a New Directory
 
+**Option 1: Via User Submission (Recommended)**
+1. Use the `/submit` page to submit a directory
+2. Directory appears in `pending_directories` table with status 'pending'
+3. Admin reviews and approves via Supabase dashboard
+4. Approved directories are moved to `directories` table
+5. Site rebuild required to reflect changes
+
+**Option 2: Direct Database Insert**
 1. Update `supabase/seeds/directories.json`
 2. Run seed script or manually insert via Supabase SQL Editor
 3. Verify on dev/staging before deploying
 4. Rebuild site to reflect changes
+
+### Working with Directory Detail Pages
+
+Directory detail pages are generated statically:
+
+1. Each directory gets its own page at `/directory/{slug}`
+2. Pages are generated at build time via `getStaticPaths()`
+3. To add new fields to detail pages:
+   - Update `src/pages/directory/[slug].astro`
+   - Ensure field is fetched in `getAllDirectories()`
+   - Rebuild to see changes
+4. Related directories use category matching logic
+5. SEO metadata includes Product schema with AggregateRating
+
+### Managing User Features
+
+**Favorites:**
+- User clicks favorite button → stored in `user_favorites` table
+- View all favorites at `/favorites`
+- Managed via `useDirectory.js` composable
+
+**Submissions Tracking:**
+- User tracks which directories they've submitted to
+- Stored in `user_submissions` table
+- Status: pending, submitted, approved, rejected
+- View and manage at `/submissions`
+
+**Directory Submission:**
+- Users submit new directories via `/submit`
+- Stored in `pending_directories` table
+- Admin reviews in Supabase dashboard
+- On approval, move to `directories` table manually
 
 ### Updating SEO Metrics
 
@@ -667,22 +795,51 @@ supabase db push
 ### Common Pitfalls to Avoid
 
 - ❌ Don't add client-side routing (use Astro file-based)
-- ❌ Don't fetch data in Vue components at runtime (use build-time)
-- ❌ Don't rely on `window` in server-side code
-- ❌ Don't commit environment variables
+- ❌ Don't fetch data in Vue components at runtime for directory listings (use build-time)
+- ❌ Don't rely on `window` in server-side Astro code
+- ❌ Don't commit environment variables or `.env` file
 - ❌ Don't skip accessibility testing
 - ❌ Don't forget to test production builds
+- ❌ Don't forget to rebuild site after database changes (directories are static)
+- ❌ Don't modify legacy `src/views/` or `src/router/` (kept for reference only)
 
 ### Testing Checklist
 
+**Build & Basic Functionality:**
 - [ ] Build succeeds without errors (`bun run build`)
 - [ ] Preview works locally (`bun run preview`)
-- [ ] All pages load correctly
-- [ ] Filters and search work
-- [ ] SEO meta tags are correct
+- [ ] All pages load correctly (/, /about, /terms, /privacy, /404)
+- [ ] Filters and search work on home page
+- [ ] SEO meta tags are correct on all pages
 - [ ] Images load and are optimized
 - [ ] No console errors in production build
 - [ ] Lighthouse score > 90 (Performance, SEO, Accessibility)
+
+**Directory Detail Pages:**
+- [ ] All directory detail pages generate correctly
+- [ ] Related directories show up based on categories
+- [ ] Breadcrumb navigation works
+- [ ] Structured data (Product schema) is present
+- [ ] Social sharing metadata (OG, Twitter) is correct
+
+**Authentication & Protected Pages:**
+- [ ] OAuth sign-in works (Google & GitHub)
+- [ ] Auth state persists across page reloads
+- [ ] Protected pages redirect to auth when not logged in
+- [ ] Sign out works correctly
+
+**User Features:**
+- [ ] Favorite button toggles correctly
+- [ ] Favorites page shows user's saved directories
+- [ ] Submission tracker works and saves status
+- [ ] Directory submission form validates and submits
+- [ ] Helpful voting works (anonymous and authenticated)
+
+**Database & State:**
+- [ ] Favorites sync with `user_favorites` table
+- [ ] Submissions sync with `user_submissions` table
+- [ ] Pending directories appear in `pending_directories` table
+- [ ] Votes increment/decrement `helpful_count` correctly
 
 ### When Making Changes
 
@@ -712,6 +869,75 @@ supabase db push
 
 ---
 
-**Last Updated**: 2025-11-17
+## Recent Updates
+
+### Commit History (Most Recent)
+
+- **9a05666** - feat: finalize auth system with Vue island components (#25)
+  - Completed authentication system implementation
+  - Added protected pages: favorites, submissions, submit
+  - Implemented user directory submission workflow
+
+- **94f3bea** - feat: Add directory details page with build-time generation (#24)
+  - Dynamic directory detail pages with static generation
+  - Related directories based on categories
+  - SEO optimization with Product schema and structured data
+
+- **e74b4fd** - docs: create comprehensive CLAUDE.md for AI assistants (#23)
+  - Initial CLAUDE.md documentation created
+
+- **f5aa55c** - feat: migrate from Vue.js SPA to Astro.js SSG with SEO optimization (#19)
+  - Major architecture migration from Vue SPA to Astro SSG
+  - Improved SEO and performance
+
+### Features Added Since Migration
+
+1. **Authentication System** (Commit 9a05666)
+   - Google & GitHub OAuth
+   - Protected pages with auth checks
+   - Auth utilities and composables
+
+2. **Directory Detail Pages** (Commit 94f3bea)
+   - `/directory/[slug]` dynamic routes
+   - Static generation at build time
+   - Related directories
+   - Breadcrumb navigation
+   - Product schema structured data
+
+3. **User Features** (Commit 9a05666)
+   - Favorites system (`/favorites`)
+   - Submission tracking (`/submissions`)
+   - Directory submission form (`/submit`)
+   - `pending_directories` table for admin review
+
+4. **New Components**
+   - DirectoryListContent, DirectoryDetailActions
+   - FavoritesContent, SubmissionsContent
+   - SubmitDirectoryForm, FavoriteButton
+   - AuthModalWrapper
+
+5. **New Composables**
+   - `useDirectory.js` - Single directory operations
+   - Enhanced `useAuth.js` for protected pages
+
+6. **Database Migrations**
+   - Migration 002: pending_directories table
+   - Migration 003: Moz metrics fields
+   - Migration 004: pg_cron setup
+   - Migration 005: HTTP extension
+
+### Legacy Files
+
+The following files/directories are kept from the Vue.js migration but are no longer used:
+
+- `src/views/` - Legacy Vue SPA views (reference only)
+- `src/router/index.js` - Legacy Vue Router (reference only)
+
+Do not modify these files. They may be removed in a future cleanup.
+
+---
+
+**Last Updated**: 2025-11-17 (Updated with commits through 9a05666)
 **Architecture**: Astro.js SSG with Vue.js Islands
 **Migration**: Completed from Vue.js SPA (commit: f5aa55c)
+**Latest Features**: Auth system, directory details, user submissions (commits 94f3bea, 9a05666)
