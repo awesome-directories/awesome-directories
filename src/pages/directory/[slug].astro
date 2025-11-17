@@ -77,10 +77,13 @@ const structuredData = [
     },
     offers: {
       '@type': 'Offer',
-      price: directory.pricing_type === 'free' ? '0' : directory.pricing_amount || '0',
-      priceCurrency: 'USD',
+      ...(directory.pricing_type === 'free'
+        ? { price: '0', priceCurrency: 'USD' }
+        : directory.pricing_type === 'paid' && directory.pricing_amount
+          ? { price: directory.pricing_amount, priceCurrency: 'USD' }
+          : { priceCurrency: 'USD' }),
       availability: 'https://schema.org/InStock',
-      url: directory.submission_url,
+      url: directory.submission_url || canonicalUrl,
     },
     aggregateRating: directory.helpful_count > 0 ? {
       '@type': 'AggregateRating',
@@ -173,7 +176,7 @@ const structuredData = [
                 itemprop="image"
               />
             ) : (
-              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-primary bg-opacity-10 flex items-center justify-center text-4xl sm:text-5xl ring-2 ring-gray-200" aria-label="Default directory icon">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-primary bg-opacity-10 flex items-center justify-center text-4xl sm:text-5xl ring-2 ring-gray-200" aria-hidden="true">
                 📂
               </div>
             )}
@@ -219,17 +222,19 @@ const structuredData = [
           </div>
 
           <!-- Primary CTA -->
-          <div class="flex-shrink-0 w-full sm:w-auto">
-            <a
-              href={directory.submission_url}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50"
-              itemprop="url"
-            >
-              Visit Directory →
-            </a>
-          </div>
+          {directory.submission_url && (
+            <div class="flex-shrink-0 w-full sm:w-auto">
+              <a
+                href={directory.submission_url}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50"
+                itemprop="url"
+              >
+                Visit Directory →
+              </a>
+            </div>
+          )}
         </div>
       </header>
 
@@ -306,7 +311,7 @@ const structuredData = [
                       loading="lazy"
                     />
                   ) : (
-                    <div class="w-12 h-12 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-2xl" aria-label="Default directory icon">
+                    <div class="w-12 h-12 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-2xl" aria-hidden="true">
                       📂
                     </div>
                   )}
