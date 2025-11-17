@@ -57,6 +57,8 @@ export default defineConfig({
           pure_funcs: ["console.log", "console.info", "console.debug"],
           passes: 3,
           ecma: 2020,
+          unsafe_arrows: true,
+          unsafe_methods: true,
         },
         mangle: {
           safari10: true,
@@ -72,8 +74,7 @@ export default defineConfig({
           moduleSideEffects: false,
         },
         output: {
-          manualChunks(id) {
-            // Manual chunking strategy for optimal code splitting
+          manualChunks: function manualChunks(id) {
             if (id.includes("node_modules")) {
               if (id.includes("@supabase/supabase-js")) {
                 return "supabase";

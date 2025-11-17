@@ -4,10 +4,13 @@
       <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
+            <label
+              for="filter-category"
+              class="block text-sm font-medium text-gray-900 mb-1"
               >Category</label
             >
             <select
+              id="filter-category"
               v-model="currentFilters.category"
               @change="applyFilters"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
@@ -19,10 +22,13 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
+            <label
+              for="filter-dr"
+              class="block text-sm font-medium text-gray-900 mb-1"
               >Domain Rating</label
             >
             <select
+              id="filter-dr"
               v-model="currentFilters.drRange"
               @change="applyFilters"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
@@ -36,10 +42,13 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
+            <label
+              for="filter-link"
+              class="block text-sm font-medium text-gray-900 mb-1"
               >Link Type</label
             >
             <select
+              id="filter-link"
               v-model="currentFilters.linkType"
               @change="applyFilters"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
@@ -50,10 +59,13 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
+            <label
+              for="filter-pricing"
+              class="block text-sm font-medium text-gray-900 mb-1"
               >Pricing</label
             >
             <select
+              id="filter-pricing"
               v-model="currentFilters.pricing"
               @change="applyFilters"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
@@ -66,10 +78,13 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
+            <label
+              for="filter-sort"
+              class="block text-sm font-medium text-gray-900 mb-1"
               >Sort By</label
             >
             <select
+              id="filter-sort"
               v-model="currentFilters.sortBy"
               @change="applyFilters"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
@@ -86,11 +101,11 @@
           v-if="hasActiveFilters"
           class="mt-4 flex items-center justify-between"
         >
-          <div class="text-sm text-gray-600">
+          <div class="text-sm text-gray-900">
             Showing
-            <span class="font-semibold">{{ filteredData.length }}</span>
+            <span class="font-semibold">{{ visibleDirectories.length }}</span>
             directories
-            <span v-if="pendingSubmissions.length > 0" class="text-yellow-700">
+            <span v-if="pendingSubmissions.length > 0" class="text-yellow-800">
               ({{ pendingSubmissions.length }} pending)
             </span>
           </div>
@@ -98,6 +113,7 @@
           <button
             @click="resetAllFilters"
             class="text-sm text-primary hover:text-primary-dark font-medium"
+            aria-label="Clear all filters"
           >
             Clear all filters
           </button>
@@ -107,14 +123,14 @@
 
     <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div v-if="isLoading" class="text-center py-12">
-        <div class="text-gray-600">Loading directories...</div>
+        <div class="text-gray-900">Loading directories...</div>
       </div>
 
       <div
-        v-else-if="filteredData.length === 0 && pendingSubmissions.length === 0"
+        v-else-if="visibleDirectories.length === 0"
         class="text-center py-12"
       >
-        <div class="text-gray-600 mb-4">
+        <div class="text-gray-900 mb-4">
           No directories found matching your filters.
         </div>
         <button @click="resetAllFilters" class="btn-primary">
@@ -123,24 +139,27 @@
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Pending Submissions (shown first, only visible to user) -->
         <DirectoryCard
-          v-for="pending in filteredPendingSubmissions"
-          :key="'pending-' + pending.id"
-          :directory="convertPendingToDirectory(pending)"
-          :isPendingSubmission="true"
-          :userVotedIds="userVotedIds"
-          :userFavoriteIds="userFavoriteIds"
-        />
-
-        <!-- Regular Directories -->
-        <DirectoryCard
-          v-for="dir in filteredData"
+          v-for="dir in visibleDirectories.slice(0, itemsToShow)"
           :key="dir.id"
           :directory="dir"
+          :isPendingSubmission="dir.isPending"
           :userVotedIds="userVotedIds"
           :userFavoriteIds="userFavoriteIds"
         />
+      </div>
+
+      <div
+        v-if="visibleDirectories.length > itemsToShow"
+        class="mt-8 text-center"
+      >
+        <button
+          @click="loadMore"
+          class="btn-primary"
+          aria-label="Load more directories"
+        >
+          Load More ({{ visibleDirectories.length - itemsToShow }} remaining)
+        </button>
       </div>
     </div>
   </div>
@@ -182,6 +201,8 @@ const currentFilters = ref({
   sortBy: "Most Helpful",
 });
 
+const itemsToShow = ref(30);
+
 const hasActiveFilters = computed(() => {
   return (
     currentFilters.value.search ||
@@ -197,6 +218,13 @@ const filteredPendingSubmissions = computed(() => {
     const dir = convertPendingToDirectory(pending);
     return applyFiltersToDirectory(dir);
   });
+});
+
+const visibleDirectories = computed(function computeVisibleDirectories() {
+  var pending = filteredPendingSubmissions.value.map(function mapPending(p) {
+    return { ...convertPendingToDirectory(p), isPending: true };
+  });
+  return [...pending, ...filteredData.value];
 });
 
 onMounted(async () => {
@@ -374,8 +402,12 @@ function sortDirectories(dirs, sortBy) {
   }
 }
 
+function loadMore() {
+  itemsToShow.value += 30;
+}
+
 function resetAllFilters() {
-  const searchInput = document.getElementById("search-input");
+  var searchInput = document.getElementById("search-input");
   if (searchInput) searchInput.value = "";
 
   currentFilters.value = {
@@ -386,6 +418,7 @@ function resetAllFilters() {
     pricing: "All",
     sortBy: "Most Helpful",
   };
+  itemsToShow.value = 30;
   applyFilters();
 }
 </script>
