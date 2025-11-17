@@ -3,15 +3,11 @@
     <!-- Auth Required Message -->
     <div v-if="!user" class="bg-white rounded-lg shadow-sm p-8 text-center">
       <div class="text-5xl mb-4">🔒</div>
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">
-        Sign in to Submit
-      </h2>
+      <h2 class="text-2xl font-bold text-gray-900 mb-2">Sign in to Submit</h2>
       <p class="text-gray-600 mb-6">
         You need to be signed in to submit a directory for review.
       </p>
-      <button @click="handleSignIn" class="btn-primary">
-        Sign In
-      </button>
+      <button @click="handleSignIn" class="btn-primary">Sign In</button>
     </div>
 
     <!-- Success Message -->
@@ -28,9 +24,7 @@
         within 3-5 business days.
       </p>
       <div class="flex gap-4 justify-center">
-        <button @click="resetForm" class="btn-secondary">
-          Submit Another
-        </button>
+        <button @click="resetForm" class="btn-secondary">Submit Another</button>
         <a href="/submissions" class="btn-primary inline-block">
           View My Submissions
         </a>
@@ -42,7 +36,10 @@
       <form @submit.prevent="handleSubmit">
         <!-- Name -->
         <div class="mb-6">
-          <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+          <label
+            for="name"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Directory Name <span class="text-red-500">*</span>
           </label>
           <input
@@ -58,7 +55,10 @@
 
         <!-- URL -->
         <div class="mb-6">
-          <label for="url" class="block text-sm font-semibold text-gray-700 mb-2">
+          <label
+            for="url"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Directory URL <span class="text-red-500">*</span>
           </label>
           <input
@@ -76,7 +76,10 @@
 
         <!-- Description -->
         <div class="mb-6">
-          <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
+          <label
+            for="description"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Description <span class="text-red-500">*</span>
           </label>
           <textarea
@@ -95,7 +98,10 @@
 
         <!-- Submission URL -->
         <div class="mb-6">
-          <label for="submission_url" class="block text-sm font-semibold text-gray-700 mb-2">
+          <label
+            for="submission_url"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Submission URL
           </label>
           <input
@@ -112,7 +118,10 @@
 
         <!-- Logo URL -->
         <div class="mb-6">
-          <label for="logo_url" class="block text-sm font-semibold text-gray-700 mb-2">
+          <label
+            for="logo_url"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Logo URL
           </label>
           <input
@@ -126,7 +135,10 @@
 
         <!-- Pricing Type -->
         <div class="mb-6">
-          <label for="pricing_type" class="block text-sm font-semibold text-gray-700 mb-2">
+          <label
+            for="pricing_type"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Pricing Type <span class="text-red-500">*</span>
           </label>
           <select
@@ -144,7 +156,10 @@
 
         <!-- Pricing Amount -->
         <div v-if="form.pricing_type === 'paid'" class="mb-6">
-          <label for="pricing_amount" class="block text-sm font-semibold text-gray-700 mb-2">
+          <label
+            for="pricing_amount"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Pricing Amount (USD)
           </label>
           <input
@@ -211,9 +226,7 @@
           >
             {{ isSubmitting ? "Submitting..." : "Submit Directory" }}
           </button>
-          <a href="/" class="btn-secondary flex-shrink-0">
-            Cancel
-          </a>
+          <a href="/" class="btn-secondary flex-shrink-0"> Cancel </a>
         </div>
       </form>
     </div>
@@ -293,8 +306,7 @@ async function handleSubmit() {
       submission_url: form.submission_url?.trim() || null,
       logo_url: form.logo_url?.trim() || null,
       pricing_type: form.pricing_type,
-      pricing_amount:
-        form.pricing_type === "paid" ? form.pricing_amount : null,
+      pricing_amount: form.pricing_type === "paid" ? form.pricing_amount : null,
       is_dofollow: form.is_dofollow,
       categories: form.categories.length > 0 ? form.categories : null,
       status: "pending",
@@ -308,7 +320,7 @@ async function handleSubmit() {
       // Check for duplicate submission
       if (error.code === "23505") {
         throw new Error(
-          "You have already submitted this directory. Please check your submissions page."
+          "You have already submitted this directory. Please check your submissions page.",
         );
       }
       throw error;

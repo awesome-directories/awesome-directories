@@ -9,9 +9,7 @@
       <p class="text-gray-600 mb-6">
         You need to be signed in to view and manage your directory submissions.
       </p>
-      <button @click="handleSignIn" class="btn-primary">
-        Sign In
-      </button>
+      <button @click="handleSignIn" class="btn-primary">Sign In</button>
     </div>
 
     <!-- Loading State -->
@@ -28,9 +26,7 @@
       class="bg-white rounded-lg shadow-sm p-8 text-center"
     >
       <div class="text-5xl mb-4">📭</div>
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">
-        No Submissions Yet
-      </h2>
+      <h2 class="text-2xl font-bold text-gray-900 mb-2">No Submissions Yet</h2>
       <p class="text-gray-600 mb-6">
         You haven't submitted any directories for review yet.
       </p>
@@ -277,7 +273,7 @@ function handleEdit(submission) {
 async function handleDelete(submissionId) {
   if (
     !confirm(
-      "Are you sure you want to delete this submission? This action cannot be undone."
+      "Are you sure you want to delete this submission? This action cannot be undone.",
     )
   ) {
     return;

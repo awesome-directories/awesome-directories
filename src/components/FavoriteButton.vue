@@ -10,9 +10,7 @@
           ? 'Remove from favorites'
           : 'Add to favorites'
     "
-    :aria-label="
-      isFavorited ? 'Remove from favorites' : 'Add to favorites'
-    "
+    :aria-label="isFavorited ? 'Remove from favorites' : 'Add to favorites'"
   >
     <span class="text-lg" :class="{ 'animate-pulse': isLoading }">
       {{ isFavorited ? "❤️" : "🤍" }}
@@ -61,8 +59,11 @@ const props = defineProps({
 const emit = defineEmits(["favorited", "unfavorited"]);
 
 const user = useStore($user);
-const { addToFavorites, removeFromFavorites, isFavorite: checkFavorite } =
-  useDirectory();
+const {
+  addToFavorites,
+  removeFromFavorites,
+  isFavorite: checkFavorite,
+} = useDirectory();
 
 const isFavorited = ref(props.initialFavorited);
 const isLoading = ref(false);
@@ -113,7 +114,7 @@ watch(
       isFavorited.value = false;
     }
   },
-  { immediate: false }
+  { immediate: false },
 );
 
 const handleToggleFavorite = async () => {

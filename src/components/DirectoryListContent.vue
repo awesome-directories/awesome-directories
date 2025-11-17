@@ -110,7 +110,10 @@
         <div class="text-gray-600">Loading directories...</div>
       </div>
 
-      <div v-else-if="filteredData.length === 0 && pendingSubmissions.length === 0" class="text-center py-12">
+      <div
+        v-else-if="filteredData.length === 0 && pendingSubmissions.length === 0"
+        class="text-center py-12"
+      >
         <div class="text-gray-600 mb-4">
           No directories found matching your filters.
         </div>
@@ -214,7 +217,7 @@ watch(
       userVotedIds.value = [];
     }
   },
-  { immediate: false }
+  { immediate: false },
 );
 
 async function loadDirectories() {
@@ -248,7 +251,7 @@ async function loadUserData() {
     userVotedIds.value = await getUserVotedIds(user.value);
 
     log.info(
-      `Loaded ${pendingSubmissions.value.length} pending submissions, ${userFavoriteIds.value.length} favorites, ${userVotedIds.value.length} votes`
+      `Loaded ${pendingSubmissions.value.length} pending submissions, ${userFavoriteIds.value.length} favorites, ${userVotedIds.value.length} votes`,
     );
   } catch (error) {
     log.error("Failed to load user data:", error);
@@ -290,7 +293,8 @@ function applyFiltersToDirectory(dir) {
     const searchLower = currentFilters.value.search.toLowerCase();
     const matchesSearch =
       dir.name.toLowerCase().includes(searchLower) ||
-      (dir.description && dir.description.toLowerCase().includes(searchLower)) ||
+      (dir.description &&
+        dir.description.toLowerCase().includes(searchLower)) ||
       (dir.categories &&
         dir.categories.some((cat) => cat.toLowerCase().includes(searchLower)));
 
@@ -348,7 +352,9 @@ function sortDirectories(dirs, sortBy) {
 
   switch (sortBy) {
     case "Most Helpful":
-      return sorted.sort((a, b) => (b.helpful_count || 0) - (a.helpful_count || 0));
+      return sorted.sort(
+        (a, b) => (b.helpful_count || 0) - (a.helpful_count || 0),
+      );
     case "Highest DR":
       return sorted.sort((a, b) => {
         if (!a.domain_rating && !b.domain_rating) return 0;
@@ -359,7 +365,7 @@ function sortDirectories(dirs, sortBy) {
     case "Newest":
       return sorted.sort(
         (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
       );
     case "Alphabetical":
       return sorted.sort((a, b) => a.name.localeCompare(b.name));

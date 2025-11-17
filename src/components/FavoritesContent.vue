@@ -9,9 +9,7 @@
       <p class="text-gray-600 mb-6">
         You need to be signed in to view and manage your favorite directories.
       </p>
-      <button @click="handleSignIn" class="btn-primary">
-        Sign In
-      </button>
+      <button @click="handleSignIn" class="btn-primary">Sign In</button>
     </div>
 
     <!-- Loading State -->
@@ -28,9 +26,7 @@
       class="bg-white rounded-lg shadow-sm p-8 text-center"
     >
       <div class="text-5xl mb-4">💔</div>
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">
-        No Favorites Yet
-      </h2>
+      <h2 class="text-2xl font-bold text-gray-900 mb-2">No Favorites Yet</h2>
       <p class="text-gray-600 mb-6">
         Start exploring directories and add them to your favorites!
       </p>
@@ -82,7 +78,10 @@
                 class="w-full h-full object-cover"
               />
             </div>
-            <div v-else class="w-16 h-16 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-3xl flex-shrink-0">
+            <div
+              v-else
+              class="w-16 h-16 rounded-lg bg-primary bg-opacity-10 flex items-center justify-center text-3xl flex-shrink-0"
+            >
               📂
             </div>
 
@@ -96,8 +95,13 @@
                 </a>
               </h3>
 
-              <div v-if="favorite.directory?.domain_rating" class="flex items-center gap-2">
-                <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 font-semibold">
+              <div
+                v-if="favorite.directory?.domain_rating"
+                class="flex items-center gap-2"
+              >
+                <span
+                  class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 font-semibold"
+                >
                   ⭐ DR: {{ favorite.directory.domain_rating }}
                 </span>
               </div>
@@ -168,7 +172,7 @@ async function loadFavorites() {
           pricing_amount,
           categories
         )
-      `
+      `,
       )
       .eq("user_id", user.value.id)
       .order("created_at", { ascending: false });
@@ -204,7 +208,7 @@ async function handleRemoveFavorite(directoryId) {
 
     // Remove from local state
     favorites.value = favorites.value.filter(
-      (f) => f.directory_id !== directoryId
+      (f) => f.directory_id !== directoryId,
     );
 
     log.info(`Removed favorite: ${directoryId}`);
@@ -231,7 +235,7 @@ function handleExportFavorites() {
   const csvContent = [
     headers.join(","),
     ...rows.map((row) =>
-      row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")
+      row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","),
     ),
   ].join("\n");
 
