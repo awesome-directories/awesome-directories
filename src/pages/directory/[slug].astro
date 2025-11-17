@@ -1,0 +1,279 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { supabase } from "@/lib/supabase-server";
+import VoteButton from "@/components/VoteButton.vue";
+import FavoriteButton from "@/components/FavoriteButton.vue";
+import ViewCounter from "@/components/ViewCounter.vue";
+import GiscusComments from "@/components/GiscusComments.vue";
+
+export async function getStaticPaths() {
+  if (!supabase) {
+    console.warn("Supabase client not available, skipping directory page generation");
+    return [];
+  }
+
+  try {
+    // Fetch all active directories
+    const { data: directories, error } = await supabase
+      .from("directories")
+      .select("*")
+      .eq("is_active", true)
+      .order("domain_rating", { ascending: false, nullsFirst: false });
+
+    if (error) {
+      console.error("Error fetching directories for SSG:", error);
+      return [];
+    }
+
+    if (!directories || directories.length === 0) {
+      console.warn("No directories found for SSG");
+      return [];
+    }
+
+    // Generate paths for each directory
+    return directories.map((directory) => ({
+      params: { slug: directory.slug },
+      props: { directory },
+    }));
+  } catch (error) {
+    console.error("Error in getStaticPaths:", error);
+    return [];
+  }
+}
+
+const { directory } = Astro.props;
+
+if (!directory) {
+  return Astro.redirect("/404");
+}
+
+// Format pricing label
+function getPricingLabel(pricingType: string, pricingAmount: number | null) {
+  if (pricingType === "free") return "💰 Free";
+  if (pricingType === "paid" && pricingAmount) {
+    return `💰 $${pricingAmount}`;
+  }
+  if (pricingType === "paid") return "💰 Paid";
+  if (pricingType === "freemium") return "💰 Freemium";
+  return "";
+}
+
+// Get badge class for domain rating
+function getDRBadgeClass(dr: number | null) {
+  if (!dr) return "badge-gray";
+  if (dr >= 80) return "badge-green";
+  if (dr >= 70) return "badge-blue";
+  if (dr >= 60) return "badge-orange";
+  return "badge-gray";
+}
+
+// Get badge class for pricing
+function getPricingBadgeClass(pricingType: string) {
+  if (pricingType === "free") return "badge-green";
+  if (pricingType === "paid") return "badge-orange";
+  if (pricingType === "freemium") return "badge-blue";
+  return "badge-gray";
+}
+
+const title = `${directory.name} - Awesome Directories`;
+const description = directory.description || `Submit your product to ${directory.name}`;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-6">
+        <a href="/" class="text-primary hover:text-primary-dark">
+          ← Back to All Directories
+        </a>
+      </nav>
+
+      <!-- Directory Details -->
+      <div class="space-y-8">
+        <!-- Hero Card -->
+        <div class="card p-8">
+          <div class="flex items-start space-x-6 mb-6">
+            <div
+              class="flex-shrink-0 w-24 h-24 rounded-xl bg-gray-100 flex items-center justify-center text-4xl"
+            >
+              {directory.logo_url ? (
+                <img
+                  src={directory.logo_url}
+                  alt={directory.name}
+                  class="w-full h-full object-cover rounded-xl"
+                />
+              ) : (
+                <span>📂</span>
+              )}
+            </div>
+
+            <div class="flex-1">
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                {directory.name}
+              </h1>
+
+              <div class="flex items-center flex-wrap gap-3 mb-4">
+                {directory.domain_rating && (
+                  <span
+                    class:list={[
+                      "badge text-xs font-semibold",
+                      getDRBadgeClass(directory.domain_rating),
+                    ]}
+                  >
+                    ⭐ DR: {directory.domain_rating}
+                  </span>
+                )}
+
+                {directory.is_dofollow && (
+                  <span class="badge-green text-xs">🔗 Dofollow</span>
+                )}
+
+                {directory.pricing_type && (
+                  <span
+                    class:list={[
+                      "badge text-xs",
+                      getPricingBadgeClass(directory.pricing_type),
+                    ]}
+                  >
+                    {getPricingLabel(directory.pricing_type, directory.pricing_amount)}
+                  </span>
+                )}
+              </div>
+
+              <a
+                href={directory.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-primary hover:text-primary-dark break-all"
+              >
+                {directory.url}
+              </a>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap gap-4">
+            <a
+              href={directory.submission_url || directory.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+            >
+              Submit to {directory.name} →
+            </a>
+
+            <VoteButton
+              directoryId={directory.id}
+              initialCount={directory.helpful_count || 0}
+              client:load
+            />
+
+            <FavoriteButton directoryId={directory.id} client:load />
+          </div>
+        </div>
+
+        <!-- Description -->
+        {directory.description && (
+          <div class="card p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">About</h2>
+            <p class="text-gray-700 leading-relaxed">
+              {directory.description}
+            </p>
+          </div>
+        )}
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-bold text-primary mb-1">
+              {directory.domain_rating || "N/A"}
+            </div>
+            <div class="text-sm text-gray-600">Domain Rating</div>
+          </div>
+
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-bold text-primary mb-1">
+              {directory.is_dofollow ? "✅" : "❌"}
+            </div>
+            <div class="text-sm text-gray-600">Dofollow</div>
+          </div>
+
+          <div class="card p-4 text-center">
+            <div class="text-2xl font-bold text-primary mb-1">
+              {directory.pricing_type || "N/A"}
+            </div>
+            <div class="text-sm text-gray-600">Pricing</div>
+          </div>
+
+          <div class="card p-4 text-center">
+            <ViewCounter
+              directoryId={directory.id}
+              initialCount={directory.view_count || 0}
+              client:visible
+            />
+            <div class="text-sm text-gray-600">Views</div>
+          </div>
+        </div>
+
+        <!-- Additional Info -->
+        {(directory.avg_approval_days || directory.traffic_estimate || directory.categories?.length > 0) && (
+          <div class="card p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">
+              Additional Information
+            </h2>
+            <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {directory.avg_approval_days && (
+                <>
+                  <dt class="text-sm font-medium text-gray-500">
+                    Avg. Approval Time
+                  </dt>
+                  <dd class="text-sm text-gray-900">
+                    {directory.avg_approval_days} days
+                  </dd>
+                </>
+              )}
+
+              {directory.traffic_estimate && (
+                <>
+                  <dt class="text-sm font-medium text-gray-500">
+                    Traffic Estimate
+                  </dt>
+                  <dd class="text-sm text-gray-900 capitalize">
+                    {directory.traffic_estimate}
+                  </dd>
+                </>
+              )}
+
+              {directory.categories && directory.categories.length > 0 && (
+                <>
+                  <dt class="text-sm font-medium text-gray-500">Categories</dt>
+                  <dd class="text-sm text-gray-900">
+                    <div class="flex flex-wrap gap-2">
+                      {directory.categories.map((category: string) => (
+                        <span class="badge-gray text-xs">{category}</span>
+                      ))}
+                    </div>
+                  </dd>
+                </>
+              )}
+            </dl>
+          </div>
+        )}
+
+        <!-- Giscus Comments -->
+        <div class="card p-6">
+          <h2 class="text-xl font-bold text-gray-900 mb-4">
+            Community Reviews & Success Stories
+          </h2>
+          <p class="text-gray-600 mb-6">
+            Launched on {directory.name}? Share your results and help other
+            founders!
+          </p>
+
+          <GiscusComments directorySlug={directory.slug} client:visible />
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
