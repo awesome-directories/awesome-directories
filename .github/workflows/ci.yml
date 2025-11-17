@@ -48,8 +48,6 @@ jobs:
         env:
           PUBLIC_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -107,8 +105,8 @@ jobs:
       - name: Build
         run: bun run build
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          PUBLIC_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       - id: upload-artifact
         name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
