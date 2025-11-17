@@ -7,6 +7,10 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import AuthModal from "./AuthModal.vue";
+import { useAuth } from "@/composables/useAuth";
+
+// Initialize auth (will be no-op if already initialized)
+const { user, session, loading } = useAuth();
 
 const showModal = ref(false);
 
