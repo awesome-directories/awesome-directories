@@ -135,6 +135,9 @@ const twitterHandle = '@awesome_dirs';
     <link rel="alternate" hreflang="en" href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Awesome Directories Blog RSS Feed" href="/rss.xml" />
+
     <!-- Webmention -->
     <link
       rel="webmention"
@@ -165,6 +168,9 @@ const twitterHandle = '@awesome_dirs';
       data-event-endpoint="https://analytics.awesome-directories.com/event"
       data-session-endpoint="https://analytics.awesome-directories.com/session"
     ></script>
+
+    <!-- Additional head content -->
+    <slot name="head" />
   </head>
   <body>
     <slot />

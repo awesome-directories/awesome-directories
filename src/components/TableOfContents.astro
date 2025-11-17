@@ -1,0 +1,72 @@
+---
+import type { TocItem } from '@/utils/blog';
+
+interface Props {
+  headings: TocItem[];
+}
+
+const { headings } = Astro.props;
+
+if (headings.length === 0) {
+  return null;
+}
+---
+
+<nav class="toc bg-gray-50 rounded-lg p-6 sticky top-24">
+  <h2 class="text-lg font-bold text-gray-900 mb-4">Table of Contents</h2>
+  <ul class="space-y-2">
+    {headings.map((heading) => (
+      <li
+        class={heading.depth === 3 ? 'ml-4' : ''}
+        style={`list-style: none;`}
+      >
+        <a
+          href={`#${heading.slug}`}
+          class="text-gray-600 hover:text-blue-600 transition-colors text-sm block py-1"
+        >
+          {heading.text}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  // Highlight active heading on scroll
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute('id');
+          const tocLink = document.querySelector(`.toc a[href="#${id}"]`);
+
+          if (tocLink) {
+            if (entry.isIntersecting) {
+              // Remove active class from all links
+              document.querySelectorAll('.toc a').forEach((link) => {
+                link.classList.remove('font-bold', 'text-blue-600');
+                link.classList.add('text-gray-600');
+              });
+              // Add active class to current link
+              tocLink.classList.remove('text-gray-600');
+              tocLink.classList.add('font-bold', 'text-blue-600');
+            }
+          }
+        });
+      },
+      { rootMargin: '-100px 0px -66%' }
+    );
+
+    // Observe all headings
+    document.querySelectorAll('article h2, article h3').forEach((heading) => {
+      observer.observe(heading);
+    });
+  });
+</script>
+
+<style>
+  .toc {
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+  }
+</style>

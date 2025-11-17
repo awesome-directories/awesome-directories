@@ -1,0 +1,99 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import BlogCard from '@/components/BlogCard.astro';
+import Pagination from '@/components/Pagination.astro';
+import { getPublishedPosts, paginate, getAllTags } from '@/utils/blog';
+
+export const getStaticPaths = (async ({ paginate: astroPageinate }) => {
+  const allPosts = await getPublishedPosts();
+  const pageSize = 10;
+
+  // Generate pagination paths
+  return astroPageinate(allPosts, { pageSize });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const allPosts = await getPublishedPosts();
+const allTags = getAllTags(allPosts);
+const currentPage = page.currentPage || 1;
+---
+
+<BaseLayout
+  title={`Blog - Page ${currentPage} | Awesome Directories`}
+  description="Discover the latest insights, guides, and tips for indie hackers, bootstrappers, and solopreneurs launching their SaaS products."
+>
+  <Fragment slot="head">
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+    <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  </Fragment>
+
+  <AppHeader />
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        Blog
+      </h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Insights, guides, and tips for indie hackers and solopreneurs
+      </p>
+    </div>
+
+    <!-- Search (Pagefind) -->
+    <div class="mb-8 max-w-2xl mx-auto">
+      <div id="search" class="pagefind-ui"></div>
+    </div>
+
+    <!-- Tags Filter -->
+    {allTags.length > 0 && (
+      <div class="mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Browse by tag:</h2>
+        <div class="flex flex-wrap gap-2">
+          {allTags.map((tag) => (
+            <a
+              href={`/blog/tags/${tag.toLowerCase()}`}
+              class="inline-block px-4 py-2 bg-white border border-gray-300 rounded-full hover:border-blue-600 hover:text-blue-600 transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Blog Posts Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      {page.data.map((post) => (
+        <BlogCard post={post} />
+      ))}
+    </div>
+
+    <!-- Pagination -->
+    <Pagination
+      currentPage={page.currentPage}
+      totalPages={page.lastPage}
+      basePath="/blog"
+      hasPrev={page.currentPage > 1}
+      hasNext={page.currentPage < page.lastPage}
+    />
+  </main>
+
+  <AppFooter />
+</BaseLayout>
+
+<script>
+  // Initialize Pagefind search
+  if (typeof window !== 'undefined') {
+    // @ts-ignore
+    new PagefindUI({
+      element: '#search',
+      showSubResults: false,
+      showImages: false,
+      excerptLength: 15,
+    });
+  }
+</script>
