@@ -3,14 +3,15 @@ var currentYear = new Date().getFullYear();
 ---
 
 <footer class="bg-gray-900 text-gray-300">
-  <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- About Section -->
+  <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
       <div>
-        <h2 class="text-white font-bold text-lg mb-4">Awesome Directories</h2>
-        <p class="text-sm text-gray-300 mb-4">
-          Find the top 20 launch directories worth your time in under 3
-          minutes—curated, verified, and updated weekly.
+        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
+          Awesome Directories
+        </h2>
+        <p class="text-sm text-gray-300 mb-3 sm:mb-4 leading-relaxed">
+          Find the top 20 launch directories worth your time in under 3 minutes—
+          curated, verified, and updated weekly.
         </p>
         <p class="text-sm text-gray-300">
           Built by
@@ -18,21 +19,22 @@ var currentYear = new Date().getFullYear();
             href="https://meysam.io"
             target="_blank"
             rel="noopener"
-            class="text-blue-400 hover:text-blue-300 transition-colors underline"
+            class="text-blue-400 hover:text-blue-300 transition-colors underline inline-block min-h-[44px] leading-[44px]"
           >
             Meysam
           </a>
         </p>
       </div>
 
-      <!-- Links Section -->
       <div>
-        <h2 class="text-white font-bold text-lg mb-4">Links</h2>
-        <ul class="space-y-2">
+        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
+          Links
+        </h2>
+        <ul class="space-y-2 sm:space-y-2.5">
           <li>
             <a
               href="/about"
-              class="text-sm text-gray-300 hover:text-white transition-colors"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block min-h-[44px] leading-[44px]"
             >
               About
             </a>
@@ -40,7 +42,7 @@ var currentYear = new Date().getFullYear();
           <li>
             <a
               href="/submit"
-              class="text-sm text-gray-300 hover:text-white transition-colors"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block min-h-[44px] leading-[44px]"
             >
               Submit Directory
             </a>
@@ -48,7 +50,7 @@ var currentYear = new Date().getFullYear();
           <li>
             <a
               href="/stats"
-              class="text-sm text-gray-300 hover:text-white transition-colors"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block min-h-[44px] leading-[44px]"
             >
               Public Stats
             </a>
@@ -56,7 +58,7 @@ var currentYear = new Date().getFullYear();
           <li>
             <a
               href="/terms"
-              class="text-sm text-gray-300 hover:text-white transition-colors"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block min-h-[44px] leading-[44px]"
             >
               Terms of Service
             </a>
@@ -64,7 +66,7 @@ var currentYear = new Date().getFullYear();
           <li>
             <a
               href="/privacy"
-              class="text-sm text-gray-300 hover:text-white transition-colors"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block min-h-[44px] leading-[44px]"
             >
               Privacy Policy
             </a>
@@ -74,7 +76,7 @@ var currentYear = new Date().getFullYear();
               href="https://github.com/awesome-directories/awesome-directories"
               target="_blank"
               rel="noopener"
-              class="text-sm text-gray-300 hover:text-white transition-colors"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block min-h-[44px] leading-[44px]"
             >
               GitHub Repository
             </a>
@@ -84,7 +86,7 @@ var currentYear = new Date().getFullYear();
               href="https://github.com/sponsors/meysam81"
               target="_blank"
               rel="noopener"
-              class="text-sm text-gray-300 hover:text-white transition-colors"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block min-h-[44px] leading-[44px]"
             >
               💝 GitHub Sponsors
             </a>
@@ -92,9 +94,8 @@ var currentYear = new Date().getFullYear();
         </ul>
       </div>
 
-      <!-- Newsletter Section -->
-      <div>
-        <h2 class="text-white font-bold text-lg mb-4">
+      <div class="sm:col-span-2 lg:col-span-1">
+        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
           📬 Get launch strategies & new directories
         </h2>
         <form id="newsletter-form" class="space-y-3">
@@ -104,13 +105,13 @@ var currentYear = new Date().getFullYear();
             type="email"
             required
             placeholder="Your email"
-            class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px]"
           />
 
           <button
             id="newsletter-submit"
             type="submit"
-            class="w-full btn-primary"
+            class="w-full btn-primary min-h-[44px]"
           >
             Subscribe
           </button>
@@ -118,25 +119,24 @@ var currentYear = new Date().getFullYear();
           <p id="newsletter-success" class="text-sm text-success hidden"></p>
           <p id="newsletter-error" class="text-sm text-danger hidden"></p>
 
-          <p class="text-xs text-gray-400">
+          <p class="text-xs text-gray-400 leading-relaxed">
             We respect your inbox. Unsubscribe anytime.
           </p>
         </form>
       </div>
     </div>
 
-    <!-- Bottom Section -->
-    <div class="mt-12 pt-8 border-t border-gray-800">
+    <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">
       <div
-        class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
+        class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 gap-4"
       >
-        <p class="text-sm text-gray-400">
+        <p class="text-xs sm:text-sm text-gray-400 text-center md:text-left">
           © {currentYear} Awesome Directories. Open source under
           <a
             href="https://github.com/awesome-directories/awesome-directories/blob/main/LICENSE"
             target="_blank"
             rel="noopener"
-            class="text-gray-300 hover:text-white transition-colors underline"
+            class="text-gray-300 hover:text-white transition-colors underline inline-block min-h-[44px] leading-[44px]"
           >
             Apache 2.0 License
           </a>
@@ -147,7 +147,7 @@ var currentYear = new Date().getFullYear();
             href="https://github.com/awesome-directories/awesome-directories"
             target="_blank"
             rel="noopener"
-            class="text-gray-400 hover:text-white transition-colors"
+            class="text-gray-400 hover:text-white transition-colors inline-flex items-center justify-center min-h-[44px] min-w-[44px]"
             aria-label="Visit our GitHub repository"
           >
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -162,7 +162,7 @@ var currentYear = new Date().getFullYear();
             href="https://x.com/meysamazing"
             target="_blank"
             rel="noopener"
-            class="text-gray-400 hover:text-white transition-colors"
+            class="text-gray-400 hover:text-white transition-colors inline-flex items-center justify-center min-h-[44px] min-w-[44px]"
             aria-label="Follow us on X (formerly Twitter)"
           >
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">

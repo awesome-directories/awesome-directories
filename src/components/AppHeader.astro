@@ -7,37 +7,37 @@ import GithubStars from "./GithubStars.vue";
   id="app-header"
   class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm"
 >
-  <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
+  <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-14 sm:h-16">
       <!-- Logo -->
-      <a href="/" class="flex items-center hover:opacity-80 transition-opacity">
+      <a href="/" class="flex items-center hover:opacity-80 transition-opacity min-h-[44px] min-w-[44px]">
         <Logo size="md" spacing="lg" />
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-6">
+      <nav class="hidden md:flex items-center space-x-4 lg:space-x-6">
         <GithubStars
           client:load
-          class="mr-4"
+          class="mr-2 lg:mr-4"
         />
 
         <a
           href="/submit"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base whitespace-nowrap min-h-[44px] flex items-center"
         >
           Submit Directory
         </a>
 
         <a
           href="/about"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center"
         >
           About
         </a>
 
         <a
           href="/stats"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center"
         >
           Stats
         </a>
@@ -46,13 +46,13 @@ import GithubStars from "./GithubStars.vue";
         <div id="user-menu-container" class="relative hidden">
           <button
             id="user-menu-button"
-            class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors"
+            class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors min-h-[44px] min-w-[44px]"
             aria-label="User menu"
             aria-expanded="false"
           >
             <div
               id="user-avatar"
-              class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-medium"
+              class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-medium text-sm"
             >
             </div>
           </button>
@@ -63,26 +63,26 @@ import GithubStars from "./GithubStars.vue";
           >
             <a
               href="/favorites"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[44px]"
             >
               ❤️ My Favorites
             </a>
             <a
               href="/submissions"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[44px]"
             >
               ✅ My Submissions
             </a>
             <button
               id="sign-out-button"
-              class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[44px]"
             >
               🚪 Sign Out
             </button>
           </div>
         </div>
 
-        <button id="sign-in-button" class="btn-primary text-sm hidden">
+        <button id="sign-in-button" class="btn-primary text-sm hidden min-h-[44px]">
           Sign In
         </button>
       </nav>
@@ -90,7 +90,7 @@ import GithubStars from "./GithubStars.vue";
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-button"
-        class="md:hidden p-2 text-gray-600 hover:text-gray-900"
+        class="md:hidden p-2 text-gray-600 hover:text-gray-900 min-h-[44px] min-w-[44px] flex items-center justify-center"
         aria-label="Toggle mobile menu"
         aria-expanded="false"
       >
@@ -126,47 +126,47 @@ import GithubStars from "./GithubStars.vue";
     <!-- Mobile Menu -->
     <div
       id="mobile-menu"
-      class="hidden md:hidden py-4 border-t border-gray-200"
+      class="hidden md:hidden py-3 border-t border-gray-200"
     >
-      <nav class="flex flex-col space-y-3">
+      <nav class="flex flex-col space-y-1">
         <a
           href="/submit"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link"
+          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center"
         >
           Submit Directory
         </a>
         <a
           href="/about"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link"
+          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center"
         >
           About
         </a>
         <a
           href="/stats"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link"
+          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center"
         >
           Stats
         </a>
 
         <div
           id="mobile-user-links"
-          class="hidden pt-3 border-t border-gray-200 space-y-3"
+          class="hidden pt-2 border-t border-gray-200 space-y-1 mt-2"
         >
           <a
             href="/favorites"
-            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link"
+            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]"
           >
             ❤️ My Favorites
           </a>
           <a
             href="/submissions"
-            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link"
+            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]"
           >
             ✅ My Submissions
           </a>
           <button
             id="mobile-sign-out-button"
-            class="text-gray-700 hover:text-primary font-medium"
+            class="w-full text-left text-gray-700 hover:text-primary font-medium px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]"
           >
             🚪 Sign Out
           </button>
@@ -174,7 +174,7 @@ import GithubStars from "./GithubStars.vue";
 
         <button
           id="mobile-sign-in-button"
-          class="btn-primary text-sm w-full hidden"
+          class="btn-primary text-sm w-full hidden min-h-[44px] mt-2"
         >
           Sign In
         </button>
