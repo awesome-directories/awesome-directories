@@ -1,144 +1,187 @@
 <template>
   <div id="directory-app">
-    <div class="bg-white border-b border-gray-200 sticky top-16 z-40 shadow-sm">
-      <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div>
-            <label
-              for="filter-category"
-              class="block text-sm font-medium text-gray-900 mb-1"
-              >Category</label
-            >
-            <select
-              id="filter-category"
-              v-model="currentFilters.category"
-              @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option v-for="cat in categories" :key="cat" :value="cat">
-                {{ cat }}
-              </option>
-            </select>
-          </div>
+    <div class="bg-white border-b border-gray-200 sticky top-0 sm:top-16 z-40 shadow-sm">
+      <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
 
-          <div>
-            <label
-              for="filter-dr"
-              class="block text-sm font-medium text-gray-900 mb-1"
-              >Domain Rating</label
+        <div class="flex items-center justify-between mb-3 lg:hidden">
+          <h2 class="text-sm font-semibold text-gray-900">Filters</h2>
+          <button
+            @click="toggleFilters"
+            class="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-dark min-h-[44px] px-3"
+            aria-label="Toggle filters"
+          >
+            <span>{{ filtersExpanded ? 'Hide' : 'Show' }}</span>
+            <svg
+              class="w-4 h-4 transition-transform duration-200"
+              :class="{ 'rotate-180': filtersExpanded }"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-            <select
-              id="filter-dr"
-              v-model="currentFilters.drRange"
-              @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option value="All">All DR</option>
-              <option value="80+">80+</option>
-              <option value="70-79">70-79</option>
-              <option value="60-69">60-69</option>
-              <option value="<60">&lt;60</option>
-            </select>
-          </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+        </div>
 
-          <div>
-            <label
-              for="filter-link"
-              class="block text-sm font-medium text-gray-900 mb-1"
-              >Link Type</label
-            >
-            <select
-              id="filter-link"
-              v-model="currentFilters.linkType"
-              @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option value="All">All</option>
-              <option value="Dofollow Only">Dofollow Only</option>
-            </select>
-          </div>
+        <div
+          class="transition-all duration-300 ease-in-out overflow-hidden"
+          :class="{
+            'max-h-0 lg:max-h-none': !filtersExpanded,
+            'max-h-[800px]': filtersExpanded
+          }"
+        >
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
+            <div>
+              <label
+                for="filter-category"
+                class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+              >
+                Category
+              </label>
+              <select
+                id="filter-category"
+                v-model="currentFilters.category"
+                @change="applyFilters"
+                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+              >
+                <option v-for="cat in categories" :key="cat" :value="cat">
+                  {{ cat }}
+                </option>
+              </select>
+            </div>
 
-          <div>
-            <label
-              for="filter-pricing"
-              class="block text-sm font-medium text-gray-900 mb-1"
-              >Pricing</label
-            >
-            <select
-              id="filter-pricing"
-              v-model="currentFilters.pricing"
-              @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option value="All">All</option>
-              <option value="free">Free</option>
-              <option value="paid">Paid</option>
-              <option value="freemium">Freemium</option>
-            </select>
-          </div>
+            <div>
+              <label
+                for="filter-dr"
+                class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+              >
+                Domain Rating
+              </label>
+              <select
+                id="filter-dr"
+                v-model="currentFilters.drRange"
+                @change="applyFilters"
+                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+              >
+                <option value="All">All DR</option>
+                <option value="80+">80+</option>
+                <option value="70-79">70-79</option>
+                <option value="60-69">60-69</option>
+                <option value="<60">&lt;60</option>
+              </select>
+            </div>
 
-          <div>
-            <label
-              for="filter-sort"
-              class="block text-sm font-medium text-gray-900 mb-1"
-              >Sort By</label
-            >
-            <select
-              id="filter-sort"
-              v-model="currentFilters.sortBy"
-              @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-            >
-              <option>Most Helpful</option>
-              <option>Highest DR</option>
-              <option>Newest</option>
-              <option>Alphabetical</option>
-            </select>
+            <div>
+              <label
+                for="filter-link"
+                class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+              >
+                Link Type
+              </label>
+              <select
+                id="filter-link"
+                v-model="currentFilters.linkType"
+                @change="applyFilters"
+                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+              >
+                <option value="All">All</option>
+                <option value="Dofollow Only">Dofollow Only</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                for="filter-pricing"
+                class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+              >
+                Pricing
+              </label>
+              <select
+                id="filter-pricing"
+                v-model="currentFilters.pricing"
+                @change="applyFilters"
+                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+              >
+                <option value="All">All</option>
+                <option value="free">Free</option>
+                <option value="paid">Paid</option>
+                <option value="freemium">Freemium</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                for="filter-sort"
+                class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+              >
+                Sort By
+              </label>
+              <select
+                id="filter-sort"
+                v-model="currentFilters.sortBy"
+                @change="applyFilters"
+                class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+              >
+                <option>Most Helpful</option>
+                <option>Highest DR</option>
+                <option>Newest</option>
+                <option>Alphabetical</option>
+              </select>
+            </div>
           </div>
         </div>
 
         <div
           v-if="hasActiveFilters"
-          class="mt-4 flex items-center justify-between"
+          class="mt-3 sm:mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-3 border-t border-gray-200"
         >
-          <div class="text-sm text-gray-900">
-            Showing
-            <span class="font-semibold">{{ visibleDirectories.length }}</span>
-            directories
-            <span v-if="pendingSubmissions.length > 0" class="text-yellow-800">
-              ({{ pendingSubmissions.length }} pending)
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-xs sm:text-sm text-gray-900">
+              <span class="font-semibold">{{ visibleDirectories.length }}</span>
+              {{ visibleDirectories.length === 1 ? 'directory' : 'directories' }}
+            </span>
+            <span v-if="pendingSubmissions.length > 0" class="text-xs text-yellow-800 bg-yellow-50 px-2 py-1 rounded-full">
+              {{ pendingSubmissions.length }} pending
             </span>
           </div>
 
           <button
             @click="resetAllFilters"
-            class="text-sm text-primary hover:text-primary-dark font-medium"
+            class="text-xs sm:text-sm text-primary hover:text-primary-dark font-medium whitespace-nowrap min-h-[44px] px-2 flex items-center gap-1"
             aria-label="Clear all filters"
           >
-            Clear all filters
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span>Clear filters</span>
           </button>
         </div>
       </div>
     </div>
 
-    <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
       <div v-if="isLoading" class="text-center py-12">
-        <div class="text-gray-900">Loading directories...</div>
+        <div class="text-gray-900 text-sm sm:text-base">Loading directories...</div>
       </div>
 
       <div
         v-else-if="visibleDirectories.length === 0"
-        class="text-center py-12"
+        class="text-center py-12 px-4"
       >
-        <div class="text-gray-900 mb-4">
+        <div class="text-gray-900 mb-4 text-sm sm:text-base">
           No directories found matching your filters.
         </div>
-        <button @click="resetAllFilters" class="btn-primary">
+        <button @click="resetAllFilters" class="btn-primary min-h-[44px]">
           Reset Filters
         </button>
       </div>
 
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
         <DirectoryCard
           v-for="dir in visibleDirectories.slice(0, itemsToShow)"
           :key="dir.id"
@@ -151,11 +194,11 @@
 
       <div
         v-if="visibleDirectories.length > itemsToShow"
-        class="mt-8 text-center"
+        class="mt-6 sm:mt-8 text-center"
       >
         <button
           @click="loadMore"
-          class="btn-primary"
+          class="btn-primary min-h-[44px] w-full sm:w-auto px-6"
           aria-label="Load more directories"
         >
           Load More ({{ visibleDirectories.length - itemsToShow }} remaining)
@@ -406,6 +449,12 @@ function loadMore() {
   itemsToShow.value += 30;
 }
 
+const filtersExpanded = ref(false);
+
+function toggleFilters() {
+  filtersExpanded.value = !filtersExpanded.value;
+}
+
 function resetAllFilters() {
   var searchInput = document.getElementById("search-input");
   if (searchInput) searchInput.value = "";
@@ -420,5 +469,9 @@ function resetAllFilters() {
   };
   itemsToShow.value = 30;
   applyFilters();
+
+  if (window.innerWidth < 1024) {
+    filtersExpanded.value = false;
+  }
 }
 </script>
