@@ -165,24 +165,40 @@ var currentYear = new Date().getFullYear();
             class="text-gray-400 hover:text-white transition-colors inline-flex items-center justify-center min-h-[44px] min-w-[44px]"
             aria-label="Follow us on X (formerly Twitter)"
           >
-            <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" id="svg5" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1668.56 1221.19"
-	 style="enable-background:new 0 0 1668.56 1221.19;" xml:space="preserve">
-<style type="text/css">
-	.st0{stroke:#FFFFFF;stroke-miterlimit:10;}
-	.st1{fill:#FFFFFF;}
-</style>
-<g>
-	<circle class="st0" cx="834.28" cy="610.6" r="481.33"/>
-	<g id="layer1" transform="translate(52.390088,-25.058597)">
-		<path id="path1009" class="st1" d="M485.39,356.79l230.07,307.62L483.94,914.52h52.11l202.7-218.98l163.77,218.98h177.32
+            <svg
+              version="1.1"
+              id="svg5"
+              xmlns:svg="http://www.w3.org/2000/svg"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 1668.56 1221.19"
+              style="enable-background:new 0 0 1668.56 1221.19;"
+              xml:space="preserve"
+            >
+              <style type="text/css">
+                .st0 {
+                  stroke: #ffffff;
+                  stroke-miterlimit: 10;
+                }
+                .st1 {
+                  fill: #ffffff;
+                }
+              </style>
+              <g>
+                <circle class="st0" cx="834.28" cy="610.6" r="481.33"></circle>
+                <g id="layer1" transform="translate(52.390088,-25.058597)">
+                  <path
+                    id="path1009"
+                    class="st1"
+                    d="M485.39,356.79l230.07,307.62L483.94,914.52h52.11l202.7-218.98l163.77,218.98h177.32
 			L836.82,589.6l215.5-232.81h-52.11L813.54,558.46L662.71,356.79H485.39z M562.02,395.17h81.46l359.72,480.97h-81.46L562.02,395.17
-			z"/>
-	</g>
-</g>
-</svg>
-
+			z"
+                  ></path>
+                </g>
+              </g>
+            </svg>
           </a>
         </div>
       </div>
@@ -191,44 +207,44 @@ var currentYear = new Date().getFullYear();
 </footer>
 
 <script>
-  import { supabase } from '@/lib/supabase-client';
+  import { supabase } from "@/lib/supabase-client";
 
-  var form = document.getElementById('newsletter-form') as HTMLFormElement;
+  var form = document.getElementById("newsletter-form") as HTMLFormElement;
   var emailInput = document.getElementById(
-    'newsletter-email'
+    "newsletter-email"
   ) as HTMLInputElement;
   var submitButton = document.getElementById(
-    'newsletter-submit'
+    "newsletter-submit"
   ) as HTMLButtonElement;
-  var successMessage = document.getElementById('newsletter-success');
-  var errorMessage = document.getElementById('newsletter-error');
+  var successMessage = document.getElementById("newsletter-success");
+  var errorMessage = document.getElementById("newsletter-error");
 
-  form?.addEventListener('submit', async function handleSubmit(e) {
+  form?.addEventListener("submit", async function handleSubmit(e) {
     e.preventDefault();
 
     var email = emailInput?.value;
     if (!email) return;
 
     if (submitButton) submitButton.disabled = true;
-    if (submitButton) submitButton.textContent = 'Subscribing...';
-    successMessage?.classList.add('hidden');
-    errorMessage?.classList.add('hidden');
+    if (submitButton) submitButton.textContent = "Subscribing...";
+    successMessage?.classList.add("hidden");
+    errorMessage?.classList.add("hidden");
 
     try {
       var { error: dbError } = await supabase
-        .from('newsletter_signups')
+        .from("newsletter_signups")
         .insert({
           email,
-          source: 'footer',
+          source: "footer",
         });
 
       if (dbError) {
-        if (dbError.code === '23505') {
+        if (dbError.code === "23505") {
           if (successMessage) {
-            successMessage.textContent = 'You are already subscribed!';
-            successMessage.classList.remove('hidden');
+            successMessage.textContent = "You are already subscribed!";
+            successMessage.classList.remove("hidden");
           }
-          emailInput.value = '';
+          emailInput.value = "";
           return;
         } else {
           throw dbError;
@@ -240,34 +256,34 @@ var currentYear = new Date().getFullYear();
 
       if (mauticBaseUrl && mauticFormId) {
         var formData = new FormData();
-        formData.append('mauticform[email]', email);
-        formData.append('mauticform[formId]', mauticFormId);
+        formData.append("mauticform[email]", email);
+        formData.append("mauticform[formId]", mauticFormId);
 
         await fetch(`${mauticBaseUrl}/form/submit?formId=${mauticFormId}`, {
-          method: 'POST',
+          method: "POST",
           body: formData,
-          mode: 'no-cors',
+          mode: "no-cors",
         });
       }
 
       if (successMessage) {
-        successMessage.textContent = '✅ Subscribed! Check your email.';
-        successMessage.classList.remove('hidden');
+        successMessage.textContent = "✅ Subscribed! Check your email.";
+        successMessage.classList.remove("hidden");
       }
-      emailInput.value = '';
+      emailInput.value = "";
 
-      if (typeof window !== 'undefined' && (window as any).pirsch) {
-        (window as any).pirsch('Newsletter Signup', { source: 'footer' });
+      if (typeof window !== "undefined" && (window as any).pirsch) {
+        (window as any).pirsch("Newsletter Signup", { source: "footer" });
       }
     } catch (error) {
-      console.error('Newsletter signup error:', error);
+      console.error("Newsletter signup error:", error);
       if (errorMessage) {
-        errorMessage.textContent = 'Failed to subscribe. Please try again.';
-        errorMessage.classList.remove('hidden');
+        errorMessage.textContent = "Failed to subscribe. Please try again.";
+        errorMessage.classList.remove("hidden");
       }
     } finally {
       if (submitButton) submitButton.disabled = false;
-      if (submitButton) submitButton.textContent = 'Subscribe';
+      if (submitButton) submitButton.textContent = "Subscribe";
     }
   });
 </script>
