@@ -1,5 +1,5 @@
-import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 export interface TocItem {
   depth: number;
@@ -31,8 +31,8 @@ export function generateTableOfContents(content: string): TocItem[] {
     const text = match[2].trim();
     const slug = text
       .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-');
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
 
     toc.push({ depth, text, slug });
   }
@@ -44,8 +44,8 @@ export function generateTableOfContents(content: string): TocItem[] {
  * Filter out draft and future posts in production
  */
 export function filterPublishedPosts(
-  posts: CollectionEntry<'blog'>[]
-): CollectionEntry<'blog'>[] {
+  posts: CollectionEntry<"blog">[],
+): CollectionEntry<"blog">[] {
   const now = new Date();
   const isProduction = import.meta.env.PROD;
 
@@ -64,8 +64,8 @@ export function filterPublishedPosts(
 /**
  * Get all published blog posts sorted by date (newest first)
  */
-export async function getPublishedPosts(): Promise<CollectionEntry<'blog'>[]> {
-  const allPosts = await getCollection('blog');
+export async function getPublishedPosts(): Promise<CollectionEntry<"blog">[]> {
+  const allPosts = await getCollection("blog");
   const publishedPosts = filterPublishedPosts(allPosts);
 
   return publishedPosts.sort((a, b) => {
@@ -78,10 +78,10 @@ export async function getPublishedPosts(): Promise<CollectionEntry<'blog'>[]> {
  * Returns top 3 posts with most shared tags
  */
 export function findRelatedPosts(
-  currentPost: CollectionEntry<'blog'>,
-  allPosts: CollectionEntry<'blog'>[],
-  limit = 3
-): CollectionEntry<'blog'>[] {
+  currentPost: CollectionEntry<"blog">,
+  allPosts: CollectionEntry<"blog">[],
+  limit = 3,
+): CollectionEntry<"blog">[] {
   const currentTags = currentPost.data.tags;
   const currentSlug = currentPost.slug;
 
@@ -90,7 +90,7 @@ export function findRelatedPosts(
     .filter((post) => post.slug !== currentSlug)
     .map((post) => {
       const sharedTags = post.data.tags.filter((tag) =>
-        currentTags.includes(tag)
+        currentTags.includes(tag),
       );
       return {
         post,
@@ -112,7 +112,7 @@ export function findRelatedPosts(
 /**
  * Get all unique tags from published posts
  */
-export function getAllTags(posts: CollectionEntry<'blog'>[]): string[] {
+export function getAllTags(posts: CollectionEntry<"blog">[]): string[] {
   const tagSet = new Set<string>();
 
   posts.forEach((post) => {
@@ -126,11 +126,11 @@ export function getAllTags(posts: CollectionEntry<'blog'>[]): string[] {
  * Get posts by tag
  */
 export function getPostsByTag(
-  posts: CollectionEntry<'blog'>[],
-  tag: string
-): CollectionEntry<'blog'>[] {
+  posts: CollectionEntry<"blog">[],
+  tag: string,
+): CollectionEntry<"blog">[] {
   return posts.filter((post) =>
-    post.data.tags.map((t) => t.toLowerCase()).includes(tag.toLowerCase())
+    post.data.tags.map((t) => t.toLowerCase()).includes(tag.toLowerCase()),
   );
 }
 
@@ -138,10 +138,10 @@ export function getPostsByTag(
  * Format date for display
  */
 export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   }).format(date);
 }
 

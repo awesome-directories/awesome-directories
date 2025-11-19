@@ -1,5 +1,8 @@
 <template>
-  <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center p-4"
+    style="position: fixed"
+  >
     <div
       class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"
       @click="handleClose"
@@ -115,7 +118,7 @@
 import { ref } from "vue";
 import { useAuth } from "@/composables/useAuth";
 
-const { signInWithGoogle, signInWithGithub } = useAuth();
+var { signInWithGoogle, signInWithGithub } = useAuth();
 
 var isLoading = ref(false);
 var errorMessage = ref("");

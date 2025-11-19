@@ -125,7 +125,8 @@ async function calculateStats(directories) {
   });
 
   // Calculate average DR
-  stats.overview.averageDR = drCount > 0 ? Math.round((totalDR / drCount) * 10) / 10 : 0;
+  stats.overview.averageDR =
+    drCount > 0 ? Math.round((totalDR / drCount) * 10) / 10 : 0;
 
   // Convert category counts to array and sort by count
   stats.categories = Object.entries(categoryCounts)

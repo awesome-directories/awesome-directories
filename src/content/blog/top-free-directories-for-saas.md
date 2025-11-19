@@ -21,6 +21,7 @@ Not every startup has a big marketing budget. The good news? You don't need one 
 Product Hunt is the gold standard for SaaS launches. A successful launch here can generate thousands of visitors and valuable feedback.
 
 **Tips for success:**
+
 - Launch on Tuesday-Thursday for maximum visibility
 - Prepare your community in advance
 - Engage with commenters throughout the day

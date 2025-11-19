@@ -44,7 +44,12 @@ export async function getSession() {
  * Get the current user
  */
 export async function getUser() {
-  const { data, error } = await supabase.auth.getUser();
+  var session = await getSession();
+  if (!session) {
+    return null;
+  }
+
+  var { data, error } = await supabase.auth.getUser();
   if (error) {
     console.error("Error getting user:", error);
     return null;

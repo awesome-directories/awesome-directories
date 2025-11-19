@@ -1,7 +1,5 @@
 <template>
-  <Teleport to="body">
-    <AuthModal v-if="showModal" @close="closeModal" />
-  </Teleport>
+  <AuthModal v-if="showModal" @close="closeModal" />
 </template>
 
 <script setup>
@@ -10,27 +8,29 @@ import AuthModal from "./AuthModal.vue";
 import { useAuth } from "@/composables/useAuth";
 
 // Initialize auth (will be no-op if already initialized)
-const { user, session, loading } = useAuth();
+var { user, session, loading } = useAuth();
 
-const showModal = ref(false);
+var showModal = ref(false);
 
-const openModal = () => {
+function openModal() {
   showModal.value = true;
-};
+}
 
-const closeModal = () => {
+function closeModal() {
   showModal.value = false;
-};
+}
 
 // Listen for global auth modal events
-let handleShowModal;
+var handleShowModal;
 
-onMounted(() => {
-  handleShowModal = () => openModal();
+onMounted(function setupModalListener() {
+  handleShowModal = function showModalHandler() {
+    openModal();
+  };
   window.addEventListener("show-auth-modal", handleShowModal);
 });
 
-onUnmounted(() => {
+onUnmounted(function cleanupModalListener() {
   if (handleShowModal) {
     window.removeEventListener("show-auth-modal", handleShowModal);
   }

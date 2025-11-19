@@ -19,6 +19,7 @@ Search engine optimization is crucial for SaaS products. Directory submissions o
 Backlinks from high-DR directories signal authority to search engines. Each quality link acts as a "vote of confidence" for your website.
 
 **What makes a quality backlink:**
+
 - High domain authority (DR 50+)
 - Relevant to your industry
 - Dofollow attribute (passes link equity)

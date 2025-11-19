@@ -6,7 +6,11 @@ tags: ["launch", "strategy", "marketing"]
 author: "Awesome Directories Team"
 coverImage: "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=1200&h=630&fit=crop"
 draft: false
-relatedPosts: ["getting-started-with-directory-submissions", "top-free-directories-for-saas"]
+relatedPosts:
+  [
+    "getting-started-with-directory-submissions",
+    "top-free-directories-for-saas",
+  ]
 ---
 
 ## Planning Your Launch
@@ -86,16 +90,19 @@ Combine directory submissions with:
 ## Coordinating Your Efforts
 
 **Week 1: Directory Blitz**
+
 - Major directories (Product Hunt, Hacker News)
 - High-DR directories
 - Industry-specific directories
 
 **Week 2-4: Sustained Submission**
+
 - Secondary directories
 - Niche communities
 - Local directories (if applicable)
 
 **Month 2+: Content & SEO**
+
 - Regular blog posts
 - Guest posting
 - Link building
@@ -134,16 +141,19 @@ Avoid these errors:
 Here's how one SaaS product used our strategy:
 
 **Pre-launch (2 months):**
+
 - Built email list of 500 subscribers
 - Created demo video and screenshots
 - Engaged in relevant communities
 
 **Launch day:**
+
 - #3 Product of the Day on Product Hunt
 - Front page of Hacker News for 4 hours
 - 5,000 unique visitors
 
 **First month:**
+
 - Submitted to 50 directories
 - Published 8 blog posts
 - 100 paying customers

@@ -203,11 +203,12 @@ import GithubStars from "./GithubStars.vue";
   // Initialize auth state
   async function initAuth() {
     try {
-      const user = await getUser();
+      var user = await getUser();
       $user.set(user);
       updateUI(user);
     } catch (error) {
-      console.error("Failed to initialize auth:", error);
+      $user.set(null);
+      updateUI(null);
     }
   }
 
