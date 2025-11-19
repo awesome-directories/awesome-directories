@@ -4,7 +4,7 @@ description: "This future-dated post is for testing the future post filtering fu
 date: 2025-12-31
 tags: ["test", "future"]
 author: "Test Author"
-draft: true
+draft: false
 ---
 
 ## This is a Future Post

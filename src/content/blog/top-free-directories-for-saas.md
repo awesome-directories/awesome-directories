@@ -4,7 +4,7 @@ description: "Discover the best free directories to launch your SaaS product wit
 date: 2024-02-01
 tags: ["directories", "free", "saas"]
 author: "Awesome Directories Team"
-draft: true
+draft: false
 ---
 
 ## Introduction
