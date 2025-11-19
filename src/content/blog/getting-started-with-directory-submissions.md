@@ -5,7 +5,7 @@ date: 2024-01-15
 tags: ["launch", "marketing", "guide"]
 author: "Awesome Directories Team"
 coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop"
-draft: false
+draft: true
 ---
 
 ## Introduction

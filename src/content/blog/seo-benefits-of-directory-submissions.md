@@ -5,7 +5,7 @@ date: 2024-01-20
 tags: ["seo", "marketing", "backlinks"]
 author: "Awesome Directories Team"
 coverImage: "https://images.unsplash.com/photo-1432888622747-4eb9a8f2c293?w=1200&h=630&fit=crop"
-draft: false
+draft: true
 ---
 
 ## The SEO Landscape for SaaS

@@ -5,7 +5,7 @@ date: 2024-02-10
 tags: ["launch", "strategy", "marketing"]
 author: "Awesome Directories Team"
 coverImage: "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=1200&h=630&fit=crop"
-draft: false
+draft: true
 relatedPosts:
   [
     "getting-started-with-directory-submissions",
