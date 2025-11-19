@@ -6,6 +6,7 @@ import AppHeader from "@/components/AppHeader.astro";
 import AppFooter from "@/components/AppFooter.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 import RelatedPosts from "@/components/RelatedPosts.astro";
+import ShareButtons from "@/components/ShareButtons.astro";
 import {
   getPublishedPosts,
   findRelatedPosts,
@@ -215,24 +216,12 @@ const ogImage = coverImage || `${siteUrl}/og-image.png`;
           <h3 class="text-lg font-semibold text-gray-900 mb-3">
             Share this post:
           </h3>
-          <div class="flex gap-3">
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(postUrl)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-            >
-              Share on Twitter
-            </a>
-            <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition-colors"
-            >
-              Share on LinkedIn
-            </a>
-          </div>
+          <ShareButtons
+            url={postUrl}
+            title={title}
+            description={description}
+            platforms={['x', 'linkedin', 'facebook', 'reddit']}
+          />
         </div>
 
         <!-- Related Posts -->
