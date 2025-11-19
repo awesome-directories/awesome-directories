@@ -16,6 +16,7 @@
     "uhtml": "^5.0.9"
   },
   "devDependencies": {
+    "@astrojs/mdx": "^4.3.11",
     "@astrojs/sitemap": "^3.0.0",
     "@astrojs/tailwind": "^5.0.0",
     "@astrojs/vue": "^5.1.3",
