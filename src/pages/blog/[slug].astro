@@ -7,6 +7,7 @@ import AppFooter from "@/components/AppFooter.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 import RelatedPosts from "@/components/RelatedPosts.astro";
 import ShareButtons from "@/components/ShareButtons.astro";
+import GiscusComments from "@/components/GiscusComments.astro";
 import {
   getPublishedPosts,
   findRelatedPosts,
@@ -221,6 +222,11 @@ const ogImage = coverImage || `${siteUrl}/og-image.png`;
             title={title}
             description={description}
             platforms={['x', 'linkedin', 'facebook', 'reddit']}
+          />
+
+          <GiscusComments
+            title={title}
+            pathname={`/blog/${post.slug}`}
           />
         </div>
 
