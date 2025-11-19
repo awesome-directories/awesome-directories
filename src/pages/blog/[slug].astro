@@ -218,13 +218,10 @@ const ogImage = coverImage || `${siteUrl}/og-image.png`;
             url={postUrl}
             title={title}
             description={description}
-            platforms={['x', 'linkedin', 'facebook', 'reddit']}
+            platforms={["x", "linkedin", "facebook", "reddit"]}
           />
 
-          <GiscusComments
-            title={title}
-            pathname={`/blog/${post.slug}`}
-          />
+          <GiscusComments title={title} pathname={`/blog/${post.slug}`} />
         </div>
 
         <!-- Related Posts -->

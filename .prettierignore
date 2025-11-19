@@ -1,3 +1,4 @@
 renovate.json
 CHANGELOG.md
 supabase/seeds/*.json
+src/content/blog/000-product-hunt-launch-2025.mdx

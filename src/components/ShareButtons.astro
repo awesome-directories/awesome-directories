@@ -3,7 +3,7 @@ interface Props {
   url: string;
   title: string;
   description?: string;
-  platforms?: Array<'x' | 'linkedin' | 'facebook' | 'reddit' | 'hackernews'>;
+  platforms?: Array<"x" | "linkedin" | "facebook" | "reddit" | "hackernews">;
   heading?: string;
   class?: string;
 }
@@ -11,13 +11,13 @@ interface Props {
 const {
   url,
   title,
-  description = '',
-  platforms = ['x', 'linkedin'],
-  heading = 'Share this post:',
-  class: className = ''
+  description = "",
+  platforms = ["x", "linkedin"],
+  heading = "Share this post:",
+  class: className = "",
 } = Astro.props;
 
-import ShareButton from './ShareButton.astro';
+import ShareButton from "./ShareButton.astro";
 ---
 
 <div class={`share-buttons-container ${className}`}>
@@ -25,16 +25,18 @@ import ShareButton from './ShareButton.astro';
     {heading}
   </h3>
   <div class="flex flex-wrap gap-3">
-    {platforms.map(function renderPlatform(platform) {
-      return (
-        <ShareButton
-          platform={platform}
-          url={url}
-          title={title}
-          description={description}
-        />
-      );
-    })}
+    {
+      platforms.map(function renderPlatform(platform) {
+        return (
+          <ShareButton
+            platform={platform}
+            url={url}
+            title={title}
+            description={description}
+          />
+        );
+      })
+    }
   </div>
 </div>
 

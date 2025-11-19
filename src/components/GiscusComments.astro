@@ -5,11 +5,11 @@ interface Props {
   class?: string;
 }
 
-var { title, pathname, class: className = '' } = Astro.props;
-var repoOwner = 'awesome-directories';
-var repoName = 'awesome-directories';
-var discussionCategory = 'General';
-var discussionCategoryId = 'DIC_kwDOQRUDDM4Cx-MZ';
+var { title, pathname, class: className = "" } = Astro.props;
+var repoOwner = "awesome-directories";
+var repoName = "awesome-directories";
+var discussionCategory = "General";
+var discussionCategoryId = "DIC_kwDOQRUDDM4Cx-MZ";
 ---
 
 <div class={`giscus-wrapper ${className}`} data-giscus-container>
@@ -30,11 +30,11 @@ var discussionCategoryId = 'DIC_kwDOQRUDDM4Cx-MZ';
     repoOwner,
     repoName,
     discussionCategory,
-    discussionCategoryId
+    discussionCategoryId,
   }}
 >
   function initGiscus() {
-    var container = document.querySelector('[data-giscus-container]');
+    var container = document.querySelector("[data-giscus-container]");
     if (!container) {
       return;
     }
@@ -48,43 +48,43 @@ var discussionCategoryId = 'DIC_kwDOQRUDDM4Cx-MZ';
       }
       giscusLoaded = true;
 
-      var placeholder = document.getElementById('giscus-placeholder');
+      var placeholder = document.getElementById("giscus-placeholder");
       if (placeholder) {
         placeholder.remove();
       }
 
-      var script = document.createElement('script');
-      script.src = 'https://giscus.app/client.js';
-      script.setAttribute('data-repo', repoOwner + '/' + repoName);
-      script.setAttribute('data-repo-id', 'R_kgDOQRUDDA');
-      script.setAttribute('data-category', discussionCategory);
-      script.setAttribute('data-category-id', discussionCategoryId);
-      script.setAttribute('data-mapping', 'pathname');
-      script.setAttribute('data-strict', '0');
-      script.setAttribute('data-reactions-enabled', '1');
-      script.setAttribute('data-emit-metadata', '0');
-      script.setAttribute('data-input-position', 'top');
-      script.setAttribute('data-theme', 'preferred_color_scheme');
-      script.setAttribute('data-lang', 'en');
-      script.setAttribute('data-loading', 'lazy');
-      script.crossOrigin = 'anonymous';
+      var script = document.createElement("script");
+      script.src = "https://giscus.app/client.js";
+      script.setAttribute("data-repo", repoOwner + "/" + repoName);
+      script.setAttribute("data-repo-id", "R_kgDOQRUDDA");
+      script.setAttribute("data-category", discussionCategory);
+      script.setAttribute("data-category-id", discussionCategoryId);
+      script.setAttribute("data-mapping", "pathname");
+      script.setAttribute("data-strict", "0");
+      script.setAttribute("data-reactions-enabled", "1");
+      script.setAttribute("data-emit-metadata", "0");
+      script.setAttribute("data-input-position", "top");
+      script.setAttribute("data-theme", "preferred_color_scheme");
+      script.setAttribute("data-lang", "en");
+      script.setAttribute("data-loading", "lazy");
+      script.crossOrigin = "anonymous";
       script.async = true;
 
       container.appendChild(script);
 
-      var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      var mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
       function handleThemeChange(e) {
-        var iframe = document.querySelector('iframe.giscus-frame');
+        var iframe = document.querySelector("iframe.giscus-frame");
         if (!iframe) {
           return;
         }
-        var theme = e.matches ? 'dark' : 'light';
+        var theme = e.matches ? "dark" : "light";
         iframe.contentWindow.postMessage(
           { giscus: { setConfig: { theme: theme } } },
-          'https://giscus.app'
+          "https://giscus.app",
         );
       }
-      mediaQuery.addEventListener('change', handleThemeChange);
+      mediaQuery.addEventListener("change", handleThemeChange);
     }
 
     function handleIntersection(entries) {
@@ -99,8 +99,8 @@ var discussionCategoryId = 'DIC_kwDOQRUDDM4Cx-MZ';
     }
 
     var observer = new IntersectionObserver(handleIntersection, {
-      rootMargin: '400px 0px',
-      threshold: 0.01
+      rootMargin: "400px 0px",
+      threshold: 0.01,
     });
 
     observer.observe(container);
@@ -111,17 +111,17 @@ var discussionCategoryId = 'DIC_kwDOQRUDDM4Cx-MZ';
       }
     }
 
-    document.addEventListener('astro:before-preparation', cleanup);
-    document.addEventListener('astro:before-swap', cleanup);
+    document.addEventListener("astro:before-preparation", cleanup);
+    document.addEventListener("astro:before-swap", cleanup);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initGiscus);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGiscus);
   } else {
     initGiscus();
   }
 
-  document.addEventListener('astro:page-load', initGiscus);
+  document.addEventListener("astro:page-load", initGiscus);
 </script>
 
 <style>
