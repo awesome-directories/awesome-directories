@@ -1,10 +1,10 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import AppHeader from '@/components/AppHeader.astro';
-import AppFooter from '@/components/AppFooter.astro';
-import StatsCards from '@/components/StatsCards.vue';
-import StatsCharts from '@/components/StatsCharts.vue';
-import TopDirectoriesTable from '@/components/TopDirectoriesTable.vue';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
+import StatsCards from "@/components/StatsCards.vue";
+import StatsCharts from "@/components/StatsCharts.vue";
+import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
 ---
 
 <BaseLayout
@@ -21,8 +21,8 @@ import TopDirectoriesTable from '@/components/TopDirectoriesTable.vue';
           Directory Statistics
         </h1>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Comprehensive analytics and insights from our curated collection of launch directories.
-          All data is updated during each build.
+          Comprehensive analytics and insights from our curated collection of
+          launch directories. All data is updated during each build.
         </p>
       </div>
 
@@ -50,14 +50,26 @@ import TopDirectoriesTable from '@/components/TopDirectoriesTable.vue';
           About These Statistics
         </h2>
         <p class="text-gray-700 mb-4">
-          These statistics are calculated at build time from our verified directory database.
-          All metrics include only active, verified directories to ensure data quality.
+          These statistics are calculated at build time from our verified
+          directory database. All metrics include only active, verified
+          directories to ensure data quality.
         </p>
         <ul class="list-disc list-inside text-gray-700 space-y-2">
-          <li><strong>Domain Rating (DR):</strong> Authority score from 0-100, higher is better</li>
-          <li><strong>Helpful Votes:</strong> Community votes indicating directory quality and effectiveness</li>
-          <li><strong>Link Types:</strong> Dofollow links pass SEO value, nofollow links don't</li>
-          <li><strong>Categories:</strong> Directories can belong to multiple categories</li>
+          <li>
+            <strong>Domain Rating (DR):</strong> Authority score from 0-100, higher
+            is better
+          </li>
+          <li>
+            <strong>Helpful Votes:</strong> Community votes indicating directory
+            quality and effectiveness
+          </li>
+          <li>
+            <strong>Link Types:</strong> Dofollow links pass SEO value, nofollow
+            links don't
+          </li>
+          <li>
+            <strong>Categories:</strong> Directories can belong to multiple categories
+          </li>
         </ul>
       </div>
     </div>
@@ -68,7 +80,7 @@ import TopDirectoriesTable from '@/components/TopDirectoriesTable.vue';
 
 <script>
   // Track page view with Pirsch
-  if (typeof window !== 'undefined' && typeof window.pirsch === 'function') {
-    window.pirsch('Stats Page View');
+  if (typeof window !== "undefined" && typeof window.pirsch === "function") {
+    window.pirsch("Stats Page View");
   }
 </script>

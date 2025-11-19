@@ -1,0 +1,47 @@
+---
+interface Props {
+  url: string;
+  title: string;
+  description?: string;
+  platforms?: Array<'x' | 'linkedin' | 'facebook' | 'reddit' | 'hackernews'>;
+  heading?: string;
+  class?: string;
+}
+
+const {
+  url,
+  title,
+  description = '',
+  platforms = ['x', 'linkedin'],
+  heading = 'Share this post:',
+  class: className = ''
+} = Astro.props;
+
+import ShareButton from './ShareButton.astro';
+---
+
+<div class={`share-buttons-container ${className}`}>
+  <h3 class="text-lg font-semibold text-gray-900 mb-3">
+    {heading}
+  </h3>
+  <div class="flex flex-wrap gap-3">
+    {platforms.map(function renderPlatform(platform) {
+      return (
+        <ShareButton
+          platform={platform}
+          url={url}
+          title={title}
+          description={description}
+        />
+      );
+    })}
+  </div>
+</div>
+
+<style>
+  .share-buttons-container {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+  }
+</style>

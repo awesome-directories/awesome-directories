@@ -10,16 +10,23 @@ import GithubStars from "./GithubStars.vue";
   <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
     <div class="flex items-center justify-between h-14 sm:h-16">
       <!-- Logo -->
-      <a href="/" class="flex items-center hover:opacity-80 transition-opacity min-h-[44px] min-w-[44px]">
+      <a
+        href="/"
+        class="flex items-center hover:opacity-80 transition-opacity min-h-[44px] min-w-[44px]"
+      >
         <Logo size="md" spacing="lg" />
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-4 lg:space-x-6">
-        <GithubStars
-          client:load
-          class="mr-2 lg:mr-4"
-        />
+        <GithubStars client:load class="mr-2 lg:mr-4" />
+
+        <a
+          href="/blog"
+          class="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+        >
+          Blog
+        </a>
 
         <a
           href="/submit"
@@ -82,7 +89,10 @@ import GithubStars from "./GithubStars.vue";
           </div>
         </div>
 
-        <button id="sign-in-button" class="btn-primary text-sm hidden min-h-[44px]">
+        <button
+          id="sign-in-button"
+          class="btn-primary text-sm hidden min-h-[44px]"
+        >
           Sign In
         </button>
       </nav>
@@ -129,6 +139,12 @@ import GithubStars from "./GithubStars.vue";
       class="hidden md:hidden py-3 border-t border-gray-200"
     >
       <nav class="flex flex-col space-y-1">
+        <a
+          href="/blog"
+          class="text-gray-700 hover:text-primary font-medium mobile-menu-link"
+        >
+          Blog
+        </a>
         <a
           href="/submit"
           class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center"
@@ -190,11 +206,12 @@ import GithubStars from "./GithubStars.vue";
   // Initialize auth state
   async function initAuth() {
     try {
-      const user = await getUser();
+      var user = await getUser();
       $user.set(user);
       updateUI(user);
     } catch (error) {
-      console.error("Failed to initialize auth:", error);
+      $user.set(null);
+      updateUI(null);
     }
   }
 

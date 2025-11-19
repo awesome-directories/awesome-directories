@@ -1,6 +1,8 @@
 <template>
   <div v-if="loading" class="text-center py-12">
-    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+    <div
+      class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"
+    ></div>
     <p class="mt-4 text-gray-600">Loading charts...</p>
   </div>
 
@@ -11,7 +13,9 @@
   <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <!-- Category Distribution -->
     <div class="card p-6">
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Category Distribution</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">
+        Category Distribution
+      </h3>
       <div class="relative h-80">
         <canvas ref="categoryChart"></canvas>
       </div>
@@ -19,7 +23,9 @@
 
     <!-- Pricing Breakdown -->
     <div class="card p-6">
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Pricing Breakdown</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">
+        Pricing Breakdown
+      </h3>
       <div class="relative h-80">
         <canvas ref="pricingChart"></canvas>
       </div>
@@ -27,7 +33,9 @@
 
     <!-- Link Types -->
     <div class="card p-6">
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Link Type Distribution</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">
+        Link Type Distribution
+      </h3>
       <div class="relative h-80">
         <canvas ref="linkTypeChart"></canvas>
       </div>
@@ -35,7 +43,9 @@
 
     <!-- Domain Rating Ranges -->
     <div class="card p-6">
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Domain Rating Distribution</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">
+        Domain Rating Distribution
+      </h3>
       <div class="relative h-80">
         <canvas ref="drRangeChart"></canvas>
       </div>
@@ -43,7 +53,9 @@
 
     <!-- Recent Additions Timeline (Full Width) -->
     <div class="card p-6 lg:col-span-2">
-      <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Additions Timeline</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">
+        Recent Additions Timeline
+      </h3>
       <div class="relative h-64">
         <canvas ref="timelineChart"></canvas>
       </div>
@@ -52,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import {
   Chart,
   ArcElement,
@@ -61,8 +73,8 @@ import {
   LinearScale,
   Tooltip,
   Legend,
-  Title
-} from 'chart.js';
+  Title,
+} from "chart.js";
 
 // Register Chart.js components
 Chart.register(
@@ -72,7 +84,7 @@ Chart.register(
   LinearScale,
   Tooltip,
   Legend,
-  Title
+  Title,
 );
 
 const loading = ref(true);
@@ -95,44 +107,58 @@ let timelineChartInstance = null;
 
 // Color palettes
 const categoryColors = [
-  '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981',
-  '#06b6d4', '#6366f1', '#f97316', '#14b8a6', '#a855f7',
-  '#84cc16', '#f43f5e', '#0ea5e9', '#eab308', '#22c55e'
+  "#3b82f6",
+  "#8b5cf6",
+  "#ec4899",
+  "#f59e0b",
+  "#10b981",
+  "#06b6d4",
+  "#6366f1",
+  "#f97316",
+  "#14b8a6",
+  "#a855f7",
+  "#84cc16",
+  "#f43f5e",
+  "#0ea5e9",
+  "#eab308",
+  "#22c55e",
 ];
 
 const pricingColors = {
-  free: '#10b981',
-  paid: '#f59e0b',
-  freemium: '#3b82f6'
+  free: "#10b981",
+  paid: "#f59e0b",
+  freemium: "#3b82f6",
 };
 
 function createCategoryChart() {
   if (!categoryChart.value || !stats.value) return;
 
   const topCategories = stats.value.categories.slice(0, 10);
-  const labels = topCategories.map(cat => cat.name);
-  const data = topCategories.map(cat => cat.count);
+  const labels = topCategories.map((cat) => cat.name);
+  const data = topCategories.map((cat) => cat.count);
 
   categoryChartInstance = new Chart(categoryChart.value, {
-    type: 'pie',
+    type: "pie",
     data: {
       labels,
-      datasets: [{
-        data,
-        backgroundColor: categoryColors.slice(0, topCategories.length),
-        borderWidth: 2,
-        borderColor: '#fff'
-      }]
+      datasets: [
+        {
+          data,
+          backgroundColor: categoryColors.slice(0, topCategories.length),
+          borderWidth: 2,
+          borderColor: "#fff",
+        },
+      ],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: 'right',
+          position: "right",
           labels: {
             font: {
-              size: 11
+              size: 11,
             },
             padding: 10,
             generateLabels: (chart) => {
@@ -141,62 +167,64 @@ function createCategoryChart() {
                 text: `${label} (${data.datasets[0].data[i]})`,
                 fillStyle: data.datasets[0].backgroundColor[i],
                 hidden: false,
-                index: i
+                index: i,
               }));
-            }
-          }
+            },
+          },
         },
         tooltip: {
           callbacks: {
             label: (context) => {
-              const label = context.label || '';
+              const label = context.label || "";
               const value = context.parsed || 0;
               const total = context.dataset.data.reduce((a, b) => a + b, 0);
               const percentage = ((value / total) * 100).toFixed(1);
               return `${label}: ${value} (${percentage}%)`;
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   });
 }
 
 function createPricingChart() {
   if (!pricingChart.value || !stats.value) return;
 
-  const labels = ['Free', 'Paid', 'Freemium'];
+  const labels = ["Free", "Paid", "Freemium"];
   const data = [
     stats.value.pricing.free,
     stats.value.pricing.paid,
-    stats.value.pricing.freemium
+    stats.value.pricing.freemium,
   ];
 
   pricingChartInstance = new Chart(pricingChart.value, {
-    type: 'doughnut',
+    type: "doughnut",
     data: {
       labels,
-      datasets: [{
-        data,
-        backgroundColor: [
-          pricingColors.free,
-          pricingColors.paid,
-          pricingColors.freemium
-        ],
-        borderWidth: 2,
-        borderColor: '#fff'
-      }]
+      datasets: [
+        {
+          data,
+          backgroundColor: [
+            pricingColors.free,
+            pricingColors.paid,
+            pricingColors.freemium,
+          ],
+          borderWidth: 2,
+          borderColor: "#fff",
+        },
+      ],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: 'bottom',
+          position: "bottom",
           labels: {
             padding: 15,
             font: {
-              size: 12
+              size: 12,
             },
             generateLabels: (chart) => {
               const data = chart.data;
@@ -204,24 +232,24 @@ function createPricingChart() {
                 text: `${label}: ${data.datasets[0].data[i]}`,
                 fillStyle: data.datasets[0].backgroundColor[i],
                 hidden: false,
-                index: i
+                index: i,
               }));
-            }
-          }
+            },
+          },
         },
         tooltip: {
           callbacks: {
             label: (context) => {
-              const label = context.label || '';
+              const label = context.label || "";
               const value = context.parsed || 0;
               const total = context.dataset.data.reduce((a, b) => a + b, 0);
               const percentage = ((value / total) * 100).toFixed(1);
               return `${label}: ${value} (${percentage}%)`;
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   });
 }
 
@@ -229,19 +257,21 @@ function createLinkTypeChart() {
   if (!linkTypeChart.value || !stats.value) return;
 
   linkTypeChartInstance = new Chart(linkTypeChart.value, {
-    type: 'bar',
+    type: "bar",
     data: {
-      labels: ['Dofollow', 'Nofollow'],
-      datasets: [{
-        label: 'Number of Directories',
-        data: [
-          stats.value.linkTypes.dofollow,
-          stats.value.linkTypes.nofollow
-        ],
-        backgroundColor: ['#10b981', '#f59e0b'],
-        borderColor: ['#059669', '#d97706'],
-        borderWidth: 1
-      }]
+      labels: ["Dofollow", "Nofollow"],
+      datasets: [
+        {
+          label: "Number of Directories",
+          data: [
+            stats.value.linkTypes.dofollow,
+            stats.value.linkTypes.nofollow,
+          ],
+          backgroundColor: ["#10b981", "#f59e0b"],
+          borderColor: ["#059669", "#d97706"],
+          borderWidth: 1,
+        },
+      ],
     },
     options: {
       responsive: true,
@@ -250,26 +280,27 @@ function createLinkTypeChart() {
         y: {
           beginAtZero: true,
           ticks: {
-            precision: 0
-          }
-        }
+            precision: 0,
+          },
+        },
       },
       plugins: {
         legend: {
-          display: false
+          display: false,
         },
         tooltip: {
           callbacks: {
             label: (context) => {
               const value = context.parsed.y;
-              const total = stats.value.linkTypes.dofollow + stats.value.linkTypes.nofollow;
+              const total =
+                stats.value.linkTypes.dofollow + stats.value.linkTypes.nofollow;
               const percentage = ((value / total) * 100).toFixed(1);
               return `${value} directories (${percentage}%)`;
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   });
 }
 
@@ -280,54 +311,50 @@ function createDRRangeChart() {
   const data = Object.values(stats.value.drRanges);
 
   drRangeChartInstance = new Chart(drRangeChart.value, {
-    type: 'bar',
+    type: "bar",
     data: {
       labels,
-      datasets: [{
-        label: 'Number of Directories',
-        data,
-        backgroundColor: [
-          '#ef4444',
-          '#f59e0b',
-          '#eab308',
-          '#84cc16',
-          '#22c55e'
-        ],
-        borderColor: [
-          '#dc2626',
-          '#d97706',
-          '#ca8a04',
-          '#65a30d',
-          '#16a34a'
-        ],
-        borderWidth: 1
-      }]
+      datasets: [
+        {
+          label: "Number of Directories",
+          data,
+          backgroundColor: [
+            "#ef4444",
+            "#f59e0b",
+            "#eab308",
+            "#84cc16",
+            "#22c55e",
+          ],
+          borderColor: ["#dc2626", "#d97706", "#ca8a04", "#65a30d", "#16a34a"],
+          borderWidth: 1,
+        },
+      ],
     },
     options: {
-      indexAxis: 'y',
+      indexAxis: "y",
       responsive: true,
       maintainAspectRatio: false,
       scales: {
         x: {
           beginAtZero: true,
           ticks: {
-            precision: 0
-          }
-        }
+            precision: 0,
+          },
+        },
       },
       plugins: {
         legend: {
-          display: false
+          display: false,
         },
         tooltip: {
           callbacks: {
             label: (context) => {
               return `${context.parsed.x} directories`;
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   });
 }
 
@@ -335,20 +362,22 @@ function createTimelineChart() {
   if (!timelineChart.value || !stats.value) return;
 
   timelineChartInstance = new Chart(timelineChart.value, {
-    type: 'bar',
+    type: "bar",
     data: {
-      labels: ['Last 30 Days', 'Last 60 Days', 'Last 90 Days'],
-      datasets: [{
-        label: 'Directories Added',
-        data: [
-          stats.value.recentAdditions.last30Days,
-          stats.value.recentAdditions.last60Days,
-          stats.value.recentAdditions.last90Days
-        ],
-        backgroundColor: ['#3b82f6', '#8b5cf6', '#ec4899'],
-        borderColor: ['#2563eb', '#7c3aed', '#db2777'],
-        borderWidth: 1
-      }]
+      labels: ["Last 30 Days", "Last 60 Days", "Last 90 Days"],
+      datasets: [
+        {
+          label: "Directories Added",
+          data: [
+            stats.value.recentAdditions.last30Days,
+            stats.value.recentAdditions.last60Days,
+            stats.value.recentAdditions.last90Days,
+          ],
+          backgroundColor: ["#3b82f6", "#8b5cf6", "#ec4899"],
+          borderColor: ["#2563eb", "#7c3aed", "#db2777"],
+          borderWidth: 1,
+        },
+      ],
     },
     options: {
       responsive: true,
@@ -357,23 +386,23 @@ function createTimelineChart() {
         y: {
           beginAtZero: true,
           ticks: {
-            precision: 0
-          }
-        }
+            precision: 0,
+          },
+        },
       },
       plugins: {
         legend: {
-          display: false
+          display: false,
         },
         tooltip: {
           callbacks: {
             label: (context) => {
               return `${context.parsed.y} new directories`;
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   });
 }
 
@@ -382,7 +411,7 @@ async function loadStats() {
     loading.value = true;
     error.value = null;
 
-    const response = await fetch('/data/stats.json');
+    const response = await fetch("/data/stats.json");
     if (!response.ok) {
       throw new Error(`Failed to load stats: ${response.statusText}`);
     }
@@ -390,7 +419,7 @@ async function loadStats() {
     stats.value = await response.json();
 
     // Wait for next tick to ensure DOM is updated
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await new Promise((resolve) => setTimeout(resolve, 0));
 
     // Create all charts
     createCategoryChart();
@@ -399,8 +428,8 @@ async function loadStats() {
     createDRRangeChart();
     createTimelineChart();
   } catch (err) {
-    console.error('Error loading stats:', err);
-    error.value = 'Failed to load chart data. Please try again later.';
+    console.error("Error loading stats:", err);
+    error.value = "Failed to load chart data. Please try again later.";
   } finally {
     loading.value = false;
   }

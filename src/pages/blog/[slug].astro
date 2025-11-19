@@ -1,0 +1,356 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import RelatedPosts from "@/components/RelatedPosts.astro";
+import ShareButtons from "@/components/ShareButtons.astro";
+import GiscusComments from "@/components/GiscusComments.astro";
+import {
+  getPublishedPosts,
+  findRelatedPosts,
+  formatDate,
+  calculateReadingTime,
+  generateTableOfContents,
+} from "@/utils/blog";
+
+export const getStaticPaths = (async () => {
+  const publishedPosts = await getPublishedPosts();
+
+  return publishedPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+const {
+  title,
+  description,
+  date,
+  tags,
+  author,
+  coverImage,
+  relatedPosts: customRelatedPosts,
+} = post.data;
+
+const readingTime = calculateReadingTime(post.body);
+const toc = generateTableOfContents(post.body);
+
+// Get related posts
+let relatedPostsData;
+if (customRelatedPosts && customRelatedPosts.length > 0) {
+  // Use custom related posts from frontmatter
+  const allPosts = await getPublishedPosts();
+  relatedPostsData = allPosts.filter((p) =>
+    customRelatedPosts.includes(p.slug),
+  );
+} else {
+  // Find related posts automatically
+  const allPosts = await getPublishedPosts();
+  relatedPostsData = findRelatedPosts(post, allPosts, 3);
+}
+
+const publishedDate = formatDate(date);
+const siteUrl = Astro.site?.toString() || "https://awesome-directories.com";
+const postUrl = `${siteUrl}/blog/${post.slug}`;
+const ogImage = coverImage || `${siteUrl}/og-image.png`;
+---
+
+<BaseLayout
+  title={`${title} | Awesome Directories Blog`}
+  description={description}
+>
+  <Fragment slot="head">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={postUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="article:published_time" content={date.toISOString()} />
+    <meta property="article:author" content={author} />
+    {tags.map((tag) => <meta property="article:tag" content={tag} />)}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={postUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Schema.org Structured Data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: title,
+        description: description,
+        image: ogImage,
+        datePublished: date.toISOString(),
+        author: {
+          "@type": "Organization",
+          name: author,
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "Awesome Directories",
+          logo: {
+            "@type": "ImageObject",
+            url: `${siteUrl}/logo.png`,
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": postUrl,
+        },
+        keywords: tags.join(", "),
+      })}
+    />
+  </Fragment>
+
+  <AppHeader />
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-8 text-sm" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2 text-gray-600">
+        <li>
+          <a href="/" class="hover:text-blue-600">Home</a>
+        </li>
+        <li>
+          <span class="mx-2">/</span>
+        </li>
+        <li>
+          <a href="/blog" class="hover:text-blue-600">Blog</a>
+        </li>
+        <li>
+          <span class="mx-2">/</span>
+        </li>
+        <li class="text-gray-900 font-medium" aria-current="page">
+          {title}
+        </li>
+      </ol>
+    </nav>
+
+    <div class="grid lg:grid-cols-[1fr_300px] gap-12">
+      <!-- Main Content -->
+      <div>
+        <!-- Article Header -->
+        <article class="prose prose-lg max-w-none" data-pagefind-body>
+          <header class="mb-8">
+            <div class="flex flex-wrap gap-2 mb-4">
+              {
+                tags.map((tag) => (
+                  <a
+                    href={`/blog/tags/${tag.toLowerCase()}`}
+                    class="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 transition-colors no-underline"
+                    data-pagefind-filter="tag"
+                  >
+                    #{tag}
+                  </a>
+                ))
+              }
+            </div>
+
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              {title}
+            </h1>
+
+            <p class="text-xl text-gray-600 mb-6">
+              {description}
+            </p>
+
+            <div
+              class="flex items-center gap-4 text-sm text-gray-600 pb-6 border-b"
+            >
+              <span>By <strong>{author}</strong></span>
+              <span>•</span>
+              <time datetime={date.toISOString()}>
+                {publishedDate}
+              </time>
+              <span>•</span>
+              <span>{readingTime} min read</span>
+            </div>
+          </header>
+
+          {
+            coverImage && (
+              <img
+                src={coverImage}
+                alt={title}
+                class="w-full rounded-lg mb-8"
+                loading="eager"
+              />
+            )
+          }
+
+          <!-- Blog Content -->
+          <div class="blog-content">
+            <Content />
+          </div>
+        </article>
+
+        <!-- Tags Footer -->
+        <div class="mt-8 pt-8 border-t">
+          <h3 class="text-lg font-semibold text-gray-900 mb-3">Tags:</h3>
+          <div class="flex flex-wrap gap-2">
+            {
+              tags.map((tag) => (
+                <a
+                  href={`/blog/tags/${tag.toLowerCase()}`}
+                  class="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 transition-colors"
+                >
+                  #{tag}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Share Buttons -->
+        <div>
+          <ShareButtons
+            url={postUrl}
+            title={title}
+            description={description}
+            platforms={['x', 'linkedin', 'facebook', 'reddit']}
+          />
+
+          <GiscusComments
+            title={title}
+            pathname={`/blog/${post.slug}`}
+          />
+        </div>
+
+        <!-- Related Posts -->
+        {
+          relatedPostsData.length > 0 && (
+            <RelatedPosts posts={relatedPostsData} />
+          )
+        }
+      </div>
+
+      <!-- Sidebar with TOC -->
+      <aside class="hidden lg:block">
+        {toc.length > 0 && <TableOfContents headings={toc} />}
+      </aside>
+    </div>
+  </main>
+
+  <AppFooter />
+</BaseLayout>
+
+<style>
+  .blog-content :global(h2),
+  .blog-content :global(h3) {
+    scroll-margin-top: 6rem;
+  }
+
+  .blog-content :global(h2) {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog-content :global(h3) {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-content :global(p) {
+    color: #374151;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .blog-content :global(a) {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+
+  .blog-content :global(a:hover) {
+    color: #1e40af;
+  }
+
+  .blog-content :global(ul),
+  .blog-content :global(ol) {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog-content :global(ul) {
+    list-style-type: disc;
+  }
+
+  .blog-content :global(ol) {
+    list-style-type: decimal;
+  }
+
+  .blog-content :global(li) {
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-content :global(blockquote) {
+    border-left: 4px solid #3b82f6;
+    padding-left: 1rem;
+    font-style: italic;
+    color: #374151;
+    margin: 1rem 0;
+  }
+
+  .blog-content :global(code) {
+    background-color: #f3f4f6;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: monospace;
+  }
+
+  .blog-content :global(pre) {
+    background-color: #111827;
+    color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .blog-content :global(pre code) {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .blog-content :global(img) {
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .blog-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+
+  .blog-content :global(th),
+  .blog-content :global(td) {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
+  }
+
+  .blog-content :global(th) {
+    background-color: #f3f4f6;
+    font-weight: 600;
+    text-align: left;
+  }
+</style>

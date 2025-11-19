@@ -1,6 +1,6 @@
 import { computed } from "vue";
 import { useStore } from "@nanostores/vue";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-client";
 import {
   $user,
   $session,

@@ -1,8 +1,9 @@
 <template>
   <div id="directory-app">
-    <div class="bg-white border-b border-gray-200 sticky top-0 sm:top-16 z-40 shadow-sm">
+    <div
+      class="bg-white border-b border-gray-200 sticky top-0 sm:top-16 z-40 shadow-sm"
+    >
       <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-
         <div class="flex items-center justify-between mb-3 lg:hidden">
           <h2 class="text-sm font-semibold text-gray-900">Filters</h2>
           <button
@@ -10,7 +11,7 @@
             class="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary-dark min-h-[44px] px-3"
             aria-label="Toggle filters"
           >
-            <span>{{ filtersExpanded ? 'Hide' : 'Show' }}</span>
+            <span>{{ filtersExpanded ? "Hide" : "Show" }}</span>
             <svg
               class="w-4 h-4 transition-transform duration-200"
               :class="{ 'rotate-180': filtersExpanded }"
@@ -32,10 +33,12 @@
           class="transition-all duration-300 ease-in-out overflow-hidden"
           :class="{
             'max-h-0 lg:max-h-none': !filtersExpanded,
-            'max-h-[800px]': filtersExpanded
+            'max-h-[800px]': filtersExpanded,
           }"
         >
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4"
+          >
             <div>
               <label
                 for="filter-category"
@@ -143,9 +146,14 @@
           <div class="flex items-center gap-2 flex-wrap">
             <span class="text-xs sm:text-sm text-gray-900">
               <span class="font-semibold">{{ visibleDirectories.length }}</span>
-              {{ visibleDirectories.length === 1 ? 'directory' : 'directories' }}
+              {{
+                visibleDirectories.length === 1 ? "directory" : "directories"
+              }}
             </span>
-            <span v-if="pendingSubmissions.length > 0" class="text-xs text-yellow-800 bg-yellow-50 px-2 py-1 rounded-full">
+            <span
+              v-if="pendingSubmissions.length > 0"
+              class="text-xs text-yellow-800 bg-yellow-50 px-2 py-1 rounded-full"
+            >
               {{ pendingSubmissions.length }} pending
             </span>
           </div>
@@ -155,8 +163,18 @@
             class="text-xs sm:text-sm text-primary hover:text-primary-dark font-medium whitespace-nowrap min-h-[44px] px-2 flex items-center gap-1"
             aria-label="Clear all filters"
           >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
             <span>Clear filters</span>
           </button>
@@ -166,7 +184,9 @@
 
     <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
       <div v-if="isLoading" class="text-center py-12">
-        <div class="text-gray-900 text-sm sm:text-base">Loading directories...</div>
+        <div class="text-gray-900 text-sm sm:text-base">
+          Loading directories...
+        </div>
       </div>
 
       <div
@@ -181,7 +201,10 @@
         </button>
       </div>
 
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+      <div
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
+      >
         <DirectoryCard
           v-for="dir in visibleDirectories.slice(0, itemsToShow)"
           :key="dir.id"

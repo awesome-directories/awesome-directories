@@ -1,28 +1,24 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import AppHeader from '@/components/AppHeader.astro';
-import AppFooter from '@/components/AppFooter.astro';
-import SubmissionsContent from '@/components/SubmissionsContent.vue';
-import '@/style.css';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
+import SubmissionsContent from "@/components/SubmissionsContent.vue";
+import "@/style.css";
 
-const title = 'My Submissions | Awesome Directories';
-const description = 'Track your directory submissions and their status';
+const title = "My Submissions | Awesome Directories";
+const description = "Track your directory submissions and their status";
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  noIndex={true}
->
+<BaseLayout title={title} description={description} noIndex={true}>
   <AppHeader />
 
   <main class="min-h-screen bg-gray-50">
     <!-- Page Header -->
-    <section class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 px-4">
+    <section
+      class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 px-4"
+    >
       <div class="max-w-7xl mx-auto">
-        <h1 class="text-3xl md:text-4xl font-bold mb-2">
-          ✅ My Submissions
-        </h1>
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">✅ My Submissions</h1>
         <p class="text-lg text-blue-100">
           Track the status of your directory submissions
         </p>

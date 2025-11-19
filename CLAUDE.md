@@ -602,9 +602,9 @@ Example:
 
 ```astro
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import AppHeader from '@/components/AppHeader.astro';
-import AppFooter from '@/components/AppFooter.astro';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
 ---
 
 <BaseLayout
