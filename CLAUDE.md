@@ -18,22 +18,27 @@
 - Directory detail pages with related directories and voting
 - User directory submission system with review workflow
 - Automated SEO metrics updates via Ahrefs API and Supabase Edge Functions
+- Comprehensive statistics page with interactive charts
+- Blog with SEO-optimized content, tags, search, and RSS feed
 
 ## Technology Stack
 
 ### Frontend Framework
 
-- **Astro.js 4** (Static Site Generation)
+- **Astro.js 5** (Static Site Generation with Content Collections)
 - **Vue.js 3** (Composition API for interactive islands/components)
 - **Vite 7** (build tool, dev server on port 3000)
 - **Tailwind CSS 4** (utility-first CSS with PostCSS)
 - **TypeScript-ready** (ES modules)
 
-**Important**: The project recently migrated from a Vue.js SPA to Astro.js SSG for better SEO and performance. Vue components are still used for interactive features via Astro's component islands.
+**Important**: The project migrated from a Vue.js SPA to Astro.js SSG for better SEO and performance. Vue components are used for interactive features via Astro's component islands. Astro Content Collections power the blog system.
 
 ### Key Libraries
 
 - `@supabase/supabase-js` - Database client (build-time and runtime)
+- `@astrojs/rss` - RSS feed generation for blog
+- `chart.js` - Interactive charts for statistics page
+- `pagefind` - Static search indexing for blog
 - `html2canvas + jsPDF` - PDF export functionality
 - `papaparse` - CSV parsing/export
 - `slugify` - URL slug generation
@@ -72,20 +77,38 @@
 │   └── ci.yml                      # CI/CD pipeline
 ├── public/                         # Static assets
 │   ├── data/                       # Generated at build time
-│   │   └── directories.json        # All directories data
+│   │   ├── directories.json        # All directories data
+│   │   └── stats.json              # Statistics data for charts
+│   ├── pagefind/                   # Search index (generated)
 │   └── robots.txt                  # SEO robots file
 ├── src/
 │   ├── pages/                      # Astro pages (file-based routing)
 │   │   ├── index.astro            # Home page (directory listing)
 │   │   ├── about.astro            # About page
+│   │   ├── stats.astro            # Statistics page with charts
 │   │   ├── terms.astro            # Terms of Service
 │   │   ├── privacy.astro          # Privacy Policy
 │   │   ├── favorites.astro        # User favorites page (auth required)
 │   │   ├── submissions.astro      # User submissions tracker (auth required)
 │   │   ├── submit.astro           # Submit new directory form (auth required)
 │   │   ├── 404.astro              # 404 error page
-│   │   └── directory/
-│   │       └── [slug].astro       # Dynamic directory detail pages
+│   │   ├── directory/
+│   │   │   └── [slug].astro       # Dynamic directory detail pages
+│   │   └── blog/
+│   │       ├── index.astro        # Blog listing page
+│   │       ├── [slug].astro       # Individual blog post pages
+│   │       ├── [...page].astro    # Blog pagination
+│   │       └── tags/
+│   │           ├── [tag].astro    # Posts by tag
+│   │           └── [tag]/[...page].astro # Tag pagination
+│   ├── content/
+│   │   ├── config.ts              # Content collections schema
+│   │   └── blog/                  # Blog posts (Markdown)
+│   │       ├── getting-started-with-directory-submissions.md
+│   │       ├── building-a-launch-strategy.md
+│   │       ├── top-free-directories-for-saas.md
+│   │       ├── seo-benefits-of-directory-submissions.md
+│   │       └── ...                # More blog posts
 │   ├── layouts/
 │   │   └── BaseLayout.astro       # Base HTML layout with SEO
 │   ├── components/
@@ -103,7 +126,17 @@
 │   │   ├── FavoritesContent.vue   # Favorites page content
 │   │   ├── SubmissionsContent.vue # Submissions tracker content
 │   │   ├── SubmitDirectoryForm.vue # Directory submission form
-│   │   └── GithubStars.vue        # GitHub stars badge (Vue island)
+│   │   ├── GithubStars.vue        # GitHub stars badge (Vue island)
+│   │   ├── StatsCards.vue         # Statistics overview cards (Vue island)
+│   │   ├── StatsCharts.vue        # Interactive Chart.js charts (Vue island)
+│   │   ├── TopDirectoriesTable.vue # Top directories rankings (Vue island)
+│   │   ├── BlogCard.astro         # Blog post card component
+│   │   ├── Pagination.astro       # Pagination component
+│   │   ├── RelatedPosts.astro     # Related blog posts
+│   │   ├── ShareButtons.astro     # Social sharing buttons
+│   │   ├── ShareButton.astro      # Individual share button
+│   │   ├── TableOfContents.astro  # Blog post TOC
+│   │   └── GiscusComments.astro   # GitHub Discussions comments
 │   ├── composables/                # Vue Composition API logic
 │   │   ├── useAuth.js             # Authentication (client-side)
 │   │   ├── useDirectories.js      # Data filtering (client-side)
@@ -120,18 +153,12 @@
 │   ├── stores/
 │   │   └── auth.js                # Nanostores for auth state
 │   ├── integrations/
-│   │   └── save-directories.js    # Astro integration to save data
+│   │   ├── save-directories.js    # Astro integration to save directories
+│   │   ├── save-stats.js          # Astro integration to save stats
+│   │   └── pagefind.js            # Pagefind search integration
 │   ├── utils/
-│   │   └── auth.js                # Authentication utilities
-│   ├── views/                      # Legacy Vue SPA views (from migration)
-│   │   ├── HomeView.vue           # Legacy home view
-│   │   ├── AboutView.vue          # Legacy about view
-│   │   ├── DirectoryDetailView.vue # Legacy detail view
-│   │   ├── FavoritesView.vue      # Legacy favorites view
-│   │   ├── SubmissionsView.vue    # Legacy submissions view
-│   │   ├── SubmitView.vue         # Legacy submit view
-│   │   └── StatsView.vue          # Legacy stats view
-│   ├── router/index.js            # Legacy Vue Router (from migration, not used)
+│   │   ├── auth.js                # Authentication utilities
+│   │   └── blog.ts                # Blog utilities (reading time, TOC, related posts)
 │   ├── env.d.ts                   # TypeScript environment types
 │   └── style.css                  # Global Tailwind imports
 ├── supabase/
@@ -331,6 +358,29 @@ Custom Astro integration (`src/integrations/save-directories.js`):
 - Saves to `public/data/directories.json` for client-side use
 - Ensures data is available in both dev and production
 
+#### Save Stats Integration
+
+Custom Astro integration (`src/integrations/save-stats.js`):
+
+- Calculates comprehensive statistics from directories data
+- Saves to `public/data/stats.json` for client-side charts
+- Statistics include:
+  - Total counts (directories, votes, categories)
+  - Category distribution
+  - Pricing breakdown (free/paid/freemium)
+  - Link type distribution (dofollow/nofollow)
+  - Domain Rating ranges
+  - Recent additions timeline
+
+#### Pagefind Integration
+
+Custom Astro integration (`src/integrations/pagefind.js`):
+
+- Generates static search index for blog posts
+- Runs after build to index content
+- Outputs to `public/pagefind/`
+- Provides fast, client-side search without server
+
 #### Supabase Edge Function
 
 `supabase/functions/update-seo-data/`:
@@ -387,6 +437,7 @@ Newsletter subscription to Mautic CRM:
 
 - `/` - Home (index.astro) - directory listing with filters
 - `/about` - About page (about.astro)
+- `/stats` - Statistics page (stats.astro) - interactive charts and analytics
 - `/terms` - Terms of Service (terms.astro)
 - `/privacy` - Privacy Policy (privacy.astro)
 - `/favorites` - User favorites page (favorites.astro) - requires authentication
@@ -396,6 +447,11 @@ Newsletter subscription to Mautic CRM:
   - Generated statically at build time via `getStaticPaths()`
   - Includes SEO metrics, related directories, and user actions
   - Breadcrumb navigation and structured data
+- `/blog` - Blog listing with search and pagination
+- `/blog/[slug]` - Individual blog posts with TOC, related posts, comments
+- `/blog/[...page]` - Blog pagination (page 2, 3, etc.)
+- `/blog/tags/[tag]` - Posts filtered by tag
+- `/blog/tags/[tag]/[...page]` - Tag pagination
 - `/404` - 404 error page (404.astro)
 
 ### Dynamic Route Generation
@@ -408,9 +464,29 @@ The `/directory/[slug]` route uses Astro's static path generation:
 - Related directories are computed based on shared categories
 - Supports social sharing with OpenGraph and Twitter Cards
 
-### Legacy Vue Router
+### Blog System
 
-The `src/router/index.js` file still exists from the Vue.js migration but is **not used** in the Astro build. Astro uses file-based routing instead. The `src/views/` directory contains legacy Vue SPA views that are no longer active but kept for reference during the migration period.
+The blog uses Astro Content Collections with Markdown files:
+
+- **Content schema**: Defined in `src/content/config.ts` with Zod validation
+- **Post frontmatter**: title, description, date, tags, author, coverImage, draft, relatedPosts
+- **Utilities**: `src/utils/blog.ts` provides helpers for:
+  - `getPublishedPosts()` - Fetch and filter published posts
+  - `calculateReadingTime()` - Estimate reading time
+  - `generateTableOfContents()` - Extract headings for TOC
+  - `findRelatedPosts()` - Find posts with shared tags
+  - `getAllTags()` - Get unique tags across all posts
+  - `paginate()` - Paginate any item array
+- **Search**: Pagefind integration for static search
+- **Comments**: Giscus (GitHub Discussions) integration
+
+Blog posts support:
+- Draft mode (hidden in production)
+- Future scheduling (hidden until publish date)
+- Auto-generated related posts based on tags
+- Custom related posts via frontmatter
+- Social sharing buttons (X, LinkedIn, Facebook, Reddit)
+- BlogPosting schema structured data
 
 ## Build Configuration
 
@@ -423,7 +499,9 @@ The `src/router/index.js` file still exists from the Vue.js migration but is **n
   - `@astrojs/vue` - Vue component support
   - `@astrojs/sitemap` - Automatic sitemap generation
   - `@playform/compress` - Gzip + Brotli compression
-  - `saveDirectoriesIntegration()` - Custom data saving
+  - `saveDirectoriesIntegration()` - Custom integration to save directories.json
+  - `saveStatsIntegration()` - Custom integration to save stats.json
+  - `pagefindIntegration()` - Static search indexing for blog
 
 ### Vite Config (via Astro)
 
@@ -433,7 +511,7 @@ The `src/router/index.js` file still exists from the Vue.js migration but is **n
   - Multiple compression passes
 - **CSS minification**: LightningCSS
 - **Code splitting**: Automatic with manual chunk optimization
-  - Separate chunks for: supabase, html2canvas, jspdf, papaparse, nanostores
+  - Separate chunks for: supabase, html2canvas, jspdf, papaparse, nanostores, chartjs, vue
 - **Bundle analysis**: Available via visualizer plugin
 - **Aliases**: `@` → `./src`
 
@@ -555,6 +633,18 @@ For Supabase Edge Functions:
 8. **DirectoryCard.vue** - Individual directory card component
 9. **AuthModal.vue** / **AuthModalWrapper.vue** - Authentication modals
 10. **ChecklistModal.vue** - Multi-select export functionality
+11. **StatsCards.vue** - Overview statistics cards
+12. **StatsCharts.vue** - Interactive Chart.js charts (pie, bar, doughnut)
+13. **TopDirectoriesTable.vue** - Top directories rankings by various metrics
+
+### Key Astro Components
+
+1. **BlogCard.astro** - Blog post preview card
+2. **Pagination.astro** - Reusable pagination component
+3. **RelatedPosts.astro** - Related blog posts section
+4. **ShareButtons.astro** - Social sharing buttons
+5. **TableOfContents.astro** - Sticky blog post TOC
+6. **GiscusComments.astro** - GitHub Discussions comments
 
 All Vue components use `client:load` directive in Astro pages for client-side hydration.
 
@@ -672,6 +762,39 @@ Directory detail pages are generated statically:
 - Stored in `pending_directories` table
 - Admin reviews in Supabase dashboard
 - On approval, move to `directories` table manually
+
+### Adding a Blog Post
+
+1. Create a new `.md` file in `src/content/blog/`
+2. Add required frontmatter:
+   ```markdown
+   ---
+   title: "Your Post Title"
+   description: "Brief description for SEO"
+   date: 2025-01-15
+   tags: ["SEO", "Marketing", "SaaS"]
+   author: "Awesome Directories Team"
+   coverImage: "/og-image.png"
+   draft: false
+   ---
+
+   Your markdown content here...
+   ```
+3. Use headings (h2, h3) for automatic table of contents
+4. Optionally specify `relatedPosts: ["post-slug-1", "post-slug-2"]` for custom related posts
+5. Set `draft: true` to hide in production while working
+6. Rebuild site to see changes
+
+### Working with Statistics Page
+
+The statistics page displays interactive charts using Chart.js:
+
+1. Data is generated at build time by `saveStatsIntegration()`
+2. Charts load from `/data/stats.json`
+3. To add new statistics:
+   - Update `src/integrations/save-stats.js` to calculate new metrics
+   - Add new chart component or update existing in `src/components/StatsCharts.vue`
+   - Rebuild to see changes
 
 ### Updating SEO Metrics
 
@@ -814,12 +937,12 @@ supabase db push
 
 - [ ] Build succeeds without errors (`bun run build`)
 - [ ] Preview works locally (`bun run preview`)
-- [ ] All pages load correctly (/, /about, /terms, /privacy, /404)
+- [ ] All pages load correctly (/, /about, /stats, /blog, /terms, /privacy, /404)
 - [ ] Filters and search work on home page
 - [ ] SEO meta tags are correct on all pages
 - [ ] Images load and are optimized
 - [ ] No console errors in production build
-- [ ] Lighthouse score > 90 (Performance, SEO, Accessibility)
+- [ ] Lighthouse score > 95 (Performance, SEO, Accessibility)
 
 **Directory Detail Pages:**
 
@@ -850,6 +973,29 @@ supabase db push
 - [ ] Submissions sync with `user_submissions` table
 - [ ] Pending directories appear in `pending_directories` table
 - [ ] Votes increment/decrement `helpful_count` correctly
+
+**Blog:**
+
+- [ ] Blog listing page shows published posts
+- [ ] Individual blog posts render correctly
+- [ ] Table of contents generates from headings
+- [ ] Related posts show based on tags
+- [ ] Pagefind search works on blog listing
+- [ ] Tag filtering works correctly
+- [ ] Pagination works on blog listing and tag pages
+- [ ] Social sharing buttons function correctly
+- [ ] Giscus comments load (if configured)
+- [ ] Draft posts hidden in production
+- [ ] Future-dated posts hidden until publish date
+- [ ] BlogPosting structured data present
+
+**Statistics Page:**
+
+- [ ] Stats page loads without errors
+- [ ] All charts render correctly (category, pricing, link type, DR, timeline)
+- [ ] Stats data loads from `/data/stats.json`
+- [ ] Charts are responsive on mobile
+- [ ] Chart tooltips show correct data
 
 ### When Making Changes
 
@@ -883,71 +1029,82 @@ supabase db push
 
 ### Commit History (Most Recent)
 
+- **012d454** - feat: add blogging with Astro dynamic routing (#28)
+  - Full blog system with Astro Content Collections
+  - Pagefind search integration
+  - Tags, pagination, and related posts
+  - Table of contents and social sharing
+
+- **72296a7** - feat: Add comprehensive statistics page with interactive charts (#29)
+  - Chart.js integration for interactive visualizations
+  - Category, pricing, link type, and DR distribution charts
+  - Top directories tables
+  - Stats data generation via custom integration
+
+- **e5cf0c3** - fix: address contract issue
+  - Bug fixes and improvements
+
+- **1e1ec4c** - fix: make the homepage fully responsive
+  - Mobile-first responsive design improvements
+
+- **3c7eded** - feat: improve lighthouse metrics to above 95+
+  - Performance optimizations
+  - Lighthouse score improvements
+
+- **713c8b7** - chore(deps): update astro to v5
+  - Major Astro framework upgrade
+
+- **ee4c7d7** - fix(auth): fix session detection and persistence after login (#27)
+  - Auth session improvements
+
 - **9a05666** - feat: finalize auth system with Vue island components (#25)
-  - Completed authentication system implementation
-  - Added protected pages: favorites, submissions, submit
-  - Implemented user directory submission workflow
+  - Authentication system implementation
+  - Protected pages: favorites, submissions, submit
 
-- **94f3bea** - feat: Add directory details page with build-time generation (#24)
-  - Dynamic directory detail pages with static generation
-  - Related directories based on categories
-  - SEO optimization with Product schema and structured data
+### Features Since Last Documentation Update
 
-- **e74b4fd** - docs: create comprehensive CLAUDE.md for AI assistants (#23)
-  - Initial CLAUDE.md documentation created
+1. **Blog System** (Commit 012d454)
+   - Astro Content Collections with Markdown
+   - `/blog` listing with Pagefind search
+   - `/blog/[slug]` individual posts with TOC
+   - Tag filtering and pagination
+   - Related posts (auto or custom)
+   - Social sharing (X, LinkedIn, Facebook, Reddit)
+   - Giscus comments integration
+   - BlogPosting schema structured data
+   - Draft and future scheduling support
 
-- **f5aa55c** - feat: migrate from Vue.js SPA to Astro.js SSG with SEO optimization (#19)
-  - Major architecture migration from Vue SPA to Astro SSG
-  - Improved SEO and performance
+2. **Statistics Page** (Commit 72296a7)
+   - `/stats` with interactive Chart.js charts
+   - Category distribution pie chart
+   - Pricing breakdown doughnut chart
+   - Link type bar chart
+   - Domain Rating distribution horizontal bar
+   - Recent additions timeline
+   - Top directories tables
+   - Stats data generated at build time
 
-### Features Added Since Migration
-
-1. **Authentication System** (Commit 9a05666)
-   - Google & GitHub OAuth
-   - Protected pages with auth checks
-   - Auth utilities and composables
-
-2. **Directory Detail Pages** (Commit 94f3bea)
-   - `/directory/[slug]` dynamic routes
-   - Static generation at build time
-   - Related directories
-   - Breadcrumb navigation
-   - Product schema structured data
-
-3. **User Features** (Commit 9a05666)
-   - Favorites system (`/favorites`)
-   - Submission tracking (`/submissions`)
-   - Directory submission form (`/submit`)
-   - `pending_directories` table for admin review
+3. **Performance Improvements**
+   - Lighthouse scores above 95+
+   - Astro v5 upgrade
+   - Fully responsive homepage
+   - Optimized bundle splitting
 
 4. **New Components**
-   - DirectoryListContent, DirectoryDetailActions
-   - FavoritesContent, SubmissionsContent
-   - SubmitDirectoryForm, FavoriteButton
-   - AuthModalWrapper
+   - StatsCards, StatsCharts, TopDirectoriesTable (Vue)
+   - BlogCard, Pagination, RelatedPosts (Astro)
+   - ShareButtons, TableOfContents, GiscusComments (Astro)
 
-5. **New Composables**
-   - `useDirectory.js` - Single directory operations
-   - Enhanced `useAuth.js` for protected pages
+5. **New Integrations**
+   - `saveStatsIntegration()` - Generate stats.json
+   - `pagefindIntegration()` - Blog search indexing
 
-6. **Database Migrations**
-   - Migration 002: pending_directories table
-   - Migration 003: Moz metrics fields
-   - Migration 004: pg_cron setup
-   - Migration 005: HTTP extension
-
-### Legacy Files
-
-The following files/directories are kept from the Vue.js migration but are no longer used:
-
-- `src/views/` - Legacy Vue SPA views (reference only)
-- `src/router/index.js` - Legacy Vue Router (reference only)
-
-Do not modify these files. They may be removed in a future cleanup.
+6. **New Utilities**
+   - `src/utils/blog.ts` - Blog helpers (reading time, TOC, related posts)
 
 ---
 
-**Last Updated**: 2025-11-17 (Updated with commits through 9a05666)
-**Architecture**: Astro.js SSG with Vue.js Islands
-**Migration**: Completed from Vue.js SPA (commit: f5aa55c)
-**Latest Features**: Auth system, directory details, user submissions (commits 94f3bea, 9a05666)
+**Last Updated**: 2025-11-19 (Updated with commits through 012d454)
+**Architecture**: Astro.js 5 SSG with Vue.js Islands
+**Lighthouse Score**: 95+ (Performance, SEO, Accessibility, Best Practices)
+**Latest Features**: Blog system, statistics page, responsive design (commits 012d454, 72296a7)
