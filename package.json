@@ -3,6 +3,7 @@
     "@astrojs/rss": "^4.0.13",
     "@nanostores/vue": "^0.10.0",
     "@supabase/supabase-js": "^2.38.4",
+    "chart.js": "^4.5.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "ky": "^1.14.0",

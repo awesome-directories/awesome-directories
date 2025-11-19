@@ -5,6 +5,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "astro/config";
 import { fileURLToPath } from "node:url";
 import { saveDirectoriesIntegration } from "./src/integrations/save-directories.js";
+import { saveStatsIntegration } from "./src/integrations/save-stats.js";
 import pagefindIntegration from "./src/integrations/pagefind.js";
 
 // https://astro.build/config
@@ -17,6 +18,7 @@ export default defineConfig({
 
   integrations: [
     saveDirectoriesIntegration(),
+    saveStatsIntegration(),
     vue(),
     sitemap(),
     pagefindIntegration(),
@@ -92,6 +94,9 @@ export default defineConfig({
               }
               if (id.includes("nanostores")) {
                 return "nanostores";
+              }
+              if (id.includes("chart.js")) {
+                return "chartjs";
               }
               if (id.includes("vue")) {
                 return "vue";
