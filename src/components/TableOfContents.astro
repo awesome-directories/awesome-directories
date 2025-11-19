@@ -1,5 +1,5 @@
 ---
-import type { TocItem } from '@/utils/blog';
+import type { TocItem } from "@/utils/blog";
 
 interface Props {
   headings: TocItem[];
@@ -15,53 +15,173 @@ if (headings.length === 0) {
 <nav class="toc bg-gray-50 rounded-lg p-6 sticky top-24">
   <h2 class="text-lg font-bold text-gray-900 mb-4">Table of Contents</h2>
   <ul class="space-y-2">
-    {headings.map((heading) => (
-      <li
-        class={heading.depth === 3 ? 'ml-4' : ''}
-        style={`list-style: none;`}
-      >
-        <a
-          href={`#${heading.slug}`}
-          class="text-gray-600 hover:text-blue-600 transition-colors text-sm block py-1"
+    {
+      headings.map((heading) => (
+        <li
+          class={heading.depth === 3 ? "ml-4" : ""}
+          style={`list-style: none;`}
         >
-          {heading.text}
-        </a>
-      </li>
-    ))}
+          <a
+            href={`#${heading.slug}`}
+            class="text-gray-600 hover:text-blue-600 transition-colors text-sm block py-1"
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </nav>
 
 <script>
-  // Highlight active heading on scroll
-  document.addEventListener('DOMContentLoaded', () => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.getAttribute('id');
-          const tocLink = document.querySelector(`.toc a[href="#${id}"]`);
+  function initTableOfContents() {
+    var toc = document.querySelector(".toc");
+    if (!toc) {
+      return;
+    }
 
-          if (tocLink) {
-            if (entry.isIntersecting) {
-              // Remove active class from all links
-              document.querySelectorAll('.toc a').forEach((link) => {
-                link.classList.remove('font-bold', 'text-blue-600');
-                link.classList.add('text-gray-600');
-              });
-              // Add active class to current link
-              tocLink.classList.remove('text-gray-600');
-              tocLink.classList.add('font-bold', 'text-blue-600');
+    var headings = document.querySelectorAll("article h2, article h3");
+    if (headings.length === 0) {
+      return;
+    }
+
+    var activeHeadingId = null;
+    var debounceTimer = null;
+    var observerInstance = null;
+
+    function setActiveLink(id) {
+      if (activeHeadingId === id) {
+        return;
+      }
+
+      activeHeadingId = id;
+
+      var allLinks = document.querySelectorAll(".toc a");
+      allLinks.forEach(function resetLink(link) {
+        link.classList.remove("font-bold", "text-blue-600");
+        link.classList.add("text-gray-600");
+      });
+
+      if (id) {
+        var activeLink = document.querySelector('.toc a[href="#' + id + '"]');
+        if (activeLink) {
+          activeLink.classList.remove("text-gray-600");
+          activeLink.classList.add("font-bold", "text-blue-600");
+        }
+      }
+    }
+
+    function findTopMostVisibleHeading(entries) {
+      var visibleEntries = entries.filter(function filterVisible(entry) {
+        return entry.isIntersecting;
+      });
+
+      if (visibleEntries.length === 0) {
+        return null;
+      }
+
+      visibleEntries.sort(function sortByPosition(a, b) {
+        return a.boundingClientRect.top - b.boundingClientRect.top;
+      });
+
+      return visibleEntries[0].target.getAttribute("id");
+    }
+
+    function handleIntersection(entries) {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+
+      debounceTimer = setTimeout(function processIntersection() {
+        try {
+          var topMostId = findTopMostVisibleHeading(entries);
+
+          if (topMostId) {
+            setActiveLink(topMostId);
+          } else {
+            var firstIntersecting = entries.find(
+              function findIntersecting(entry) {
+                return entry.isIntersecting;
+              },
+            );
+
+            if (firstIntersecting) {
+              var id = firstIntersecting.target.getAttribute("id");
+              setActiveLink(id);
             }
           }
-        });
-      },
-      { rootMargin: '-100px 0px -66%' }
-    );
+        } catch (error) {
+          console.error("Error in TOC intersection observer:", error);
+        }
+      }, 100);
+    }
 
-    // Observe all headings
-    document.querySelectorAll('article h2, article h3').forEach((heading) => {
-      observer.observe(heading);
-    });
-  });
+    function initializeObserver() {
+      try {
+        observerInstance = new IntersectionObserver(handleIntersection, {
+          rootMargin: "-100px 0px -66%",
+          threshold: [0, 0.25, 0.5, 0.75, 1.0],
+        });
+
+        headings.forEach(function observeHeading(heading) {
+          if (heading.getAttribute("id")) {
+            observerInstance.observe(heading);
+          }
+        });
+
+        setInitialActiveHeading();
+      } catch (error) {
+        console.error("Error initializing TOC observer:", error);
+      }
+    }
+
+    function setInitialActiveHeading() {
+      var scrollPosition = window.scrollY;
+      var foundHeading = null;
+
+      headings.forEach(function checkHeading(heading) {
+        var rect = heading.getBoundingClientRect();
+        var absoluteTop = rect.top + scrollPosition;
+
+        if (absoluteTop <= scrollPosition + 150) {
+          foundHeading = heading;
+        }
+      });
+
+      if (foundHeading) {
+        var id = foundHeading.getAttribute("id");
+        if (id) {
+          setActiveLink(id);
+        }
+      } else if (headings.length > 0) {
+        var firstId = headings[0].getAttribute("id");
+        if (firstId) {
+          setActiveLink(firstId);
+        }
+      }
+    }
+
+    function cleanup() {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+      if (observerInstance) {
+        observerInstance.disconnect();
+      }
+    }
+
+    initializeObserver();
+
+    document.addEventListener("astro:before-preparation", cleanup);
+    document.addEventListener("astro:before-swap", cleanup);
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("beforeunload", cleanup);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", initTableOfContents);
+  document.addEventListener("astro:page-load", initTableOfContents);
 </script>
 
 <style>
