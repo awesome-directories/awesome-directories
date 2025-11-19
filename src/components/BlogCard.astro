@@ -6,9 +6,9 @@ interface Props {
   post: CollectionEntry<'blog'>;
 }
 
-const { post } = Astro.props;
-const { title, description, date, tags, author, coverImage } = post.data;
-const readingTime = calculateReadingTime(post.body);
+var { post } = Astro.props;
+var { title, description, date, tags, author, coverImage } = post.data;
+var readingTime = calculateReadingTime(post.body);
 ---
 
 <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
