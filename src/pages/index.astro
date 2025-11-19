@@ -1,0 +1,187 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
+import DirectoryListContent from "@/components/DirectoryListContent.vue";
+import {
+  getAllDirectories,
+  getUniqueCategories,
+} from "@/lib/data/directories.js";
+import log from "@/lib/logger.js";
+import "@/style.css";
+
+var allDirectories = await getAllDirectories();
+var categories = getUniqueCategories(allDirectories);
+
+log.info(`Total directories fetched: ${allDirectories.length}`);
+
+var totalCount = allDirectories.length;
+var drCount = allDirectories.filter(function countDR(d) {
+  return d.domain_rating;
+}).length;
+
+var structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Awesome Directories",
+    url: "https://awesome-directories.com/",
+    description:
+      "Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly.",
+    inLanguage: "en-US",
+    publisher: {
+      "@type": "Organization",
+      name: "Awesome Directories",
+      url: "https://awesome-directories.com/",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://awesome-directories.com/logo.png",
+        width: 512,
+        height: 512,
+      },
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://awesome-directories.com/?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "Awesome Directories",
+    url: "https://awesome-directories.com/",
+    description: "Curated launch directories for SaaS products",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Any",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      ratingCount: "250",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="Awesome Directories - Curated Launch Directories for SaaS"
+  description="Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly."
+  structuredData={structuredData}
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50">
+    <section
+      class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 sm:py-16 md:py-20 px-4"
+    >
+      <div class="max-w-8xl mx-auto text-center">
+        <h1
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 px-2"
+        >
+          Find the Top Launch Directories for Your SaaS
+        </h1>
+        <p
+          class="text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-blue-50 px-2"
+        >
+          Curated, verified, and updated weekly
+        </p>
+        <p
+          class="text-base sm:text-lg md:text-xl text-blue-50 mb-6 sm:mb-8 px-2 max-w-3xl mx-auto"
+        >
+          Stop wasting time on dead links and low-value directories. Get the 20
+          that actually drive traffic—in under 3 minutes.
+        </p>
+
+        <div
+          class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-6 sm:mb-8 px-2"
+        >
+          <div class="text-center min-w-[120px]">
+            <div class="text-2xl sm:text-3xl md:text-4xl font-bold">
+              {totalCount}+
+            </div>
+            <div class="text-xs sm:text-sm text-blue-50 mt-1">
+              Curated Directories
+            </div>
+          </div>
+          <div class="hidden sm:block text-blue-100" aria-hidden="true">•</div>
+          <div class="text-center min-w-[120px]">
+            <div class="text-2xl sm:text-3xl md:text-4xl font-bold">
+              {drCount}+
+            </div>
+            <div class="text-xs sm:text-sm text-blue-50 mt-1">
+              With DR Ratings
+            </div>
+          </div>
+          <div class="hidden sm:block text-blue-100" aria-hidden="true">•</div>
+          <div class="text-center min-w-[120px]">
+            <div class="text-2xl sm:text-3xl md:text-4xl font-bold">
+              Open Source
+            </div>
+            <div class="text-xs sm:text-sm text-blue-50 mt-1">
+              Apache 2.0 License ❤️
+            </div>
+          </div>
+        </div>
+
+        <div class="max-w-2xl mx-auto px-2">
+          <label for="search-input" class="sr-only">Search directories</label>
+          <div class="relative">
+            <input
+              id="search-input"
+              type="search"
+              placeholder="Search directories..."
+              class="w-full px-4 sm:px-6 py-3 sm:py-4 pr-12 sm:pr-14 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-300 text-base sm:text-lg"
+              aria-label="Search directories"
+              autocomplete="off"
+            />
+            <svg
+              class="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-gray-400 pointer-events-none"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <button
+              id="clear-search"
+              class="hidden absolute right-11 sm:right-12 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300 rounded p-1"
+              aria-label="Clear search"
+            >
+              <svg
+                class="w-4 h-4 sm:w-5 sm:h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <DirectoryListContent client:load categories={categories} />
+  </main>
+
+  <AppFooter />
+</BaseLayout>

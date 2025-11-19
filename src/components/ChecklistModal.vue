@@ -8,7 +8,9 @@
     <div
       class="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col transform transition-all"
     >
-      <div class="flex items-center justify-between p-6 border-b border-gray-200">
+      <div
+        class="flex items-center justify-between p-6 border-b border-gray-200"
+      >
         <div class="flex items-center space-x-3">
           <div class="text-3xl">✅</div>
           <div>
@@ -16,7 +18,10 @@
               Your Submission Checklist
             </h2>
             <p class="text-sm text-gray-600">
-              {{ selectedDirectories.length }} director{{ selectedDirectories.length !== 1 ? 'ies' : 'y' }} selected
+              {{ selectedDirectories.length }} director{{
+                selectedDirectories.length !== 1 ? "ies" : "y"
+              }}
+              selected
             </p>
           </div>
         </div>
@@ -57,8 +62,18 @@
         <div v-else class="space-y-4">
           <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <div class="flex items-start space-x-3">
-              <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
               <div class="flex-1">
                 <h4 class="font-semibold text-blue-900 mb-1">Pro Tips</h4>
@@ -66,7 +81,9 @@
                   <li>• Check each directory as you complete the submission</li>
                   <li>• Click directory names to open them in a new tab</li>
                   <li>• Your progress is saved automatically</li>
-                  <li>• Focus on high DR directories first for best SEO impact</li>
+                  <li>
+                    • Focus on high DR directories first for best SEO impact
+                  </li>
                 </ul>
               </div>
             </div>
@@ -75,7 +92,10 @@
           <div class="flex items-center justify-between mb-4">
             <div class="text-sm text-gray-600">
               <span class="font-semibold">{{ completedCount }}</span> of
-              <span class="font-semibold">{{ selectedDirectories.length }}</span> completed
+              <span class="font-semibold">{{
+                selectedDirectories.length
+              }}</span>
+              completed
             </div>
             <div class="flex items-center space-x-2">
               <div class="w-32 bg-gray-200 rounded-full h-2">
@@ -95,7 +115,11 @@
               v-for="directory in sortedDirectories"
               :key="directory.id"
               class="flex items-center space-x-4 p-4 border rounded-lg transition-all"
-              :class="isCompleted(directory.id) ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200 hover:border-gray-300'"
+              :class="
+                isCompleted(directory.id)
+                  ? 'bg-green-50 border-green-200'
+                  : 'bg-white border-gray-200 hover:border-gray-300'
+              "
             >
               <input
                 type="checkbox"
@@ -115,8 +139,18 @@
                   >
                     {{ directory.name }}
                   </a>
-                  <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  <svg
+                    class="w-4 h-4 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
                   </svg>
                 </div>
                 <div class="flex flex-wrap gap-2 text-xs">
@@ -161,12 +195,7 @@
             >
               📥 Export List
             </button>
-            <button
-              @click="handleClose"
-              class="btn-primary px-6"
-            >
-              Done
-            </button>
+            <button @click="handleClose" class="btn-primary px-6">Done</button>
           </div>
         </div>
       </div>
@@ -176,6 +205,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
+import Papa from "papaparse";
 
 const props = defineProps({
   selectedDirectories: {
@@ -188,16 +218,18 @@ const emit = defineEmits(["close", "clear-selection"]);
 
 var completedDirectories = ref(new Set());
 
-const completedCount = computed(function() {
+const completedCount = computed(function () {
   return completedDirectories.value.size;
 });
 
-var progressPercentage = computed(function() {
+var progressPercentage = computed(function () {
   if (props.selectedDirectories.length === 0) return 0;
-  return Math.round((completedCount.value / props.selectedDirectories.length) * 100);
+  return Math.round(
+    (completedCount.value / props.selectedDirectories.length) * 100,
+  );
 });
 
-var sortedDirectories = computed(function() {
+var sortedDirectories = computed(function () {
   return [...props.selectedDirectories].sort((a, b) => {
     var aCompleted = completedDirectories.value.has(a.id);
     var bCompleted = completedDirectories.value.has(b.id);
@@ -216,7 +248,11 @@ function handleClose() {
 }
 
 function handleClearSelection() {
-  if (confirm("Are you sure you want to clear your selection? This will remove all selected directories.")) {
+  if (
+    confirm(
+      "Are you sure you want to clear your selection? This will remove all selected directories.",
+    )
+  ) {
     completedDirectories.value.clear();
     saveProgress();
     emit("clear-selection");
@@ -263,21 +299,18 @@ function getPricingClass(pricing) {
 }
 
 function handleExport() {
-  var csv = "Name,URL,Domain Rating,Pricing,Link Type,Category\n";
-
-  props.selectedDirectories.forEach(function(dir) {
-    var row = [
-      dir.name,
-      dir.url,
-      dir.domain_rating || "N/A",
-      dir.pricing || "N/A",
-      dir.is_dofollow ? "Dofollow" : "Nofollow",
-      dir.category || "N/A"
-    ];
-    csv += row.map(function(field) {
-      return '"' + String(field).replace(/"/g, '""') + '"';
-    }).join(",") + "\n";
+  var data = props.selectedDirectories.map(function (dir) {
+    return {
+      Name: dir.name,
+      URL: dir.url,
+      "Domain Rating": dir.domain_rating || "N/A",
+      Pricing: dir.pricing || "N/A",
+      "Link Type": dir.is_dofollow ? "Dofollow" : "Nofollow",
+      Category: dir.category || "N/A",
+    };
   });
+
+  var csv = Papa.unparse(data);
 
   var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   var link = document.createElement("a");
@@ -292,28 +325,36 @@ function handleExport() {
   document.body.removeChild(link);
 }
 
-onMounted(function() {
+onMounted(function () {
   loadProgress();
 });
 
-watch(function() {
-  return props.selectedDirectories;
-}, function(newDirs) {
-  var validIds = new Set(newDirs.map(function(d) { return d.id; }));
-  var toRemove = [];
+watch(
+  function () {
+    return props.selectedDirectories;
+  },
+  function (newDirs) {
+    var validIds = new Set(
+      newDirs.map(function (d) {
+        return d.id;
+      }),
+    );
+    var toRemove = [];
 
-  completedDirectories.value.forEach(function(id) {
-    if (!validIds.has(id)) {
-      toRemove.push(id);
+    completedDirectories.value.forEach(function (id) {
+      if (!validIds.has(id)) {
+        toRemove.push(id);
+      }
+    });
+
+    toRemove.forEach(function (id) {
+      completedDirectories.value.delete(id);
+    });
+
+    if (toRemove.length > 0) {
+      saveProgress();
     }
-  });
-
-  toRemove.forEach(function(id) {
-    completedDirectories.value.delete(id);
-  });
-
-  if (toRemove.length > 0) {
-    saveProgress();
-  }
-}, { deep: true });
+  },
+  { deep: true },
+);
 </script>

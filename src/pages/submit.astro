@@ -1,0 +1,44 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
+import SubmitDirectoryForm from "@/components/SubmitDirectoryForm.vue";
+
+const title = "Submit a Directory | Awesome Directories";
+const description =
+  "Submit a new directory to be added to our curated collection";
+---
+
+<BaseLayout title={title} description={description} noIndex={true}>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Page Header -->
+    <section
+      class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 px-4"
+    >
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">
+          📝 Submit a Directory
+        </h1>
+        <p class="text-lg text-blue-100 mb-4">
+          Know a great directory that's not listed? Submit it for review!
+        </p>
+        <div class="bg-white bg-opacity-10 rounded-lg p-4 text-sm text-black">
+          <p class="mb-2"><strong>Guidelines:</strong></p>
+          <ul class="list-disc list-inside space-y-1">
+            <li>The directory should be active and accepting submissions</li>
+            <li>Provide accurate information about pricing and link type</li>
+            <li>Include a clear description of what the directory offers</li>
+            <li>Submissions are reviewed within 3-5 business days</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Submit Form -->
+    <SubmitDirectoryForm client:load />
+  </main>
+
+  <AppFooter />
+</BaseLayout>

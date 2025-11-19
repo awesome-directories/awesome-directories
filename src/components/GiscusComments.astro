@@ -1,0 +1,204 @@
+---
+interface Props {
+  title: string;
+  pathname: string;
+  class?: string;
+}
+
+var { title, pathname, class: className = '' } = Astro.props;
+var repoOwner = 'awesome-directories';
+var repoName = 'awesome-directories';
+var discussionCategory = 'General';
+var discussionCategoryId = 'DIC_kwDOQRUDDM4Cx-MZ';
+---
+
+<div class={`giscus-wrapper ${className}`} data-giscus-container>
+  <div id="giscus-placeholder" class="giscus-loading">
+    <div class="loading-skeleton">
+      <div class="skeleton-header"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line short"></div>
+      <div class="skeleton-button"></div>
+    </div>
+  </div>
+</div>
+
+<script
+  define:vars={{
+    title,
+    pathname,
+    repoOwner,
+    repoName,
+    discussionCategory,
+    discussionCategoryId
+  }}
+>
+  function initGiscus() {
+    var container = document.querySelector('[data-giscus-container]');
+    if (!container) {
+      return;
+    }
+
+    var hasIntersected = false;
+    var giscusLoaded = false;
+
+    function loadGiscus() {
+      if (giscusLoaded) {
+        return;
+      }
+      giscusLoaded = true;
+
+      var placeholder = document.getElementById('giscus-placeholder');
+      if (placeholder) {
+        placeholder.remove();
+      }
+
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo', repoOwner + '/' + repoName);
+      script.setAttribute('data-repo-id', 'R_kgDOQRUDDA');
+      script.setAttribute('data-category', discussionCategory);
+      script.setAttribute('data-category-id', discussionCategoryId);
+      script.setAttribute('data-mapping', 'pathname');
+      script.setAttribute('data-strict', '0');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata', '0');
+      script.setAttribute('data-input-position', 'top');
+      script.setAttribute('data-theme', 'preferred_color_scheme');
+      script.setAttribute('data-lang', 'en');
+      script.setAttribute('data-loading', 'lazy');
+      script.crossOrigin = 'anonymous';
+      script.async = true;
+
+      container.appendChild(script);
+
+      var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      function handleThemeChange(e) {
+        var iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) {
+          return;
+        }
+        var theme = e.matches ? 'dark' : 'light';
+        iframe.contentWindow.postMessage(
+          { giscus: { setConfig: { theme: theme } } },
+          'https://giscus.app'
+        );
+      }
+      mediaQuery.addEventListener('change', handleThemeChange);
+    }
+
+    function handleIntersection(entries) {
+      entries.forEach(function processEntry(entry) {
+        if (entry.isIntersecting && !hasIntersected) {
+          hasIntersected = true;
+          setTimeout(function delayedLoad() {
+            loadGiscus();
+          }, 500);
+        }
+      });
+    }
+
+    var observer = new IntersectionObserver(handleIntersection, {
+      rootMargin: '400px 0px',
+      threshold: 0.01
+    });
+
+    observer.observe(container);
+
+    function cleanup() {
+      if (observer) {
+        observer.disconnect();
+      }
+    }
+
+    document.addEventListener('astro:before-preparation', cleanup);
+    document.addEventListener('astro:before-swap', cleanup);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGiscus);
+  } else {
+    initGiscus();
+  }
+
+  document.addEventListener('astro:page-load', initGiscus);
+</script>
+
+<style>
+  .giscus-wrapper {
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .giscus-loading {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loading-skeleton {
+    width: 100%;
+    max-width: 800px;
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+  }
+
+  .skeleton-header {
+    height: 3rem;
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .skeleton-line {
+    height: 1rem;
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+    border-radius: 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skeleton-line.short {
+    width: 60%;
+  }
+
+  .skeleton-button {
+    height: 2.5rem;
+    width: 8rem;
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+    border-radius: 0.375rem;
+    margin-top: 1rem;
+  }
+
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .loading-skeleton {
+      background: #1f2937;
+      border-color: #374151;
+    }
+
+    .skeleton-header,
+    .skeleton-line,
+    .skeleton-button {
+      background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+      background-size: 200% 100%;
+    }
+  }
+</style>

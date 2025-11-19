@@ -51,3 +51,13 @@ ignore
 data
 dataset
 .secrets/
+
+supabase/functions/update-seo-data/semrush*
+supabase/functions/update-seo-data/moz-da*
+supabase/functions/update-seo-data/ahrefs-response.json
+supabase/functions/update-seo-data/ahrefs-docs.md
+DEPLOYMENT_GUIDE_MOZ_METRICS.md
+.github/workflows/update-moz-metrics.yml
+supabase/functions/update-seo-data/README.md
+.astro/
+src/components/DirectoryFilter.astro

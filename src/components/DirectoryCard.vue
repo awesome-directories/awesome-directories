@@ -1,8 +1,17 @@
 <template>
   <div class="card p-5 h-full flex flex-col relative">
+    <!-- Pending Submission Badge -->
+    <div
+      v-if="isPendingSubmission"
+      class="absolute top-4 right-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-300"
+      title="This is your pending submission, visible only to you"
+    >
+      ⏳ Pending Review
+    </div>
+
     <!-- Checkbox for selection -->
     <input
-      v-if="selectable"
+      v-if="selectable && !isPendingSubmission"
       type="checkbox"
       :checked="isSelected"
       @change="$emit('toggle-select', directory)"
@@ -81,10 +90,8 @@
     </div>
 
     <!-- Footer -->
-    <div
-      class="flex items-center justify-between pt-4 border-t border-gray-100"
-    >
-      <div class="flex items-center space-x-1">
+    <div class="pt-4 border-t border-gray-100">
+      <div class="flex items-center justify-between mb-3">
         <!-- Star Rating Display -->
         <div v-if="directory.review_count > 0" class="flex items-center space-x-1 text-sm">
           <div class="flex items-center">
@@ -92,35 +99,41 @@
               v-for="star in 5"
               :key="star"
               class="text-base"
-              :class="star <= Math.floor(directory.average_rating || 0) ? 'text-yellow-400' : 'text-gray-300'"
+              :class="star <= Math.round(directory.average_rating || 0) ? 'text-yellow-400' : 'text-gray-300'"
             >
               ★
             </span>
           </div>
-          <span class="text-gray-600 font-medium">
-            {{ (directory.average_rating || 0).toFixed(1) }}
-          </span>
-          <span class="text-gray-400">
-            ({{ directory.review_count }})
-          </span>
+          <span class="text-gray-600 font-medium">{{ (directory.average_rating || 0).toFixed(1) }}</span>
+          <span class="text-gray-400">({{ directory.review_count }})</span>
         </div>
         <div v-else class="text-sm text-gray-400">
           No reviews yet
         </div>
+
+        <FavoriteButton
+          v-if="directory.id"
+          :directoryId="directory.id"
+          variant="icon-only"
+          :isDisabled="isPendingSubmission"
+          :disabledReason="'Cannot favorite pending submissions'"
+          :initialFavorited="userFavoriteIds.includes(directory.id)"
+        />
       </div>
 
-      <router-link
-        :to="`/directory/${directory.slug}`"
-        class="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
+      <a
+        :href="`/directory/${directory.slug}`"
+        class="inline-block w-full text-center text-sm font-medium text-primary hover:text-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded py-2"
       >
         View Details →
-      </router-link>
+      </a>
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
+import FavoriteButton from "./FavoriteButton.vue";
 
 const props = defineProps({
   directory: {
@@ -132,6 +145,14 @@ const props = defineProps({
     default: false,
   },
   isSelected: {
+    type: Boolean,
+    default: false,
+  },
+  userFavoriteIds: {
+    type: Array,
+    default: () => [],
+  },
+  isPendingSubmission: {
     type: Boolean,
     default: false,
   },

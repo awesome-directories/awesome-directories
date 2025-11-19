@@ -1,0 +1,289 @@
+---
+var currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-900 text-gray-300">
+  <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+      <div>
+        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
+          Awesome Directories
+        </h2>
+        <p class="text-sm text-gray-300 mb-3 sm:mb-4 leading-relaxed">
+          Find the top 20 launch directories worth your time in under 3 minutes—
+          curated, verified, and updated weekly.
+        </p>
+        <p class="text-sm text-gray-300">
+          Built by
+          <a
+            href="https://meysam.io"
+            target="_blank"
+            rel="noopener"
+            class="text-blue-400 hover:text-blue-300 transition-colors underline"
+          >
+            Meysam
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
+          Links
+        </h2>
+        <ul class="space-y-2 sm:space-y-2.5">
+          <li>
+            <a
+              href="/about"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+            >
+              About
+            </a>
+          </li>
+          <li>
+            <a
+              href="/submit"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+            >
+              Submit Directory
+            </a>
+          </li>
+          <li>
+            <a
+              href="/stats"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+            >
+              Public Stats
+            </a>
+          </li>
+          <li>
+            <a
+              href="/terms"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+            >
+              Terms of Service
+            </a>
+          </li>
+          <li>
+            <a
+              href="/privacy"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+            >
+              Privacy Policy
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/awesome-directories/awesome-directories"
+              target="_blank"
+              rel="noopener"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+            >
+              GitHub Repository
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/sponsors/meysam81"
+              target="_blank"
+              rel="noopener"
+              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+            >
+              💝 GitHub Sponsors
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sm:col-span-2 lg:col-span-1">
+        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
+          📬 Get launch strategies & new directories
+        </h2>
+        <form id="newsletter-form" class="space-y-3">
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            required
+            placeholder="Your email"
+            class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px]"
+          />
+
+          <button
+            id="newsletter-submit"
+            type="submit"
+            class="w-full btn-primary min-h-[44px]"
+          >
+            Subscribe
+          </button>
+
+          <p id="newsletter-success" class="text-sm text-success hidden"></p>
+          <p id="newsletter-error" class="text-sm text-danger hidden"></p>
+
+          <p class="text-xs text-gray-400 leading-relaxed">
+            We respect your inbox. Unsubscribe anytime.
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 gap-4"
+      >
+        <p class="text-xs sm:text-sm text-gray-400 text-center md:text-left">
+          © {currentYear} Awesome Directories. Open source under
+          <a
+            href="https://github.com/awesome-directories/awesome-directories/blob/main/LICENSE"
+            target="_blank"
+            rel="noopener"
+            class="text-gray-300 hover:text-white transition-colors underline"
+          >
+            Apache 2.0 License
+          </a>
+        </p>
+
+        <div class="flex items-center space-x-6">
+          <a
+            href="https://github.com/awesome-directories/awesome-directories"
+            target="_blank"
+            rel="noopener"
+            class="text-gray-400 hover:text-white transition-colors inline-flex items-center justify-center min-h-[44px] min-w-[44px]"
+            aria-label="Visit our GitHub repository"
+          >
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                fill-rule="evenodd"
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </a>
+
+          <a
+            href="https://x.com/meysamazing"
+            target="_blank"
+            rel="noopener"
+            class="text-gray-400 hover:text-white transition-colors inline-flex items-center justify-center min-h-[44px] min-w-[44px]"
+            aria-label="Follow us on X (formerly Twitter)"
+          >
+            <svg
+              version="1.1"
+              id="svg5"
+              xmlns:svg="http://www.w3.org/2000/svg"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 1668.56 1221.19"
+              style="enable-background:new 0 0 1668.56 1221.19;"
+              xml:space="preserve"
+            >
+              <style type="text/css">
+                .st0 {
+                  stroke: #ffffff;
+                  stroke-miterlimit: 10;
+                }
+                .st1 {
+                  fill: #ffffff;
+                }
+              </style>
+              <g>
+                <circle class="st0" cx="834.28" cy="610.6" r="481.33"></circle>
+                <g id="layer1" transform="translate(52.390088,-25.058597)">
+                  <path
+                    id="path1009"
+                    class="st1"
+                    d="M485.39,356.79l230.07,307.62L483.94,914.52h52.11l202.7-218.98l163.77,218.98h177.32
+			L836.82,589.6l215.5-232.81h-52.11L813.54,558.46L662.71,356.79H485.39z M562.02,395.17h81.46l359.72,480.97h-81.46L562.02,395.17
+			z"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import { supabase } from "@/lib/supabase-client";
+
+  var form = document.getElementById("newsletter-form") as HTMLFormElement;
+  var emailInput = document.getElementById(
+    "newsletter-email",
+  ) as HTMLInputElement;
+  var submitButton = document.getElementById(
+    "newsletter-submit",
+  ) as HTMLButtonElement;
+  var successMessage = document.getElementById("newsletter-success");
+  var errorMessage = document.getElementById("newsletter-error");
+
+  form?.addEventListener("submit", async function handleSubmit(e) {
+    e.preventDefault();
+
+    var email = emailInput?.value;
+    if (!email) return;
+
+    if (submitButton) submitButton.disabled = true;
+    if (submitButton) submitButton.textContent = "Subscribing...";
+    successMessage?.classList.add("hidden");
+    errorMessage?.classList.add("hidden");
+
+    try {
+      var { error: dbError } = await supabase
+        .from("newsletter_signups")
+        .insert({
+          email,
+          source: "footer",
+        });
+
+      if (dbError) {
+        if (dbError.code === "23505") {
+          if (successMessage) {
+            successMessage.textContent = "You are already subscribed!";
+            successMessage.classList.remove("hidden");
+          }
+          emailInput.value = "";
+          return;
+        } else {
+          throw dbError;
+        }
+      }
+
+      var mauticBaseUrl = import.meta.env.PUBLIC_MAUTIC_BASE_URL;
+      var mauticFormId = import.meta.env.PUBLIC_MAUTIC_FORM_ID;
+
+      if (mauticBaseUrl && mauticFormId) {
+        var formData = new FormData();
+        formData.append("mauticform[email]", email);
+        formData.append("mauticform[formId]", mauticFormId);
+
+        await fetch(`${mauticBaseUrl}/form/submit?formId=${mauticFormId}`, {
+          method: "POST",
+          body: formData,
+          mode: "no-cors",
+        });
+      }
+
+      if (successMessage) {
+        successMessage.textContent = "✅ Subscribed! Check your email.";
+        successMessage.classList.remove("hidden");
+      }
+      emailInput.value = "";
+
+      if (typeof window !== "undefined" && (window as any).pirsch) {
+        (window as any).pirsch("Newsletter Signup", { source: "footer" });
+      }
+    } catch (error) {
+      console.error("Newsletter signup error:", error);
+      if (errorMessage) {
+        errorMessage.textContent = "Failed to subscribe. Please try again.";
+        errorMessage.classList.remove("hidden");
+      }
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+      if (submitButton) submitButton.textContent = "Subscribe";
+    }
+  });
+</script>

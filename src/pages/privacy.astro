@@ -1,0 +1,248 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
+
+const lastUpdated = "November 12, 2025";
+---
+
+<BaseLayout
+  title="Privacy Policy | Awesome Directories"
+  description="Privacy Policy for Awesome Directories - Learn how we collect, use, and protect your data."
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
+      <p class="text-gray-600 mb-8">Last Updated: {lastUpdated}</p>
+
+      <div class="space-y-6 text-gray-700">
+        <div class="card p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            Our Commitment to Privacy
+          </h2>
+          <p class="mb-4">
+            Awesome Directories is an open-source project that respects your
+            privacy. We collect minimal data necessary to provide our service
+            and never sell your personal information to third parties.
+          </p>
+          <p>
+            This privacy policy explains what data we collect, how we use it,
+            and your rights regarding your personal information. As an
+            open-source project, we prioritize transparency and user control.
+          </p>
+        </div>
+
+        <div class="card p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            1. Information We Collect
+          </h2>
+
+          <h3 class="text-xl font-semibold text-gray-900 mb-3 mt-6">
+            1.1 Authentication Data (via Supabase)
+          </h3>
+          <p class="mb-3">
+            When you create an account using OAuth authentication, we collect:
+          </p>
+          <ul class="list-disc list-inside space-y-1 mb-4 pl-4">
+            <li>Email address - From your Google or GitHub account</li>
+            <li>OAuth provider ID - Unique identifier from Google or GitHub</li>
+            <li>Display name/username - Public profile information</li>
+            <li>
+              Profile picture - Avatar from your OAuth provider (if available)
+            </li>
+            <li>
+              Account creation date - Timestamp of when you first signed up
+            </li>
+          </ul>
+
+          <h3 class="text-xl font-semibold text-gray-900 mb-3 mt-6">
+            1.2 User-Generated Content
+          </h3>
+          <ul class="list-disc list-inside space-y-1 mb-4 pl-4">
+            <li>
+              Directory submissions - Information you submit about new
+              directories
+            </li>
+            <li>Favorites - Directories you've marked as favorites</li>
+            <li>Votes - Your upvotes or downvotes on directories</li>
+            <li>
+              Reviews & comments - Your written feedback about directories
+            </li>
+            <li>Submission tracking - Record of your directory submissions</li>
+          </ul>
+
+          <h3 class="text-xl font-semibold text-gray-900 mb-3 mt-6">
+            1.3 Analytics Data (via Pirsch)
+          </h3>
+          <p class="mb-3">
+            We collect anonymized analytics data through Pirsch, a privacy-first
+            analytics platform:
+          </p>
+          <ul class="list-disc list-inside space-y-1 mb-4 pl-4">
+            <li>Page views - Which pages you visit</li>
+            <li>Referrer information - Where you came from</li>
+            <li>Browser & device type - General device information</li>
+            <li>Geographic location - Country-level location (not precise)</li>
+            <li>Session duration - How long you spend on the site</li>
+          </ul>
+          <p class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
+            <strong>Important:</strong> Pirsch is fully GDPR-compliant and does NOT
+            use cookies or track personal information. All analytics data is anonymized
+            and aggregated. No IP addresses are stored.
+          </p>
+
+          <h3 class="text-xl font-semibold text-gray-900 mb-3 mt-6">
+            1.4 Newsletter Data (via Mautic)
+          </h3>
+          <ul class="list-disc list-inside space-y-1 mb-4 pl-4">
+            <li>Email address - To send you updates and launch strategies</li>
+            <li>
+              Subscription source - Where you signed up (e.g., footer, popup)
+            </li>
+            <li>Subscription date - When you subscribed</li>
+            <li>
+              Email engagement - Whether you open or click links in our emails
+            </li>
+          </ul>
+        </div>
+
+        <div class="card p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            2. How We Use Your Information
+          </h2>
+          <ul class="list-disc list-inside space-y-2 pl-4">
+            <li>
+              Provide core features - Authentication, favorites, submissions,
+              voting
+            </li>
+            <li>
+              Improve the service - Understand usage patterns and optimize UX
+            </li>
+            <li>
+              Send newsletters - Deliver launch strategies and updates (opt-in
+              only)
+            </li>
+            <li>
+              Prevent abuse - Detect and prevent spam or malicious activity
+            </li>
+            <li>Communicate updates - Notify you of important changes</li>
+            <li>
+              Comply with legal obligations - Respond to valid legal requests
+            </li>
+          </ul>
+          <p class="mt-4 font-semibold">
+            We do NOT: Sell your data, share it with advertisers, or use it for
+            unrelated purposes.
+          </p>
+        </div>
+
+        <div class="card p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            3. Data Storage & Security
+          </h2>
+          <ul class="list-disc list-inside space-y-2 pl-4">
+            <li>Encryption - All data is transmitted over HTTPS (TLS/SSL)</li>
+            <li>OAuth authentication - We never store passwords</li>
+            <li>Database security - Supabase implements row-level security</li>
+            <li>Access controls - Limited access to production data</li>
+            <li>Regular updates - Dependencies kept up to date</li>
+          </ul>
+        </div>
+
+        <div class="card p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            4. Your Privacy Rights
+          </h2>
+          <ul class="list-disc list-inside space-y-2 pl-4 mb-4">
+            <li>Access - Request a copy of your data</li>
+            <li>Correction - Request corrections to inaccurate data</li>
+            <li>Deletion - Request deletion of your account and data</li>
+            <li>Portability - Request data in machine-readable format</li>
+            <li>Opt-out - Unsubscribe from newsletters anytime</li>
+            <li>Revoke access - Disconnect OAuth via Google/GitHub settings</li>
+          </ul>
+          <p class="font-semibold">How to Exercise Your Rights:</p>
+          <p>
+            Email: <a
+              href="mailto:privacy@awesome-directories.com"
+              class="text-primary hover:underline"
+              >privacy@awesome-directories.com</a
+            >
+          </p>
+        </div>
+
+        <div class="card p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            5. Open Source Transparency
+          </h2>
+          <p class="mb-4">
+            As an open-source project, we believe in transparency. You can:
+          </p>
+          <ul class="list-disc list-inside space-y-2 pl-4">
+            <li>
+              Review our source code - See exactly how we handle data on GitHub
+            </li>
+            <li>
+              Audit our practices - Verify our privacy claims in the codebase
+            </li>
+            <li>
+              Contribute improvements - Submit PRs to enhance privacy features
+            </li>
+            <li>Report concerns - Open issues for privacy-related questions</li>
+          </ul>
+        </div>
+
+        <div class="card p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Contact Us</h2>
+          <p class="mb-4">
+            If you have questions, concerns, or requests regarding this privacy
+            policy or your personal data, please contact us:
+          </p>
+          <ul class="space-y-2">
+            <li>
+              Privacy Email: <a
+                href="mailto:privacy@awesome-directories.com"
+                class="text-primary hover:underline"
+                >privacy@awesome-directories.com</a
+              >
+            </li>
+            <li>
+              General Contact: <a
+                href="mailto:contact@awesome-directories.com"
+                class="text-primary hover:underline"
+                >contact@awesome-directories.com</a
+              >
+            </li>
+            <li>
+              GitHub Issues: <a
+                href="https://github.com/awesome-directories/awesome-directories/issues"
+                target="_blank"
+                rel="noopener"
+                class="text-primary hover:underline"
+                >awesome-directories/awesome-directories</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="card p-8 bg-blue-50 border-blue-200">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">TL;DR Summary</h3>
+          <ul class="list-disc list-inside space-y-1 pl-4">
+            <li>We collect minimal data (email, OAuth info, usage data)</li>
+            <li>We use privacy-first analytics (Pirsch) with no cookies</li>
+            <li>We never sell your data or share it with advertisers</li>
+            <li>You can request access, correction, or deletion anytime</li>
+            <li>Our code is open-source, so you can verify our practices</li>
+            <li>
+              We're transparent, community-driven, and respect your privacy
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <AppFooter />
+</BaseLayout>

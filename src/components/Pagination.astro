@@ -1,0 +1,92 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  basePath: string;
+  hasPrev: boolean;
+  hasNext: boolean;
+}
+
+const { currentPage, totalPages, basePath, hasPrev, hasNext } = Astro.props;
+
+// Generate page numbers to display
+function getPageNumbers(current: number, total: number): (number | string)[] {
+  const delta = 2; // Number of pages to show on each side of current page
+  const range: (number | string)[] = [];
+
+  for (let i = 1; i <= total; i++) {
+    if (
+      i === 1 ||
+      i === total ||
+      (i >= current - delta && i <= current + delta)
+    ) {
+      range.push(i);
+    } else if (range[range.length - 1] !== "...") {
+      range.push("...");
+    }
+  }
+
+  return range;
+}
+
+const pageNumbers = getPageNumbers(currentPage, totalPages);
+
+function getPageUrl(page: number): string {
+  if (page === 1) {
+    return basePath;
+  }
+  return `${basePath}/${page}`;
+}
+---
+
+{
+  totalPages > 1 && (
+    <nav
+      class="flex justify-center items-center gap-2 mt-12"
+      aria-label="Pagination"
+    >
+      {hasPrev && (
+        <a
+          href={getPageUrl(currentPage - 1)}
+          class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+        >
+          ← Previous
+        </a>
+      )}
+
+      <div class="flex gap-1">
+        {pageNumbers.map((pageNum) => {
+          if (pageNum === "...") {
+            return <span class="px-3 py-2 text-gray-500">...</span>;
+          }
+
+          const page = pageNum as number;
+          const isActive = page === currentPage;
+
+          return (
+            <a
+              href={getPageUrl(page)}
+              class={`px-4 py-2 rounded-md transition-colors ${
+                isActive
+                  ? "bg-blue-600 text-white font-bold"
+                  : "bg-white border border-gray-300 hover:bg-gray-50"
+              }`}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {page}
+            </a>
+          );
+        })}
+      </div>
+
+      {hasNext && (
+        <a
+          href={getPageUrl(currentPage + 1)}
+          class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+        >
+          Next →
+        </a>
+      )}
+    </nav>
+  )
+}

@@ -1,0 +1,33 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
+import FavoritesContent from "@/components/FavoritesContent.vue";
+import "@/style.css";
+
+const title = "My Favorites | Awesome Directories";
+const description = "View and manage your favorite directories";
+---
+
+<BaseLayout title={title} description={description} noIndex={true}>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50">
+    <!-- Page Header -->
+    <section
+      class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 px-4"
+    >
+      <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">❤️ My Favorites</h1>
+        <p class="text-lg text-blue-100">
+          Manage your curated list of directories
+        </p>
+      </div>
+    </section>
+
+    <!-- Favorites Content -->
+    <FavoritesContent client:load />
+  </main>
+
+  <AppFooter />
+</BaseLayout>
