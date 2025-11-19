@@ -113,8 +113,22 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { useAuth } from '@/composables/useAuth'
-import { useReviews } from '@/composables/useReviews'
+import { useStore } from '@nanostores/vue'
+import { $user } from '@/stores/auth'
+import {
+  $reviews,
+  $reviewsLoading,
+  $reviewsError,
+  fetchReviews,
+  createReview,
+  updateReview,
+  deleteReview,
+  voteReview,
+  removeVote,
+  flagReview,
+  getReviewStats,
+  generateIpHash
+} from '@/stores/reviews'
 import StarRating from './StarRating.vue'
 import ReviewForm from './ReviewForm.vue'
 import ReviewItem from './ReviewItem.vue'
@@ -128,21 +142,10 @@ const props = defineProps({
 
 defineEmits(['show-auth-modal'])
 
-const { user, isAuthenticated } = useAuth()
-const {
-  reviews,
-  loading,
-  error,
-  fetchReviews,
-  createReview,
-  updateReview,
-  deleteReview,
-  voteReview,
-  removeVote,
-  flagReview,
-  getReviewStats,
-  generateIpHash
-} = useReviews()
+const user = useStore($user)
+const reviews = useStore($reviews)
+const loading = useStore($reviewsLoading)
+const error = useStore($reviewsError)
 
 const reviewFormRef = ref(null)
 const sortBy = ref('helpfulness')
@@ -151,6 +154,7 @@ const ipHash = ref(null)
 const successMessage = ref('')
 const errorToast = ref('')
 
+const isAuthenticated = computed(() => !!user.value)
 const currentUserId = computed(() => user.value?.id || null)
 
 const loadReviews = async () => {
@@ -298,7 +302,7 @@ const handleFlag = async (data) => {
 onMounted(async () => {
   // Generate IP hash for anonymous users
   if (!currentUserId.value) {
-    ipHash.value = await generateIpHash()
+    ipHash.value = generateIpHash()
   }
 
   await loadReviews()

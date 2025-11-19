@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppHeader from '@/components/AppHeader.astro';
+import AppFooter from '@/components/AppFooter.astro';
+import SettingsContent from '@/components/SettingsContent.vue';
+import '@/style.css';
+
+const title = 'Settings - Awesome Directories';
+const description = 'Manage your profile and account settings';
+const canonicalUrl = 'https://awesome-directories.com/settings';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  noIndex={true}
+>
+  <AppHeader />
+
+  <main class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Settings</h1>
+        <p class="text-gray-600 mt-2">Manage your profile and account preferences</p>
+      </div>
+
+      <!-- Settings Content (Vue Island) -->
+      <SettingsContent client:load />
+    </div>
+  </main>
+
+  <AppFooter />
+</BaseLayout>

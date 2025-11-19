@@ -228,7 +228,7 @@
 import { ref, computed, onMounted } from 'vue'
 import StarRating from './StarRating.vue'
 import ReviewForm from './ReviewForm.vue'
-import { useReviews } from '@/composables/useReviews'
+import { getUserVote, hasUserFlagged } from '@/stores/reviews'
 
 const props = defineProps({
   review: {
@@ -250,8 +250,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['vote', 'delete', 'update', 'reply', 'flag'])
-
-const { getUserVote, hasUserFlagged } = useReviews()
 
 const isEditing = ref(false)
 const showReplyForm = ref(false)
