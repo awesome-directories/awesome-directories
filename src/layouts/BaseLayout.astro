@@ -1,6 +1,6 @@
 ---
-import '@/style.css';
-import AuthModalWrapper from '@/components/AuthModalWrapper.vue';
+import "@/style.css";
+import AuthModalWrapper from "@/components/AuthModalWrapper.vue";
 
 interface Props {
   title?: string;
@@ -14,19 +14,19 @@ interface Props {
 }
 
 const {
-  title = 'Awesome Directories - Curated Launch Directories for SaaS',
-  description = 'Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly.',
-  keywords = 'launch directories, SaaS, startup directories, product launch, directory submission, curated directories',
-  ogImage = 'https://awesome-directories.com/og-image.jpg',
-  ogType = 'website',
+  title = "Awesome Directories - Curated Launch Directories for SaaS",
+  description = "Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly.",
+  keywords = "launch directories, SaaS, startup directories, product launch, directory submission, curated directories",
+  ogImage = "https://awesome-directories.com/og-image.jpg",
+  ogType = "website",
   canonicalUrl = Astro.url.href,
   structuredData,
   noIndex = false,
 } = Astro.props;
 
-const siteUrl = 'https://awesome-directories.com';
-const siteName = 'Awesome Directories';
-const twitterHandle = '@awesome_dirs';
+const siteUrl = "https://awesome-directories.com";
+const siteName = "Awesome Directories";
+const twitterHandle = "@awesome_dirs";
 ---
 
 <!doctype html>
@@ -46,20 +46,20 @@ const twitterHandle = '@awesome_dirs';
     <meta
       name="robots"
       content={noIndex
-        ? 'noindex, nofollow'
-        : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'}
+        ? "noindex, nofollow"
+        : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"}
     />
     <meta
       name="googlebot"
       content={noIndex
-        ? 'noindex, nofollow'
-        : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'}
+        ? "noindex, nofollow"
+        : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"}
     />
     <meta
       name="bingbot"
       content={noIndex
-        ? 'noindex, nofollow'
-        : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'}
+        ? "noindex, nofollow"
+        : "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"}
     />
     <link rel="canonical" href={canonicalUrl} />
 
@@ -81,7 +81,12 @@ const twitterHandle = '@awesome_dirs';
     />
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="/data/directories.json" as="fetch" crossorigin="anonymous" />
+    <link
+      rel="preload"
+      href="/data/directories.json"
+      as="fetch"
+      crossorigin="anonymous"
+    />
 
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -136,7 +141,12 @@ const twitterHandle = '@awesome_dirs';
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
     <!-- RSS Feed -->
-    <link rel="alternate" type="application/rss+xml" title="Awesome Directories Blog RSS Feed" href="/rss.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Awesome Directories Blog RSS Feed"
+      href="/rss.xml"
+    />
 
     <!-- Webmention -->
     <link
@@ -152,7 +162,12 @@ const twitterHandle = '@awesome_dirs';
     <!-- Structured Data -->
     {
       structuredData && (
-        <script type="application/ld+json" set:html={JSON.stringify(Array.isArray(structuredData) ? structuredData : [structuredData])} />
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(
+            Array.isArray(structuredData) ? structuredData : [structuredData],
+          )}
+        />
       )
     }
 

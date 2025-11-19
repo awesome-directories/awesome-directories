@@ -21,8 +21,8 @@ function getPageNumbers(current: number, total: number): (number | string)[] {
       (i >= current - delta && i <= current + delta)
     ) {
       range.push(i);
-    } else if (range[range.length - 1] !== '...') {
-      range.push('...');
+    } else if (range[range.length - 1] !== "...") {
+      range.push("...");
     }
   }
 
@@ -39,53 +39,54 @@ function getPageUrl(page: number): string {
 }
 ---
 
-{totalPages > 1 && (
-  <nav class="flex justify-center items-center gap-2 mt-12" aria-label="Pagination">
-    {hasPrev && (
-      <a
-        href={getPageUrl(currentPage - 1)}
-        class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-      >
-        ← Previous
-      </a>
-    )}
+{
+  totalPages > 1 && (
+    <nav
+      class="flex justify-center items-center gap-2 mt-12"
+      aria-label="Pagination"
+    >
+      {hasPrev && (
+        <a
+          href={getPageUrl(currentPage - 1)}
+          class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+        >
+          ← Previous
+        </a>
+      )}
 
-    <div class="flex gap-1">
-      {pageNumbers.map((pageNum) => {
-        if (pageNum === '...') {
+      <div class="flex gap-1">
+        {pageNumbers.map((pageNum) => {
+          if (pageNum === "...") {
+            return <span class="px-3 py-2 text-gray-500">...</span>;
+          }
+
+          const page = pageNum as number;
+          const isActive = page === currentPage;
+
           return (
-            <span class="px-3 py-2 text-gray-500">
-              ...
-            </span>
+            <a
+              href={getPageUrl(page)}
+              class={`px-4 py-2 rounded-md transition-colors ${
+                isActive
+                  ? "bg-blue-600 text-white font-bold"
+                  : "bg-white border border-gray-300 hover:bg-gray-50"
+              }`}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {page}
+            </a>
           );
-        }
+        })}
+      </div>
 
-        const page = pageNum as number;
-        const isActive = page === currentPage;
-
-        return (
-          <a
-            href={getPageUrl(page)}
-            class={`px-4 py-2 rounded-md transition-colors ${
-              isActive
-                ? 'bg-blue-600 text-white font-bold'
-                : 'bg-white border border-gray-300 hover:bg-gray-50'
-            }`}
-            aria-current={isActive ? 'page' : undefined}
-          >
-            {page}
-          </a>
-        );
-      })}
-    </div>
-
-    {hasNext && (
-      <a
-        href={getPageUrl(currentPage + 1)}
-        class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-      >
-        Next →
-      </a>
-    )}
-  </nav>
-)}
+      {hasNext && (
+        <a
+          href={getPageUrl(currentPage + 1)}
+          class="px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+        >
+          Next →
+        </a>
+      )}
+    </nav>
+  )
+}

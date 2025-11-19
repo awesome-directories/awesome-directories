@@ -10,16 +10,16 @@ import GithubStars from "./GithubStars.vue";
   <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
     <div class="flex items-center justify-between h-14 sm:h-16">
       <!-- Logo -->
-      <a href="/" class="flex items-center hover:opacity-80 transition-opacity min-h-[44px] min-w-[44px]">
+      <a
+        href="/"
+        class="flex items-center hover:opacity-80 transition-opacity min-h-[44px] min-w-[44px]"
+      >
         <Logo size="md" spacing="lg" />
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-4 lg:space-x-6">
-        <GithubStars
-          client:load
-          class="mr-2 lg:mr-4"
-        />
+        <GithubStars client:load class="mr-2 lg:mr-4" />
 
         <a
           href="/blog"
@@ -89,7 +89,10 @@ import GithubStars from "./GithubStars.vue";
           </div>
         </div>
 
-        <button id="sign-in-button" class="btn-primary text-sm hidden min-h-[44px]">
+        <button
+          id="sign-in-button"
+          class="btn-primary text-sm hidden min-h-[44px]"
+        >
           Sign In
         </button>
       </nav>

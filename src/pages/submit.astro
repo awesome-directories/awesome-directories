@@ -1,23 +1,22 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import AppHeader from '@/components/AppHeader.astro';
-import AppFooter from '@/components/AppFooter.astro';
-import SubmitDirectoryForm from '@/components/SubmitDirectoryForm.vue';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import AppHeader from "@/components/AppHeader.astro";
+import AppFooter from "@/components/AppFooter.astro";
+import SubmitDirectoryForm from "@/components/SubmitDirectoryForm.vue";
 
-const title = 'Submit a Directory | Awesome Directories';
-const description = 'Submit a new directory to be added to our curated collection';
+const title = "Submit a Directory | Awesome Directories";
+const description =
+  "Submit a new directory to be added to our curated collection";
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  noIndex={true}
->
+<BaseLayout title={title} description={description} noIndex={true}>
   <AppHeader />
 
   <main class="min-h-screen bg-gray-50">
     <!-- Page Header -->
-    <section class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 px-4">
+    <section
+      class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 px-4"
+    >
       <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl md:text-4xl font-bold mb-2">
           📝 Submit a Directory
