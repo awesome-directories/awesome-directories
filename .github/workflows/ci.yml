@@ -46,6 +46,7 @@ jobs:
       - name: Build
         run: bun run build
         env:
+          PUBLIC_PREVIEW: "true"
           PUBLIC_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
