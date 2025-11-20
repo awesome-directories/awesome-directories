@@ -168,3 +168,7 @@ export function paginate<T>(items: T[], page: number, pageSize: number) {
     totalItems: items.length,
   };
 }
+
+export function getPostSlug(post: CollectionEntry<"blog">): string {
+  return post.data.slug || post.slug;
+}
