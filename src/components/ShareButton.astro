@@ -1,6 +1,13 @@
 ---
 interface Props {
-  platform: "x" | "linkedin" | "facebook" | "reddit" | "hackernews" | "threads" | "whatsapp";
+  platform:
+    | "x"
+    | "linkedin"
+    | "facebook"
+    | "reddit"
+    | "hackernews"
+    | "threads"
+    | "whatsapp";
   url: string;
   title: string;
   description?: string;
@@ -99,10 +106,7 @@ const platformConfigs = {
     bgColor: "bg-[#25d366]",
     hoverColor: "hover:bg-[#20ba5a]",
     shareUrl: function buildUrl(u, t) {
-      return (
-        "https://wa.me/?text=" +
-        encodeURIComponent(t + " " + u)
-      );
+      return "https://wa.me/?text=" + encodeURIComponent(t + " " + u);
     },
   },
 };
