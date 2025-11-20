@@ -314,7 +314,7 @@ Before submitting, verify:
 - Images optimized (his 8MB page size was unnecessary)
 - Server can handle 35-50 visitors per minute sustained for hours
 
-A $3-5/month VPS with proper caching can handle front page traffic. RoyalSloth documented 43,000 unique requests on a $3.04/month Hetzner VPS with 0-5% CPU idle. But only with caching.
+A $3-5/month VPS with proper caching can handle front page traffic. RoyalSloth documented 43,000 unique requests on a $3.04/month Hetzner VPS with 0-5% CPU usage. But only with caching.
 
 ## Why 90% of HN Posts Fail
 
