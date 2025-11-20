@@ -481,6 +481,7 @@ The blog uses Astro Content Collections with Markdown files:
 - **Comments**: Giscus (GitHub Discussions) integration
 
 Blog posts support:
+
 - Draft mode (hidden in production)
 - Future scheduling (hidden until publish date)
 - Auto-generated related posts based on tags
@@ -767,6 +768,7 @@ Directory detail pages are generated statically:
 
 1. Create a new `.md` file in `src/content/blog/`
 2. Add required frontmatter:
+
    ```markdown
    ---
    title: "Your Post Title"
@@ -780,6 +782,7 @@ Directory detail pages are generated statically:
 
    Your markdown content here...
    ```
+
 3. Use headings (h2, h3) for automatic table of contents
 4. Optionally specify `relatedPosts: ["post-slug-1", "post-slug-2"]` for custom related posts
 5. Set `draft: true` to hide in production while working

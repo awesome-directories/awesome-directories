@@ -5,13 +5,19 @@
   <!-- Browser chrome mockup -->
   <g id="browser-chrome">
     <rect x="40" y="40" width="1190" height="680" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <!-- Browser bar -->
     <rect x="40" y="40" width="1190" height="48" rx="12" fill="#f1f5f9"/>
     <rect x="40" y="76" width="1190" height="2" fill="#e2e8f0"/>
+    <!-- Browser dots -->
     <circle cx="64" cy="64" r="6" fill="#ef4444"/>
     <circle cx="88" cy="64" r="6" fill="#f59e0b"/>
     <circle cx="112" cy="64" r="6" fill="#10b981"/>
+    <!-- URL bar -->
+    <rect x="140" y="52" width="800" height="24" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="160" y="69" font-family="monospace" font-size="13" fill="#64748b">
+      https://awesome-directories.com
+    </text>
   </g>
-
   <!-- Modal overlay -->
   <rect x="40" y="88" width="1190" height="632" fill="#1f2937" opacity="0.5"/>
 

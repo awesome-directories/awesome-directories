@@ -167,6 +167,38 @@ const conversions = [
     height: 512,
     format: "png",
   },
+  {
+    baseUrl: "./assets",
+    input: "product-hunt/gallery-01-homepage.svg",
+    output: "product-hunt/gallery-01-homepage.png",
+    width: 1280,
+    height: 720,
+    format: "png",
+  },
+  {
+    baseUrl: "./assets",
+    input: "product-hunt/gallery-02-filters.svg",
+    output: "product-hunt/gallery-02-filters.png",
+    width: 1280,
+    height: 720,
+    format: "png",
+  },
+  {
+    baseUrl: "./assets",
+    input: "product-hunt/gallery-03-checklist.svg",
+    output: "product-hunt/gallery-03-checklist.png",
+    width: 1280,
+    height: 720,
+    format: "png",
+  },
+  {
+    baseUrl: "./assets",
+    input: "product-hunt/gallery-04-detail.svg",
+    output: "product-hunt/gallery-04-detail.png",
+    width: 1280,
+    height: 720,
+    format: "png",
+  },
 ];
 
 async function convertSVGtoPNG() {
@@ -178,8 +210,9 @@ async function convertSVGtoPNG() {
   let failed = 0;
 
   for (const conversion of conversions) {
-    const inputPath = join(publicDir, conversion.input);
-    const outputPath = join(publicDir, conversion.output);
+    var dir = conversion.baseUrl || publicDir;
+    const inputPath = join(dir, conversion.input);
+    const outputPath = join(dir, conversion.output);
 
     try {
       let pipeline = sharp(inputPath).resize(
