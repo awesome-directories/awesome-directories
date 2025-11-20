@@ -110,9 +110,10 @@ var structuredData = [
         <p
           class="text-base sm:text-lg md:text-xl text-blue-50 mb-6 sm:mb-8 px-2 max-w-3xl mx-auto"
         >
-          Most directory lists are bloated with dead links and low-DR sites that waste your time.
-          We manually curate every directory, so you only see the ones worth submitting to.
-          Filter DoFollow 70+ DR directories in seconds, export your list, and track every submission.
+          Most directory lists are bloated with dead links and low-DR sites that
+          waste your time. We manually curate every directory, so you only see
+          the ones worth submitting to. Filter DoFollow 70+ DR directories in
+          seconds, export your list, and track every submission.
         </p>
 
         <div
@@ -137,9 +138,7 @@ var structuredData = [
           </div>
           <div class="hidden sm:block text-blue-100" aria-hidden="true">·</div>
           <div class="text-center min-w-[140px]">
-            <div class="text-2xl sm:text-3xl md:text-4xl font-bold">
-              100%
-            </div>
+            <div class="text-2xl sm:text-3xl md:text-4xl font-bold">100%</div>
             <div class="text-xs sm:text-sm text-blue-50 mt-1">
               Open Source & Transparent
             </div>
@@ -196,7 +195,9 @@ var structuredData = [
     <!-- Problem/Solution Section -->
     <section class="bg-white py-12 sm:py-16 px-4 border-b border-gray-200">
       <div class="max-w-4xl mx-auto">
-        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
+        <h2
+          class="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8"
+        >
           Directory Research Shouldn't Take All Day
         </h2>
 
@@ -256,47 +257,57 @@ var structuredData = [
             From Research to Launch in 3 Steps
           </h2>
           <p class="text-gray-600 text-lg">
-            No more spreadsheet chaos. No more guessing which directories matter.
+            No more spreadsheet chaos. No more guessing which directories
+            matter.
           </p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
           <!-- Step 1 -->
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+            <div
+              class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4"
+            >
               1
             </div>
             <h3 class="font-bold text-lg text-gray-900 mb-2">
               Filter What Matters
             </h3>
             <p class="text-gray-600 text-sm">
-              Set DoFollow + DR 70+ and instantly see directories that move the needle. No fluff, just the ones that count.
+              Set DoFollow + DR 70+ and instantly see directories that move the
+              needle. No fluff, just the ones that count.
             </p>
           </div>
 
           <!-- Step 2 -->
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+            <div
+              class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4"
+            >
               2
             </div>
             <h3 class="font-bold text-lg text-gray-900 mb-2">
               Export Your Hit List
             </h3>
             <p class="text-gray-600 text-sm">
-              Download as CSV or PDF. Your personalized launch checklist ready in seconds, not hours.
+              Download as CSV or PDF. Your personalized launch checklist ready
+              in seconds, not hours.
             </p>
           </div>
 
           <!-- Step 3 -->
           <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+            <div
+              class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4"
+            >
               3
             </div>
             <h3 class="font-bold text-lg text-gray-900 mb-2">
               Track Every Submission
             </h3>
             <p class="text-gray-600 text-sm">
-              Log which directories you've submitted to per project. Never double-submit or lose track of your progress.
+              Log which directories you've submitted to per project. Never
+              double-submit or lose track of your progress.
             </p>
           </div>
         </div>
@@ -307,8 +318,18 @@ var structuredData = [
             class="inline-flex items-center gap-2 text-primary hover:text-blue-700 font-medium transition-colors"
           >
             Start filtering now
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"></path>
             </svg>
           </a>
         </div>
@@ -323,36 +344,39 @@ var structuredData = [
             Quick Wins: Top DoFollow Directories by DR
           </h2>
           <p class="text-gray-600">
-            Start here. These are the directories serious founders submit to first.
+            Start here. These are the directories serious founders submit to
+            first.
           </p>
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {featuredDirectories.map(function renderFeatured(directory) {
-            return (
-              <a
-                href={`/directory/${directory.slug}`}
-                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200"
-              >
-                <div class="flex-1 min-w-0">
-                  <h3 class="font-semibold text-gray-900 truncate">
-                    {directory.name}
-                  </h3>
-                  <p class="text-sm text-gray-500 truncate">
-                    {directory.categories?.[0] || "Directory"}
-                  </p>
-                </div>
-                <div class="flex items-center gap-2 ml-4">
-                  <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
-                    DoFollow
-                  </span>
-                  <span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-blue-100 text-blue-800">
-                    DR {directory.domain_rating}
-                  </span>
-                </div>
-              </a>
-            );
-          })}
+          {
+            featuredDirectories.map(function renderFeatured(directory) {
+              return (
+                <a
+                  href={`/directory/${directory.slug}`}
+                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200"
+                >
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-gray-900 truncate">
+                      {directory.name}
+                    </h3>
+                    <p class="text-sm text-gray-500 truncate">
+                      {directory.categories?.[0] || "Directory"}
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-2 ml-4">
+                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
+                      DoFollow
+                    </span>
+                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-blue-100 text-blue-800">
+                      DR {directory.domain_rating}
+                    </span>
+                  </div>
+                </a>
+              );
+            })
+          }
         </div>
 
         <div class="text-center mt-6">

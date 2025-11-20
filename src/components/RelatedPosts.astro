@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { formatDate, calculateReadingTime } from "@/utils/blog";
+import { formatDate, calculateReadingTime, getPostSlug } from "@/utils/blog";
 
 interface Props {
   posts: CollectionEntry<"blog">[];
@@ -18,16 +18,17 @@ if (posts.length === 0) {
 
   <div class="grid md:grid-cols-3 gap-6">
     {
-      posts.map((post) => {
-        const readingTime = calculateReadingTime(post.body);
+      posts.map(function mapPosts(post) {
+        var readingTime = calculateReadingTime(post.body);
+        var postSlug = getPostSlug(post);
 
         return (
           <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             {post.data.coverImage && (
-              <a href={`/blog/${post.slug}`} class="block">
+              <a href={`/blog/${postSlug}`} class="block">
                 <img
                   src={post.data.coverImage}
-                  alt={post.data.title}
+                  alt={post.data.coverImageAlt || post.data.title}
                   class="w-full h-32 object-cover"
                   loading="lazy"
                 />
@@ -43,7 +44,7 @@ if (posts.length === 0) {
                 <span>{readingTime} min read</span>
               </div>
 
-              <a href={`/blog/${post.slug}`} class="block group">
+              <a href={`/blog/${postSlug}`} class="block group">
                 <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
                   {post.data.title}
                 </h3>
@@ -54,11 +55,13 @@ if (posts.length === 0) {
               </p>
 
               <div class="flex flex-wrap gap-1">
-                {post.data.tags.slice(0, 2).map((tag) => (
-                  <span class="inline-block px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
-                    #{tag}
-                  </span>
-                ))}
+                {post.data.tags.slice(0, 2).map(function mapTags(tag) {
+                  return (
+                    <span class="inline-block px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
+                      #{tag}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </article>

@@ -34,6 +34,8 @@ const {
   tags,
   author,
   coverImage,
+  coverImageAlt,
+  coverCaption,
   relatedPosts: customRelatedPosts,
 } = post.data;
 
@@ -180,12 +182,18 @@ const ogImage = coverImage || `${siteUrl}/og-image.png`;
 
           {
             coverImage && (
-              <img
-                src={coverImage}
-                alt={title}
-                class="w-full rounded-lg mb-8"
-                loading="eager"
-              />
+              <figure>
+                <img
+                  src={coverImage}
+                  alt={coverImageAlt || title}
+                  class="w-full rounded-lg mb-3"
+                  loading="eager"
+                />
+                {coverCaption && (
+                  <figcaption class="text-sm text-gray-500 text-center mb-6" set:html={coverCaption}>
+                  </figcaption>
+                )}
+              </figure>
             )
           }
 

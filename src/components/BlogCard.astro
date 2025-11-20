@@ -1,14 +1,16 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { formatDate, calculateReadingTime } from "@/utils/blog";
+import { formatDate, calculateReadingTime, getPostSlug } from "@/utils/blog";
 
 interface Props {
   post: CollectionEntry<"blog">;
 }
 
 var { post } = Astro.props;
-var { title, description, date, tags, author, coverImage } = post.data;
+var { title, description, date, tags, author, coverImage, coverImageAlt } =
+  post.data;
 var readingTime = calculateReadingTime(post.body);
+var postSlug = getPostSlug(post);
 ---
 
 <article
@@ -16,10 +18,10 @@ var readingTime = calculateReadingTime(post.body);
 >
   {
     coverImage && (
-      <a href={`/blog/${post.slug}`} class="block">
+      <a href={`/blog/${postSlug}`} class="block">
         <img
           src={coverImage}
-          alt={title}
+          alt={coverImageAlt || title}
           class="w-full h-48 object-cover"
           loading="lazy"
         />
@@ -36,7 +38,7 @@ var readingTime = calculateReadingTime(post.body);
       <span>{readingTime} min read</span>
     </div>
 
-    <a href={`/blog/${post.slug}`} class="block group">
+    <a href={`/blog/${postSlug}`} class="block group">
       <h2
         class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors"
       >
@@ -50,21 +52,23 @@ var readingTime = calculateReadingTime(post.body);
 
     <div class="flex flex-wrap gap-2 mb-4">
       {
-        tags.slice(0, 3).map((tag) => (
-          <a
-            href={`/blog/tags/${tag.toLowerCase()}`}
-            class="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 transition-colors"
-          >
-            #{tag}
-          </a>
-        ))
+        tags.slice(0, 3).map(function mapTags(tag) {
+          return (
+            <a
+              href={`/blog/tags/${tag.toLowerCase()}`}
+              class="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 transition-colors"
+            >
+              #{tag}
+            </a>
+          );
+        })
       }
     </div>
 
     <div class="flex items-center justify-between text-sm text-gray-600">
       <span>By {author}</span>
       <a
-        href={`/blog/${post.slug}`}
+        href={`/blog/${postSlug}`}
         class="text-blue-600 hover:text-blue-800 font-medium"
       >
         Read more →
