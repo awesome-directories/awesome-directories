@@ -57,7 +57,8 @@ if (customRelatedPosts && customRelatedPosts.length > 0) {
 }
 
 const publishedDate = formatDate(date);
-const siteUrl = Astro.site?.toString() || "https://awesome-directories.com";
+const siteUrlRaw = Astro.site?.toString() || "https://awesome-directories.com";
+const siteUrl= siteUrlRaw.replace(/\/+$/, "");
 const postUrl = `${siteUrl}/blog/${post.slug}`;
 const ogImage = coverImage || `${siteUrl}/og-image.png`;
 ---
