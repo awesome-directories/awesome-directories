@@ -20,6 +20,16 @@ var drCount = allDirectories.filter(function countDR(d) {
   return d.domain_rating;
 }).length;
 
+// Get featured directories (top DoFollow directories by DR)
+var featuredDirectories = allDirectories
+  .filter(function filterFeatured(d) {
+    return d.domain_rating && d.is_dofollow;
+  })
+  .sort(function sortByDR(a, b) {
+    return (b.domain_rating || 0) - (a.domain_rating || 0);
+  })
+  .slice(0, 6);
+
 var structuredData = [
   {
     "@context": "https://schema.org",
@@ -27,7 +37,7 @@ var structuredData = [
     name: "Awesome Directories",
     url: "https://awesome-directories.com/",
     description:
-      "Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly.",
+      "Hand-picked launch directories with real DR scores. Filter DoFollow + High DR in seconds, export to CSV, and track submissions per project. Built by indie hackers, for indie hackers.",
     inLanguage: "en-US",
     publisher: {
       "@type": "Organization",
@@ -74,13 +84,14 @@ var structuredData = [
 ---
 
 <BaseLayout
-  title="Awesome Directories - Curated Launch Directories for SaaS"
-  description="Find the top 20 launch directories worth your time in under 3 minutes—curated, verified, and updated weekly."
+  title="Awesome Directories - Curated Launch Directories for SaaS Founders"
+  description="Hand-picked launch directories with real DR scores. Filter DoFollow + High DR in seconds, export to CSV, and track submissions per project. Built by indie hackers, for indie hackers."
   structuredData={structuredData}
 >
   <AppHeader />
 
   <main class="min-h-screen bg-gray-50">
+    <!-- Hero Section -->
     <section
       class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 sm:py-16 md:py-20 px-4"
     >
@@ -88,47 +99,49 @@ var structuredData = [
         <h1
           class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 px-2"
         >
-          Find the Top Launch Directories for Your SaaS
+          Your Competitors Already Found the Best Launch Directories.
+          <span class="block mt-2">Now It's Your Turn.</span>
         </h1>
         <p
           class="text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 text-blue-50 px-2"
         >
-          Curated, verified, and updated weekly
+          Hand-picked directories that actually drive traffic. Updated weekly.
         </p>
         <p
           class="text-base sm:text-lg md:text-xl text-blue-50 mb-6 sm:mb-8 px-2 max-w-3xl mx-auto"
         >
-          Stop wasting time on dead links and low-value directories. Get the 20
-          that actually drive traffic—in under 3 minutes.
+          Most directory lists are bloated with dead links and low-DR sites that waste your time.
+          We manually curate every directory, so you only see the ones worth submitting to.
+          Filter DoFollow 70+ DR directories in seconds, export your list, and track every submission.
         </p>
 
         <div
           class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-6 sm:mb-8 px-2"
         >
-          <div class="text-center min-w-[120px]">
+          <div class="text-center min-w-[140px]">
             <div class="text-2xl sm:text-3xl md:text-4xl font-bold">
               {totalCount}+
             </div>
             <div class="text-xs sm:text-sm text-blue-50 mt-1">
-              Curated Directories
+              Directories That Matter
             </div>
           </div>
-          <div class="hidden sm:block text-blue-100" aria-hidden="true">•</div>
-          <div class="text-center min-w-[120px]">
+          <div class="hidden sm:block text-blue-100" aria-hidden="true">·</div>
+          <div class="text-center min-w-[140px]">
             <div class="text-2xl sm:text-3xl md:text-4xl font-bold">
               {drCount}+
             </div>
             <div class="text-xs sm:text-sm text-blue-50 mt-1">
-              With DR Ratings
+              Real Ahrefs DR Scores
             </div>
           </div>
-          <div class="hidden sm:block text-blue-100" aria-hidden="true">•</div>
-          <div class="text-center min-w-[120px]">
+          <div class="hidden sm:block text-blue-100" aria-hidden="true">·</div>
+          <div class="text-center min-w-[140px]">
             <div class="text-2xl sm:text-3xl md:text-4xl font-bold">
-              Open Source
+              100%
             </div>
             <div class="text-xs sm:text-sm text-blue-50 mt-1">
-              Apache 2.0 License ❤️
+              Open Source & Transparent
             </div>
           </div>
         </div>
@@ -139,7 +152,7 @@ var structuredData = [
             <input
               id="search-input"
               type="search"
-              placeholder="Search directories..."
+              placeholder="Find directories by name or category..."
               class="w-full px-4 sm:px-6 py-3 sm:py-4 pr-12 sm:pr-14 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-300 text-base sm:text-lg"
               aria-label="Search directories"
               autocomplete="off"
@@ -180,7 +193,183 @@ var structuredData = [
       </div>
     </section>
 
-    <DirectoryListContent client:load categories={categories} />
+    <!-- Problem/Solution Section -->
+    <section class="bg-white py-12 sm:py-16 px-4 border-b border-gray-200">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8">
+          Directory Research Shouldn't Take All Day
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Pain Points -->
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="text-red-500 text-xl flex-shrink-0">✗</span>
+              <p class="text-gray-600">
+                Submitting to directories with DR 15 that send zero traffic
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-red-500 text-xl flex-shrink-0">✗</span>
+              <p class="text-gray-600">
+                Wasting hours on lists full of dead links and paywalls
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-red-500 text-xl flex-shrink-0">✗</span>
+              <p class="text-gray-600">
+                No way to track what you've submitted or where
+              </p>
+            </div>
+          </div>
+
+          <!-- Solutions -->
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="text-green-500 text-xl flex-shrink-0">✓</span>
+              <p class="text-gray-700 font-medium">
+                Only directories with verified DR scores and real traffic
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-green-500 text-xl flex-shrink-0">✓</span>
+              <p class="text-gray-700 font-medium">
+                Filter DoFollow + High DR in one click
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-green-500 text-xl flex-shrink-0">✓</span>
+              <p class="text-gray-700 font-medium">
+                Track every submission per project—never lose progress
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-Step Process Section -->
+    <section class="bg-gray-50 py-12 sm:py-16 px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+            From Research to Launch in 3 Steps
+          </h2>
+          <p class="text-gray-600 text-lg">
+            No more spreadsheet chaos. No more guessing which directories matter.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
+          <!-- Step 1 -->
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+              1
+            </div>
+            <h3 class="font-bold text-lg text-gray-900 mb-2">
+              Filter What Matters
+            </h3>
+            <p class="text-gray-600 text-sm">
+              Set DoFollow + DR 70+ and instantly see directories that move the needle. No fluff, just the ones that count.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+              2
+            </div>
+            <h3 class="font-bold text-lg text-gray-900 mb-2">
+              Export Your Hit List
+            </h3>
+            <p class="text-gray-600 text-sm">
+              Download as CSV or PDF. Your personalized launch checklist ready in seconds, not hours.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg mb-4">
+              3
+            </div>
+            <h3 class="font-bold text-lg text-gray-900 mb-2">
+              Track Every Submission
+            </h3>
+            <p class="text-gray-600 text-sm">
+              Log which directories you've submitted to per project. Never double-submit or lose track of your progress.
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center mt-8">
+          <a
+            href="#directory-list"
+            class="inline-flex items-center gap-2 text-primary hover:text-blue-700 font-medium transition-colors"
+          >
+            Start filtering now
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Directories Section -->
+    <section class="bg-white py-12 sm:py-16 px-4 border-b border-gray-200">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+            Quick Wins: Top DoFollow Directories by DR
+          </h2>
+          <p class="text-gray-600">
+            Start here. These are the directories serious founders submit to first.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {featuredDirectories.map(function renderFeatured(directory) {
+            return (
+              <a
+                href={`/directory/${directory.slug}`}
+                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200"
+              >
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-semibold text-gray-900 truncate">
+                    {directory.name}
+                  </h3>
+                  <p class="text-sm text-gray-500 truncate">
+                    {directory.categories?.[0] || "Directory"}
+                  </p>
+                </div>
+                <div class="flex items-center gap-2 ml-4">
+                  <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
+                    DoFollow
+                  </span>
+                  <span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-blue-100 text-blue-800">
+                    DR {directory.domain_rating}
+                  </span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+
+        <div class="text-center mt-6">
+          <a
+            href="#directory-list"
+            class="text-primary hover:text-blue-700 font-medium transition-colors"
+          >
+            See all {totalCount}+ directories →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Directory Listing -->
+    <div id="directory-list">
+      <DirectoryListContent client:load categories={categories} />
+    </div>
   </main>
 
   <AppFooter />
