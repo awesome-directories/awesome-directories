@@ -23,7 +23,7 @@ var drCount = allDirectories.filter(function countDR(d) {
 // Get featured directories (top DoFollow directories by DR)
 var featuredDirectories = allDirectories
   .filter(function filterFeatured(d) {
-    return d.domain_rating && d.link_type === "DoFollow";
+    return d.domain_rating && d.is_dofollow;
   })
   .sort(function sortByDR(a, b) {
     return (b.domain_rating || 0) - (a.domain_rating || 0);
