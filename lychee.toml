@@ -1,0 +1,22 @@
+accept = ["200", "429"]
+archive = "wayback"
+cache = true
+cookie_jar = "cookie-jar"
+exclude = ["https://awesome-directories.com/404/"]
+exclude_path = []
+format = "markdown"
+header = { "accept" = "text/html" }
+max_cache_age = "7d"
+max_concurrency = 16
+max_retries = 5
+method = "get"
+no_progress = false
+require_https = false
+retry_wait_time = 3
+root_dir = "/dist"
+scheme = ["https"]
+suggest = true
+threads = 4
+timeout = 30
+user_agent = "Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0"
+verbose = "warn"

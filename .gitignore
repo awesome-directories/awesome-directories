@@ -61,3 +61,6 @@ DEPLOYMENT_GUIDE_MOZ_METRICS.md
 supabase/functions/update-seo-data/README.md
 .astro/
 src/components/DirectoryFilter.astro
+.lycheecache
+cookie-jar
+lychee.toml.bk
