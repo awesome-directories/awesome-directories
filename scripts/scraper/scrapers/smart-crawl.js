@@ -3,10 +3,10 @@
  * Intelligently finds and crawls relevant pages (submission, pricing, about)
  */
 
-import { logger } from '../utils/logger.js';
-import { config } from '../config.js';
-import { navigateToUrl } from '../browser.js';
-import { humanDelay } from '../utils/retry.js';
+import { logger } from "../utils/logger.js";
+import { config } from "../config.js";
+import { navigateToUrl } from "../browser.js";
+import { humanDelay } from "../utils/retry.js";
 
 /**
  * Score link relevance based on keywords
@@ -31,8 +31,8 @@ function scoreLinkRelevance(href, text, keywords) {
 function shouldExclude(url) {
   const pathname = new URL(url).pathname.toLowerCase();
 
-  return config.crawl.excludePatterns.some(pattern =>
-    pathname.includes(pattern.replace(/\//g, ''))
+  return config.crawl.excludePatterns.some((pattern) =>
+    pathname.includes(pattern.replace(/\//g, "")),
   );
 }
 
@@ -43,51 +43,60 @@ function shouldExclude(url) {
  * @returns {Promise<Array>} - Sorted list of relevant pages to visit
  */
 export async function findRelevantPages(page, baseUrl) {
-  logger.info('Finding relevant pages to crawl...');
+  logger.info("Finding relevant pages to crawl...");
 
   try {
-    const relevantLinks = await page.evaluate((base, keywords, maxPages) => {
-      const links = Array.from(document.querySelectorAll('a[href]'));
-      const candidates = [];
+    const relevantLinks = await page.evaluate(
+      (base, keywords, maxPages) => {
+        const links = Array.from(document.querySelectorAll("a[href]"));
+        const candidates = [];
 
-      links.forEach(link => {
-        const href = link.getAttribute('href');
-        const text = link.textContent.trim();
+        links.forEach((link) => {
+          const href = link.getAttribute("href");
+          const text = link.textContent.trim();
 
-        try {
-          const fullUrl = new URL(href, base);
-          const baseDomain = new URL(base).hostname;
+          try {
+            const fullUrl = new URL(href, base);
+            const baseDomain = new URL(base).hostname;
 
-          // Only internal links
-          if (fullUrl.hostname === baseDomain) {
-            candidates.push({
-              url: fullUrl.href,
-              text,
-              href,
-            });
+            // Only internal links
+            if (fullUrl.hostname === baseDomain) {
+              candidates.push({
+                url: fullUrl.href,
+                text,
+                href,
+              });
+            }
+          } catch (error) {
+            // Invalid URL, skip
           }
-        } catch (error) {
-          // Invalid URL, skip
-        }
-      });
+        });
 
-      return candidates;
-    }, baseUrl, config.crawl.relevantKeywords, config.crawl.maxPages);
+        return candidates;
+      },
+      baseUrl,
+      config.crawl.relevantKeywords,
+      config.crawl.maxPages,
+    );
 
     // Filter and score links
     const scored = relevantLinks
-      .filter(link => !shouldExclude(link.url))
-      .map(link => ({
+      .filter((link) => !shouldExclude(link.url))
+      .map((link) => ({
         ...link,
-        score: scoreLinkRelevance(link.href, link.text, config.crawl.relevantKeywords),
+        score: scoreLinkRelevance(
+          link.href,
+          link.text,
+          config.crawl.relevantKeywords,
+        ),
       }))
-      .filter(link => link.score > 0) // Only keep relevant links
+      .filter((link) => link.score > 0) // Only keep relevant links
       .sort((a, b) => b.score - a.score) // Sort by relevance
       .slice(0, config.crawl.maxPages); // Limit results
 
     // Deduplicate by URL
     const uniqueUrls = new Map();
-    scored.forEach(link => {
+    scored.forEach((link) => {
       if (!uniqueUrls.has(link.url)) {
         uniqueUrls.set(link.url, link);
       }
@@ -98,7 +107,7 @@ export async function findRelevantPages(page, baseUrl) {
     logger.success(`Found ${pages.length} relevant pages to crawl`);
     return pages;
   } catch (error) {
-    logger.error('Failed to find relevant pages', { error: error.message });
+    logger.error("Failed to find relevant pages", { error: error.message });
     return [];
   }
 }
@@ -115,7 +124,7 @@ export async function crawlPage(browser, url, scrapeHomepage, analyzeLinks) {
   let page = null;
 
   try {
-    const { createStealthPage } = await import('../browser.js');
+    const { createStealthPage } = await import("../browser.js");
     page = await createStealthPage(browser);
 
     // Navigate to URL
@@ -155,7 +164,13 @@ export async function crawlPage(browser, url, scrapeHomepage, analyzeLinks) {
  * @param {string} baseUrl - Base URL
  * @returns {Promise<Object>} - All crawled data
  */
-export async function smartCrawl(browser, homePage, baseUrl, scrapeHomepage, analyzeLinks) {
+export async function smartCrawl(
+  browser,
+  homePage,
+  baseUrl,
+  scrapeHomepage,
+  analyzeLinks,
+) {
   logger.info(`Starting smart crawl for: ${baseUrl}`);
 
   const crawledData = {
@@ -170,7 +185,7 @@ export async function smartCrawl(browser, homePage, baseUrl, scrapeHomepage, ana
     const relevantPages = await findRelevantPages(homePage, baseUrl);
 
     if (relevantPages.length === 0) {
-      logger.info('No additional relevant pages found, crawling homepage only');
+      logger.info("No additional relevant pages found, crawling homepage only");
       return crawledData;
     }
 
@@ -178,23 +193,36 @@ export async function smartCrawl(browser, homePage, baseUrl, scrapeHomepage, ana
 
     // Crawl each relevant page
     for (const [index, pageInfo] of relevantPages.entries()) {
-      logger.info(`[${index + 1}/${relevantPages.length}] Crawling: ${pageInfo.text}`);
+      logger.info(
+        `[${index + 1}/${relevantPages.length}] Crawling: ${pageInfo.text}`,
+      );
 
       // Human-like delay between pages
       if (index > 0) {
         await humanDelay();
       }
 
-      const pageData = await crawlPage(browser, pageInfo.url, scrapeHomepage, analyzeLinks);
+      const pageData = await crawlPage(
+        browser,
+        pageInfo.url,
+        scrapeHomepage,
+        analyzeLinks,
+      );
       crawledData.pages.push(pageData);
 
       // Extract submission URLs
       if (pageData.links && pageData.links.quality.hasSubmissionLinks) {
-        crawledData.submissionUrls.push(...pageData.links.quality.submissionUrls);
+        crawledData.submissionUrls.push(
+          ...pageData.links.quality.submissionUrls,
+        );
       }
 
       // Extract pricing info
-      if (pageData.pricing && pageData.pricing.found && !crawledData.pricingInfo) {
+      if (
+        pageData.pricing &&
+        pageData.pricing.found &&
+        !crawledData.pricingInfo
+      ) {
         crawledData.pricingInfo = pageData.pricing;
       }
     }
@@ -202,9 +230,11 @@ export async function smartCrawl(browser, homePage, baseUrl, scrapeHomepage, ana
     // Deduplicate submission URLs
     crawledData.submissionUrls = [...new Set(crawledData.submissionUrls)];
 
-    logger.success(`Smart crawl complete: ${crawledData.pages.length} pages crawled`);
+    logger.success(
+      `Smart crawl complete: ${crawledData.pages.length} pages crawled`,
+    );
   } catch (error) {
-    logger.error('Smart crawl failed', { error: error.message });
+    logger.error("Smart crawl failed", { error: error.message });
   }
 
   return crawledData;

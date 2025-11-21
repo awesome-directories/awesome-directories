@@ -3,112 +3,121 @@
  * Generates human-readable markdown reports
  */
 
-import fs from 'fs/promises';
-import path from 'path';
-import { logger } from '../utils/logger.js';
-import { config } from '../config.js';
+import fs from "fs/promises";
+import path from "path";
+import { logger } from "../utils/logger.js";
+import { config } from "../config.js";
 
 /**
  * Generate quality indicator emoji
  */
 function getQualityEmoji(score) {
-  if (score >= 80) return '🟢';
-  if (score >= 60) return '🟡';
-  if (score >= 40) return '🟠';
-  return '🔴';
+  if (score >= 80) return "🟢";
+  if (score >= 60) return "🟡";
+  if (score >= 40) return "🟠";
+  return "🔴";
 }
 
 /**
  * Generate markdown report for a single directory
  */
 export function generateDirectoryMarkdown(directoryData) {
-  const { directory, homepage, smartCrawl, curationSuggestions } = directoryData;
+  const { directory, homepage, smartCrawl, curationSuggestions } =
+    directoryData;
 
   const lines = [];
 
   // Header
   lines.push(`# ${directory.name}`);
-  lines.push('');
+  lines.push("");
   lines.push(`**URL:** ${directory.url}`);
-  lines.push(`**Quality Score:** ${getQualityEmoji(curationSuggestions.qualityScore)} ${curationSuggestions.qualityScore}/100`);
-  lines.push(`**Scraped:** ${new Date(directoryData.scrapedAt).toLocaleString()}`);
-  lines.push('');
+  lines.push(
+    `**Quality Score:** ${getQualityEmoji(curationSuggestions.qualityScore)} ${curationSuggestions.qualityScore}/100`,
+  );
+  lines.push(
+    `**Scraped:** ${new Date(directoryData.scrapedAt).toLocaleString()}`,
+  );
+  lines.push("");
 
   // Curation Suggestions
-  lines.push('## 📝 Curation Suggestions');
-  lines.push('');
-  lines.push('### Short Description');
-  lines.push(curationSuggestions.shortDescription || '_No description generated_');
-  lines.push('');
+  lines.push("## 📝 Curation Suggestions");
+  lines.push("");
+  lines.push("### Short Description");
+  lines.push(
+    curationSuggestions.shortDescription || "_No description generated_",
+  );
+  lines.push("");
 
   if (curationSuggestions.categories.length > 0) {
-    lines.push('### Suggested Categories');
-    lines.push(curationSuggestions.categories.map(c => `- ${c}`).join('\n'));
-    lines.push('');
+    lines.push("### Suggested Categories");
+    lines.push(curationSuggestions.categories.map((c) => `- ${c}`).join("\n"));
+    lines.push("");
   }
 
   if (curationSuggestions.keyFeatures.length > 0) {
-    lines.push('### Key Features');
-    lines.push(curationSuggestions.keyFeatures.map(f => `- ${f}`).join('\n'));
-    lines.push('');
+    lines.push("### Key Features");
+    lines.push(curationSuggestions.keyFeatures.map((f) => `- ${f}`).join("\n"));
+    lines.push("");
   }
 
   // Link Quality
-  lines.push('## 🔗 Link Analysis');
-  lines.push('');
+  lines.push("## 🔗 Link Analysis");
+  lines.push("");
   lines.push(`**Link Quality:** ${curationSuggestions.linkQuality}`);
-  lines.push('');
-  lines.push('### Statistics');
+  lines.push("");
+  lines.push("### Statistics");
   lines.push(`- Total Links: ${homepage.links.stats.total}`);
   lines.push(`- Dofollow: ${homepage.links.stats.dofollow}`);
   lines.push(`- Nofollow: ${homepage.links.stats.nofollow}`);
   lines.push(`- External Dofollow: ${homepage.links.stats.externalDofollow}`);
   lines.push(`- External Nofollow: ${homepage.links.stats.externalNofollow}`);
-  lines.push('');
+  lines.push("");
 
   // Submission Info
-  lines.push('## 📥 Submission Process');
-  lines.push('');
+  lines.push("## 📥 Submission Process");
+  lines.push("");
   lines.push(curationSuggestions.submissionProcess);
-  lines.push('');
+  lines.push("");
 
   if (homepage.links.quality.submissionUrls.length > 0) {
-    lines.push('### Submission URLs Found');
-    homepage.links.quality.submissionUrls.forEach(url => {
+    lines.push("### Submission URLs Found");
+    homepage.links.quality.submissionUrls.forEach((url) => {
       lines.push(`- ${url}`);
     });
-    lines.push('');
+    lines.push("");
   }
 
   // Pricing
-  lines.push('## 💰 Pricing Information');
-  lines.push('');
-  lines.push(curationSuggestions.pricingInsights || '_No pricing information available_');
-  lines.push('');
+  lines.push("## 💰 Pricing Information");
+  lines.push("");
+  lines.push(
+    curationSuggestions.pricingInsights || "_No pricing information available_",
+  );
+  lines.push("");
 
   // Page Content
-  lines.push('## 📄 Homepage Content');
-  lines.push('');
-  lines.push('### Metadata');
+  lines.push("## 📄 Homepage Content");
+  lines.push("");
+  lines.push("### Metadata");
   lines.push(`- **Title:** ${homepage.metadata.title}`);
   lines.push(`- **Description:** ${homepage.metadata.description}`);
   if (homepage.metadata.keywords) {
     lines.push(`- **Keywords:** ${homepage.metadata.keywords}`);
   }
-  lines.push('');
+  lines.push("");
 
-  lines.push('### Hero Section');
+  lines.push("### Hero Section");
   if (homepage.hero.heading) {
     lines.push(`**Heading:** ${homepage.hero.heading}`);
   }
   if (homepage.hero.subheading) {
     lines.push(`**Subheading:** ${homepage.hero.subheading}`);
   }
-  lines.push('');
+  lines.push("");
 
   // Features
   if (homepage.features && homepage.features.length > 0) {
-    lines.push('### Features');
+    lines.push("### Features");
     homepage.features.forEach((feature, i) => {
       if (feature.title) {
         lines.push(`${i + 1}. **${feature.title}**`);
@@ -117,13 +126,13 @@ export function generateDirectoryMarkdown(directoryData) {
         }
       }
     });
-    lines.push('');
+    lines.push("");
   }
 
   // Smart Crawl Results
   if (smartCrawl && smartCrawl.pages && smartCrawl.pages.length > 0) {
-    lines.push('## 🔍 Additional Pages Crawled');
-    lines.push('');
+    lines.push("## 🔍 Additional Pages Crawled");
+    lines.push("");
     smartCrawl.pages.forEach((page, i) => {
       lines.push(`### ${i + 1}. ${page.url}`);
       if (page.metadata) {
@@ -132,31 +141,31 @@ export function generateDirectoryMarkdown(directoryData) {
       if (page.error) {
         lines.push(`- **Error:** ${page.error}`);
       }
-      lines.push('');
+      lines.push("");
     });
   }
 
   // Existing Data (from database)
   if (directory.existingDescription) {
-    lines.push('## 📚 Existing Database Information');
-    lines.push('');
-    lines.push('### Current Description');
+    lines.push("## 📚 Existing Database Information");
+    lines.push("");
+    lines.push("### Current Description");
     lines.push(directory.existingDescription);
-    lines.push('');
+    lines.push("");
   }
 
   if (directory.existingCategories && directory.existingCategories.length > 0) {
-    lines.push('### Current Categories');
-    lines.push(directory.existingCategories.map(c => `- ${c}`).join('\n'));
-    lines.push('');
+    lines.push("### Current Categories");
+    lines.push(directory.existingCategories.map((c) => `- ${c}`).join("\n"));
+    lines.push("");
   }
 
   // Footer
-  lines.push('---');
-  lines.push('');
-  lines.push('*Generated by Awesome Directories Web Scraper*');
+  lines.push("---");
+  lines.push("");
+  lines.push("*Generated by Awesome Directories Web Scraper*");
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 /**
@@ -168,12 +177,12 @@ export async function saveDirectoryMarkdown(directoryData) {
     const filename = `${directoryData.directory.id}.md`;
     const filepath = path.join(config.output.reportsDir, filename);
 
-    await fs.writeFile(filepath, markdown, 'utf-8');
+    await fs.writeFile(filepath, markdown, "utf-8");
 
     logger.debug(`Saved Markdown: ${filename}`);
     return filepath;
   } catch (error) {
-    logger.error('Failed to save markdown', { error: error.message });
+    logger.error("Failed to save markdown", { error: error.message });
     throw error;
   }
 }
@@ -185,61 +194,74 @@ export async function saveSummaryMarkdown(allResults) {
   try {
     const lines = [];
 
-    lines.push('# Web Scraper Summary Report');
-    lines.push('');
+    lines.push("# Web Scraper Summary Report");
+    lines.push("");
     lines.push(`**Generated:** ${new Date().toLocaleString()}`);
     lines.push(`**Total Scraped:** ${allResults.length}`);
-    lines.push(`**Successful:** ${allResults.filter(r => !r.error).length}`);
-    lines.push(`**Errors:** ${allResults.filter(r => r.error).length}`);
-    lines.push('');
+    lines.push(`**Successful:** ${allResults.filter((r) => !r.error).length}`);
+    lines.push(`**Errors:** ${allResults.filter((r) => r.error).length}`);
+    lines.push("");
 
     // Calculate stats
     const scores = allResults
-      .filter(r => r.curationSuggestions)
-      .map(r => r.curationSuggestions.qualityScore);
+      .filter((r) => r.curationSuggestions)
+      .map((r) => r.curationSuggestions.qualityScore);
 
     if (scores.length > 0) {
-      const avg = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
+      const avg = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(
+        1,
+      );
       const min = Math.min(...scores);
       const max = Math.max(...scores);
 
-      lines.push('## Quality Scores');
-      lines.push('');
+      lines.push("## Quality Scores");
+      lines.push("");
       lines.push(`- **Average:** ${avg}/100`);
       lines.push(`- **Highest:** ${max}/100`);
       lines.push(`- **Lowest:** ${min}/100`);
-      lines.push('');
+      lines.push("");
     }
 
     // Directory list
-    lines.push('## Directories Scraped');
-    lines.push('');
-    lines.push('| Name | Quality Score | Link Quality | Submission Found | Status |');
-    lines.push('|------|---------------|--------------|------------------|--------|');
+    lines.push("## Directories Scraped");
+    lines.push("");
+    lines.push(
+      "| Name | Quality Score | Link Quality | Submission Found | Status |",
+    );
+    lines.push(
+      "|------|---------------|--------------|------------------|--------|",
+    );
 
-    allResults.forEach(result => {
+    allResults.forEach((result) => {
       const name = result.directory.name;
       const score = result.curationSuggestions?.qualityScore || 0;
       const emoji = getQualityEmoji(score);
-      const linkQuality = result.homepage?.links?.quality?.providesDofollow ? '✅ Dofollow' : '⚠️ No dofollow';
-      const submissionFound = result.homepage?.links?.quality?.hasSubmissionLinks ? '✅ Yes' : '❌ No';
-      const status = result.error ? `❌ Error` : '✅ Success';
+      const linkQuality = result.homepage?.links?.quality?.providesDofollow
+        ? "✅ Dofollow"
+        : "⚠️ No dofollow";
+      const submissionFound = result.homepage?.links?.quality
+        ?.hasSubmissionLinks
+        ? "✅ Yes"
+        : "❌ No";
+      const status = result.error ? `❌ Error` : "✅ Success";
 
-      lines.push(`| ${name} | ${emoji} ${score}/100 | ${linkQuality} | ${submissionFound} | ${status} |`);
+      lines.push(
+        `| ${name} | ${emoji} ${score}/100 | ${linkQuality} | ${submissionFound} | ${status} |`,
+      );
     });
 
-    lines.push('');
-    lines.push('---');
-    lines.push('');
-    lines.push('*Generated by Awesome Directories Web Scraper*');
+    lines.push("");
+    lines.push("---");
+    lines.push("");
+    lines.push("*Generated by Awesome Directories Web Scraper*");
 
-    const filepath = path.join(config.output.baseDir, 'SUMMARY.md');
-    await fs.writeFile(filepath, lines.join('\n'), 'utf-8');
+    const filepath = path.join(config.output.baseDir, "SUMMARY.md");
+    await fs.writeFile(filepath, lines.join("\n"), "utf-8");
 
-    logger.success('Saved summary markdown: SUMMARY.md');
+    logger.success("Saved summary markdown: SUMMARY.md");
     return filepath;
   } catch (error) {
-    logger.error('Failed to save summary markdown', { error: error.message });
+    logger.error("Failed to save summary markdown", { error: error.message });
     throw error;
   }
 }

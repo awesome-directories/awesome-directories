@@ -25,17 +25,20 @@ Automated web scraper to speed up directory curation by extracting metadata, ana
 ### Install Chrome/Chromium
 
 **Ubuntu/Debian:**
+
 ```bash
 sudo apt update
 sudo apt install chromium-browser
 ```
 
 **macOS:**
+
 ```bash
 brew install --cask google-chrome
 ```
 
 **Or specify custom Chrome path:**
+
 ```bash
 export CHROME_PATH=/path/to/chrome
 ```
@@ -59,7 +62,7 @@ VITE_SUPABASE_URL=https://xxx.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
 
 # Optional: Apify proxy
-APIFY_API_TOKEN=your-apify-token
+APIFY_PROXY_PASSWORD=your-apify-token
 USE_PROXY=false
 
 # Optional: Custom Chrome path
@@ -159,6 +162,7 @@ scraper-outputs/
 ### JSON Output
 
 Each directory gets a detailed JSON file with:
+
 - Metadata (title, description, keywords)
 - Hero section content
 - Features list
@@ -172,6 +176,7 @@ Each directory gets a detailed JSON file with:
 ### Markdown Reports
 
 Human-readable reports with:
+
 - Quality score indicator
 - Curation suggestions
 - Link analysis
@@ -182,6 +187,7 @@ Human-readable reports with:
 ### CSV Export
 
 Spreadsheet-friendly export with columns:
+
 - Directory name and URL
 - Quality score
 - Suggested description and categories
@@ -247,22 +253,22 @@ Directories are scored 0-100 based on:
 
 ## CLI Options Reference
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `-s, --source` | string | `pending` | Data source: `pending` or `directories` |
-| `--status` | string | `pending` | Status filter: `pending`, `approved`, `rejected`, `all` |
-| `--categories` | string | - | Comma-separated categories |
-| `--pricing-type` | string | - | Pricing type: `free`, `paid`, `freemium` |
-| `--min-dr` | number | - | Minimum domain rating |
-| `--max-dr` | number | - | Maximum domain rating |
-| `--dofollow` | boolean | - | Only dofollow directories |
-| `-l, --limit` | number | `10` | Number of directories to scrape |
-| `--offset` | number | `0` | Pagination offset |
-| `--proxy` | boolean | `false` | Enable Apify proxy |
-| `--smart-crawl` | boolean | `true` | Enable smart crawling |
-| `--screenshots` | boolean | `true` | Take screenshots |
-| `-o, --output` | string | `./scripts/scraper-outputs` | Output directory |
-| `-h, --help` | boolean | - | Show help message |
+| Option           | Type    | Default                     | Description                                             |
+| ---------------- | ------- | --------------------------- | ------------------------------------------------------- |
+| `-s, --source`   | string  | `pending`                   | Data source: `pending` or `directories`                 |
+| `--status`       | string  | `pending`                   | Status filter: `pending`, `approved`, `rejected`, `all` |
+| `--categories`   | string  | -                           | Comma-separated categories                              |
+| `--pricing-type` | string  | -                           | Pricing type: `free`, `paid`, `freemium`                |
+| `--min-dr`       | number  | -                           | Minimum domain rating                                   |
+| `--max-dr`       | number  | -                           | Maximum domain rating                                   |
+| `--dofollow`     | boolean | -                           | Only dofollow directories                               |
+| `-l, --limit`    | number  | `10`                        | Number of directories to scrape                         |
+| `--offset`       | number  | `0`                         | Pagination offset                                       |
+| `--proxy`        | boolean | `false`                     | Enable Apify proxy                                      |
+| `--smart-crawl`  | boolean | `true`                      | Enable smart crawling                                   |
+| `--screenshots`  | boolean | `true`                      | Take screenshots                                        |
+| `-o, --output`   | string  | `./scripts/scraper-outputs` | Output directory                                        |
+| `-h, --help`     | boolean | -                           | Show help message                                       |
 
 ## Troubleshooting
 
@@ -271,6 +277,7 @@ Directories are scored 0-100 based on:
 If you get "Chrome not found" errors:
 
 1. Install Chrome/Chromium:
+
    ```bash
    sudo apt install chromium-browser  # Ubuntu/Debian
    brew install --cask google-chrome  # macOS
@@ -284,6 +291,7 @@ If you get "Chrome not found" errors:
 ### Supabase connection errors
 
 Make sure your `.env` file has valid credentials:
+
 ```bash
 VITE_SUPABASE_URL=https://xxx.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
@@ -292,8 +300,9 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 ### Proxy errors
 
 If using `--proxy`, ensure you have a valid Apify token:
+
 ```bash
-APIFY_API_TOKEN=your-token
+APIFY_PROXY_PASSWORD=your-token
 USE_PROXY=true
 ```
 
@@ -353,6 +362,7 @@ Apache 2.0 (same as parent project)
 ## Support
 
 For issues or questions:
+
 - Check this README
 - Review test output: `bun run scrape:test`
 - Check logs (set `LOG_LEVEL=DEBUG`)

@@ -3,8 +3,8 @@
  * Extracts basic information from directory homepage
  */
 
-import { logger } from '../utils/logger.js';
-import { config } from '../config.js';
+import { logger } from "../utils/logger.js";
+import { config } from "../config.js";
 
 /**
  * Extract metadata from page
@@ -13,18 +13,19 @@ async function extractMetadata(page) {
   return await page.evaluate(() => {
     const getMetaContent = (selector) => {
       const element = document.querySelector(selector);
-      return element ? element.getAttribute('content') : null;
+      return element ? element.getAttribute("content") : null;
     };
 
     return {
-      title: document.title || '',
-      description: getMetaContent('meta[name="description"]') ||
-                   getMetaContent('meta[property="og:description"]') ||
-                   '',
-      keywords: getMetaContent('meta[name="keywords"]') || '',
-      ogImage: getMetaContent('meta[property="og:image"]') || '',
-      siteName: getMetaContent('meta[property="og:site_name"]') || '',
-      twitterCard: getMetaContent('meta[name="twitter:card"]') || '',
+      title: document.title || "",
+      description:
+        getMetaContent('meta[name="description"]') ||
+        getMetaContent('meta[property="og:description"]') ||
+        "",
+      keywords: getMetaContent('meta[name="keywords"]') || "",
+      ogImage: getMetaContent('meta[property="og:image"]') || "",
+      siteName: getMetaContent('meta[property="og:site_name"]') || "",
+      twitterCard: getMetaContent('meta[name="twitter:card"]') || "",
     };
   });
 }
@@ -35,15 +36,15 @@ async function extractMetadata(page) {
 async function extractHeroContent(page) {
   return await page.evaluate(() => {
     const selectors = [
-      'h1',
+      "h1",
       '[class*="hero"] h1',
       '[class*="Hero"] h1',
       '[class*="heading"] h1',
       '[id*="hero"] h1',
     ];
 
-    let heading = '';
-    let subheading = '';
+    let heading = "";
+    let subheading = "";
 
     // Find main heading
     for (const selector of selectors) {
@@ -53,7 +54,10 @@ async function extractHeroContent(page) {
 
         // Try to find subheading nearby
         const nextElement = element.nextElementSibling;
-        if (nextElement && (nextElement.tagName === 'P' || nextElement.tagName === 'H2')) {
+        if (
+          nextElement &&
+          (nextElement.tagName === "P" || nextElement.tagName === "H2")
+        ) {
           subheading = nextElement.textContent.trim();
         }
 
@@ -84,14 +88,14 @@ async function extractFeatures(page) {
 
     for (const selector of selectors) {
       const elements = document.querySelectorAll(selector);
-      elements.forEach(el => {
-        const heading = el.querySelector('h2, h3, h4');
-        const text = el.querySelector('p');
+      elements.forEach((el) => {
+        const heading = el.querySelector("h2, h3, h4");
+        const text = el.querySelector("p");
 
         if (heading || text) {
           features.push({
-            title: heading ? heading.textContent.trim() : '',
-            description: text ? text.textContent.trim() : '',
+            title: heading ? heading.textContent.trim() : "",
+            description: text ? text.textContent.trim() : "",
           });
         }
       });
@@ -127,11 +131,11 @@ async function extractPricingInfo(page) {
     for (const selector of selectors) {
       const elements = document.querySelectorAll(selector);
 
-      elements.forEach(el => {
+      elements.forEach((el) => {
         const priceText = el.textContent.toLowerCase();
 
         // Check for free plan
-        if (priceText.includes('free') && !priceText.includes('trial')) {
+        if (priceText.includes("free") && !priceText.includes("trial")) {
           pricing.freeOption = true;
           pricing.found = true;
         }
@@ -141,7 +145,11 @@ async function extractPricingInfo(page) {
         if (priceMatch) {
           pricing.plans.push({
             amount: priceMatch[1],
-            period: priceText.includes('month') ? 'month' : priceText.includes('year') ? 'year' : 'unknown',
+            period: priceText.includes("month")
+              ? "month"
+              : priceText.includes("year")
+                ? "year"
+                : "unknown",
           });
           pricing.found = true;
         }
@@ -161,12 +169,12 @@ async function extractPageContent(page) {
   return await page.evaluate((maxLength) => {
     // Get main content, avoiding nav, footer, etc.
     const mainSelectors = [
-      'main',
+      "main",
       '[role="main"]',
       '[class*="content"]',
       '[class*="Content"]',
-      'article',
-      'body',
+      "article",
+      "body",
     ];
 
     let contentElement = null;
@@ -180,11 +188,13 @@ async function extractPageContent(page) {
     }
 
     // Extract all paragraphs and headings
-    const textElements = contentElement.querySelectorAll('h1, h2, h3, h4, p, li');
+    const textElements = contentElement.querySelectorAll(
+      "h1, h2, h3, h4, p, li",
+    );
     const textContent = Array.from(textElements)
-      .map(el => el.textContent.trim())
-      .filter(text => text.length > 20) // Filter out very short text
-      .join(' ')
+      .map((el) => el.textContent.trim())
+      .filter((text) => text.length > 20) // Filter out very short text
+      .join(" ")
       .slice(0, maxLength);
 
     return textContent;

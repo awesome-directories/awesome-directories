@@ -3,17 +3,17 @@
  * Handles Puppeteer browser initialization with stealth and proxy support
  */
 
-import puppeteer from 'puppeteer-extra';
-import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import { config } from './config.js';
-import { logger } from './utils/logger.js';
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import { config } from "./config.js";
+import { logger } from "./utils/logger.js";
 import {
   getBrowserFingerprint,
   applyStealthTechniques,
   simulateMouseMovement,
   simulateScrolling,
-} from './utils/stealth.js';
-import { withRetry } from './utils/retry.js';
+} from "./utils/stealth.js";
+import { withRetry } from "./utils/retry.js";
 
 // Add stealth plugin
 puppeteer.use(StealthPlugin());
@@ -28,7 +28,7 @@ export async function launchBrowser() {
     return browserInstance;
   }
 
-  logger.info('Launching browser...');
+  logger.info("Launching browser...");
 
   const { viewport, userAgent, timezone } = getBrowserFingerprint();
   const proxyUrl = config.proxy.getProxyUrl();
@@ -40,18 +40,18 @@ export async function launchBrowser() {
 
   // Add proxy if enabled
   if (proxyUrl) {
-    logger.info('Using Apify residential proxy');
+    logger.info("Using Apify residential proxy");
     launchOptions.args.push(`--proxy-server=${proxyUrl}`);
   } else {
-    logger.info('Running without proxy (direct connection)');
+    logger.info("Running without proxy (direct connection)");
   }
 
   try {
     browserInstance = await puppeteer.launch(launchOptions);
-    logger.success('Browser launched successfully');
+    logger.success("Browser launched successfully");
     return browserInstance;
   } catch (error) {
-    logger.error('Failed to launch browser', { error: error.message });
+    logger.error("Failed to launch browser", { error: error.message });
     throw error;
   }
 }
@@ -78,12 +78,13 @@ export async function createStealthPage(browser) {
 
   // Set extra HTTP headers to appear more human
   await page.setExtraHTTPHeaders({
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'DNT': '1',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
+    "Accept-Language": "en-US,en;q=0.9",
+    Accept:
+      "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Encoding": "gzip, deflate, br",
+    DNT: "1",
+    Connection: "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
   });
 
   return page;
@@ -112,7 +113,7 @@ export async function navigateToUrl(page, url) {
     {
       context: `Navigation to ${url}`,
       maxAttempts: 3,
-    }
+    },
   );
 }
 
@@ -124,11 +125,11 @@ export async function takeScreenshot(page, filepath) {
     await page.screenshot({
       path: filepath,
       fullPage: false,
-      type: 'png',
+      type: "png",
     });
     logger.debug(`Screenshot saved to ${filepath}`);
   } catch (error) {
-    logger.warn('Failed to take screenshot', { error: error.message });
+    logger.warn("Failed to take screenshot", { error: error.message });
   }
 }
 
@@ -139,7 +140,7 @@ export async function closeBrowser() {
   if (browserInstance) {
     await browserInstance.close();
     browserInstance = null;
-    logger.info('Browser closed');
+    logger.info("Browser closed");
   }
 }
 
@@ -152,7 +153,7 @@ export async function closePage(page) {
       await page.close();
     }
   } catch (error) {
-    logger.warn('Error closing page', { error: error.message });
+    logger.warn("Error closing page", { error: error.message });
   }
 }
 

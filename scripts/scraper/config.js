@@ -2,6 +2,7 @@
  * Scraper Configuration
  * Centralized configuration for web scraping operations
  */
+import log from "./utils/logger.js";
 
 export const config = {
   // Browser settings
@@ -9,13 +10,13 @@ export const config = {
     headless: true,
     executablePath: process.env.CHROME_PATH || undefined, // Auto-detect or use custom path
     args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-accelerated-2d-canvas',
-      '--disable-gpu',
-      '--window-size=1920x1080',
-      '--disable-blink-features=AutomationControlled',
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-accelerated-2d-canvas",
+      "--disable-gpu",
+      "--window-size=1920x1080",
+      "--disable-blink-features=AutomationControlled",
     ],
     defaultViewport: {
       width: 1920,
@@ -26,12 +27,12 @@ export const config = {
 
   // Apify residential proxy configuration
   proxy: {
-    enabled: process.env.USE_PROXY === 'true',
-    apifyToken: process.env.APIFY_API_TOKEN || '',
+    apifyProxyPassword: process.env.APIFY_PROXY_PASSWORD || "",
     // Apify proxy format: http://auto:${token}@proxy.apify.com:8000
     getProxyUrl() {
-      if (!this.enabled || !this.apifyToken) return null;
-      return `http://auto:${this.apifyToken}@proxy.apify.com:8000`;
+      if (!this.apifyProxyPassword) return null;
+      log.success("Apify proxy URL constructed successfully");
+      return `http://auto:${this.apifyProxyPassword}@proxy.apify.com:8000`;
     },
   },
 
@@ -47,9 +48,9 @@ export const config = {
   // Navigation and timing
   navigation: {
     timeout: 30000, // 30 seconds
-    waitUntil: 'networkidle2', // Wait for network to be mostly idle
+    waitUntil: "networkidle2", // Wait for network to be mostly idle
     minDelay: 2000, // Minimum delay between requests (ms)
-    maxDelay: 5000, // Maximum delay between requests (ms)
+    maxDelay: 15000, // Maximum delay between requests (ms)
   },
 
   // Smart crawl settings
@@ -57,24 +58,24 @@ export const config = {
     maxDepth: 2, // Maximum pages to crawl per directory
     maxPages: 5, // Maximum total pages to visit
     relevantKeywords: [
-      'submit',
-      'submission',
-      'add',
-      'pricing',
-      'price',
-      'about',
-      'how-it-works',
-      'guidelines',
-      'terms',
+      "submit",
+      "submission",
+      "add",
+      "pricing",
+      "price",
+      "about",
+      "how-it-works",
+      "guidelines",
+      "terms",
     ],
     excludePatterns: [
-      '/blog/',
-      '/article/',
-      '/news/',
-      '/faq/',
-      '/contact/',
-      '/support/',
-      '/privacy/',
+      "/blog/",
+      "/article/",
+      "/news/",
+      "/faq/",
+      "/contact/",
+      "/support/",
+      "/privacy/",
     ],
   },
 
@@ -83,12 +84,7 @@ export const config = {
     analyzeExternal: true,
     analyzeInternal: false,
     maxLinksToAnalyze: 100,
-    relevantLinkPatterns: [
-      'submit',
-      'add-listing',
-      'directory',
-      'listing',
-    ],
+    relevantLinkPatterns: ["submit", "add-listing", "directory", "listing"],
   },
 
   // Content extraction settings
@@ -102,10 +98,10 @@ export const config = {
 
   // Output settings
   output: {
-    baseDir: './scripts/scraper-outputs',
-    dataDir: './scripts/scraper-outputs/data',
-    reportsDir: './scripts/scraper-outputs/reports',
-    screenshotsDir: './scripts/scraper-outputs/screenshots',
+    baseDir: "./scripts/scraper-outputs",
+    dataDir: "./scripts/scraper-outputs/data",
+    reportsDir: "./scripts/scraper-outputs/reports",
+    screenshotsDir: "./scripts/scraper-outputs/screenshots",
     formats: {
       json: true,
       markdown: true,
@@ -124,7 +120,7 @@ export const config = {
   // Supabase filters mapping
   filters: {
     // Map CLI args to Supabase column filters
-    status: ['pending', 'approved', 'rejected', 'all'],
+    status: ["pending", "approved", "rejected", "all"],
     limit: 10, // Default limit
     offset: 0,
   },
@@ -132,11 +128,11 @@ export const config = {
 
 // User agent rotation
 export const userAgents = [
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0',
-  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Safari/605.1.15',
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0",
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1 Safari/605.1.15",
 ];
 
 // Viewport sizes for randomization

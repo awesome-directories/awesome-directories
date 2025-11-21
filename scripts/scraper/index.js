@@ -5,10 +5,14 @@
  * Main CLI entry point
  */
 
-import { parseArgs } from 'node:util';
-import { logger } from './utils/logger.js';
-import { config } from './config.js';
-import { fetchDirectories, getFilterStats, getAvailableCategories } from './data-fetcher.js';
+import { parseArgs } from "node:util";
+import { logger } from "./utils/logger.js";
+import { config } from "./config.js";
+import {
+  fetchDirectories,
+  getFilterStats,
+  getAvailableCategories,
+} from "./data-fetcher.js";
 import {
   launchBrowser,
   createStealthPage,
@@ -16,20 +20,23 @@ import {
   takeScreenshot,
   closeBrowser,
   closePage,
-} from './browser.js';
-import { scrapeHomepage } from './scrapers/homepage.js';
-import { analyzeLinks, findSubmissionUrl } from './scrapers/links.js';
-import { smartCrawl } from './scrapers/smart-crawl.js';
+} from "./browser.js";
+import { scrapeHomepage } from "./scrapers/homepage.js";
+import { analyzeLinks, findSubmissionUrl } from "./scrapers/links.js";
+import { smartCrawl } from "./scrapers/smart-crawl.js";
 import {
   compileScrapedData,
   generateCurationSuggestions,
-} from './scrapers/content.js';
-import { saveDirectoryJson, saveSummaryJson } from './output/json.js';
-import { saveDirectoryMarkdown, saveSummaryMarkdown } from './output/markdown.js';
-import { saveCsv } from './output/csv.js';
-import { humanDelay } from './utils/retry.js';
-import path from 'path';
-import fs from 'fs/promises';
+} from "./scrapers/content.js";
+import { saveDirectoryJson, saveSummaryJson } from "./output/json.js";
+import {
+  saveDirectoryMarkdown,
+  saveSummaryMarkdown,
+} from "./output/markdown.js";
+import { saveCsv } from "./output/csv.js";
+import { humanDelay } from "./utils/retry.js";
+import path from "path";
+import fs from "fs/promises";
 
 /**
  * Parse CLI arguments
@@ -38,30 +45,34 @@ function parseCliArgs() {
   const { values } = parseArgs({
     options: {
       // Data source
-      source: { type: 'string', short: 's', default: 'pending' },
-      status: { type: 'string', default: 'pending' },
+      source: { type: "string", short: "s", default: "pending" },
+      status: { type: "string", default: "pending" },
 
       // Filters
-      categories: { type: 'string' },
-      'pricing-type': { type: 'string' },
-      'min-dr': { type: 'string' },
-      'max-dr': { type: 'string' },
-      dofollow: { type: 'boolean' },
+      categories: { type: "string" },
+      "pricing-type": { type: "string" },
+      "min-dr": { type: "string" },
+      "max-dr": { type: "string" },
+      dofollow: { type: "boolean" },
 
       // Pagination
-      limit: { type: 'string', short: 'l', default: '10' },
-      offset: { type: 'string', default: '0' },
+      limit: { type: "string", short: "l", default: "10" },
+      offset: { type: "string", default: "0" },
 
       // Scraping options
-      proxy: { type: 'boolean', default: false },
-      'smart-crawl': { type: 'boolean', default: true },
-      screenshots: { type: 'boolean', default: true },
+      proxy: { type: "boolean", default: false },
+      "smart-crawl": { type: "boolean", default: true },
+      screenshots: { type: "boolean", default: true },
 
       // Output options
-      output: { type: 'string', short: 'o', default: './scripts/scraper-outputs' },
+      output: {
+        type: "string",
+        short: "o",
+        default: "./scripts/scraper-outputs",
+      },
 
       // Help
-      help: { type: 'boolean', short: 'h' },
+      help: { type: "boolean", short: "h" },
     },
   });
 
@@ -97,7 +108,7 @@ Pagination:
   --offset <number>         Pagination offset (default: 0)
 
 Scraping Options:
-  --proxy                  Enable Apify residential proxy (requires APIFY_API_TOKEN)
+  --proxy                  Enable Apify residential proxy (requires APIFY_PROXY_PASSWORD)
   --smart-crawl            Enable smart crawling of additional pages (default: true)
   --screenshots            Take screenshots of pages (default: true)
 
@@ -110,7 +121,7 @@ Other:
 Environment Variables:
   VITE_SUPABASE_URL        Supabase project URL (required)
   VITE_SUPABASE_ANON_KEY   Supabase anonymous key (required)
-  APIFY_API_TOKEN          Apify API token for proxy (optional)
+  APIFY_PROXY_PASSWORD          Apify API token for proxy (optional)
   USE_PROXY                Set to 'true' to enable proxy (optional)
   CHROME_PATH              Custom Chrome executable path (optional)
   LOG_LEVEL                Log level: DEBUG, INFO, WARN, ERROR (default: INFO)
@@ -120,7 +131,7 @@ Database Statistics:
   Total Active Directories: ${stats.totalDirectories}
 
 Available Categories:
-  ${categories.slice(0, 10).join(', ')}${categories.length > 10 ? `, ... (${categories.length - 10} more)` : ''}
+  ${categories.slice(0, 10).join(", ")}${categories.length > 10 ? `, ... (${categories.length - 10} more)` : ""}
 
 Examples:
   # Scrape 5 pending directories
@@ -177,7 +188,7 @@ async function scrapeDirectory(browser, directory, options) {
     if (screenshotsEnabled) {
       const screenshotPath = path.join(
         config.output.screenshotsDir,
-        `${directory.id}.png`
+        `${directory.id}.png`,
       );
       await takeScreenshot(page, screenshotPath);
     }
@@ -196,7 +207,7 @@ async function scrapeDirectory(browser, directory, options) {
         page,
         directory.url,
         scrapeHomepage,
-        analyzeLinks
+        analyzeLinks,
       );
     }
 
@@ -205,11 +216,12 @@ async function scrapeDirectory(browser, directory, options) {
       directory,
       homepageData,
       linkData,
-      smartCrawlData
+      smartCrawlData,
     );
 
     // Generate curation suggestions
-    compiledData.curationSuggestions = generateCurationSuggestions(compiledData);
+    compiledData.curationSuggestions =
+      generateCurationSuggestions(compiledData);
 
     // Close page
     await closePage(page);
@@ -220,7 +232,9 @@ async function scrapeDirectory(browser, directory, options) {
 
     return compiledData;
   } catch (error) {
-    logger.error(`Failed to scrape: ${directory.name}`, { error: error.message });
+    logger.error(`Failed to scrape: ${directory.name}`, {
+      error: error.message,
+    });
 
     if (page && !page.isClosed()) {
       await closePage(page);
@@ -245,9 +259,9 @@ async function main() {
     process.exit(0);
   }
 
-  logger.info('Awesome Directories Web Scraper');
-  logger.info('================================');
-  logger.info('');
+  logger.info("Awesome Directories Web Scraper");
+  logger.info("================================");
+  logger.info("");
 
   try {
     // Initialize output directories
@@ -257,10 +271,12 @@ async function main() {
     const filters = {
       source: args.source,
       status: args.status,
-      categories: args.categories ? args.categories.split(',').map(c => c.trim()) : null,
-      pricingType: args['pricing-type'] || null,
-      minDr: args['min-dr'] ? parseInt(args['min-dr']) : null,
-      maxDr: args['max-dr'] ? parseInt(args['max-dr']) : null,
+      categories: args.categories
+        ? args.categories.split(",").map((c) => c.trim())
+        : null,
+      pricingType: args["pricing-type"] || null,
+      minDr: args["min-dr"] ? parseInt(args["min-dr"]) : null,
+      maxDr: args["max-dr"] ? parseInt(args["max-dr"]) : null,
       isDofollow: args.dofollow || null,
       limit: parseInt(args.limit),
       offset: parseInt(args.offset),
@@ -269,21 +285,21 @@ async function main() {
     // Update config with CLI options
     config.proxy.enabled = args.proxy;
     config.output.baseDir = args.output;
-    config.output.dataDir = path.join(args.output, 'data');
-    config.output.reportsDir = path.join(args.output, 'reports');
-    config.output.screenshotsDir = path.join(args.output, 'screenshots');
+    config.output.dataDir = path.join(args.output, "data");
+    config.output.reportsDir = path.join(args.output, "reports");
+    config.output.screenshotsDir = path.join(args.output, "screenshots");
 
     // Fetch directories from Supabase
-    logger.info('Fetching directories from database...');
+    logger.info("Fetching directories from database...");
     const directories = await fetchDirectories(filters);
 
     if (directories.length === 0) {
-      logger.warn('No directories found matching filters');
+      logger.warn("No directories found matching filters");
       process.exit(0);
     }
 
     logger.info(`Found ${directories.length} directories to scrape`);
-    logger.info('');
+    logger.info("");
 
     // Launch browser
     const browser = await launchBrowser();
@@ -297,7 +313,7 @@ async function main() {
       logger.progress(i + 1, directories.length, directory.name);
 
       const result = await scrapeDirectory(browser, directory, {
-        smartCrawlEnabled: args['smart-crawl'],
+        smartCrawlEnabled: args["smart-crawl"],
         screenshotsEnabled: args.screenshots,
       });
 
@@ -316,8 +332,8 @@ async function main() {
     // Close browser
     await closeBrowser();
 
-    logger.info('');
-    logger.info('Generating summary reports...');
+    logger.info("");
+    logger.info("Generating summary reports...");
 
     // Generate summary outputs
     await saveSummaryJson(results);
@@ -325,24 +341,26 @@ async function main() {
     await saveCsv(results);
 
     // Final stats
-    const successCount = results.filter(r => !r.error).length;
-    const errorCount = results.filter(r => r.error).length;
-    const avgQualityScore = results
-      .filter(r => r.curationSuggestions)
-      .reduce((sum, r) => sum + r.curationSuggestions.qualityScore, 0) / successCount;
+    const successCount = results.filter((r) => !r.error).length;
+    const errorCount = results.filter((r) => r.error).length;
+    const avgQualityScore =
+      results
+        .filter((r) => r.curationSuggestions)
+        .reduce((sum, r) => sum + r.curationSuggestions.qualityScore, 0) /
+      successCount;
 
-    logger.info('');
-    logger.success('Scraping complete!');
-    logger.info('');
-    logger.info('Summary:');
+    logger.info("");
+    logger.success("Scraping complete!");
+    logger.info("");
+    logger.info("Summary:");
     logger.info(`  Total: ${results.length}`);
     logger.info(`  Success: ${successCount}`);
     logger.info(`  Errors: ${errorCount}`);
     logger.info(`  Avg Quality Score: ${avgQualityScore.toFixed(1)}/100`);
-    logger.info('');
+    logger.info("");
     logger.info(`Output directory: ${config.output.baseDir}`);
   } catch (error) {
-    logger.error('Fatal error', { error: error.message });
+    logger.error("Fatal error", { error: error.message });
     console.error(error);
     process.exit(1);
   }

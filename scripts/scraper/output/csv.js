@@ -3,22 +3,22 @@
  * Exports scraped data to CSV for spreadsheet review
  */
 
-import fs from 'fs/promises';
-import path from 'path';
-import { logger } from '../utils/logger.js';
-import { config } from '../config.js';
-import { extractContentForExport } from '../scrapers/content.js';
+import fs from "fs/promises";
+import path from "path";
+import { logger } from "../utils/logger.js";
+import { config } from "../config.js";
+import { extractContentForExport } from "../scrapers/content.js";
 
 /**
  * Escape CSV field
  */
 function escapeCsvField(field) {
-  if (field === null || field === undefined) return '';
+  if (field === null || field === undefined) return "";
 
   const str = String(field);
 
   // If field contains comma, quote, or newline, wrap in quotes and escape quotes
-  if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+  if (str.includes(",") || str.includes('"') || str.includes("\n")) {
     return `"${str.replace(/"/g, '""')}"`;
   }
 
@@ -32,15 +32,15 @@ function arrayToCsv(data, headers) {
   const lines = [];
 
   // Add header row
-  lines.push(headers.map(h => escapeCsvField(h)).join(','));
+  lines.push(headers.map((h) => escapeCsvField(h)).join(","));
 
   // Add data rows
-  data.forEach(row => {
-    const values = headers.map(header => escapeCsvField(row[header]));
-    lines.push(values.join(','));
+  data.forEach((row) => {
+    const values = headers.map((header) => escapeCsvField(row[header]));
+    lines.push(values.join(","));
   });
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 /**
@@ -48,7 +48,7 @@ function arrayToCsv(data, headers) {
  */
 export async function saveCsv(allResults) {
   try {
-    const exportData = allResults.map(result => {
+    const exportData = allResults.map((result) => {
       if (result.error) {
         return {
           directoryName: result.directory.name,
@@ -62,37 +62,40 @@ export async function saveCsv(allResults) {
     });
 
     const headers = [
-      'directoryName',
-      'url',
-      'qualityScore',
-      'suggestedDescription',
-      'suggestedCategories',
-      'linkQuality',
-      'pricingInfo',
-      'submissionProcess',
-      'keyFeatures',
-      'metaTitle',
-      'metaDescription',
-      'heroHeading',
-      'heroSubheading',
-      'totalLinks',
-      'dofollowLinks',
-      'nofollowLinks',
-      'externalDofollowLinks',
-      'submissionUrls',
-      'scrapedAt',
-      'error',
+      "directoryName",
+      "url",
+      "qualityScore",
+      "suggestedDescription",
+      "suggestedCategories",
+      "linkQuality",
+      "pricingInfo",
+      "submissionProcess",
+      "keyFeatures",
+      "metaTitle",
+      "metaDescription",
+      "heroHeading",
+      "heroSubheading",
+      "totalLinks",
+      "dofollowLinks",
+      "nofollowLinks",
+      "externalDofollowLinks",
+      "submissionUrls",
+      "scrapedAt",
+      "error",
     ];
 
     const csv = arrayToCsv(exportData, headers);
 
-    const filepath = path.join(config.output.baseDir, 'scraped-directories.csv');
-    await fs.writeFile(filepath, csv, 'utf-8');
+    const filepath = path.join(
+      config.output.baseDir,
+      "scraped-directories.csv",
+    );
+    await fs.writeFile(filepath, csv, "utf-8");
 
-    logger.success('Saved CSV: scraped-directories.csv');
+    logger.success("Saved CSV: scraped-directories.csv");
     return filepath;
   } catch (error) {
-    logger.error('Failed to save CSV', { error: error.message });
+    logger.error("Failed to save CSV", { error: error.message });
     throw error;
   }
 }

@@ -3,10 +3,10 @@
  * Saves scraped data as JSON files
  */
 
-import fs from 'fs/promises';
-import path from 'path';
-import { logger } from '../utils/logger.js';
-import { config } from '../config.js';
+import fs from "fs/promises";
+import path from "path";
+import { logger } from "../utils/logger.js";
+import { config } from "../config.js";
 
 /**
  * Save individual directory data as JSON
@@ -19,13 +19,13 @@ export async function saveDirectoryJson(directoryData) {
     await fs.writeFile(
       filepath,
       JSON.stringify(directoryData, null, 2),
-      'utf-8'
+      "utf-8",
     );
 
     logger.debug(`Saved JSON: ${filename}`);
     return filepath;
   } catch (error) {
-    logger.error('Failed to save JSON', { error: error.message });
+    logger.error("Failed to save JSON", { error: error.message });
     throw error;
   }
 }
@@ -37,11 +37,11 @@ export async function saveSummaryJson(allResults) {
   try {
     const summary = {
       totalScraped: allResults.length,
-      successCount: allResults.filter(r => !r.error).length,
-      errorCount: allResults.filter(r => r.error).length,
+      successCount: allResults.filter((r) => !r.error).length,
+      errorCount: allResults.filter((r) => r.error).length,
       timestamp: new Date().toISOString(),
       averageQualityScore: 0,
-      directories: allResults.map(result => ({
+      directories: allResults.map((result) => ({
         id: result.directory.id,
         name: result.directory.name,
         url: result.directory.url,
@@ -53,8 +53,8 @@ export async function saveSummaryJson(allResults) {
 
     // Calculate average quality score
     const scores = summary.directories
-      .filter(d => !d.hasError)
-      .map(d => d.qualityScore);
+      .filter((d) => !d.hasError)
+      .map((d) => d.qualityScore);
 
     if (scores.length > 0) {
       summary.averageQualityScore = (
@@ -62,13 +62,13 @@ export async function saveSummaryJson(allResults) {
       ).toFixed(1);
     }
 
-    const filepath = path.join(config.output.baseDir, 'summary.json');
-    await fs.writeFile(filepath, JSON.stringify(summary, null, 2), 'utf-8');
+    const filepath = path.join(config.output.baseDir, "summary.json");
+    await fs.writeFile(filepath, JSON.stringify(summary, null, 2), "utf-8");
 
     logger.success(`Saved summary JSON: summary.json`);
     return filepath;
   } catch (error) {
-    logger.error('Failed to save summary JSON', { error: error.message });
+    logger.error("Failed to save summary JSON", { error: error.message });
     throw error;
   }
 }

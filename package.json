@@ -39,9 +39,9 @@
   "scripts": {
     "build": "astro build",
     "preview": "astro preview",
-    "start": "astro dev",
-    "scrape": "node scripts/scraper/index.js",
-    "scrape:test": "node scripts/scraper/test.js"
+    "scrape": "bun run ./scripts/scraper/index.js",
+    "scrape:test": "bun run ./scripts/scraper/test.js",
+    "start": "astro dev"
   },
   "type": "module",
   "version": "1.0.0"

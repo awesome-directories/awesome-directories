@@ -3,8 +3,8 @@
  * Analyzes links on page for dofollow/nofollow attributes
  */
 
-import { logger } from '../utils/logger.js';
-import { config } from '../config.js';
+import { logger } from "../utils/logger.js";
+import { config } from "../config.js";
 
 /**
  * Categorize link type
@@ -15,12 +15,12 @@ function categorizeLink(href, baseUrl) {
     const baseDomain = new URL(baseUrl).hostname;
 
     if (linkUrl.hostname === baseDomain) {
-      return 'internal';
+      return "internal";
     } else {
-      return 'external';
+      return "external";
     }
   } catch (error) {
-    return 'invalid';
+    return "invalid";
   }
 }
 
@@ -29,19 +29,19 @@ function categorizeLink(href, baseUrl) {
  */
 function isSubmissionLink(href, text) {
   const submissionKeywords = [
-    'submit',
-    'add',
-    'list',
-    'register',
-    'sign-up',
-    'signup',
-    'join',
-    'post',
+    "submit",
+    "add",
+    "list",
+    "register",
+    "sign-up",
+    "signup",
+    "join",
+    "post",
   ];
 
   const combined = `${href} ${text}`.toLowerCase();
 
-  return submissionKeywords.some(keyword => combined.includes(keyword));
+  return submissionKeywords.some((keyword) => combined.includes(keyword));
 }
 
 /**
@@ -54,33 +54,37 @@ export async function analyzeLinks(page, url) {
   logger.info(`Analyzing links on: ${url}`);
 
   try {
-    const linkData = await page.evaluate((baseUrl, maxLinks) => {
-      const links = Array.from(document.querySelectorAll('a[href]'));
+    const linkData = await page.evaluate(
+      (baseUrl, maxLinks) => {
+        const links = Array.from(document.querySelectorAll("a[href]"));
 
-      return links.slice(0, maxLinks).map(link => {
-        const href = link.getAttribute('href');
-        const rel = link.getAttribute('rel') || '';
-        const text = link.textContent.trim();
-        const ariaLabel = link.getAttribute('aria-label') || '';
+        return links.slice(0, maxLinks).map((link) => {
+          const href = link.getAttribute("href");
+          const rel = link.getAttribute("rel") || "";
+          const text = link.textContent.trim();
+          const ariaLabel = link.getAttribute("aria-label") || "";
 
-        // Determine link attributes
-        const isNofollow = rel.includes('nofollow');
-        const isUgc = rel.includes('ugc');
-        const isSponsored = rel.includes('sponsored');
-        const isDofollow = !isNofollow && !isUgc && !isSponsored;
+          // Determine link attributes
+          const isNofollow = rel.includes("nofollow");
+          const isUgc = rel.includes("ugc");
+          const isSponsored = rel.includes("sponsored");
+          const isDofollow = !isNofollow && !isUgc && !isSponsored;
 
-        return {
-          href,
-          text,
-          ariaLabel,
-          rel,
-          isDofollow,
-          isNofollow,
-          isUgc,
-          isSponsored,
-        };
-      });
-    }, url, config.links.maxLinksToAnalyze);
+          return {
+            href,
+            text,
+            ariaLabel,
+            rel,
+            isDofollow,
+            isNofollow,
+            isUgc,
+            isSponsored,
+          };
+        });
+      },
+      url,
+      config.links.maxLinksToAnalyze,
+    );
 
     // Categorize links
     const categorized = {
@@ -101,7 +105,7 @@ export async function analyzeLinks(page, url) {
       submissionLinks: 0,
     };
 
-    linkData.forEach(link => {
+    linkData.forEach((link) => {
       const category = categorizeLink(link.href, url);
 
       // Update stats
@@ -111,11 +115,11 @@ export async function analyzeLinks(page, url) {
       if (link.isSponsored) linkStats.sponsored++;
 
       // Categorize
-      if (category === 'external') {
+      if (category === "external") {
         categorized.external.push(link);
         if (link.isDofollow) linkStats.externalDofollow++;
         if (link.isNofollow) linkStats.externalNofollow++;
-      } else if (category === 'internal') {
+      } else if (category === "internal") {
         categorized.internal.push(link);
       } else {
         categorized.invalid.push(link);
@@ -131,11 +135,12 @@ export async function analyzeLinks(page, url) {
     // Determine overall link quality
     const linkQuality = {
       providesDofollow: linkStats.externalDofollow > 0,
-      dofollowPercentage: linkStats.total > 0
-        ? ((linkStats.dofollow / linkStats.total) * 100).toFixed(1)
-        : 0,
+      dofollowPercentage:
+        linkStats.total > 0
+          ? ((linkStats.dofollow / linkStats.total) * 100).toFixed(1)
+          : 0,
       hasSubmissionLinks: linkStats.submissionLinks > 0,
-      submissionUrls: categorized.submission.map(l => l.href),
+      submissionUrls: categorized.submission.map((l) => l.href),
     };
 
     logger.success(`Link analysis complete: ${url}`, {
@@ -167,12 +172,13 @@ export function findSubmissionUrl(linkAnalysis) {
   }
 
   // Prioritize links with clear submission keywords
-  const priorityKeywords = ['submit', 'add-listing', 'add-your'];
+  const priorityKeywords = ["submit", "add-listing", "add-your"];
 
   for (const keyword of priorityKeywords) {
-    const found = submissionLinks.find(link =>
-      link.href.toLowerCase().includes(keyword) ||
-      link.text.toLowerCase().includes(keyword)
+    const found = submissionLinks.find(
+      (link) =>
+        link.href.toLowerCase().includes(keyword) ||
+        link.text.toLowerCase().includes(keyword),
     );
     if (found) return found.href;
   }

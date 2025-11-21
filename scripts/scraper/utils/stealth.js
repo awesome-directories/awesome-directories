@@ -3,7 +3,7 @@
  * Makes the scraper behave more like a human user
  */
 
-import { userAgents, viewportSizes, config } from '../config.js';
+import { userAgents, viewportSizes, config } from "../config.js";
 
 /**
  * Get random user agent
@@ -24,11 +24,11 @@ export function getRandomViewport() {
  */
 export function getRandomTimezone() {
   const timezones = [
-    'America/New_York',
-    'America/Chicago',
-    'America/Los_Angeles',
-    'America/Denver',
-    'America/Phoenix',
+    "America/New_York",
+    "America/Chicago",
+    "America/Los_Angeles",
+    "America/Denver",
+    "America/Phoenix",
   ];
   return timezones[Math.floor(Math.random() * timezones.length)];
 }
@@ -46,8 +46,12 @@ export async function simulateMouseMovement(page) {
     for (let i = 0; i < steps; i++) {
       const x = Math.floor(Math.random() * viewport.width);
       const y = Math.floor(Math.random() * viewport.height);
-      await page.mouse.move(x, y, { steps: Math.floor(Math.random() * 10) + 5 });
-      await new Promise(resolve => setTimeout(resolve, Math.random() * 100 + 50));
+      await page.mouse.move(x, y, {
+        steps: Math.floor(Math.random() * 10) + 5,
+      });
+      await new Promise((resolve) =>
+        setTimeout(resolve, Math.random() * 100 + 50),
+      );
     }
   } catch (error) {
     // Ignore mouse movement errors
@@ -62,11 +66,16 @@ export async function simulateScrolling(page) {
     const scrolls = Math.floor(Math.random() * 3) + 2; // 2-4 scrolls
 
     for (let i = 0; i < scrolls; i++) {
-      await page.evaluate((scroll) => {
-        window.scrollBy(0, scroll);
-      }, Math.floor(Math.random() * 500) + 300);
+      await page.evaluate(
+        (scroll) => {
+          window.scrollBy(0, scroll);
+        },
+        Math.floor(Math.random() * 500) + 300,
+      );
 
-      await new Promise(resolve => setTimeout(resolve, Math.random() * 500 + 300));
+      await new Promise((resolve) =>
+        setTimeout(resolve, Math.random() * 500 + 300),
+      );
     }
 
     // Scroll back to top
@@ -83,18 +92,18 @@ export async function applyStealthTechniques(page) {
   // Override navigator properties to avoid detection
   await page.evaluateOnNewDocument(() => {
     // Override the navigator.webdriver property
-    Object.defineProperty(navigator, 'webdriver', {
+    Object.defineProperty(navigator, "webdriver", {
       get: () => false,
     });
 
     // Override navigator.plugins to appear more realistic
-    Object.defineProperty(navigator, 'plugins', {
+    Object.defineProperty(navigator, "plugins", {
       get: () => [1, 2, 3, 4, 5],
     });
 
     // Override navigator.languages
-    Object.defineProperty(navigator, 'languages', {
-      get: () => ['en-US', 'en'],
+    Object.defineProperty(navigator, "languages", {
+      get: () => ["en-US", "en"],
     });
 
     // Mock chrome runtime
@@ -104,11 +113,10 @@ export async function applyStealthTechniques(page) {
 
     // Override permissions query
     const originalQuery = window.navigator.permissions.query;
-    window.navigator.permissions.query = (parameters) => (
-      parameters.name === 'notifications'
+    window.navigator.permissions.query = (parameters) =>
+      parameters.name === "notifications"
         ? Promise.resolve({ state: Notification.permission })
-        : originalQuery(parameters)
-    );
+        : originalQuery(parameters);
   });
 }
 

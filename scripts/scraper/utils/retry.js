@@ -3,18 +3,18 @@
  * Handles retries for network requests and scraping operations
  */
 
-import { logger } from './logger.js';
-import { config } from '../config.js';
+import { logger } from "./logger.js";
+import { config } from "../config.js";
 
 /**
  * Sleep for specified milliseconds
  */
-export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Random delay between min and max
  */
-export const randomDelay = (min = 2000, max = 5000) => {
+export const randomDelay = (min = 2000, max = 15000) => {
   const delay = Math.floor(Math.random() * (max - min + 1)) + min;
   return sleep(delay);
 };
@@ -31,7 +31,7 @@ export async function withRetry(fn, options = {}) {
     backoffMultiplier = config.retry.backoffMultiplier,
     initialDelay = config.retry.initialDelay,
     onRetry = null,
-    context = 'operation',
+    context = "operation",
   } = options;
 
   let lastError;
@@ -50,9 +50,12 @@ export async function withRetry(fn, options = {}) {
       }
 
       const delay = initialDelay * Math.pow(backoffMultiplier, attempt - 1);
-      logger.warn(`${context} failed (attempt ${attempt}/${maxAttempts}), retrying in ${delay}ms...`, {
-        error: error.message,
-      });
+      logger.warn(
+        `${context} failed (attempt ${attempt}/${maxAttempts}), retrying in ${delay}ms...`,
+        {
+          error: error.message,
+        },
+      );
 
       if (onRetry) {
         await onRetry(attempt, error);

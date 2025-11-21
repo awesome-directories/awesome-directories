@@ -3,7 +3,7 @@
  * Compiles scraped data into structured format for manual curation
  */
 
-import { logger } from '../utils/logger.js';
+import { logger } from "../utils/logger.js";
 
 /**
  * Generate curation suggestions from scraped data
@@ -11,12 +11,12 @@ import { logger } from '../utils/logger.js';
  */
 export function generateCurationSuggestions(scrapedData) {
   const suggestions = {
-    shortDescription: '',
-    longDescription: '',
+    shortDescription: "",
+    longDescription: "",
     categories: [],
-    pricingInsights: '',
-    linkQuality: '',
-    submissionProcess: '',
+    pricingInsights: "",
+    linkQuality: "",
+    submissionProcess: "",
     keyFeatures: [],
     qualityScore: 0,
   };
@@ -50,8 +50,8 @@ export function generateCurationSuggestions(scrapedData) {
     }
 
     if (features && features.length > 0) {
-      descriptionParts.push('\n**Key Features:**');
-      features.slice(0, 5).forEach(feature => {
+      descriptionParts.push("\n**Key Features:**");
+      features.slice(0, 5).forEach((feature) => {
         if (feature.title) {
           descriptionParts.push(`- ${feature.title}`);
           suggestions.keyFeatures.push(feature.title);
@@ -59,24 +59,39 @@ export function generateCurationSuggestions(scrapedData) {
       });
     }
 
-    suggestions.longDescription = descriptionParts.join('\n');
+    suggestions.longDescription = descriptionParts.join("\n");
 
     // Suggest categories based on content
-    const contentText = `${metadata.title} ${metadata.description} ${metadata.keywords}`.toLowerCase();
+    const contentText =
+      `${metadata.title} ${metadata.description} ${metadata.keywords}`.toLowerCase();
 
     const categoryKeywords = {
-      'Developer Tools': ['developer', 'api', 'code', 'github', 'programming'],
-      'Marketing': ['marketing', 'seo', 'email', 'ads', 'analytics'],
-      'Design': ['design', 'ui', 'ux', 'figma', 'sketch'],
-      'Productivity': ['productivity', 'task', 'project', 'management', 'workflow'],
-      'AI/ML': ['ai', 'machine learning', 'ml', 'artificial intelligence', 'chatgpt'],
-      'SaaS': ['saas', 'software', 'cloud', 'platform'],
-      'Startup': ['startup', 'founder', 'entrepreneur', 'bootstrap'],
-      'Business': ['business', 'enterprise', 'b2b', 'corporate'],
+      "Developer Tools": ["developer", "api", "code", "github", "programming"],
+      Marketing: ["marketing", "seo", "email", "ads", "analytics"],
+      Design: ["design", "ui", "ux", "figma", "sketch"],
+      Productivity: [
+        "productivity",
+        "task",
+        "project",
+        "management",
+        "workflow",
+      ],
+      "AI/ML": [
+        "ai",
+        "machine learning",
+        "ml",
+        "artificial intelligence",
+        "chatgpt",
+      ],
+      SaaS: ["saas", "software", "cloud", "platform"],
+      Startup: ["startup", "founder", "entrepreneur", "bootstrap"],
+      Business: ["business", "enterprise", "b2b", "corporate"],
     };
 
     Object.entries(categoryKeywords).forEach(([category, keywords]) => {
-      const matchCount = keywords.filter(keyword => contentText.includes(keyword)).length;
+      const matchCount = keywords.filter((keyword) =>
+        contentText.includes(keyword),
+      ).length;
       if (matchCount >= 2) {
         suggestions.categories.push(category);
       }
@@ -85,14 +100,17 @@ export function generateCurationSuggestions(scrapedData) {
     // Pricing insights
     if (pricing.found) {
       if (pricing.freeOption) {
-        suggestions.pricingInsights = 'Offers a free plan. ';
+        suggestions.pricingInsights = "Offers a free plan. ";
       }
       if (pricing.plans.length > 0) {
-        const amounts = pricing.plans.map(p => `$${p.amount}/${p.period}`).join(', ');
+        const amounts = pricing.plans
+          .map((p) => `$${p.amount}/${p.period}`)
+          .join(", ");
         suggestions.pricingInsights += `Paid plans: ${amounts}`;
       }
     } else {
-      suggestions.pricingInsights = 'Pricing information not clearly visible on homepage.';
+      suggestions.pricingInsights =
+        "Pricing information not clearly visible on homepage.";
     }
 
     // Link quality assessment
@@ -104,11 +122,15 @@ export function generateCurationSuggestions(scrapedData) {
 
     // Submission process
     if (links.quality.hasSubmissionLinks) {
-      suggestions.submissionProcess = `Submission page(s) found: ${links.quality.submissionUrls.slice(0, 3).join(', ')}`;
-    } else if (scrapedData.smartCrawl && scrapedData.smartCrawl.submissionUrls.length > 0) {
-      suggestions.submissionProcess = `Submission URLs found via crawl: ${scrapedData.smartCrawl.submissionUrls.slice(0, 3).join(', ')}`;
+      suggestions.submissionProcess = `Submission page(s) found: ${links.quality.submissionUrls.slice(0, 3).join(", ")}`;
+    } else if (
+      scrapedData.smartCrawl &&
+      scrapedData.smartCrawl.submissionUrls.length > 0
+    ) {
+      suggestions.submissionProcess = `Submission URLs found via crawl: ${scrapedData.smartCrawl.submissionUrls.slice(0, 3).join(", ")}`;
     } else {
-      suggestions.submissionProcess = '⚠️ No clear submission process found. Manual investigation needed.';
+      suggestions.submissionProcess =
+        "⚠️ No clear submission process found. Manual investigation needed.";
     }
 
     // Calculate quality score (0-100)
@@ -131,9 +153,11 @@ export function generateCurationSuggestions(scrapedData) {
 
     suggestions.qualityScore = score;
 
-    logger.success('Curation suggestions generated', { qualityScore: score });
+    logger.success("Curation suggestions generated", { qualityScore: score });
   } catch (error) {
-    logger.error('Failed to generate curation suggestions', { error: error.message });
+    logger.error("Failed to generate curation suggestions", {
+      error: error.message,
+    });
   }
 
   return suggestions;
@@ -142,7 +166,12 @@ export function generateCurationSuggestions(scrapedData) {
 /**
  * Compile all scraped data into final format
  */
-export function compileScrapedData(directory, homepageData, linkData, smartCrawlData) {
+export function compileScrapedData(
+  directory,
+  homepageData,
+  linkData,
+  smartCrawlData,
+) {
   return {
     directory: {
       id: directory.id,
@@ -176,13 +205,13 @@ export function extractContentForExport(compiledData) {
     // Suggestions
     suggestedDescription: suggestions.shortDescription,
     suggestedLongDescription: suggestions.longDescription,
-    suggestedCategories: suggestions.categories.join(', '),
+    suggestedCategories: suggestions.categories.join(", "),
 
     // Analysis
     linkQuality: suggestions.linkQuality,
     pricingInfo: suggestions.pricingInsights,
     submissionProcess: suggestions.submissionProcess,
-    keyFeatures: suggestions.keyFeatures.join(', '),
+    keyFeatures: suggestions.keyFeatures.join(", "),
     qualityScore: suggestions.qualityScore,
 
     // Metadata
@@ -200,7 +229,8 @@ export function extractContentForExport(compiledData) {
     externalDofollowLinks: compiledData.homepage.links.stats.externalDofollow,
 
     // URLs
-    submissionUrls: compiledData.homepage.links.quality.submissionUrls.join(' | '),
+    submissionUrls:
+      compiledData.homepage.links.quality.submissionUrls.join(" | "),
 
     // Timestamp
     scrapedAt: compiledData.scrapedAt,
