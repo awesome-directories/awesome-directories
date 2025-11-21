@@ -26,6 +26,9 @@
     "lightningcss": "^1.30.2",
     "pagefind": "^1.4.0",
     "postcss": "^8.5.6",
+    "puppeteer": "^24.31.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "rollup-plugin-visualizer": "^6.0.5",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.17",
@@ -36,7 +39,9 @@
   "scripts": {
     "build": "astro build",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "astro dev",
+    "scrape": "node scripts/scraper/index.js",
+    "scrape:test": "node scripts/scraper/test.js"
   },
   "type": "module",
   "version": "1.0.0"
