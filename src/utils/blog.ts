@@ -42,16 +42,21 @@ export function generateTableOfContents(content: string): TocItem[] {
 
 /**
  * Filter out draft and future posts in production
+ * In preview builds (PUBLIC_PREVIEW=true), show all posts including drafts and future posts
  */
 export function filterPublishedPosts(
   posts: CollectionEntry<"blog">[],
 ): CollectionEntry<"blog">[] {
   const now = new Date();
   const isProduction = import.meta.env.PROD;
+  const isPreview = import.meta.env.PUBLIC_PREVIEW === "true";
 
   return posts.filter((post) => {
     // In development, show all posts
     if (!isProduction) return true;
+
+    // In preview builds, show all posts (including drafts and future posts)
+    if (isPreview) return true;
 
     // In production, filter drafts and future posts
     const isDraft = post.data.draft;
@@ -162,4 +167,8 @@ export function paginate<T>(items: T[], page: number, pageSize: number) {
     hasPrev: currentPage > 1,
     totalItems: items.length,
   };
+}
+
+export function getPostSlug(post: CollectionEntry<"blog">): string {
+  return post.data.slug || post.slug;
 }

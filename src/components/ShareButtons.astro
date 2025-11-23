@@ -25,18 +25,48 @@ import ShareButton from "./ShareButton.astro";
     {heading}
   </h3>
   <div class="flex flex-wrap gap-3">
-    {
-      platforms.map(function renderPlatform(platform) {
-        return (
-          <ShareButton
-            platform={platform}
-            url={url}
-            title={title}
-            description={description}
-          />
-        );
-      })
-    }
+    <ShareButton
+      platform="x"
+      url={url}
+      title={title}
+      description={description}
+    />
+    <ShareButton
+      platform="linkedin"
+      url={url}
+      title={title}
+      description={description}
+    />
+    <ShareButton
+      platform="facebook"
+      url={url}
+      title={title}
+      description={description}
+    />
+    <ShareButton
+      platform="reddit"
+      url={url}
+      title={title}
+      description={description}
+    />
+    <ShareButton
+      platform="hackernews"
+      url={url}
+      title={title}
+      description={description}
+    />
+    <ShareButton
+      platform="threads"
+      url={url}
+      title={title}
+      description={description}
+    />
+    <ShareButton
+      platform="whatsapp"
+      url={url}
+      title={title}
+      description={description}
+    />
   </div>
 </div>
 

@@ -51,9 +51,10 @@ if (headings.length === 0) {
     var observerInstance = null;
     var isUserScrolling = true;
     var programmaticScrollTimer = null;
+    var isInitialLoad = true;
 
     function updateUrlHash(id) {
-      if (!id || !isUserScrolling) {
+      if (!id || !isUserScrolling || isInitialLoad) {
         return;
       }
 
@@ -148,7 +149,18 @@ if (headings.length === 0) {
           }
         });
 
-        setInitialActiveHeading();
+        var hasInitialHash = window.location.hash && window.location.hash.length > 1;
+
+        if (!hasInitialHash) {
+          setInitialActiveHeading();
+
+          setTimeout(function enableHashUpdates() {
+            isInitialLoad = false;
+          }, 500);
+        } else {
+          isInitialLoad = false;
+        }
+
         handleInitialHash();
       } catch (error) {
         console.error("Error initializing TOC observer:", error);
@@ -228,6 +240,7 @@ if (headings.length === 0) {
       }
 
       isUserScrolling = false;
+      isInitialLoad = false;
 
       targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
 
