@@ -2,7 +2,7 @@
  * Scraper Configuration
  * Centralized configuration for web scraping operations
  */
-import log from "./utils/logger.js";
+import { logger } from "./utils/logger.js";
 
 export const proxyConfig = {
   enabled: process.env.USE_PROXY === "true" || false,

@@ -8,13 +8,6 @@ async function pageFunction(context) {
 
   var currentDepth = request.userData.depth || 0;
   var baseUrl = new URL(request.loadedUrl);
-  var isHomeDomain = function (url) {
-    try {
-      return new URL(url).hostname === baseUrl.hostname;
-    } catch {
-      return false;
-    }
-  };
 
   log.info(`Processing: ${request.url} (Depth: ${currentDepth})`);
 

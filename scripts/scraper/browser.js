@@ -31,7 +31,7 @@ export async function launchBrowser() {
   logger.info("Launching browser...");
 
   var viewport = getBrowserFingerprint().viewport;
-  var userAgent = getBrowserFingerprint().userAgent;
+
   var timezone = getBrowserFingerprint().timezone;
 
   var launchOptions = {

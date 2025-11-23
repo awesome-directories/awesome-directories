@@ -22,7 +22,7 @@ import {
   closePage,
 } from "./browser.js";
 import { scrapeHomepage } from "./scrapers/homepage.js";
-import { analyzeLinks, findSubmissionUrl } from "./scrapers/links.js";
+import { analyzeLinks } from "./scrapers/links.js";
 import { smartCrawl } from "./scrapers/smart-crawl.js";
 import {
   compileScrapedData,

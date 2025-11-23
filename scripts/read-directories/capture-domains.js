@@ -70,24 +70,6 @@ function isValidDomain(domain) {
 }
 
 // 5. output the results to directories.txt, one domain per line
-function processDomains() {
-  var urls = parseCSV(csvContent);
-  var domains = [];
-
-  for (var i = 0; i < urls.length; i++) {
-    var url = urls[i];
-    var domain = extractDomain(url);
-
-    if (!domain || !isValidDomain(domain)) {
-      // console.error('Invalid domain for URL: ' + url);
-      continue;
-    }
-
-    domains.push(domain);
-  }
-
-  return domains;
-}
 
 function writeDomains(domains) {
   var outputPath = path.join(__dirname, "directories.txt");
