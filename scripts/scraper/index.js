@@ -283,7 +283,6 @@ async function main() {
     };
 
     // Update config with CLI options
-    config.proxy.enabled = args.proxy;
     config.output.baseDir = args.output;
     config.output.dataDir = path.join(args.output, "data");
     config.output.reportsDir = path.join(args.output, "reports");

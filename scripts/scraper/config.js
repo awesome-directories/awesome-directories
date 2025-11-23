@@ -4,6 +4,13 @@
  */
 import log from "./utils/logger.js";
 
+export const proxyConfig = {
+  enabled: process.env.USE_PROXY === "true" || false,
+  password: process.env.APIFY_PROXY_PASSWORD || null,
+  server: "http://proxy.apify.com:8000",
+  username: "auto",
+};
+
 export const config = {
   // Browser settings
   browser: {
@@ -22,17 +29,6 @@ export const config = {
       width: 1920,
       height: 1080,
       deviceScaleFactor: 1,
-    },
-  },
-
-  // Apify residential proxy configuration
-  proxy: {
-    apifyProxyPassword: process.env.APIFY_PROXY_PASSWORD || "",
-    // Apify proxy format: http://auto:${token}@proxy.apify.com:8000
-    getProxyUrl() {
-      if (!this.apifyProxyPassword) return null;
-      log.success("Apify proxy URL constructed successfully");
-      return `http://auto:${this.apifyProxyPassword}@proxy.apify.com:8000`;
     },
   },
 

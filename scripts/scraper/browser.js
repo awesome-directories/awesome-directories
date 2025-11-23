@@ -5,7 +5,7 @@
 
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
-import { config } from "./config.js";
+import { config, proxyConfig } from "./config.js";
 import { logger } from "./utils/logger.js";
 import {
   getBrowserFingerprint,
@@ -30,18 +30,27 @@ export async function launchBrowser() {
 
   logger.info("Launching browser...");
 
-  const { viewport, userAgent, timezone } = getBrowserFingerprint();
-  const proxyUrl = config.proxy.getProxyUrl();
+  var viewport = getBrowserFingerprint().viewport;
+  var userAgent = getBrowserFingerprint().userAgent;
+  var timezone = getBrowserFingerprint().timezone;
 
-  const launchOptions = {
+  var launchOptions = {
     ...config.browser,
     defaultViewport: viewport,
   };
 
-  // Add proxy if enabled
-  if (proxyUrl) {
-    logger.info("Using Apify residential proxy");
-    launchOptions.args.push(`--proxy-server=${proxyUrl}`);
+  logger.info("Browser launch options", {
+    headless: launchOptions.headless,
+    executablePath: launchOptions.executablePath,
+    args: launchOptions.args,
+    viewport: launchOptions.defaultViewport,
+    proxyConfig,
+  });
+  if (proxyConfig?.enabled) {
+    logger.info("Using Apify residential proxy", {
+      server: proxyConfig.server,
+    });
+    launchOptions.args.push(`--proxy-server=${proxyConfig.server}`);
   } else {
     logger.info("Running without proxy (direct connection)");
   }
@@ -60,7 +69,15 @@ export async function launchBrowser() {
  * Create a new page with stealth configuration
  */
 export async function createStealthPage(browser) {
-  const page = await browser.newPage();
+  var page = await browser.newPage();
+
+  if (config?.proxy?.enabled) {
+    await page.authenticate({
+      username: proxyConfig.username,
+      password: proxyConfig.password,
+    });
+    logger.debug("Proxy authentication configured");
+  }
 
   // Set user agent if randomized
   const { userAgent, timezone } = getBrowserFingerprint();
@@ -112,7 +129,7 @@ export async function navigateToUrl(page, url) {
     },
     {
       context: `Navigation to ${url}`,
-      maxAttempts: 3,
+      maxAttempts: 10,
     },
   );
 }

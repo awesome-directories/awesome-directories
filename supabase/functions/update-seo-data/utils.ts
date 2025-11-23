@@ -4,11 +4,11 @@ export function extractDomain(url: string): string {
     return urlObj.hostname.replace(/^www\./, "");
   } catch (error) {
     console.error(`Failed to extract domain from ${url}:`, error);
-    return "";
+    return url;
   }
 }
 
-export function batchArray(array, size) {
+export function batchArray<T>(array: T[], size: number): T[][] {
   var batches = [];
   for (var i = 0; i < array.length; i += size) {
     batches.push(array.slice(i, i + size));
@@ -20,15 +20,14 @@ export async function pollApifyRun(
   runId: string,
   datasetId: string,
   apifyToken: string,
-  maxWaitMinutes: number,
-) {
-  var maxWaitTime = maxWaitMinutes * 60 * 1000;
-  var pollInterval = 5000;
-  var startTime = Date.now();
+  maxAttempts: number,
+): Promise<any[]> {
+  var attempt = 0;
+  var delay = 5000;
 
-  while (Date.now() - startTime < maxWaitTime) {
+  while (attempt < maxAttempts) {
     var statusResponse = await fetch(
-      `https://api.apify.com/v2/actor-runs/${runId}`,
+      `https://api.apify.com/v2/acts/radeance~ahrefs-scraper/runs/${runId}`,
       {
         headers: {
           Authorization: `Bearer ${apifyToken}`,
@@ -36,10 +35,18 @@ export async function pollApifyRun(
       },
     );
 
+    if (!statusResponse.ok) {
+      throw new Error(
+        `Failed to check run status: ${statusResponse.statusText}`,
+      );
+    }
+
     var statusData = await statusResponse.json();
     var status = statusData.data.status;
 
-    console.log(`Run status: ${status}`);
+    console.log(
+      `Run ${runId} status: ${status} (attempt ${attempt + 1}/${maxAttempts})`,
+    );
 
     if (status === "SUCCEEDED") {
       var datasetResponse = await fetch(
@@ -51,65 +58,61 @@ export async function pollApifyRun(
         },
       );
 
-      var results = await datasetResponse.json();
-      console.log(`Retrieved ${results.length} results from Apify`);
-      return results;
-    } else if (
-      status === "FAILED" ||
-      status === "ABORTED" ||
-      status === "TIMED-OUT"
-    ) {
+      if (!datasetResponse.ok) {
+        throw new Error(
+          `Failed to fetch dataset: ${datasetResponse.statusText}`,
+        );
+      }
+
+      return await datasetResponse.json();
+    }
+
+    if (status === "FAILED" || status === "ABORTED" || status === "TIMED-OUT") {
       throw new Error(`Actor run ${status.toLowerCase()}`);
     }
 
+    attempt++;
     await new Promise(function wait(resolve) {
-      setTimeout(resolve, pollInterval);
+      setTimeout(resolve, delay);
     });
   }
 
-  throw new Error("Actor run timed out");
+  throw new Error(`Polling timed out after ${maxAttempts} attempts`);
 }
 
 export async function fetchDirectoriesFromDatabase(
-  supabase,
-  limitDirectories: number | null,
+  supabase: any,
+  limit: number | null,
 ) {
-  console.log("Fetching directories from database...");
   var query = supabase
     .from("directories")
     .select("id, name, url, domain_rating, last_dr_check")
     .eq("is_active", true)
     .order("last_dr_check", { ascending: true, nullsFirst: true });
 
-  if (limitDirectories) {
-    query = query.limit(limitDirectories);
+  if (limit) {
+    query = query.limit(limit);
   }
 
-  var { data: directories, error: fetchError } = await query;
+  var { data, error } = await query;
 
-  if (fetchError) {
-    throw fetchError;
+  if (error) {
+    console.error("Error fetching directories:", error);
+    throw error;
   }
 
-  return directories;
+  return data;
 }
 
-export function createDomainMapping(directories) {
+export function createDomainMapping(directories: any[]) {
   var domainToDirectory = new Map();
   var urls = [];
 
   for (var i = 0; i < directories.length; i++) {
     var dir = directories[i];
     var domain = extractDomain(dir.url);
-    if (!domain) {
-      console.error(
-        `Skipping directory ${dir.id} due to invalid URL: ${dir.url}`,
-      );
-      continue;
-    }
-    var fullUrl = dir.url.startsWith("http") ? dir.url : `https://${dir.url}`;
-    urls.push(fullUrl);
     domainToDirectory.set(domain, dir);
+    urls.push(domain);
   }
 
   return { domainToDirectory: domainToDirectory, urls: urls };
