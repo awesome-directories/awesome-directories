@@ -54,7 +54,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          name: build-pr${{ github.event.pull_request.number }}
+          name: build-pr${{ github.event.pull_request.number }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: dist
       - name: Deploy to Netlify
         id: netlify
