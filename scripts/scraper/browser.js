@@ -32,7 +32,7 @@ export async function launchBrowser() {
 
   var viewport = getBrowserFingerprint().viewport;
 
-  var timezone = getBrowserFingerprint().timezone;
+
 
   var launchOptions = {
     ...config.browser,
@@ -71,7 +71,7 @@ export async function launchBrowser() {
 export async function createStealthPage(browser) {
   var page = await browser.newPage();
 
-  if (config?.proxy?.enabled) {
+  if (proxyConfig?.enabled) {
     await page.authenticate({
       username: proxyConfig.username,
       password: proxyConfig.password,
