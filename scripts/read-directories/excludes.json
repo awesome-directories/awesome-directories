@@ -1,0 +1,302 @@
+[
+  {
+    "glob": "**/*.{png,jpg,jpeg,gif,svg,pdf,zip,mp4,mp3,webp,ico,woff,woff2,ttf,eot,css,js,xml,txt,csv,doc,docx,xls,xlsx,ppt,pptx,avi,mov,wmv,flv,wav,ogg,webm,m4v,m4a}"
+  },
+  {
+    "glob": "**/logout*"
+  },
+  {
+    "glob": "**/signout*"
+  },
+  {
+    "glob": "**/sign-out*"
+  },
+  {
+    "glob": "**/log-out*"
+  },
+  {
+    "glob": "**/login*"
+  },
+  {
+    "glob": "**/signin*"
+  },
+  {
+    "glob": "**/sign-in*"
+  },
+  {
+    "glob": "**/log-in*"
+  },
+  {
+    "glob": "**/register*"
+  },
+  {
+    "glob": "**/signup*"
+  },
+  {
+    "glob": "**/sign-up*"
+  },
+  {
+    "glob": "**/auth*"
+  },
+  {
+    "glob": "**/authentication*"
+  },
+  {
+    "glob": "**/password*"
+  },
+  {
+    "glob": "**/reset*"
+  },
+  {
+    "glob": "**/forgot*"
+  },
+  {
+    "glob": "**/account*"
+  },
+  {
+    "glob": "**/profile*"
+  },
+  {
+    "glob": "**/settings*"
+  },
+  {
+    "glob": "**/dashboard*"
+  },
+  {
+    "glob": "**/admin*"
+  },
+  {
+    "glob": "**/cart*"
+  },
+  {
+    "glob": "**/checkout*"
+  },
+  {
+    "glob": "**/payment*"
+  },
+  {
+    "glob": "**/purchase*"
+  },
+  {
+    "glob": "**/buy*"
+  },
+  {
+    "glob": "**/order*"
+  },
+  {
+    "glob": "**/subscribe*"
+  },
+  {
+    "glob": "**/subscription*"
+  },
+  {
+    "glob": "**/unsubscribe*"
+  },
+  {
+    "glob": "**/api*"
+  },
+  {
+    "glob": "**/cdn*"
+  },
+  {
+    "glob": "**/assets*"
+  },
+  {
+    "glob": "**/static*"
+  },
+  {
+    "glob": "**/wp-content*"
+  },
+  {
+    "glob": "**/wp-admin*"
+  },
+  {
+    "glob": "**/wp-includes*"
+  },
+  {
+    "glob": "**/wp-json*"
+  },
+  {
+    "glob": "**/feed*"
+  },
+  {
+    "glob": "**/rss*"
+  },
+  {
+    "glob": "**/atom*"
+  },
+  {
+    "glob": "**/embed*"
+  },
+  {
+    "glob": "**/print*"
+  },
+  {
+    "glob": "**/share*"
+  },
+  {
+    "glob": "**/mailto:*"
+  },
+  {
+    "glob": "tel:*"
+  },
+  {
+    "glob": "javascript:*"
+  },
+  {
+    "glob": "**/download*"
+  },
+  {
+    "glob": "**/search*"
+  },
+  {
+    "glob": "**/?s=*"
+  },
+  {
+    "glob": "**/*?q=*"
+  },
+  {
+    "glob": "**/*?search=*"
+  },
+  {
+    "glob": "**/tag/*"
+  },
+  {
+    "glob": "**/tags/*"
+  },
+  {
+    "glob": "**/author/*"
+  },
+  {
+    "glob": "**/date/*"
+  },
+  {
+    "glob": "**/archive/*"
+  },
+  {
+    "glob": "**/page/*"
+  },
+  {
+    "glob": "**/*?page=*"
+  },
+  {
+    "glob": "**/*?p=*"
+  },
+  {
+    "glob": "**/comment*"
+  },
+  {
+    "glob": "**/reply*"
+  },
+  {
+    "glob": "**/trackback*"
+  },
+  {
+    "glob": "**/xmlrpc*"
+  },
+  {
+    "glob": "**/sitemap*"
+  },
+  {
+    "glob": "**/robots.txt"
+  },
+  {
+    "glob": "**/.well-known/*"
+  },
+  {
+    "glob": "**/privacy*"
+  },
+  {
+    "glob": "**/terms*"
+  },
+  {
+    "glob": "**/cookie*"
+  },
+  {
+    "glob": "**/legal*"
+  },
+  {
+    "glob": "**/gdpr*"
+  },
+  {
+    "glob": "**/jobs*"
+  },
+  {
+    "glob": "**/career*"
+  },
+  {
+    "glob": "**/careers*"
+  },
+  {
+    "glob": "**/job*"
+  },
+  {
+    "glob": "**/hiring*"
+  },
+  {
+    "glob": "**/press*"
+  },
+  {
+    "glob": "**/media*"
+  },
+  {
+    "glob": "**/news/*"
+  },
+  {
+    "glob": "**/blog/page/*"
+  },
+  {
+    "glob": "**/category/*"
+  },
+  {
+    "glob": "**/categories/*"
+  },
+  {
+    "glob": "**/*?utm_*"
+  },
+  {
+    "glob": "**/*?ref=*"
+  },
+  {
+    "glob": "**/*?source=*"
+  },
+  {
+    "glob": "**/*?fbclid=*"
+  },
+  {
+    "glob": "**/*?gclid=*"
+  },
+  {
+    "glob": "**/amp/*"
+  },
+  {
+    "glob": "**/?amp*"
+  },
+  {
+    "glob": "**/mobile/*"
+  },
+  {
+    "glob": "**/m.*"
+  },
+  {
+    "glob": "**/help*"
+  },
+  {
+    "glob": "**/support*"
+  },
+  {
+    "glob": "**/faq*"
+  },
+  {
+    "glob": "**/documentation*"
+  },
+  {
+    "glob": "**/docs*"
+  },
+  {
+    "glob": "**/404*"
+  },
+  {
+    "glob": "**/error*"
+  }
+]

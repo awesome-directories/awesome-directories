@@ -132,6 +132,14 @@ async function updateDirectoryMetrics(
       if (metrics.top_backlinks) {
         consolidatedData.top_backlinks = metrics.top_backlinks;
       }
+      if (metrics.referal_domains_overall !== undefined) {
+        consolidatedData.referal_domains_overall =
+          metrics.referal_domains_overall;
+      }
+      if (metrics.referal_domains_history) {
+        consolidatedData.referal_domains_history =
+          metrics.referal_domains_history;
+      }
     }
 
     if (metrics.type === "traffic") {
@@ -143,10 +151,29 @@ async function updateDirectoryMetrics(
       }
       consolidatedData.traffic = {
         monthly_avg: metrics.website_traffic?.trafficMonthlyAvg,
+        overall_search_traffic: metrics.website_overall_search_traffic,
+        overall_search_traffic_last_month:
+          metrics.website_overall_search_traffic_last_month,
+        overall_search_traffic_value:
+          metrics.website_overall_search_traffic_value,
         history: metrics.website_traffic_history,
         by_country: metrics.website_traffic_by_country,
         top_pages: metrics.website_traffic_top_pages,
         top_keywords: metrics.website_traffic_top_keywords,
+        top_countries: metrics.website_traffic_top_countries,
+      };
+    }
+
+    if (metrics.type === "competitors" && metrics.competitors) {
+      consolidatedData.competitors = metrics.competitors;
+    }
+
+    if (metrics.type === "keywords" && metrics.keyword_ideas) {
+      consolidatedData.keywords = {
+        ideas: metrics.keyword_ideas,
+        ideas_count: metrics.keyword_ideas_count,
+        questions: metrics.keyword_ideas_questions,
+        questions_count: metrics.keyword_ideas_questions_count,
       };
     }
   }

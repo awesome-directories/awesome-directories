@@ -1,0 +1,72 @@
+{
+  "browserLog": false,
+  "closeCookieModals": true,
+  "customData": {
+    "extractDoFollow": true,
+    "extractPricing": true,
+    "extractSubmissionInfo": true,
+    "maxExternalDepth": 1,
+    "maxInternalDepth": 2
+  },
+  "datasetName": "directory-enrichment-data",
+  "debugLog": true,
+  "downloadCss": true,
+  "downloadMedia": false,
+  "excludes": [
+    {
+      "glob": "**/*.{png,jpg,jpeg,gif,svg,pdf,zip,mp4,mp3,webp,ico}"
+    },
+    {
+      "glob": "**/logout*"
+    },
+    {
+      "glob": "**/signout*"
+    },
+    {
+      "glob": "**/login*"
+    },
+    {
+      "glob": "**/signin*"
+    }
+  ],
+  "globs": [],
+  "headless": true,
+  "ignoreCorsAndCsp": false,
+  "ignoreSslErrors": false,
+  "initialCookies": [],
+  "keepUrlFragments": false,
+  "keyValueStoreName": "",
+  "linkSelector": "a[href]",
+  "maxConcurrency": 5,
+  "maxCrawlingDepth": 1,
+  "maxPagesPerCrawl": 10000,
+  "maxRequestRetries": 10,
+  "maxResultsPerCrawl": 0,
+  "maxScrollHeightPixels": 5000,
+  "pageFunction": "placeholder",
+  "pageFunctionTimeoutSecs": 90,
+  "pageLoadTimeoutSecs": 60,
+  "postNavigationHooks": "",
+  "preNavigationHooks": "",
+  "proxyConfiguration": {
+    "useApifyProxy": true
+  },
+  "proxyRotation": "RECOMMENDED",
+  "pseudoUrls": [],
+  "requestQueueName": "",
+  "respectRobotsTxtFile": true,
+  "startUrls": [
+    {
+      "url": "https://www.producthunt.com",
+      "userData": {
+        "depth": 0,
+        "directoryName": "Product Hunt",
+        "label": "DIRECTORY_HOME"
+      }
+    }
+  ],
+  "useChrome": false,
+  "waitUntil": [
+    "networkidle2"
+  ]
+}
