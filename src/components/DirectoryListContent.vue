@@ -38,6 +38,7 @@
                   ? 'bg-primary text-white shadow-sm'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               ]"
+              :aria-label="`Apply ${preset.label} filter`"
             >
               {{ preset.icon }} {{ preset.label }}
             </button>
@@ -50,6 +51,7 @@
             @click="advancedFiltersExpanded = !advancedFiltersExpanded"
             class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 min-h-[44px]"
             aria-label="Toggle advanced filters"
+            :aria-expanded="advancedFiltersExpanded"
           >
             <span>Advanced Filters</span>
             <svg
@@ -111,8 +113,8 @@
                   class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
                 >
                   <option value="All">All DR</option>
-                  <option value="70+">70+</option>
                   <option value="80+">80+</option>
+                  <option value="70+">70+</option>
                   <option value="70-79">70-79</option>
                   <option value="60-69">60-69</option>
                   <option value="<60">&lt;60</option>
