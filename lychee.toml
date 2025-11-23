@@ -2,7 +2,10 @@ accept = ["200", "429"]
 archive = "wayback"
 cache = true
 cookie_jar = "cookie-jar"
-exclude = ["https://awesome-directories.com/404/"]
+exclude = [
+  "https://awesome-directories.com/404/",
+]
+exclude_all_private = true
 exclude_path = []
 format = "markdown"
 header = { "accept" = "text/html" }

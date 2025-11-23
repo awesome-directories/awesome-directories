@@ -79,6 +79,13 @@ jobs:
             The live preview of the changes are available at the following URL:
             <${{ steps.netlify.outputs.deploy_url }}>
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose
+          fail: false
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   deploy:
     if: github.ref == 'refs/heads/main'
@@ -123,32 +130,3 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-actions-${{ github.run_id }}-${{ github.run_attempt }}
-
-  lychee:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Cache
-        uses: actions/cache@v4
-        with:
-          path: .lycheecache
-          key: cache-lychee-${{ github.sha }}
-          restore-keys: cache-lychee-
-      - name: Build site
-        uses: withastro/action@v5
-        with:
-          package-manager: bun@v2
-      - name: Lychee
-        uses: lycheeverse/lychee-action@v2
-        with:
-          args: >-
-            --root-dir ${{ github.workspace }}/dist
-            --exclude-all-private
-            --cache
-            --verbose
-            --no-progress
-            dist
-          fail: false
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
