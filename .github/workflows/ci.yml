@@ -138,7 +138,7 @@ jobs:
       - name: Build site
         uses: withastro/action@v5
         with:
-          package-manager: bun@v2
+          package-manager: bun@latest
       - name: Lychee
         uses: lycheeverse/lychee-action@v2
         with:
