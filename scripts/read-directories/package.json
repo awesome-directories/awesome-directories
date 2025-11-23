@@ -1,0 +1,29 @@
+{
+  "author": "Awesome Directories",
+  "dependencies": {
+    "apify-client": "^2.9.0",
+    "csv-parse": "^6.1.0"
+  },
+  "description": "Comprehensive Apify Puppeteer Scraper for directory website enrichment",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "apify",
+    "scraper",
+    "puppeteer",
+    "directory",
+    "seo",
+    "enrichment"
+  ],
+  "license": "Apache-2.0",
+  "main": "configure-scraper.js",
+  "name": "directory-enrichment-scraper",
+  "scripts": {
+    "analyze": "node analyze-results.js",
+    "config": "node configure-scraper.js --config-only",
+    "scrape": "node configure-scraper.js --run",
+    "test": "node configure-scraper.js --config-only && echo 'Configuration generated successfully'"
+  },
+  "version": "1.0.0"
+}

@@ -58,7 +58,7 @@ if (customRelatedPosts && customRelatedPosts.length > 0) {
 
 const publishedDate = formatDate(date);
 const siteUrlRaw = Astro.site?.toString() || "https://awesome-directories.com";
-const siteUrl= siteUrlRaw.replace(/\/+$/, "");
+const siteUrl = siteUrlRaw.replace(/\/+$/, "");
 const postUrl = `${siteUrl}/blog/${post.slug}`;
 const ogImage = coverImage || `${siteUrl}/og-image.png`;
 ---
@@ -191,8 +191,10 @@ const ogImage = coverImage || `${siteUrl}/og-image.png`;
                   loading="eager"
                 />
                 {coverCaption && (
-                  <figcaption class="text-sm text-gray-500 text-center mb-6" set:html={coverCaption}>
-                  </figcaption>
+                  <figcaption
+                    class="text-sm text-gray-500 text-center mb-6"
+                    set:html={coverCaption}
+                  />
                 )}
               </figure>
             )

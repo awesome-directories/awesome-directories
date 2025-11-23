@@ -64,3 +64,4 @@ src/components/DirectoryFilter.astro
 .lycheecache
 cookie-jar
 lychee.toml.bk
+scripts/scraper-outputs
