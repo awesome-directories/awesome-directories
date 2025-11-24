@@ -21,7 +21,7 @@
           </div>
           <button
             @click="dismissTooltip"
-            class="text-gray-400 hover:text-gray-600 flex-shrink-0"
+            class="text-gray-400 hover:text-gray-600 flex-shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2"
             aria-label="Dismiss"
           >
             <svg
@@ -40,24 +40,73 @@
           </button>
         </div>
 
+        <!-- Search Bar -->
+        <div class="mb-3">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+            <input
+              v-model="searchQuery"
+              type="search"
+              placeholder="Search directories..."
+              class="w-full pl-10 pr-4 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base bg-white transition-shadow min-h-[48px] sm:min-h-[44px]"
+              aria-label="Search directories"
+            />
+            <button
+              v-if="searchQuery"
+              @click="clearSearch"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center min-w-[44px] min-h-[44px] justify-center"
+              aria-label="Clear search"
+            >
+              <svg
+                class="h-5 w-5 text-gray-400 hover:text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
         <!-- Quick Filter Pills -->
         <div class="mb-3">
           <div
-            class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide"
+            class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0"
           >
             <button
               v-for="preset in quickFilterPresets"
               :key="preset.id"
               @click="applyQuickFilter(preset)"
               :class="[
-                'flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all min-h-[40px] whitespace-nowrap',
+                'flex-shrink-0 px-4 py-2.5 sm:py-2 rounded-full text-sm font-medium transition-all min-h-[44px] sm:min-h-[40px] whitespace-nowrap touch-manipulation',
                 isActivePreset(preset)
                   ? 'bg-primary text-white shadow-sm'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300',
               ]"
               :aria-label="`Apply ${preset.label} filter`"
             >
-              {{ preset.icon }} {{ preset.label }}
+              <span class="inline-block mr-1">{{ preset.icon }}</span>
+              <span>{{ preset.label }}</span>
             </button>
           </div>
         </div>
@@ -65,14 +114,14 @@
         <!-- Advanced Filters Accordion -->
         <div class="border-t border-gray-200 pt-3">
           <button
-            @click="advancedFiltersExpanded = !advancedFiltersExpanded"
-            class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 min-h-[44px]"
+            @click="toggleAdvancedFilters"
+            class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 min-h-[48px] sm:min-h-[44px] w-full justify-between touch-manipulation active:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors"
             aria-label="Toggle advanced filters"
             :aria-expanded="advancedFiltersExpanded"
           >
             <span>Advanced Filters</span>
             <svg
-              class="w-4 h-4 transition-transform duration-200"
+              class="w-5 h-5 transition-transform duration-200 flex-shrink-0"
               :class="{ 'rotate-180': advancedFiltersExpanded }"
               fill="none"
               stroke="currentColor"
@@ -90,8 +139,8 @@
           <div
             class="transition-all duration-300 ease-in-out overflow-hidden"
             :class="{
-              'max-h-0': !advancedFiltersExpanded,
-              'max-h-[800px]': advancedFiltersExpanded,
+              'max-h-0 opacity-0': !advancedFiltersExpanded,
+              'max-h-[1000px] opacity-100': advancedFiltersExpanded,
             }"
           >
             <div
@@ -100,7 +149,7 @@
               <div>
                 <label
                   for="filter-category"
-                  class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+                  class="block text-sm font-medium text-gray-900 mb-1.5"
                 >
                   Category
                 </label>
@@ -108,7 +157,7 @@
                   id="filter-category"
                   v-model="currentFilters.category"
                   @change="applyFilters"
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
                 >
                   <option v-for="cat in categories" :key="cat" :value="cat">
                     {{ cat }}
@@ -119,7 +168,7 @@
               <div>
                 <label
                   for="filter-dr"
-                  class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+                  class="block text-sm font-medium text-gray-900 mb-1.5"
                 >
                   Domain Rating
                 </label>
@@ -127,7 +176,7 @@
                   id="filter-dr"
                   v-model="currentFilters.drRange"
                   @change="applyFilters"
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
                 >
                   <option value="All">All DR</option>
                   <option value="80+">80+</option>
@@ -141,7 +190,7 @@
               <div>
                 <label
                   for="filter-link"
-                  class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+                  class="block text-sm font-medium text-gray-900 mb-1.5"
                 >
                   Link Type
                 </label>
@@ -149,7 +198,7 @@
                   id="filter-link"
                   v-model="currentFilters.linkType"
                   @change="applyFilters"
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
                 >
                   <option value="All">All</option>
                   <option value="Dofollow Only">Dofollow Only</option>
@@ -159,7 +208,7 @@
               <div>
                 <label
                   for="filter-pricing"
-                  class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+                  class="block text-sm font-medium text-gray-900 mb-1.5"
                 >
                   Pricing
                 </label>
@@ -167,7 +216,7 @@
                   id="filter-pricing"
                   v-model="currentFilters.pricing"
                   @change="applyFilters"
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
                 >
                   <option value="All">All</option>
                   <option value="free">Free</option>
@@ -179,7 +228,7 @@
               <div>
                 <label
                   for="filter-sort"
-                  class="block text-xs sm:text-sm font-medium text-gray-900 mb-1.5"
+                  class="block text-sm font-medium text-gray-900 mb-1.5"
                 >
                   Sort By
                 </label>
@@ -187,7 +236,7 @@
                   id="filter-sort"
                   v-model="currentFilters.sortBy"
                   @change="applyFilters"
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px] bg-white"
+                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
                 >
                   <option>Most Helpful</option>
                   <option>Highest DR</option>
@@ -201,10 +250,10 @@
 
         <!-- Results Summary -->
         <div
-          class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-3 border-t border-gray-200"
+          class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-gray-200"
         >
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-xs sm:text-sm text-gray-700">
+            <span class="text-sm text-gray-700">
               <span class="font-semibold text-gray-900">{{
                 visibleDirectories.length
               }}</span>
@@ -221,11 +270,11 @@
           <button
             v-if="!isDefaultState"
             @click="resetToDefault"
-            class="text-xs sm:text-sm text-primary hover:text-primary-dark font-medium whitespace-nowrap min-h-[44px] px-2 flex items-center gap-1"
+            class="text-sm text-primary hover:text-primary-dark font-medium whitespace-nowrap min-h-[48px] sm:min-h-[44px] px-3 -mx-3 sm:mx-0 sm:px-2 flex items-center gap-1.5 touch-manipulation active:bg-gray-50 rounded-lg transition-colors"
             aria-label="Reset to default filters"
           >
             <svg
-              class="w-4 h-4"
+              class="w-4 h-4 flex-shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -245,7 +294,7 @@
 
     <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
       <div v-if="isLoading" class="text-center py-12">
-        <div class="text-gray-900 text-sm sm:text-base">
+        <div class="text-gray-900 text-base">
           Loading directories...
         </div>
       </div>
@@ -254,10 +303,10 @@
         v-else-if="visibleDirectories.length === 0"
         class="text-center py-12 px-4"
       >
-        <div class="text-gray-900 mb-4 text-sm sm:text-base">
+        <div class="text-gray-900 mb-4 text-base">
           No directories found matching your filters.
         </div>
-        <button @click="resetAllFilters" class="btn-primary min-h-[44px]">
+        <button @click="resetAllFilters" class="btn-primary min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation">
           Reset Filters
         </button>
       </div>
@@ -282,7 +331,7 @@
       >
         <button
           @click="loadMore"
-          class="btn-primary min-h-[44px] w-full sm:w-auto px-6"
+          class="btn-primary min-h-[48px] sm:min-h-[44px] w-full sm:w-auto px-6 touch-manipulation"
           aria-label="Load more directories"
         >
           Load More ({{ visibleDirectories.length - itemsToShow }} remaining)
@@ -441,10 +490,9 @@ const visibleDirectories = computed(function computeVisibleDirectories() {
   return [...pending, ...filteredData.value];
 });
 
-onMounted(async () => {
+onMounted(async function handleMounted() {
   await loadDirectories();
   await loadUserData();
-  setupSearchListener();
   checkFirstVisit();
 });
 
@@ -461,6 +509,22 @@ function dismissTooltip() {
   showTooltip.value = false;
 }
 
+// Search input state
+var searchQuery = ref("");
+var searchDebounceTimer = ref(null);
+
+// Watch for search query changes with debouncing
+watch(searchQuery, function handleSearchChange(newValue) {
+  if (searchDebounceTimer.value) {
+    clearTimeout(searchDebounceTimer.value);
+  }
+
+  searchDebounceTimer.value = setTimeout(function executeSearch() {
+    currentFilters.value.search = newValue;
+    applyFilters();
+  }, 300);
+});
+
 // Apply quick filter preset
 function applyQuickFilter(preset) {
   currentFilters.value = {
@@ -468,9 +532,7 @@ function applyQuickFilter(preset) {
     ...preset.filters,
   };
 
-  // Clear search input if exists
-  const searchInput = document.getElementById("search-input");
-  if (searchInput) searchInput.value = "";
+  searchQuery.value = "";
 
   applyFilters();
   advancedFiltersExpanded.value = false;
@@ -492,29 +554,20 @@ function isActivePreset(preset) {
 // Reset to default smart filters
 function resetToDefault() {
   currentFilters.value = { ...DEFAULT_FILTERS };
-
-  const searchInput = document.getElementById("search-input");
-  if (searchInput) searchInput.value = "";
-
+  searchQuery.value = "";
   itemsToShow.value = 30;
   applyFilters();
   advancedFiltersExpanded.value = false;
 }
 
-// Watch for user changes (login/logout)
-watch(
-  user,
-  async (newUser) => {
-    if (newUser) {
-      await loadUserData();
-    } else {
-      pendingSubmissions.value = [];
-      userFavoriteIds.value = [];
-      userVotedIds.value = [];
-    }
-  },
-  { immediate: false },
-);
+function resetAllFilters() {
+  resetToDefault();
+}
+
+// Toggle advanced filters visibility
+function toggleAdvancedFilters() {
+  advancedFiltersExpanded.value = !advancedFiltersExpanded.value;
+}
 
 async function loadDirectories() {
   try {
@@ -571,16 +624,6 @@ function convertPendingToDirectory(pending) {
     view_count: 0,
     created_at: pending.submitted_at,
   };
-}
-
-function setupSearchListener() {
-  const searchInput = document.getElementById("search-input");
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      currentFilters.value.search = e.target.value;
-      applyFilters();
-    });
-  }
 }
 
 function applyFiltersToDirectory(dir) {
@@ -684,5 +727,16 @@ function loadMore() {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+@media (max-width: 640px) {
+  .scrollbar-hide {
+    scroll-padding-left: 0.75rem;
+    scroll-padding-right: 0.75rem;
+  }
 }
 </style>

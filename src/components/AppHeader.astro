@@ -9,16 +9,15 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
   class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm"
 >
   <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-14 sm:h-16">
-      <!-- Logo -->
+    <div class="flex items-center justify-between h-16 sm:h-16">
       <a
         href="/"
-        class="flex items-center hover:opacity-80 transition-opacity min-h-[44px] min-w-[44px]"
+        class="flex items-center hover:opacity-80 transition-opacity min-h-[48px] min-w-[48px] sm:min-h-[44px] sm:min-w-[44px] -ml-2 pl-2 touch-manipulation"
+        aria-label="Awesome Directories home"
       >
         <Logo size="md" spacing="lg" />
       </a>
 
-      <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-4 lg:space-x-6">
         <div class="min-w-[50px] flex items-center justify-center">
           <GithubStars client:load />
@@ -29,37 +28,36 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
 
         <a
           href="/blog"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center px-2"
         >
           Blog
         </a>
 
         <a
           href="/submit"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base whitespace-nowrap min-h-[44px] flex items-center"
+          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base whitespace-nowrap min-h-[44px] flex items-center px-2"
         >
           Submit Directory
         </a>
 
         <a
           href="/about"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center"
+          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center px-2"
         >
           About
         </a>
 
         <a
           href="/stats"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center"
+          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center px-2"
         >
           Stats
         </a>
 
-        <!-- User Menu -->
         <div id="user-menu-container" class="relative hidden">
           <button
             id="user-menu-button"
-            class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors min-h-[44px] min-w-[44px]"
+            class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors min-h-[44px] min-w-[44px] px-2 rounded-lg hover:bg-gray-50 touch-manipulation"
             aria-label="User menu"
             aria-expanded="false"
           >
@@ -76,19 +74,19 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
           >
             <a
               href="/favorites"
-              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[44px]"
+              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] flex items-center touch-manipulation"
             >
               ❤️ My Favorites
             </a>
             <a
               href="/submissions"
-              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[44px]"
+              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] flex items-center touch-manipulation"
             >
               ✅ My Submissions
             </a>
             <button
               id="sign-out-button"
-              class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[44px]"
+              class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] touch-manipulation"
             >
               🚪 Sign Out
             </button>
@@ -97,16 +95,15 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
 
         <button
           id="sign-in-button"
-          class="btn-primary text-sm hidden min-h-[44px]"
+          class="btn-primary text-sm hidden min-h-[44px] px-4 touch-manipulation"
         >
           Sign In
         </button>
       </nav>
 
-      <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-button"
-        class="md:hidden p-2 text-gray-600 hover:text-gray-900 min-h-[44px] min-w-[44px] flex items-center justify-center"
+        class="md:hidden p-2 text-gray-600 hover:text-gray-900 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-lg hover:bg-gray-50 -mr-2 touch-manipulation active:bg-gray-100 transition-colors"
         aria-label="Toggle mobile menu"
         aria-expanded="false"
       >
@@ -139,10 +136,9 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
       </button>
     </div>
 
-    <!-- Mobile Menu -->
     <div
       id="mobile-menu"
-      class="hidden md:hidden py-3 border-t border-gray-200"
+      class="hidden md:hidden py-3 border-t border-gray-200 transition-all duration-200"
     >
       <nav class="flex flex-col space-y-1">
         <div class="flex items-center justify-start gap-2 px-3 py-2 mb-1">
@@ -154,25 +150,25 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
 
         <a
           href="/blog"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center"
+          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] flex items-center touch-manipulation"
         >
           Blog
         </a>
         <a
           href="/submit"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center"
+          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] flex items-center touch-manipulation"
         >
           Submit Directory
         </a>
         <a
           href="/about"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center"
+          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] flex items-center touch-manipulation"
         >
           About
         </a>
         <a
           href="/stats"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center"
+          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] flex items-center touch-manipulation"
         >
           Stats
         </a>
@@ -183,19 +179,19 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
         >
           <a
             href="/favorites"
-            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]"
+            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] touch-manipulation"
           >
             ❤️ My Favorites
           </a>
           <a
             href="/submissions"
-            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]"
+            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] touch-manipulation"
           >
             ✅ My Submissions
           </a>
           <button
             id="mobile-sign-out-button"
-            class="w-full text-left text-gray-700 hover:text-primary font-medium px-3 py-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]"
+            class="w-full text-left text-gray-700 hover:text-primary font-medium px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] touch-manipulation"
           >
             🚪 Sign Out
           </button>
@@ -203,7 +199,7 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
 
         <button
           id="mobile-sign-in-button"
-          class="btn-primary text-sm w-full hidden min-h-[44px] mt-2"
+          class="btn-primary text-sm w-full hidden min-h-[48px] mt-2 touch-manipulation"
         >
           Sign In
         </button>
@@ -212,11 +208,31 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
   </div>
 </header>
 
+<style>
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  #mobile-menu {
+    animation: slideDown 0.2s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
 <script>
   import { $user } from "@/stores/auth";
   import { supabase, getUser, signOut } from "@/lib/supabase-client";
 
-  // Initialize auth state
   async function initAuth() {
     try {
       var user = await getUser();
@@ -228,29 +244,25 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
     }
   }
 
-  // Update UI based on auth state
-  function updateUI(user: any) {
-    const userMenuContainer = document.getElementById("user-menu-container");
-    const signInButton = document.getElementById("sign-in-button");
-    const mobileUserLinks = document.getElementById("mobile-user-links");
-    const mobileSignInButton = document.getElementById("mobile-sign-in-button");
-    const userAvatar = document.getElementById("user-avatar");
+  function updateUI(user) {
+    var userMenuContainer = document.getElementById("user-menu-container");
+    var signInButton = document.getElementById("sign-in-button");
+    var mobileUserLinks = document.getElementById("mobile-user-links");
+    var mobileSignInButton = document.getElementById("mobile-sign-in-button");
+    var userAvatar = document.getElementById("user-avatar");
 
     if (user) {
-      // Show user menu
       userMenuContainer?.classList.remove("hidden");
       signInButton?.classList.add("hidden");
       mobileUserLinks?.classList.remove("hidden");
       mobileSignInButton?.classList.add("hidden");
 
-      // Set user initial
-      const email = user.email || "";
-      const initial = email.charAt(0).toUpperCase();
+      var email = user.email || "";
+      var initial = email.charAt(0).toUpperCase();
       if (userAvatar) {
         userAvatar.textContent = initial;
       }
     } else {
-      // Show sign in button
       userMenuContainer?.classList.add("hidden");
       signInButton?.classList.remove("hidden");
       mobileUserLinks?.classList.add("hidden");
@@ -258,17 +270,15 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
     }
   }
 
-  // User menu toggle
-  const userMenuButton = document.getElementById("user-menu-button");
-  const userMenuDropdown = document.getElementById("user-menu-dropdown");
+  var userMenuButton = document.getElementById("user-menu-button");
+  var userMenuDropdown = document.getElementById("user-menu-dropdown");
 
-  userMenuButton?.addEventListener("click", () => {
+  userMenuButton?.addEventListener("click", function toggleUserMenu() {
     userMenuDropdown?.classList.toggle("hidden");
   });
 
-  // Close user menu when clicking outside
-  document.addEventListener("click", (e) => {
-    const target = e.target as HTMLElement;
+  document.addEventListener("click", function closeUserMenuOutside(e) {
+    var target = e.target;
     if (
       !userMenuButton?.contains(target) &&
       !userMenuDropdown?.contains(target)
@@ -277,50 +287,48 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
     }
   });
 
-  // Mobile menu toggle
-  const mobileMenuButton = document.getElementById("mobile-menu-button");
-  const mobileMenu = document.getElementById("mobile-menu");
-  const menuIconOpen = document.getElementById("menu-icon-open");
-  const menuIconClose = document.getElementById("menu-icon-close");
+  var mobileMenuButton = document.getElementById("mobile-menu-button");
+  var mobileMenu = document.getElementById("mobile-menu");
+  var menuIconOpen = document.getElementById("menu-icon-open");
+  var menuIconClose = document.getElementById("menu-icon-close");
 
-  mobileMenuButton?.addEventListener("click", () => {
+  mobileMenuButton?.addEventListener("click", function toggleMobileMenu() {
+    var isHidden = mobileMenu?.classList.contains("hidden");
+
     mobileMenu?.classList.toggle("hidden");
     menuIconOpen?.classList.toggle("hidden");
     menuIconClose?.classList.toggle("hidden");
+
+    mobileMenuButton?.setAttribute("aria-expanded", isHidden ? "true" : "false");
   });
 
-  // Close mobile menu on link click
-  const mobileMenuLinks = document.querySelectorAll(".mobile-menu-link");
-  mobileMenuLinks.forEach((link) => {
-    link.addEventListener("click", () => {
+  var mobileMenuLinks = document.querySelectorAll(".mobile-menu-link");
+  mobileMenuLinks.forEach(function addCloseMobileMenu(link) {
+    link.addEventListener("click", function closeMobileMenu() {
       mobileMenu?.classList.add("hidden");
       menuIconOpen?.classList.remove("hidden");
       menuIconClose?.classList.add("hidden");
+      mobileMenuButton?.setAttribute("aria-expanded", "false");
     });
   });
 
-  // Sign in button
-  const signInButton = document.getElementById("sign-in-button");
-  const mobileSignInButton = document.getElementById("mobile-sign-in-button");
+  var signInButton = document.getElementById("sign-in-button");
+  var mobileSignInButton = document.getElementById("mobile-sign-in-button");
 
-  signInButton?.addEventListener("click", () => {
-    // Dispatch custom event to show auth modal
+  signInButton?.addEventListener("click", function showAuthModalDesktop() {
     window.dispatchEvent(new CustomEvent("show-auth-modal"));
   });
 
-  mobileSignInButton?.addEventListener("click", () => {
-    // Close mobile menu
+  mobileSignInButton?.addEventListener("click", function showAuthModalMobile() {
     mobileMenu?.classList.add("hidden");
     menuIconOpen?.classList.remove("hidden");
     menuIconClose?.classList.add("hidden");
-
-    // Dispatch custom event to show auth modal
+    mobileMenuButton?.setAttribute("aria-expanded", "false");
     window.dispatchEvent(new CustomEvent("show-auth-modal"));
   });
 
-  // Sign out buttons
-  const signOutButton = document.getElementById("sign-out-button");
-  const mobileSignOutButton = document.getElementById("mobile-sign-out-button");
+  var signOutButton = document.getElementById("sign-out-button");
+  var mobileSignOutButton = document.getElementById("mobile-sign-out-button");
 
   async function handleSignOut() {
     await signOut();
@@ -330,19 +338,18 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
     mobileMenu?.classList.add("hidden");
     menuIconOpen?.classList.remove("hidden");
     menuIconClose?.classList.add("hidden");
+    mobileMenuButton?.setAttribute("aria-expanded", "false");
     window.location.href = "/";
   }
 
   signOutButton?.addEventListener("click", handleSignOut);
   mobileSignOutButton?.addEventListener("click", handleSignOut);
 
-  // Listen for auth changes
-  supabase.auth.onAuthStateChange((event, session) => {
-    const user = session?.user || null;
+  supabase.auth.onAuthStateChange(function handleAuthChange(event, session) {
+    var user = session?.user || null;
     $user.set(user);
     updateUI(user);
   });
 
-  // Initialize on load
   initAuth();
 </script>
