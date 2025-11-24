@@ -303,7 +303,7 @@ const DEFAULT_FILTERS = {
   search: "",
   category: "All",
   drRange: "70+",
-  linkType: "Dofollow Only",
+  linkType: "All",
   pricing: "All",
   sortBy: "Most Helpful",
 };
