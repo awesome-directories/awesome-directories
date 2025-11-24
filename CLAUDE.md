@@ -728,6 +728,7 @@ The scraper evaluates directories based on:
 - Authority signals (SSL, professional design)
 
 Scores are categorized as:
+
 - **80-100**: Excellent - High priority for inclusion
 - **60-79**: Good - Worth including with minor review
 - **40-59**: Fair - Needs manual evaluation

@@ -32,8 +32,6 @@ export async function launchBrowser() {
 
   var viewport = getBrowserFingerprint().viewport;
 
-
-
   var launchOptions = {
     ...config.browser,
     defaultViewport: viewport,

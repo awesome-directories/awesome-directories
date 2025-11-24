@@ -11,23 +11,40 @@
         >
           <span class="text-lg">👋</span>
           <div class="flex-1 text-sm text-gray-700">
-            <p class="font-medium mb-1">We pre-filtered to show you the best directories</p>
-            <p class="text-gray-600">DoFollow links with high DR (70+). Tap "All Directories" to see everything.</p>
+            <p class="font-medium mb-1">
+              We pre-filtered to show you the best directories
+            </p>
+            <p class="text-gray-600">
+              DoFollow links with high DR (70+). Tap "All Directories" to see
+              everything.
+            </p>
           </div>
           <button
             @click="dismissTooltip"
             class="text-gray-400 hover:text-gray-600 flex-shrink-0"
             aria-label="Dismiss"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
 
         <!-- Quick Filter Pills -->
         <div class="mb-3">
-          <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          <div
+            class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide"
+          >
             <button
               v-for="preset in quickFilterPresets"
               :key="preset.id"
@@ -36,7 +53,7 @@
                 'flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all min-h-[40px] whitespace-nowrap',
                 isActivePreset(preset)
                   ? 'bg-primary text-white shadow-sm'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
               ]"
               :aria-label="`Apply ${preset.label} filter`"
             >
@@ -183,10 +200,14 @@
         </div>
 
         <!-- Results Summary -->
-        <div class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-3 border-t border-gray-200">
+        <div
+          class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-3 border-t border-gray-200"
+        >
           <div class="flex items-center gap-2 flex-wrap">
             <span class="text-xs sm:text-sm text-gray-700">
-              <span class="font-semibold text-gray-900">{{ visibleDirectories.length }}</span>
+              <span class="font-semibold text-gray-900">{{
+                visibleDirectories.length
+              }}</span>
               {{ resultsLabel }}
             </span>
             <span

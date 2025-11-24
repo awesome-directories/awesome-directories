@@ -35,7 +35,7 @@ export default defineConfig({
           minifyJS: true,
         },
       },
-      Image: false, // Disable image compression as we're using sharp
+      Image: true,
       JavaScript: true,
       SVG: true,
     }),
