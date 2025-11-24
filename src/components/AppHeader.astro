@@ -1,6 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import GithubStars from "./GithubStars.vue";
+import ProductHuntBadge from "./ProductHuntBadge.vue";
 ---
 
 <header
@@ -19,7 +20,8 @@ import GithubStars from "./GithubStars.vue";
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center space-x-4 lg:space-x-6">
-        <GithubStars client:load class="mr-2 lg:mr-4" />
+        <GithubStars client:load />
+        <ProductHuntBadge client:load class="mr-2 lg:mr-4" />
 
         <a
           href="/blog"
@@ -139,6 +141,11 @@ import GithubStars from "./GithubStars.vue";
       class="hidden md:hidden py-3 border-t border-gray-200"
     >
       <nav class="flex flex-col space-y-1">
+        <div class="flex items-center gap-2 px-3 py-2">
+          <GithubStars client:load />
+          <ProductHuntBadge client:load />
+        </div>
+
         <a
           href="/blog"
           class="text-gray-700 hover:text-primary font-medium mobile-menu-link"
