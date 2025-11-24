@@ -102,10 +102,9 @@ var structuredData = [
           >
             Hand-picked Launch Directories with Real DR Scores
           </h1>
-          <p
-            class="text-base sm:text-lg text-blue-50 px-2 mb-4"
-          >
-            {totalCount}+ curated directories · {drCount}+ verified DR scores · Updated weekly
+          <p class="text-base sm:text-lg text-blue-50 px-2 mb-4">
+            {totalCount}+ curated directories · {drCount}+ verified DR scores ·
+            Updated weekly
           </p>
         </div>
 
@@ -169,47 +168,57 @@ var structuredData = [
             Why Awesome Directories?
           </h2>
           <p class="text-gray-600 text-lg max-w-3xl mx-auto">
-            Stop wasting hours researching directories. We've done the work for you—curated, verified, and ready to launch.
+            Stop wasting hours researching directories. We've done the work for
+            you—curated, verified, and ready to launch.
           </p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8 mb-12">
           <!-- Feature 1 -->
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <span class="text-3xl">✓</span>
             </div>
             <h3 class="font-bold text-lg text-gray-900 mb-2">
               Verified DR Scores
             </h3>
             <p class="text-gray-600 text-sm">
-              Real Ahrefs domain ratings updated weekly. No guessing, no dead links—just quality directories.
+              Real Ahrefs domain ratings updated weekly. No guessing, no dead
+              links—just quality directories.
             </p>
           </div>
 
           <!-- Feature 2 -->
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <span class="text-3xl">🚀</span>
             </div>
             <h3 class="font-bold text-lg text-gray-900 mb-2">
               Smart Filtering
             </h3>
             <p class="text-gray-600 text-sm">
-              One-tap presets like "Quick Wins" or "Premium" get you the best directories instantly. No analysis paralysis.
+              One-tap presets like "Quick Wins" or "Premium" get you the best
+              directories instantly. No analysis paralysis.
             </p>
           </div>
 
           <!-- Feature 3 -->
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <span class="text-3xl">📊</span>
             </div>
             <h3 class="font-bold text-lg text-gray-900 mb-2">
               Track Submissions
             </h3>
             <p class="text-gray-600 text-sm">
-              Mark directories as submitted per project. Never double-submit or lose track of your launch progress.
+              Mark directories as submitted per project. Never double-submit or
+              lose track of your launch progress.
             </p>
           </div>
         </div>
@@ -226,31 +235,33 @@ var structuredData = [
           </div>
 
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {featuredDirectories.map(function renderFeatured(directory) {
-              return (
-                <a
-                  href={`/directory/${directory.slug}`}
-                  class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200"
-                >
-                  <div class="flex-1 min-w-0">
-                    <h4 class="font-semibold text-gray-900 truncate">
-                      {directory.name}
-                    </h4>
-                    <p class="text-sm text-gray-500 truncate">
-                      {directory.categories?.[0] || "Directory"}
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-2 ml-4">
-                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
-                      DoFollow
-                    </span>
-                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-blue-100 text-blue-800">
-                      DR {directory.domain_rating}
-                    </span>
-                  </div>
-                </a>
-              );
-            })}
+            {
+              featuredDirectories.map(function renderFeatured(directory) {
+                return (
+                  <a
+                    href={`/directory/${directory.slug}`}
+                    class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200"
+                  >
+                    <div class="flex-1 min-w-0">
+                      <h4 class="font-semibold text-gray-900 truncate">
+                        {directory.name}
+                      </h4>
+                      <p class="text-sm text-gray-500 truncate">
+                        {directory.categories?.[0] || "Directory"}
+                      </p>
+                    </div>
+                    <div class="flex items-center gap-2 ml-4">
+                      <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
+                        DoFollow
+                      </span>
+                      <span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-blue-100 text-blue-800">
+                        DR {directory.domain_rating}
+                      </span>
+                    </div>
+                  </a>
+                );
+              })
+            }
           </div>
         </div>
       </div>
