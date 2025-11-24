@@ -2,8 +2,9 @@
   <a
     href="https://www.producthunt.com/products/awesome-directories"
     target="_blank"
-    rel="noopener"
+    rel="noopener noreferrer"
     class="flex items-center space-x-2 px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-lg transition-all duration-200 shadow-sm hover:shadow-md shrink-0"
+    aria-label="View on Product Hunt (opens in new tab)"
   >
     <svg
       class="w-5 h-5"
