@@ -155,23 +155,6 @@
             Submissions
           </button>
           <button
-            @click="activeTab = 'pending'"
-            :class="[
-              'px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px',
-              activeTab === 'pending'
-                ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700',
-            ]"
-          >
-            My Directory Submissions
-            <span
-              v-if="pendingDirectories.length > 0"
-              class="ml-1 px-2 py-0.5 text-xs bg-yellow-100 text-yellow-800 rounded-full"
-            >
-              {{ pendingDirectories.length }}
-            </span>
-          </button>
-          <button
             @click="activeTab = 'settings'"
             :class="[
               'px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px',
@@ -209,13 +192,6 @@
               </select>
             </div>
 
-            <button
-              @click="showAddSubmission = true"
-              class="text-sm font-medium text-primary hover:text-primary-dark"
-            >
-              + Track New Directory
-            </button>
-
             <div class="flex-1"></div>
 
             <button
@@ -239,19 +215,22 @@
                     <h3 class="font-semibold text-gray-900">
                       {{ getDirectoryName(submission.directory_id) }}
                     </h3>
-                    <select
-                      :value="submission.status"
-                      @change="updateStatus(submission.id, $event.target.value)"
-                      :class="getStatusSelectClass(submission.status)"
-                      class="text-xs font-semibold px-2 py-1 rounded-full border-0 cursor-pointer focus:ring-2 focus:ring-primary"
-                    >
-                      <option value="not_started">Not Started</option>
-                      <option value="in_progress">In Progress</option>
-                      <option value="submitted">Submitted</option>
-                      <option value="approved">Approved</option>
-                      <option value="rejected">Rejected</option>
-                      <option value="featured">Featured</option>
-                    </select>
+                    <div class="relative inline-block">
+                      <select
+                        :value="submission.status"
+                        @change="updateStatus(submission.id, $event.target.value)"
+                        :class="getStatusSelectClass(submission.status)"
+                        class="text-xs font-semibold py-1 rounded-full border-0 cursor-pointer focus:ring-2 focus:ring-primary appearance-none bg-no-repeat"
+                        :style="getStatusSelectStyle(submission.status)"
+                      >
+                        <option value="not_started">Not Started</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="submitted">Submitted</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="featured">Featured</option>
+                      </select>
+                    </div>
                   </div>
 
                   <!-- Submission Link -->
@@ -568,6 +547,245 @@
         </div>
       </div>
     </div>
+
+    <!-- Add Directory Sliding Panel -->
+    <transition name="slide-panel">
+      <div
+        v-if="showAddSubmission"
+        class="fixed inset-y-0 right-0 z-50 w-full sm:w-[480px] bg-white shadow-2xl flex flex-col"
+      >
+        <div
+          class="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-primary/5 to-blue-50"
+        >
+          <div>
+            <h3 class="text-lg font-bold text-gray-900">
+              Track New Directory
+            </h3>
+            <p class="text-sm text-gray-600 mt-0.5">
+              Add directories to track for this project
+            </p>
+          </div>
+          <button
+            @click="showAddSubmission = false"
+            class="p-2 hover:bg-white/80 rounded-lg transition-colors"
+          >
+            <svg
+              class="w-5 h-5 text-gray-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6">
+          <div class="mb-6">
+            <div class="relative">
+              <input
+                v-model="directorySearchQuery"
+                @input="handleDirectorySearch"
+                type="text"
+                placeholder="Search directories by name, category, or URL..."
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+              <svg
+                class="absolute left-3 top-3.5 w-5 h-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+
+            <div
+              v-if="directorySearchQuery"
+              class="mt-2 flex items-center gap-2 text-sm text-gray-600"
+            >
+              <span>{{ filteredAvailableDirectories.length }} directories found</span>
+              <button
+                @click="directorySearchQuery = ''"
+                class="text-primary hover:text-primary-dark"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <div v-if="isLoadingDirectories" class="text-center py-12">
+            <div
+              class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"
+            ></div>
+            <p class="mt-3 text-sm text-gray-600">Loading directories...</p>
+          </div>
+
+          <div
+            v-else-if="filteredAvailableDirectories.length > 0"
+            class="space-y-3"
+          >
+            <div
+              v-for="directory in filteredAvailableDirectories"
+              :key="directory.id"
+              class="group relative bg-white border border-gray-200 rounded-lg p-4 hover:border-primary hover:shadow-md transition-all cursor-pointer"
+              @click="handleQuickAdd(directory)"
+            >
+              <div class="flex items-start gap-3">
+                <div
+                  class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary/10 to-blue-100 rounded-lg flex items-center justify-center text-xl font-bold text-primary"
+                >
+                  {{ directory.name.charAt(0) }}
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-semibold text-gray-900 mb-1">
+                    {{ directory.name }}
+                  </h4>
+
+                  <div class="flex flex-wrap items-center gap-2 mb-2">
+                    <span
+                      v-if="directory.domain_rating"
+                      class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-green-100 text-green-800 rounded"
+                    >
+                      DR {{ directory.domain_rating }}
+                    </span>
+
+                    <span
+                      v-if="directory.is_dofollow"
+                      class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded"
+                    >
+                      Dofollow
+                    </span>
+
+                    <span
+                      v-if="directory.pricing_type"
+                      class="inline-flex items-center px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-800 rounded"
+                    >
+                      {{ directory.pricing_type }}
+                    </span>
+                  </div>
+
+                  <div
+                    v-if="directory.categories && directory.categories.length > 0"
+                    class="flex flex-wrap gap-1"
+                  >
+                    <span
+                      v-for="cat in directory.categories.slice(0, 3)"
+                      :key="cat"
+                      class="text-xs text-gray-600 bg-gray-100 px-2 py-0.5 rounded"
+                    >
+                      {{ cat }}
+                    </span>
+                    <span
+                      v-if="directory.categories.length > 3"
+                      class="text-xs text-gray-500"
+                    >
+                      +{{ directory.categories.length - 3 }}
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  class="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <div
+                    class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center"
+                  >
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                v-if="isAddingDirectory === directory.id"
+                class="absolute inset-0 bg-white/90 rounded-lg flex items-center justify-center"
+              >
+                <div class="text-center">
+                  <div
+                    class="inline-block h-6 w-6 animate-spin rounded-full border-3 border-solid border-primary border-r-transparent mb-2"
+                  ></div>
+                  <p class="text-sm font-medium text-gray-700">Adding...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-else class="text-center py-12">
+            <div class="text-4xl mb-3">🔍</div>
+            <p class="text-gray-600 mb-2">
+              {{ directorySearchQuery ? "No matching directories found" : "No more directories to add" }}
+            </p>
+            <p class="text-sm text-gray-500">
+              {{ directorySearchQuery ? "Try a different search term" : "You've tracked all available directories!" }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="flex-shrink-0 px-6 py-4 border-t border-gray-200 bg-gray-50"
+        >
+          <p class="text-xs text-gray-500 text-center">
+            Click on a directory to quickly add it with default settings
+          </p>
+        </div>
+      </div>
+    </transition>
+
+    <div
+      v-if="showAddSubmission"
+      class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-40 transition-opacity"
+      @click="showAddSubmission = false"
+    ></div>
+
+    <!-- Floating Action Button -->
+    <button
+      v-if="selectedProjectId && activeTab === 'submissions'"
+      @click="showAddSubmission = true"
+      class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-primary to-blue-600 text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center z-30 group"
+      title="Track new directory"
+    >
+      <svg
+        class="w-6 h-6"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+      <span
+        class="absolute -top-10 right-0 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none"
+      >
+        Track New Directory
+      </span>
+    </button>
   </div>
 </template>
 
@@ -618,10 +836,38 @@ const isSaving = ref(false);
 
 // Add submission
 const showAddSubmission = ref(false);
+const directorySearchQuery = ref("");
+const isLoadingDirectories = ref(false);
+const isAddingDirectory = ref(null);
+const availableDirectories = computed(function() {
+  var trackedIds = projectSubmissions.value.map(function(s) {
+    return s.directory_id;
+  });
+  return directories.value.filter(function(d) {
+    return !trackedIds.includes(d.id);
+  });
+});
 
-// Computed
-const submissionStats = computed(() => {
-  if (!selectedProjectId.value)
+const filteredAvailableDirectories = computed(function() {
+  var query = directorySearchQuery.value.toLowerCase().trim();
+  if (!query) {
+    return availableDirectories.value.slice(0, 50);
+  }
+
+  return availableDirectories.value.filter(function(dir) {
+    var matchesName = dir.name.toLowerCase().includes(query);
+    var matchesUrl = dir.url && dir.url.toLowerCase().includes(query);
+    var matchesCategories =
+      dir.categories &&
+      dir.categories.some(function(cat) {
+        return cat.toLowerCase().includes(query);
+      });
+    return matchesName || matchesUrl || matchesCategories;
+  });
+});
+
+const submissionStats = computed(function() {
+  if (!selectedProjectId.value) {
     return {
       total: 0,
       not_started: 0,
@@ -631,14 +877,29 @@ const submissionStats = computed(() => {
       rejected: 0,
       featured: 0,
     };
-  return getSubmissionStats(selectedProjectId.value);
+  }
+  var stats = getSubmissionStats(selectedProjectId.value);
+  if (!stats) {
+    return {
+      total: 0,
+      not_started: 0,
+      in_progress: 0,
+      submitted: 0,
+      approved: 0,
+      rejected: 0,
+      featured: 0,
+    };
+  }
+  return stats;
 });
 
-const filteredSubmissions = computed(() => {
-  let filtered = projectSubmissions.value;
+const filteredSubmissions = computed(function() {
+  var filtered = projectSubmissions.value;
 
   if (statusFilter.value !== "all") {
-    filtered = filtered.filter((s) => s.status === statusFilter.value);
+    filtered = filtered.filter(function(s) {
+      return s.status === statusFilter.value;
+    });
   }
 
   return filtered;
@@ -847,6 +1108,46 @@ function getStatusSelectClass(status) {
   }
 }
 
+function getStatusSelectStyle(status) {
+  var statusText = "";
+  switch (status) {
+    case "not_started":
+      statusText = "Not Started";
+      break;
+    case "in_progress":
+      statusText = "In Progress";
+      break;
+    case "submitted":
+      statusText = "Submitted";
+      break;
+    case "approved":
+      statusText = "Approved";
+      break;
+    case "rejected":
+      statusText = "Rejected";
+      break;
+    case "featured":
+      statusText = "Featured";
+      break;
+    default:
+      statusText = "Not Started";
+  }
+
+  var textWidth = statusText.length * 0.6;
+  var paddingLeft = 0.5;
+  var paddingRight = 0.5;
+  var totalWidth = textWidth + paddingLeft + paddingRight;
+
+  return {
+    paddingLeft: paddingLeft + "rem",
+    paddingRight: paddingRight + "rem",
+    minWidth: totalWidth + "rem",
+    backgroundImage: "url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')",
+    backgroundPosition: "right 0.35rem center",
+    backgroundSize: "0.9em"
+  };
+}
+
 function getPendingStatusBadgeClass(status) {
   const baseClass =
     "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold";
@@ -911,6 +1212,40 @@ function handleExport() {
   link.click();
   document.body.removeChild(link);
 }
+
+function handleDirectorySearch() {}
+
+async function handleQuickAdd(directory) {
+  if (!selectedProjectId.value) return;
+
+  isAddingDirectory.value = directory.id;
+
+  try {
+    var { upsertSubmission } = useProjects();
+    var result = await upsertSubmission(
+      selectedProjectId.value,
+      directory.id,
+      "not_started"
+    );
+
+    if (result.success) {
+      await loadProjectSubmissions(selectedProjectId.value);
+      directorySearchQuery.value = "";
+
+      setTimeout(function() {
+        showAddSubmission.value = false;
+        isAddingDirectory.value = null;
+      }, 500);
+    } else {
+      alert(result.error || "Failed to add directory");
+      isAddingDirectory.value = null;
+    }
+  } catch (error) {
+    log.error("Failed to add directory:", error);
+    alert("Failed to add directory");
+    isAddingDirectory.value = null;
+  }
+}
 </script>
 
 <style scoped>
@@ -922,5 +1257,22 @@ function handleExport() {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+.slide-panel-enter-active,
+.slide-panel-leave-active {
+  transition: transform 0.3s ease-out;
+}
+
+.slide-panel-enter-from {
+  transform: translateX(100%);
+}
+
+.slide-panel-leave-to {
+  transform: translateX(100%);
+}
+
+select::-ms-expand {
+  display: none;
 }
 </style>
