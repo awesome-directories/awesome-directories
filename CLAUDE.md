@@ -14,9 +14,10 @@
 
 - Curated, verified directories updated weekly
 - Advanced filtering by Domain Rating (DR), category, pricing, and link type
-- User authentication with favorites and submission tracking (implemented)
-- Directory detail pages with related directories and voting
-- User directory submission system with review workflow
+- User authentication with favorites and project-based submission tracking
+- Directory detail pages with related directories, ratings, and reviews
+- User directory submission system with review workflow and email notifications
+- Project management for tracking submissions across multiple products
 - Automated SEO metrics updates via Ahrefs API and Supabase Edge Functions
 - Comprehensive statistics page with interactive charts
 - Blog with SEO-optimized content, tags, search, and RSS feed
@@ -35,19 +36,19 @@
 
 ### Key Libraries
 
-- `@supabase/supabase-js` - Database client (build-time and runtime)
-- `@astrojs/rss` - RSS feed generation for blog
-- `chart.js` - Interactive charts for statistics page
-- `pagefind` - Static search indexing for blog
-- `html2canvas + jsPDF` - PDF export functionality
-- `papaparse` - CSV parsing/export
-- `slugify` - URL slug generation
-- `nanostores` - Lightweight state management
-- `uhtml` - Lightweight DOM rendering
-- `ky` - HTTP client
-- `loglevel` - Logging utility
-- `puppeteer-core` - Headless browser automation for web scraping (dev dependency)
-- `prettier` - Code formatting
+- `@supabase/supabase-js` ^2.83.0 - Database client (build-time and runtime)
+- `@astrojs/rss` ^4.0.13 - RSS feed generation for blog
+- `@astrojs/mdx` ^4.3.11 - MDX support for enhanced blog posts (dev dependency)
+- `chart.js` ^4.5.1 - Interactive charts for statistics page
+- `pagefind` ^1.4.0 - Static search indexing for blog (dev dependency)
+- `html2canvas` ^1.4.1 + `jspdf` ^2.5.2 - PDF export functionality
+- `papaparse` ^5.5.3 - CSV parsing/export
+- `slugify` ^1.6.6 - URL slug generation
+- `nanostores` ^0.10.3 - Lightweight state management
+- `uhtml` ^5.0.9 - Lightweight DOM rendering
+- `ky` ^1.14.0 - HTTP client
+- `loglevel` ^1.9.2 - Logging utility
+- `prettier` ^3.6.2 - Code formatting
 
 ### Backend & Services
 
@@ -55,6 +56,8 @@
 - **PostgreSQL** with Row Level Security (RLS)
 - **Supabase Edge Functions** (Deno runtime)
   - `update-seo-data` - Updates Ahrefs metrics via pg_cron scheduled jobs
+  - `send-approval-email` - Sends approval emails via Resend when directories are approved
+- **Resend** - Transactional email service for approval notifications
 - **Mautic** - Self-hosted CRM for newsletter (crm.meysam.io) - _planned/optional_
 - **Pirsch** - Privacy-first analytics - _optional_
 - **Ahrefs API** - SEO metrics (DR, traffic estimates)
@@ -105,7 +108,10 @@
 │   │           └── [tag]/[...page].astro # Tag pagination
 │   ├── content/
 │   │   ├── config.ts              # Content collections schema
-│   │   └── blog/                  # Blog posts (Markdown)
+│   │   └── blog/                  # Blog posts (Markdown/MDX)
+│   │       ├── 000-product-hunt-launch-2025.mdx
+│   │       ├── 001-hacker-news-front-page-strategy.mdx
+│   │       ├── 002-reddit-marketing-account-warmup-guide.mdx
 │   │       ├── getting-started-with-directory-submissions.md
 │   │       ├── building-a-launch-strategy.md
 │   │       ├── top-free-directories-for-saas.md
@@ -129,6 +135,7 @@
 │   │   ├── SubmissionsContent.vue # Submissions tracker content
 │   │   ├── SubmitDirectoryForm.vue # Directory submission form
 │   │   ├── GithubStars.vue        # GitHub stars badge (Vue island)
+│   │   ├── ProductHuntBadge.vue   # Product Hunt link badge (Vue island)
 │   │   ├── StatsCards.vue         # Statistics overview cards (Vue island)
 │   │   ├── StatsCharts.vue        # Interactive Chart.js charts (Vue island)
 │   │   ├── TopDirectoriesTable.vue # Top directories rankings (Vue island)
@@ -142,7 +149,8 @@
 │   ├── composables/                # Vue Composition API logic
 │   │   ├── useAuth.js             # Authentication (client-side)
 │   │   ├── useDirectories.js      # Data filtering (client-side)
-│   │   ├── useDirectory.js        # Single directory operations (favorite, vote)
+│   │   ├── useDirectory.js        # Single directory operations (favorites)
+│   │   ├── useProjects.js         # Project management for tracking submissions
 │   │   └── useMauticNewsletter.js # Newsletter subscription
 │   ├── lib/
 │   │   ├── supabase-server.js     # Supabase client (build-time)
@@ -170,16 +178,19 @@
 │   │   ├── 002_pending_directories.sql # User directory submissions
 │   │   ├── 003_add_moz_metrics.sql # Moz API integration fields
 │   │   ├── 004_setup_cron_jobs.sql # pg_cron for automated updates
-│   │   └── 005_setup_http_extension.sql # HTTP extension for webhooks
+│   │   ├── 005_setup_http_extension.sql # HTTP extension for webhooks
+│   │   └── 006_reviews_projects_schema.sql # Reviews, ratings, projects tables
 │   ├── seeds/
 │   │   ├── directories.sql        # SQL seed data
 │   │   └── directories.json       # JSON seed data
 │   └── functions/
-│       └── update-seo-data/       # Edge function for SEO updates
-│           ├── index.ts           # Main function handler
-│           ├── ahrefs.ts          # Ahrefs API integration
-│           ├── utils.ts           # Helper utilities
-│           └── deno.json          # Deno configuration
+│       ├── update-seo-data/       # Edge function for SEO updates
+│       │   ├── index.ts           # Main function handler
+│       │   ├── ahrefs.ts          # Ahrefs API integration
+│       │   ├── utils.ts           # Helper utilities
+│       │   └── deno.json          # Deno configuration
+│       └── send-approval-email/   # Edge function for approval notifications
+│           └── index.ts           # Sends emails via Resend API
 ├── scripts/
 │   ├── parse-directories.js       # Parse dataset
 │   ├── seed-database.js           # Populate database
@@ -276,6 +287,8 @@ SUPABASE_URL=https://xxx.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=<service-role-key>
 APIFY_API_TOKEN=<apify-token>  # For Ahrefs data scraping
 FUNCTION_SECRET=<optional-secret>  # For function authentication
+RESEND_API_KEY=<resend-api-key>  # For sending approval emails
+FROM_EMAIL=notifications@your-domain.com  # From address for emails
 ```
 
 For Web Scraper (optional):
@@ -303,39 +316,56 @@ LOG_LEVEL=INFO                 # Log level: DEBUG, INFO, WARN, ERROR
    - Primary table for all directory listings
    - Slug-based unique identifiers
    - Includes: DR scores, categories (array), pricing, traffic estimates
-   - Engagement: helpful_count, view_count
+   - Rating stats: average_rating, rating_count, review_count (aggregated from reviews)
    - Status tracking and timestamps
    - SEO fields: domain_rating, organic_traffic, organic_keywords
    - Metadata: is_affiliate, affiliate_url, github_pr_number, added_by
 
-2. **directory_votes**
-   - IP-based voting for "helpful" clicks
-   - One vote per IP per directory
-   - Supports both authenticated and anonymous voting
-   - Auto-increments/decrements helpful_count via triggers
+2. **directory_ratings**
+   - User ratings for directories (1-5 stars)
+   - One rating per user per directory (can update)
+   - Triggers auto-update average_rating on directories table
 
-3. **user_favorites**
+3. **directory_reviews**
+   - User comments on directories
+   - Multiple comments per user per directory allowed
+   - Must have either rating or comment content
+   - Triggers auto-update review_count on directories table
+
+4. **user_favorites**
    - User-specific saved directories (auth required)
    - One-to-many relationship: user → directories
    - Unique constraint per user/directory pair
 
-4. **user_submissions**
-   - Track user submission status per directory
-   - Status: pending, submitted, approved, rejected
-   - Personal notes field for tracking
-   - Unique constraint per user/directory pair
+5. **projects**
+   - User projects for tracking directory submissions
+   - Fields: name, url, description, logo_url
+   - One user can have multiple projects
+   - Unique constraint on user_id + name
 
-5. **pending_directories**
+6. **project_submissions**
+   - Tracks which directories a project has been submitted to
+   - Status: not_started, in_progress, submitted, approved, rejected, featured
+   - submission_link field for actual submission URL
+   - Personal notes field
+   - Replaces the older user_submissions concept
+
+7. **pending_directories**
    - User-submitted directories awaiting admin review
    - Full directory information (name, URL, description, categories, etc.)
    - Review workflow: pending → approved/rejected
    - Admin notes and reviewer tracking
+   - Notification tracking: notification_sent, notification_sent_at
    - Unique constraint per user/URL to prevent duplicates
 
-6. **newsletter_signups**
+8. **newsletter_signups**
    - Email capture with Mautic integration
    - Tracks subscription/unsubscription status
    - Mautic contact ID for synchronization
+
+9. **directory_reviews_with_user** (View)
+   - Combines reviews with user info for display
+   - Includes user_name and user_avatar from auth.users
 
 ### Key Indexes
 
@@ -419,15 +449,24 @@ Custom Astro integration (`src/integrations/pagefind.js`):
 - Outputs to `public/pagefind/`
 - Provides fast, client-side search without server
 
-#### Supabase Edge Function
+#### Supabase Edge Functions
 
-`supabase/functions/update-seo-data/`:
+**`supabase/functions/update-seo-data/`**:
 
 - Deno-based serverless function
 - Triggered by Supabase pg_cron (scheduled jobs)
 - Fetches Ahrefs metrics via Apify API
 - Updates directories table with latest SEO data
 - Batch processing to avoid API rate limits
+
+**`supabase/functions/send-approval-email/`**:
+
+- Sends approval emails via Resend API
+- Triggered when pending_directories status changes to 'approved'
+- Can be called via database webhook or direct API call
+- Generates professional HTML email with approval confirmation
+- Includes admin notes if provided
+- Prevents duplicate notifications via notification_sent flag
 
 ## Key Composables & Logic
 
@@ -453,14 +492,23 @@ Manages authentication state:
 
 ### useDirectory.js
 
-Single directory operations and state management:
+Single directory favorites management:
 
-- Methods: `toggleFavorite()`, `toggleHelpful()`, `checkFavoriteStatus()`, `checkVoteStatus()`
-- Manages user interactions with individual directories
+- Methods: `addToFavorites()`, `removeFromFavorites()`, `isFavorite()`, `getUserFavoriteIds()`
+- Manages user interactions with favorites
 - Handles favorite/unfavorite actions with optimistic updates
-- IP-based voting for anonymous users
-- User-based voting for authenticated users
+- User-based favorites (auth required)
 - Real-time state synchronization with Supabase
+
+### useProjects.js
+
+Project and submission tracking:
+
+- State: `projects`, `currentProject`, `projectSubmissions`, `isLoading`, `error`
+- Project methods: `loadProjects()`, `createProject()`, `updateProject()`, `deleteProject()`
+- Submission methods: `loadProjectSubmissions()`, `upsertSubmission()`, `updateSubmissionStatus()`, `updateSubmissionLink()`, `deleteSubmission()`
+- Stats: `getSubmissionStats()` - counts by status
+- Used for tracking directory submissions per project
 
 ### useMauticNewsletter.js (Optional)
 
@@ -504,9 +552,10 @@ The `/directory/[slug]` route uses Astro's static path generation:
 
 ### Blog System
 
-The blog uses Astro Content Collections with Markdown files:
+The blog uses Astro Content Collections with Markdown and MDX files:
 
 - **Content schema**: Defined in `src/content/config.ts` with Zod validation
+- **File formats**: `.md` (Markdown) and `.mdx` (MDX for enhanced features)
 - **Post frontmatter**: title, description, date, tags, author, coverImage, draft, relatedPosts
 - **Utilities**: `src/utils/blog.ts` provides helpers for:
   - `getPublishedPosts()` - Fetch and filter published posts
@@ -757,9 +806,9 @@ Scores are categorized as:
 ### Key Vue Island Components
 
 1. **DirectoryListContent.vue** - Main directory listing with filters and search
-2. **DirectoryDetailActions.vue** - Favorite/vote actions on directory detail pages
+2. **DirectoryDetailActions.vue** - Favorite/rating actions on directory detail pages
 3. **FavoritesContent.vue** - User's saved directories with management
-4. **SubmissionsContent.vue** - User's submission tracking dashboard
+4. **SubmissionsContent.vue** - User's project-based submission tracking dashboard
 5. **SubmitDirectoryForm.vue** - Directory submission form with validation
 6. **FavoriteButton.vue** - Reusable favorite toggle button
 7. **DirectoryFilter.vue** - Advanced filtering sidebar
@@ -769,6 +818,8 @@ Scores are categorized as:
 11. **StatsCards.vue** - Overview statistics cards
 12. **StatsCharts.vue** - Interactive Chart.js charts (pie, bar, doughnut)
 13. **TopDirectoriesTable.vue** - Top directories rankings by various metrics
+14. **ProductHuntBadge.vue** - Product Hunt link badge
+15. **GithubStars.vue** - GitHub stars badge
 
 ### Key Astro Components
 
@@ -1186,6 +1237,34 @@ supabase db push
 
 ### Commit History (Most Recent)
 
+- **765b0db** - feat: add review, rating, export and pending directory approval (#44)
+  - Directory reviews and ratings system (1-5 stars)
+  - Projects feature for tracking submissions per project
+  - Email notifications via Resend for approved directories
+  - New database tables: directory_reviews, directory_ratings, projects, project_submissions
+  - New Edge Function: send-approval-email
+
+- **a4c8243** - fix: handle search icon container size issue
+  - Fixed search icon sizing in the UI
+
+- **c109cf2** - fix: address responsiveness issues
+  - Improved mobile responsiveness across the site
+
+- **ec93bef** - fix: address issue on search bar
+  - Fixed search bar functionality
+
+- **6e2976f** - fix: address mobile responsiveness of the filters
+  - Improved filter sidebar on mobile devices
+
+- **b4db9ef** - feat(blog): write the third blog post (#43)
+  - New blog post: Reddit marketing account warmup guide
+
+- **2054424** - feat: add Product Hunt badge (#41)
+  - ProductHuntBadge.vue component in header
+
+- **090f99d** - fix: use all DR as default filter (#42)
+  - Changed default DR filter to show all directories
+
 - **ce623d1** - fix: remove puppeteer from the main deps
   - Moved puppeteer to dev dependencies for web scraper only
   - Reduced production bundle size
@@ -1200,44 +1279,43 @@ supabase db push
   - Support for multiple output formats (JSON, Markdown, CSV)
   - Smart crawling and link analysis capabilities
 
-- **c4f8d8b** - fix: remove trailing slash before joining to blog
-  - Fixed URL path handling for blog routes
-
-- **11cc40c** - feat: write blog post on Hacker News launch (#32)
-  - New blog content for product launch
-
-- **b086048** - chore(deps): upgrade astro to v5.16.0
-  - Latest Astro framework with performance improvements
-
-- **509b410** - feat(CI): add lychee link checker
-  - Automated link validation in CI/CD pipeline
-  - Non-blocking link checking on pull requests
-
-- **85caf9e** - fix: use X for offsite share
-  - Updated social sharing to use X (Twitter rebrand)
-
-- **69033e1** - feat: add PUBLIC_PREVIEW env var for showing drafts in CI preview builds (#33)
-  - Preview builds now show draft and future blog posts
-  - Helps with reviewing content before publication
-
-- **2e2a996** - feat: overhaul landing page with high-conversion copy (#31)
-  - Improved landing page copy and conversion optimization
-
-- **012d454** - feat: add blogging with Astro dynamic routing (#28)
-  - Full blog system with Astro Content Collections
-  - Pagefind search integration
-  - Tags, pagination, and related posts
-  - Table of contents and social sharing
-
-- **72296a7** - feat: Add comprehensive statistics page with interactive charts (#29)
-  - Chart.js integration for interactive visualizations
-  - Category, pricing, link type, and DR distribution charts
-  - Top directories tables
-  - Stats data generation via custom integration
-
 ### Features Since Last Documentation Update
 
-1. **Web Scraping System** (Commit e8f4c45)
+1. **Reviews & Ratings System** (Commit 765b0db)
+   - Directory ratings (1-5 stars) with aggregated statistics
+   - User comments on directories
+   - Automatic average_rating and rating_count calculations via triggers
+   - New tables: directory_reviews, directory_ratings
+   - View: directory_reviews_with_user for display with user info
+
+2. **Projects Feature** (Commit 765b0db)
+   - Users can create multiple projects
+   - Track directory submissions per project
+   - Status tracking: not_started, in_progress, submitted, approved, rejected, featured
+   - Submission link field for tracking actual submission URLs
+   - New composable: useProjects.js
+
+3. **Email Notifications** (Commit 765b0db)
+   - New Edge Function: send-approval-email
+   - Sends emails via Resend API when directories are approved
+   - Professional HTML email templates
+   - Notification tracking to prevent duplicates
+
+4. **Product Hunt Integration** (Commit 2054424)
+   - ProductHuntBadge.vue component
+   - Links to Product Hunt product page
+
+5. **UI/UX Improvements**
+   - Mobile responsiveness fixes (commits c109cf2, 6e2976f)
+   - Search icon container sizing fix (commit a4c8243)
+   - Search bar functionality fix (commit ec93bef)
+   - Default DR filter now shows all directories (commit 090f99d)
+
+6. **Blog Content** (Commit b4db9ef)
+   - New blog post: Reddit marketing account warmup guide
+   - Blog posts now use MDX format for enhanced features
+
+7. **Web Scraping System** (Commit e8f4c45)
    - Comprehensive directory curation and analysis tool
    - Automated quality scoring (0-100 scale)
    - Homepage data extraction and link analysis
@@ -1247,65 +1325,38 @@ supabase db push
    - CLI with filtering and pagination options
    - Integration with Supabase for fetching pending/approved directories
 
-2. **CI/CD Improvements**
-   - **Lychee link checker** (Commit 509b410) - Automated link validation on PRs
-   - **PUBLIC_PREVIEW env var** (Commit 69033e1) - Show drafts in preview builds
-   - Non-blocking link checks for better workflow
-
-3. **Onboarding & UX Enhancements** (Commit 2263d4d)
+8. **Onboarding Improvements** (Commit 2263d4d)
    - Streamlined onboarding process
    - Reduced time to value for new users
-   - Improved landing page copy for conversion optimization (Commit 2e2a996)
 
-4. **Framework & Dependency Updates**
-   - **Astro v5.16.0** (Commit b086048) - Latest framework version
-   - **Puppeteer optimization** (Commit ce623d1) - Moved to dev deps for reduced bundle size
-   - **Vite 7.2.2** - Latest build tool
-   - **Tailwind CSS 4.1.17** - Latest styling framework
+9. **Performance & Dependencies**
+   - Puppeteer moved to dev dependencies (commit ce623d1)
+   - Astro v5.16.0
+   - Vite 7.2.2
+   - Tailwind CSS 4.1.17
 
-5. **Blog System** (Commit 012d454)
-   - Astro Content Collections with Markdown
-   - `/blog` listing with Pagefind search
-   - `/blog/[slug]` individual posts with TOC
-   - Tag filtering and pagination
-   - Related posts (auto or custom)
-   - Social sharing (X, LinkedIn, Facebook, Reddit)
-   - Giscus comments integration
-   - BlogPosting schema structured data
-   - Draft and future scheduling support
+### New Database Tables (Migration 006)
 
-6. **Statistics Page** (Commit 72296a7)
-   - `/stats` with interactive Chart.js charts
-   - Category distribution pie chart
-   - Pricing breakdown doughnut chart
-   - Link type bar chart
-   - Domain Rating distribution horizontal bar
-   - Recent additions timeline
-   - Top directories tables
-   - Stats data generated at build time
+- **directory_ratings** - User ratings (1-5 stars), one per user per directory
+- **directory_reviews** - User comments, multiple per user per directory
+- **projects** - User projects for tracking submissions
+- **project_submissions** - Directory submission tracking per project
 
-7. **Performance Improvements**
-   - Lighthouse scores above 95+
-   - Astro v5 upgrade
-   - Fully responsive homepage
-   - Optimized bundle splitting
+### New Composables
 
-8. **New Components**
-   - StatsCards, StatsCharts, TopDirectoriesTable (Vue)
-   - BlogCard, Pagination, RelatedPosts (Astro)
-   - ShareButtons, TableOfContents, GiscusComments (Astro)
+- **useProjects.js** - Project CRUD and submission tracking
 
-9. **New Integrations**
-   - `saveStatsIntegration()` - Generate stats.json
-   - `pagefindIntegration()` - Blog search indexing
+### New Components
 
-10. **New Utilities**
-    - `src/utils/blog.ts` - Blog helpers (reading time, TOC, related posts)
-    - `scripts/scraper/` - Complete web scraping toolkit
+- **ProductHuntBadge.vue** - Product Hunt link badge
+
+### New Edge Functions
+
+- **send-approval-email** - Sends approval emails via Resend API
 
 ---
 
-**Last Updated**: 2025-11-23 (Updated with commits through ce623d1)
+**Last Updated**: 2025-11-25 (Updated with commits through 765b0db)
 **Architecture**: Astro.js 5.16.0 SSG with Vue.js Islands
 **Lighthouse Score**: 95+ (Performance, SEO, Accessibility, Best Practices)
-**Latest Features**: Web scraping system, CI/CD improvements, onboarding enhancements (commits e8f4c45, 509b410, 69033e1, 2263d4d)
+**Latest Features**: Reviews & ratings, projects, email notifications, Product Hunt badge (commits 765b0db, 2054424)
