@@ -366,8 +366,8 @@ const hasSubmissionInfo =
                 (directory.submission_url || directory.url) && (
                   <div class="flex-shrink-0 w-full sm:w-auto">
                     <a
-                      href={directory.submission_url || directory.url}
-                      target="_blank"
+                      href={`${directory.submission_url || directory.url}?ref=awesome-directories.com`}
+
                       rel="noopener noreferrer nofollow"
                       class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50"
                       itemprop="url"
