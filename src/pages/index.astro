@@ -88,24 +88,45 @@ var structuredData = [
   description="Hand-picked launch directories with real DR scores. Filter DoFollow + High DR in seconds, export to CSV, and track submissions per project. Built by indie hackers, for indie hackers."
   structuredData={structuredData}
 >
+  <!-- Skip to main content link for accessibility -->
+  <a
+    href="#directory-list"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg"
+  >
+    Skip to directory list
+  </a>
+
   <AppHeader />
 
   <main class="min-h-screen bg-gray-50">
     <!-- Compact Hero Section -->
     <section
-      class="bg-gradient-to-br from-primary to-blue-600 text-white py-8 sm:py-10 md:py-12 px-4"
+      class="bg-gradient-to-br from-primary to-blue-600 text-white py-8 sm:py-10 md:py-12 lg:py-16 px-4"
     >
       <div class="max-w-8xl mx-auto">
         <div class="max-w-4xl mx-auto text-center">
           <h1
-            class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 px-2"
+            class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 px-2 leading-tight"
           >
             Hand-picked Launch Directories with Real DR Scores
           </h1>
-          <p class="text-base sm:text-lg md:text-xl text-blue-50 px-2">
-            {totalCount}+ curated directories · {drCount}+ verified DR scores ·
-            Updated weekly
+          <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-50 px-2 max-w-3xl mx-auto">
+            {totalCount}+ curated directories · {drCount}+ verified DR scores · Updated weekly
           </p>
+          <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-2">
+            <a
+              href="#directory-list"
+              class="btn-primary bg-white text-primary hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] px-6 sm:px-8 w-full sm:w-auto inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            >
+              Browse Directories
+            </a>
+            <a
+              href="/stats"
+              class="border-2 border-white text-white hover:bg-white hover:text-primary min-h-[48px] sm:min-h-[44px] px-6 sm:px-8 w-full sm:w-auto inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            >
+              View Statistics
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -116,64 +137,60 @@ var structuredData = [
     </div>
 
     <!-- Why Awesome Directories Section (After browsing directories) -->
-    <section class="bg-white py-12 sm:py-16 px-4 border-t border-gray-200">
+    <section class="bg-white py-12 sm:py-16 lg:py-20 px-4 border-t border-gray-200">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Why Awesome Directories?
           </h2>
-          <p class="text-gray-600 text-lg max-w-3xl mx-auto">
-            Stop wasting hours researching directories. We've done the work for
-            you—curated, verified, and ready to launch.
+          <p class="text-gray-600 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
+            Stop wasting hours researching directories. We've done the work for you—curated, verified, and ready to launch.
           </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
+        <div class="grid md:grid-cols-3 gap-8 lg:gap-12 mb-12">
           <!-- Feature 1 -->
-          <div class="text-center">
+          <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition-colors">
             <div
               class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
             >
-              <span class="text-3xl">✓</span>
+              <span class="text-3xl" aria-hidden="true">✓</span>
             </div>
-            <h3 class="font-bold text-lg text-gray-900 mb-2">
+            <h3 class="font-bold text-lg lg:text-xl text-gray-900 mb-2">
               Verified DR Scores
             </h3>
-            <p class="text-gray-600 text-sm">
-              Real Ahrefs domain ratings updated weekly. No guessing, no dead
-              links—just quality directories.
+            <p class="text-gray-600 text-sm lg:text-base">
+              Real Ahrefs domain ratings updated weekly. No guessing, no dead links—just quality directories.
             </p>
           </div>
 
           <!-- Feature 2 -->
-          <div class="text-center">
+          <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition-colors">
             <div
               class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
             >
-              <span class="text-3xl">🚀</span>
+              <span class="text-3xl" aria-hidden="true">🚀</span>
             </div>
-            <h3 class="font-bold text-lg text-gray-900 mb-2">
+            <h3 class="font-bold text-lg lg:text-xl text-gray-900 mb-2">
               Smart Filtering
             </h3>
-            <p class="text-gray-600 text-sm">
-              One-tap presets like "Quick Wins" or "Premium" get you the best
-              directories instantly. No analysis paralysis.
+            <p class="text-gray-600 text-sm lg:text-base">
+              One-tap presets like "Quick Wins" or "Premium" get you the best directories instantly. No analysis paralysis.
             </p>
           </div>
 
           <!-- Feature 3 -->
-          <div class="text-center">
+          <div class="text-center p-6 rounded-lg hover:bg-gray-50 transition-colors">
             <div
               class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
             >
-              <span class="text-3xl">📊</span>
+              <span class="text-3xl" aria-hidden="true">📊</span>
             </div>
-            <h3 class="font-bold text-lg text-gray-900 mb-2">
+            <h3 class="font-bold text-lg lg:text-xl text-gray-900 mb-2">
               Track Submissions
             </h3>
-            <p class="text-gray-600 text-sm">
-              Mark directories as submitted per project. Never double-submit or
-              lose track of your launch progress.
+            <p class="text-gray-600 text-sm lg:text-base">
+              Mark directories as submitted per project. Never double-submit or lose track of your launch progress.
             </p>
           </div>
         </div>
@@ -181,31 +198,31 @@ var structuredData = [
         <!-- Featured Directories -->
         <div class="border-t border-gray-200 pt-12">
           <div class="text-center mb-8">
-            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
               Top DoFollow Directories by DR
             </h3>
-            <p class="text-gray-600">
+            <p class="text-gray-600 text-sm sm:text-base">
               Start here—these are the directories that drive real traffic.
             </p>
           </div>
 
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {
               featuredDirectories.map(function renderFeatured(directory) {
                 return (
                   <a
                     href={`/directory/${directory.slug}`}
-                    class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200"
+                    class="flex items-center justify-between p-4 sm:p-5 bg-gray-50 rounded-lg hover:bg-gray-100 hover:shadow-md transition-all border border-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                   >
                     <div class="flex-1 min-w-0">
-                      <h4 class="font-semibold text-gray-900 truncate">
+                      <h4 class="font-semibold text-gray-900 truncate text-base sm:text-lg">
                         {directory.name}
                       </h4>
                       <p class="text-sm text-gray-500 truncate">
                         {directory.categories?.[0] || "Directory"}
                       </p>
                     </div>
-                    <div class="flex items-center gap-2 ml-4">
+                    <div class="flex items-center gap-2 ml-4 flex-shrink-0">
                       <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
                         DoFollow
                       </span>
@@ -225,3 +242,28 @@ var structuredData = [
 
   <AppFooter />
 </BaseLayout>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+</style>

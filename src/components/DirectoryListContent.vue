@@ -1,345 +1,425 @@
 <template>
   <div id="directory-app">
+    <!-- Error State -->
     <div
-      class="bg-white border-b border-gray-200 sticky top-0 sm:top-16 z-40 shadow-sm"
+      v-if="error"
+      class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8"
+      role="alert"
+      aria-live="assertive"
     >
-      <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-        <!-- First-Visit Tooltip -->
-        <div
-          v-if="showTooltip"
-          class="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3"
+      <div class="bg-red-50 border border-red-200 rounded-lg p-4 sm:p-6 text-center">
+        <div class="text-red-600 mb-4">
+          <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">Failed to Load Directories</h2>
+        <p class="text-gray-600 mb-4">{{ error }}</p>
+        <button
+          @click="retryLoad"
+          class="btn-primary min-h-[44px] px-6 touch-manipulation"
         >
-          <span class="text-lg">👋</span>
-          <div class="flex-1 text-sm text-gray-700">
-            <p class="font-medium mb-1">
-              We pre-filtered to show you the best directories
-            </p>
-            <p class="text-gray-600">
-              DoFollow links with high DR (70+). Tap "All Directories" to see
-              everything.
-            </p>
-          </div>
-          <button
-            @click="dismissTooltip"
-            class="text-gray-400 hover:text-gray-600 flex-shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2"
-            aria-label="Dismiss"
-          >
-            <svg
-              class="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="mb-3">
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-              <svg
-                class="h-5 w-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            <input
-              v-model="searchQuery"
-              type="search"
-              placeholder="Search directories..."
-              class="search-input w-full pl-10 pr-12 py-3 sm:py-2.5 border border-gray-300 rounded-lg text-sm sm:text-base bg-white min-h-[48px] sm:min-h-[44px]"
-              aria-label="Search directories"
-            />
-            <button
-              v-if="searchQuery"
-              @click="clearSearch"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center min-w-[44px] min-h-[44px] justify-center z-10"
-              aria-label="Clear search"
-            >
-              <svg
-                class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Quick Filter Pills -->
-        <div class="mb-3">
-          <div
-            class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0"
-          >
-            <button
-              v-for="preset in quickFilterPresets"
-              :key="preset.id"
-              @click="applyQuickFilter(preset)"
-              :class="[
-                'flex-shrink-0 px-4 py-2.5 sm:py-2 rounded-full text-sm font-medium transition-all min-h-[44px] sm:min-h-[40px] whitespace-nowrap touch-manipulation',
-                isActivePreset(preset)
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300',
-              ]"
-              :aria-label="`Apply ${preset.label} filter`"
-            >
-              <span class="inline-block mr-1">{{ preset.icon }}</span>
-              <span>{{ preset.label }}</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Advanced Filters Accordion -->
-        <div class="border-t border-gray-200 pt-3">
-          <button
-            @click="toggleAdvancedFilters"
-            class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 min-h-[48px] sm:min-h-[44px] w-full justify-between touch-manipulation active:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors"
-            aria-label="Toggle advanced filters"
-            :aria-expanded="advancedFiltersExpanded"
-          >
-            <span>Advanced Filters</span>
-            <svg
-              class="w-5 h-5 transition-transform duration-200 flex-shrink-0"
-              :class="{ 'rotate-180': advancedFiltersExpanded }"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </button>
-
-          <transition
-            name="accordion"
-            @enter="onEnter"
-            @after-enter="onAfterEnter"
-            @leave="onLeave"
-          >
-            <div
-              v-show="advancedFiltersExpanded"
-              class="overflow-hidden"
-            >
-              <div
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 mt-3 pb-1"
-              >
-                <div>
-                  <label
-                    for="filter-category"
-                    class="block text-sm font-medium text-gray-900 mb-1.5"
-                  >
-                    Category
-                  </label>
-                  <select
-                    id="filter-category"
-                    v-model="currentFilters.category"
-                    @change="applyFilters"
-                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                  >
-                    <option v-for="cat in categories" :key="cat" :value="cat">
-                      {{ cat }}
-                    </option>
-                  </select>
-                </div>
-
-                <div>
-                  <label
-                    for="filter-dr"
-                    class="block text-sm font-medium text-gray-900 mb-1.5"
-                  >
-                    Domain Rating
-                  </label>
-                  <select
-                    id="filter-dr"
-                    v-model="currentFilters.drRange"
-                    @change="applyFilters"
-                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                  >
-                    <option value="All">All DR</option>
-                    <option value="80+">80+</option>
-                    <option value="70+">70+</option>
-                    <option value="70-79">70-79</option>
-                    <option value="60-69">60-69</option>
-                    <option value="<60">&lt;60</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label
-                    for="filter-link"
-                    class="block text-sm font-medium text-gray-900 mb-1.5"
-                  >
-                    Link Type
-                  </label>
-                  <select
-                    id="filter-link"
-                    v-model="currentFilters.linkType"
-                    @change="applyFilters"
-                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                  >
-                    <option value="All">All</option>
-                    <option value="Dofollow Only">Dofollow Only</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label
-                    for="filter-pricing"
-                    class="block text-sm font-medium text-gray-900 mb-1.5"
-                  >
-                    Pricing
-                  </label>
-                  <select
-                    id="filter-pricing"
-                    v-model="currentFilters.pricing"
-                    @change="applyFilters"
-                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                  >
-                    <option value="All">All</option>
-                    <option value="free">Free</option>
-                    <option value="paid">Paid</option>
-                    <option value="freemium">Freemium</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label
-                    for="filter-sort"
-                    class="block text-sm font-medium text-gray-900 mb-1.5"
-                  >
-                    Sort By
-                  </label>
-                  <select
-                    id="filter-sort"
-                    v-model="currentFilters.sortBy"
-                    @change="applyFilters"
-                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                  >
-                    <option>Most Helpful</option>
-                    <option>Highest DR</option>
-                    <option>Newest</option>
-                    <option>Alphabetical</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </transition>
-        </div>
-
-        <!-- Results Summary -->
-        <div
-          class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-gray-200"
-        >
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-sm text-gray-700">
-              <span class="font-semibold text-gray-900">{{
-                visibleDirectories.length
-              }}</span>
-              {{ resultsLabel }}
-            </span>
-            <span
-              v-if="pendingSubmissions.length > 0"
-              class="text-xs text-yellow-800 bg-yellow-50 px-2 py-1 rounded-full"
-            >
-              {{ pendingSubmissions.length }} pending
-            </span>
-          </div>
-
-          <button
-            v-if="!isDefaultState"
-            @click="resetToDefault"
-            class="text-sm text-primary hover:text-primary-dark font-medium whitespace-nowrap min-h-[48px] sm:min-h-[44px] px-3 -mx-3 sm:mx-0 sm:px-2 flex items-center gap-1.5 touch-manipulation active:bg-gray-50 rounded-lg transition-colors"
-            aria-label="Reset to default filters"
-          >
-            <svg
-              class="w-4 h-4 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-              />
-            </svg>
-            <span>Reset filters</span>
-          </button>
-        </div>
+          Try Again
+        </button>
       </div>
     </div>
 
-    <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
-      <div v-if="isLoading" class="text-center py-12">
-        <div class="text-gray-900 text-base">
-          Loading directories...
+    <!-- Main Content -->
+    <div v-else>
+      <!-- Sticky Filter Bar -->
+      <div
+        class="bg-white border-b border-gray-200 sticky top-0 sm:top-16 z-40 shadow-sm"
+      >
+        <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+          <!-- First-Visit Tooltip -->
+          <transition
+            name="slide-down"
+            @enter="onTooltipEnter"
+            @after-enter="onTooltipAfterEnter"
+            @leave="onTooltipLeave"
+          >
+            <div
+              v-if="showTooltip"
+              class="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3"
+              role="status"
+              aria-live="polite"
+            >
+              <span class="text-lg flex-shrink-0" aria-hidden="true">👋</span>
+              <div class="flex-1 text-sm text-gray-700">
+                <p class="font-medium mb-1">
+                  We pre-filtered to show you the best directories
+                </p>
+                <p class="text-gray-600">
+                  DoFollow links with high DR (70+). Tap "All Directories" to see everything.
+                </p>
+              </div>
+              <button
+                @click="dismissTooltip"
+                class="text-gray-400 hover:text-gray-600 focus:text-gray-600 flex-shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                aria-label="Dismiss notification"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </transition>
+
+          <!-- Search Bar -->
+          <div class="mb-3">
+            <div class="relative">
+              <label for="directory-search" class="sr-only">Search directories</label>
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+                <svg
+                  class="h-5 w-5 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+              <input
+                id="directory-search"
+                v-model="searchQuery"
+                type="search"
+                placeholder="Search directories..."
+                class="search-input w-full pl-10 pr-12 py-3 sm:py-2.5 border border-gray-300 rounded-lg text-sm sm:text-base bg-white min-h-[48px] sm:min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent transition-all"
+                aria-label="Search directories"
+                :aria-describedby="searchQuery ? 'search-clear' : undefined"
+              />
+              <transition name="fade">
+                <button
+                  v-if="searchQuery"
+                  id="search-clear"
+                  @click="clearSearch"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center min-w-[44px] min-h-[44px] justify-center z-10 rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors"
+                  aria-label="Clear search"
+                >
+                  <svg
+                    class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </transition>
+            </div>
+          </div>
+
+          <!-- Quick Filter Pills -->
+          <div class="mb-3">
+            <div
+              class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0"
+              role="group"
+              aria-label="Quick filter presets"
+            >
+              <button
+                v-for="preset in quickFilterPresets"
+                :key="preset.id"
+                @click="applyQuickFilter(preset)"
+                :class="[
+                  'flex-shrink-0 px-4 py-2.5 sm:py-2 rounded-full text-sm font-medium transition-all min-h-[44px] sm:min-h-[40px] whitespace-nowrap touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+                  isActivePreset(preset)
+                    ? 'bg-primary text-white shadow-sm focus-visible:ring-primary'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300 focus-visible:ring-gray-400',
+                ]"
+                :aria-label="`Apply ${preset.label} filter`"
+                :aria-pressed="isActivePreset(preset)"
+              >
+                <span class="inline-block mr-1" aria-hidden="true">{{ preset.icon }}</span>
+                <span>{{ preset.label }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Advanced Filters Accordion -->
+          <div class="border-t border-gray-200 pt-3">
+            <button
+              @click="toggleAdvancedFilters"
+              class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 min-h-[48px] sm:min-h-[44px] w-full justify-between touch-manipulation active:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              aria-label="Toggle advanced filters"
+              :aria-expanded="advancedFiltersExpanded"
+              aria-controls="advanced-filters"
+            >
+              <span>Advanced Filters</span>
+              <svg
+                class="w-5 h-5 transition-transform duration-200 flex-shrink-0"
+                :class="{ 'rotate-180': advancedFiltersExpanded }"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            <transition
+              name="accordion"
+              @enter="onEnter"
+              @after-enter="onAfterEnter"
+              @leave="onLeave"
+            >
+              <div
+                v-show="advancedFiltersExpanded"
+                id="advanced-filters"
+                class="overflow-hidden"
+              >
+                <div
+                  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 mt-3 pb-1"
+                  role="group"
+                  aria-label="Advanced filter options"
+                >
+                  <div>
+                    <label
+                      for="filter-category"
+                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                    >
+                      Category
+                    </label>
+                    <select
+                      id="filter-category"
+                      v-model="currentFilters.category"
+                      @change="applyFilters"
+                      class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none"
+                    >
+                      <option v-for="cat in categories" :key="cat" :value="cat">
+                        {{ cat }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label
+                      for="filter-dr"
+                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                    >
+                      Domain Rating
+                    </label>
+                    <select
+                      id="filter-dr"
+                      v-model="currentFilters.drRange"
+                      @change="applyFilters"
+                      class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none"
+                    >
+                      <option value="All">All DR</option>
+                      <option value="80+">80+</option>
+                      <option value="70+">70+</option>
+                      <option value="70-79">70-79</option>
+                      <option value="60-69">60-69</option>
+                      <option value="<60">&lt;60</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label
+                      for="filter-link"
+                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                    >
+                      Link Type
+                    </label>
+                    <select
+                      id="filter-link"
+                      v-model="currentFilters.linkType"
+                      @change="applyFilters"
+                      class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none"
+                    >
+                      <option value="All">All</option>
+                      <option value="Dofollow Only">Dofollow Only</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label
+                      for="filter-pricing"
+                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                    >
+                      Pricing
+                    </label>
+                    <select
+                      id="filter-pricing"
+                      v-model="currentFilters.pricing"
+                      @change="applyFilters"
+                      class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none"
+                    >
+                      <option value="All">All</option>
+                      <option value="free">Free</option>
+                      <option value="paid">Paid</option>
+                      <option value="freemium">Freemium</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label
+                      for="filter-sort"
+                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                    >
+                      Sort By
+                    </label>
+                    <select
+                      id="filter-sort"
+                      v-model="currentFilters.sortBy"
+                      @change="applyFilters"
+                      class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none"
+                    >
+                      <option>Most Helpful</option>
+                      <option>Highest DR</option>
+                      <option>Newest</option>
+                      <option>Alphabetical</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </transition>
+          </div>
+
+          <!-- Results Summary -->
+          <div
+            class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-gray-200"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-sm text-gray-700">
+                <span class="font-semibold text-gray-900">{{
+                  visibleDirectories.length.toLocaleString()
+                }}</span>
+                {{ resultsLabel }}
+              </span>
+              <span
+                v-if="pendingSubmissions.length > 0"
+                class="text-xs text-yellow-800 bg-yellow-50 px-2 py-1 rounded-full"
+              >
+                {{ pendingSubmissions.length }} pending
+              </span>
+            </div>
+
+            <button
+              v-if="!isDefaultState"
+              @click="resetToDefault"
+              class="text-sm text-primary hover:text-primary-dark font-medium whitespace-nowrap min-h-[48px] sm:min-h-[44px] px-3 -mx-3 sm:mx-0 sm:px-2 flex items-center gap-1.5 touch-manipulation active:bg-gray-50 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              aria-label="Reset to default filters"
+            >
+              <svg
+                class="w-4 h-4 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+              <span>Reset filters</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div
-        v-else-if="visibleDirectories.length === 0"
-        class="text-center py-12 px-4"
-      >
-        <div class="text-gray-900 mb-4 text-base">
-          No directories found matching your filters.
+      <!-- Directory Grid -->
+      <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
+        <!-- Loading Skeleton -->
+        <div v-if="isLoading" class="space-y-4">
+          <div
+            v-for="i in 6"
+            :key="i"
+            class="animate-pulse"
+          >
+            <div class="bg-gray-200 rounded-lg h-48"></div>
+          </div>
         </div>
-        <button @click="resetAllFilters" class="btn-primary min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation">
-          Reset Filters
-        </button>
-      </div>
 
-      <div
-        v-else
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
-      >
-        <DirectoryCard
-          v-for="dir in visibleDirectories.slice(0, itemsToShow)"
-          :key="dir.id"
-          :directory="dir"
-          :isPendingSubmission="dir.isPending"
-          :userVotedIds="userVotedIds"
-          :userFavoriteIds="userFavoriteIds"
-        />
-      </div>
-
-      <div
-        v-if="visibleDirectories.length > itemsToShow"
-        class="mt-6 sm:mt-8 text-center"
-      >
-        <button
-          @click="loadMore"
-          class="btn-primary min-h-[48px] sm:min-h-[44px] w-full sm:w-auto px-6 touch-manipulation"
-          aria-label="Load more directories"
+        <!-- Empty State -->
+        <div
+          v-else-if="visibleDirectories.length === 0"
+          class="text-center py-12 px-4"
         >
-          Load More ({{ visibleDirectories.length - itemsToShow }} remaining)
-        </button>
+          <div class="mb-4">
+            <svg class="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 class="text-xl font-semibold text-gray-900 mb-2">
+            No directories found
+          </h2>
+          <p class="text-gray-600 mb-4">
+            Try adjusting your filters or search query.
+          </p>
+          <button
+            @click="resetAllFilters"
+            class="btn-primary min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          >
+            Reset Filters
+          </button>
+        </div>
+
+        <!-- Directory Grid -->
+        <div
+          v-else
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
+        >
+          <DirectoryCard
+            v-for="dir in visibleDirectories.slice(0, itemsToShow)"
+            :key="dir.id"
+            :directory="dir"
+            :isPendingSubmission="dir.isPending"
+            :userVotedIds="userVotedIds"
+            :userFavoriteIds="userFavoriteIds"
+          />
+        </div>
+
+        <!-- Load More Button -->
+        <div
+          v-if="visibleDirectories.length > itemsToShow"
+          class="mt-6 sm:mt-8 text-center"
+        >
+          <button
+            @click="loadMore"
+            class="btn-primary min-h-[48px] sm:min-h-[44px] w-full sm:w-auto px-6 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2"
+            aria-label="Load more directories"
+          >
+            <span>Load More</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white bg-opacity-20">
+              {{ (visibleDirectories.length - itemsToShow).toLocaleString() }} remaining
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -573,16 +653,38 @@ function toggleAdvancedFilters() {
   advancedFiltersExpanded.value = !advancedFiltersExpanded.value;
 }
 
+var error = ref(null);
+var retryCount = ref(0);
+var maxRetries = 3;
+
+function clearSearch() {
+  searchQuery.value = "";
+  var searchInput = document.getElementById("directory-search");
+  if (searchInput) {
+    searchInput.focus();
+  }
+}
+
 async function loadDirectories() {
   try {
-    const response = await httpClient.get("/data/directories.json");
+    error.value = null;
+    var response = await httpClient.get("/data/directories.json");
     allData.value = await response.json();
     filteredData.value = [...allData.value];
     isLoading.value = false;
     applyFilters();
-  } catch (error) {
-    console.error("Failed to load directories:", error);
+  } catch (err) {
+    console.error("Failed to load directories:", err);
+    error.value = "Unable to load directories. Please check your connection and try again.";
     isLoading.value = false;
+  }
+}
+
+async function retryLoad() {
+  if (retryCount.value < maxRetries) {
+    retryCount.value++;
+    isLoading.value = true;
+    await loadDirectories();
   }
 }
 
@@ -746,10 +848,25 @@ function onLeave(el) {
     });
   });
 }
+
+function onTooltipEnter(el) {
+  el.style.maxHeight = '0';
+  el.style.overflow = 'hidden';
+  el.style.opacity = '0';
+}
+
+function onTooltipAfterEnter(el) {
+  el.style.maxHeight = el.scrollHeight + 'px';
+  el.style.opacity = '1';
+}
+
+function onTooltipLeave(el) {
+  el.style.maxHeight = '0';
+  el.style.opacity = '0';
+}
 </script>
 
 <style scoped>
-/* Hide scrollbar for quick filter pills on mobile while maintaining functionality */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -760,6 +877,7 @@ function onLeave(el) {
 
 .touch-manipulation {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .search-input {
@@ -770,18 +888,63 @@ function onLeave(el) {
 .search-input:focus {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   border-color: #3b82f6;
-  outline: none;
 }
 
 .accordion-enter-active,
 .accordion-leave-active {
-  transition: height 0.3s ease-in-out;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 @media (max-width: 640px) {
   .scrollbar-hide {
     scroll-padding-left: 0.75rem;
     scroll-padding-right: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-enter-active,
+  .accordion-leave-active,
+  .slide-down-enter-active,
+  .slide-down-leave-active,
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: none;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
   }
 }
 </style>

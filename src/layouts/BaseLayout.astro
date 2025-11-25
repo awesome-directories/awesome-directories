@@ -26,7 +26,7 @@ const {
 
 const siteUrl = "https://awesome-directories.com";
 const siteName = "Awesome Directories";
-const twitterHandle = "@awesome_dirs";
+const twitterHandle = "@meysamazing";
 ---
 
 <!doctype html>
@@ -35,9 +35,13 @@ const twitterHandle = "@awesome_dirs";
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5"
     />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -184,6 +188,43 @@ const twitterHandle = "@awesome_dirs";
       data-session-endpoint="https://analytics.awesome-directories.com/session"
     ></script>
 
+    <!-- Additional Performance Meta -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
+
+    <!-- Reduced Motion Support -->
+    <style>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      /* Prevent layout shift */
+      body {
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      /* Focus visible for better accessibility */
+      :focus-visible {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+      }
+
+      /* Smooth scroll for modern browsers */
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+    </style>
+
     <!-- Additional head content -->
     <slot name="head" />
   </head>
@@ -191,5 +232,12 @@ const twitterHandle = "@awesome_dirs";
     <slot />
     <!-- Global Auth Modal -->
     <AuthModalWrapper client:load />
+
+    <!-- No-JS Fallback Message -->
+    <noscript>
+      <div style="position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: #fef3c7; border-bottom: 2px solid #f59e0b; padding: 1rem; text-align: center;">
+        <strong>JavaScript is disabled.</strong> Some features may not work properly. Please enable JavaScript for the best experience.
+      </div>
+    </noscript>
   </body>
 </html>
