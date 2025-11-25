@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Auth Required Message -->
-    <div v-if="!user" class="bg-white rounded-lg shadow-sm p-8 text-center">
+    <div v-if="!user" class="bg-white rounded-lg shadow-sm p-8">
       <div class="text-5xl mb-4">🔒</div>
       <h2 class="text-2xl font-bold text-gray-900 mb-2">Sign in to Submit</h2>
       <p class="text-gray-600 mb-6">

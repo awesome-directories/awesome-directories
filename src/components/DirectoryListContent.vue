@@ -95,12 +95,12 @@
 
           <!-- Search Bar -->
           <div class="mb-3">
+            <label for="directory-search" class="sr-only"
+              >Search directories</label
+            >
             <div class="relative w-full">
-              <label for="directory-search" class="sr-only"
-                >Search directories</label
-              >
               <div
-                class="absolute inset-y-0 left-0 w-10 flex items-center justify-center pointer-events-none"
+                class="absolute inset-y-0 left-0 w-10 flex items-center justify-center pointer-events-none z-10"
               >
                 <svg
                   class="h-5 w-5 text-gray-400"
@@ -131,7 +131,7 @@
                   v-if="searchQuery"
                   id="search-clear"
                   @click="clearSearch"
-                  class="absolute inset-y-0 right-0 w-12 flex items-center justify-center rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors"
+                  class="absolute inset-y-0 right-0 w-12 flex items-center justify-center rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors z-10"
                   aria-label="Clear search"
                 >
                   <svg
