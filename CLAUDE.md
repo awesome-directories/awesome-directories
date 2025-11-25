@@ -25,10 +25,10 @@
 
 ### Frontend Framework
 
-- **Astro.js 5** (Static Site Generation with Content Collections)
+- **Astro.js 5.16.0** (Static Site Generation with Content Collections)
 - **Vue.js 3** (Composition API for interactive islands/components)
-- **Vite 7** (build tool, dev server on port 3000)
-- **Tailwind CSS 4** (utility-first CSS with PostCSS)
+- **Vite 7.2.2** (build tool, dev server on port 3000)
+- **Tailwind CSS 4.1.17** (utility-first CSS with PostCSS)
 - **TypeScript-ready** (ES modules)
 
 **Important**: The project migrated from a Vue.js SPA to Astro.js SSG for better SEO and performance. Vue components are used for interactive features via Astro's component islands. Astro Content Collections power the blog system.
@@ -46,6 +46,8 @@
 - `uhtml` - Lightweight DOM rendering
 - `ky` - HTTP client
 - `loglevel` - Logging utility
+- `puppeteer-core` - Headless browser automation for web scraping (dev dependency)
+- `prettier` - Code formatting
 
 ### Backend & Services
 
@@ -182,7 +184,29 @@
 │   ├── parse-directories.js       # Parse dataset
 │   ├── seed-database.js           # Populate database
 │   ├── update-dr-scores.js        # Update DR from Moz (legacy)
-│   └── convert-svgs.js            # SVG optimization
+│   ├── convert-svgs.js            # SVG optimization
+│   ├── scraper/                   # Web scraping system for directory curation
+│   │   ├── index.js               # Main CLI entry point
+│   │   ├── config.js              # Scraper configuration
+│   │   ├── browser.js             # Browser automation utilities
+│   │   ├── data-fetcher.js        # Fetch directories from Supabase
+│   │   ├── scrapers/
+│   │   │   ├── homepage.js        # Homepage data extraction
+│   │   │   ├── links.js           # Link analysis
+│   │   │   ├── content.js         # Content compilation
+│   │   │   └── smart-crawl.js     # Smart crawling of related pages
+│   │   ├── output/
+│   │   │   ├── json.js            # JSON output generation
+│   │   │   ├── markdown.js        # Markdown report generation
+│   │   │   └── csv.js             # CSV export
+│   │   └── utils/
+│   │       ├── logger.js          # Logging utilities
+│   │       ├── stealth.js         # Anti-detection measures
+│   │       └── retry.js           # Retry logic with backoff
+│   └── read-directories/          # Legacy scraping utilities
+│       ├── analyze-results.js     # Result analysis
+│       ├── seodata.js             # SEO data extraction
+│       └── batch-scraper.js       # Batch scraping
 ├── astro.config.mjs               # Astro configuration
 ├── vite.config.js                 # Vite build config (via Astro)
 ├── tailwind.config.js             # Tailwind config
@@ -240,6 +264,9 @@ VITE_GITHUB_REPO=awesome-directories/awesome-directories
 VITE_GITHUB_REPO_ID=<repo-id>
 VITE_GITHUB_CATEGORY=Announcements
 VITE_GITHUB_CATEGORY_ID=<category-id>
+
+# Preview builds (for showing drafts in CI preview deployments)
+PUBLIC_PREVIEW=true  # Set to "true" to show draft and future blog posts
 ```
 
 For Supabase Edge Functions:
@@ -251,11 +278,22 @@ APIFY_API_TOKEN=<apify-token>  # For Ahrefs data scraping
 FUNCTION_SECRET=<optional-secret>  # For function authentication
 ```
 
+For Web Scraper (optional):
+
+```env
+USE_PROXY=false                # Set to "true" to enable Apify proxy
+APIFY_PROXY_PASSWORD=<password>  # Apify proxy password (if using proxy)
+CHROME_PATH=                   # Custom Chrome executable path (auto-detect if empty)
+LOG_LEVEL=INFO                 # Log level: DEBUG, INFO, WARN, ERROR
+```
+
 ### Available Scripts
 
 - `bun start` - Start Astro development server (port 3000)
 - `bun run build` - Build static site for production
 - `bun run preview` - Preview production build locally
+- `bun run scrape` - Run web scraper for directory curation (see Web Scraper section)
+- `bun run scrape:test` - Test web scraper on a single directory
 
 ## Database Schema
 
@@ -533,9 +571,11 @@ Blog posts support:
 3. Setup Bun
 4. Install dependencies (`bun install`)
 5. Build with environment secrets (`bun run build`)
+   - Sets `PUBLIC_PREVIEW=true` to show draft and future blog posts
 6. Upload Pages artifact
 7. Deploy to Netlify for preview
 8. Comment on PR with preview URL
+9. Run Lychee link checker to validate all links (non-blocking)
 
 **On Push to Main:**
 
@@ -611,6 +651,98 @@ For Supabase Edge Functions:
 
 - Legacy script: `scripts/update-dr-scores.js` (Moz API)
 - Replaced by Ahrefs integration via Edge Function
+
+## Web Scraper System
+
+The project includes a comprehensive web scraping system for directory curation and analysis (`scripts/scraper/`). This tool helps automate the process of evaluating pending directory submissions and gathering detailed information about directories.
+
+### Features
+
+- **Automated Directory Analysis**: Scrapes homepage content, pricing, features, and submission guidelines
+- **Link Analysis**: Analyzes external links to identify dofollow/nofollow attributes and submission URLs
+- **Smart Crawling**: Intelligently crawls related pages (pricing, submission, about) based on relevance
+- **Quality Scoring**: Generates curation suggestions with quality scores (0-100)
+- **Anti-Detection**: Uses stealth techniques to avoid bot detection
+- **Proxy Support**: Optional Apify proxy integration for IP rotation
+- **Multiple Output Formats**: JSON, Markdown reports, CSV exports, and screenshots
+
+### Usage
+
+Basic usage:
+
+```bash
+# Scrape 10 pending directories
+bun run scrape --limit 10
+
+# Scrape approved directories with dofollow links
+bun run scrape --status approved --dofollow --limit 20
+
+# Scrape directories in specific categories
+bun run scrape --categories "SaaS,Marketing" --limit 10
+
+# Use proxy for scraping (requires APIFY_PROXY_PASSWORD)
+bun run scrape --proxy --limit 5
+
+# Scrape from main directories table
+bun run scrape --source directories --min-dr 50 --limit 10
+
+# Show help and available options
+bun run scrape --help
+```
+
+### Configuration
+
+The scraper is configured via:
+
+1. **Environment variables** (`.env` file):
+   - `USE_PROXY` - Enable/disable proxy
+   - `APIFY_PROXY_PASSWORD` - Apify proxy password
+   - `CHROME_PATH` - Custom Chrome path (optional)
+   - `LOG_LEVEL` - Logging verbosity
+
+2. **Config file** (`scripts/scraper/config.js`):
+   - Browser settings and user agents
+   - Navigation timeouts and delays
+   - Crawl depth and page limits
+   - Link analysis parameters
+   - Output format preferences
+
+### Output
+
+The scraper generates outputs in `scripts/scraper-outputs/`:
+
+- `data/` - Individual directory JSON files
+- `reports/` - Individual directory Markdown reports
+- `screenshots/` - Homepage screenshots (PNG)
+- `summary.json` - Aggregated results JSON
+- `summary.md` - Aggregated results Markdown
+- `results.csv` - CSV export of all results
+
+### Quality Scoring
+
+The scraper evaluates directories based on:
+
+- Content completeness (has pricing, features, submission info)
+- Link quality (dofollow links, submission URLs found)
+- Page performance (load time, content richness)
+- Authority signals (SSL, professional design)
+
+Scores are categorized as:
+
+- **80-100**: Excellent - High priority for inclusion
+- **60-79**: Good - Worth including with minor review
+- **40-59**: Fair - Needs manual evaluation
+- **0-39**: Poor - May not be worth including
+
+### Architecture
+
+- **Browser Automation**: Uses Puppeteer-core with stealth plugins
+- **Data Fetching**: Connects to Supabase to fetch directories
+- **Scrapers**: Modular scrapers for homepage, links, and content
+- **Smart Crawl**: Follows relevant internal links automatically
+- **Output Generators**: JSON, Markdown, and CSV formatters
+- **Retry Logic**: Exponential backoff for failed requests
+- **Logging**: Structured logging with multiple levels
 
 ## Important Patterns & Conventions
 
@@ -815,6 +947,28 @@ curl -X POST https://your-project.supabase.co/functions/v1/update-seo-data \
   -H "Content-Type: application/json" \
   -d '{"batchSize": 10, "limit": 100}'
 ```
+
+### Curating and Analyzing Directories
+
+Use the web scraper to automate directory evaluation:
+
+```bash
+# Scrape pending directories for review
+bun run scrape --limit 10
+
+# Analyze specific categories
+bun run scrape --categories "SaaS,Marketing" --limit 20
+
+# Get detailed quality scores
+bun run scrape --status pending --dofollow --limit 5
+
+# Review outputs
+ls scripts/scraper-outputs/reports/  # Markdown reports
+ls scripts/scraper-outputs/data/     # JSON data
+open scripts/scraper-outputs/summary.md  # Summary report
+```
+
+The scraper outputs quality scores and curation suggestions to help decide which directories to include in the main database.
 
 ### Database Migrations
 
@@ -1032,6 +1186,43 @@ supabase db push
 
 ### Commit History (Most Recent)
 
+- **ce623d1** - fix: remove puppeteer from the main deps
+  - Moved puppeteer to dev dependencies for web scraper only
+  - Reduced production bundle size
+
+- **2263d4d** - Streamline onboarding to reduce time to value (#36)
+  - Improved onboarding process
+  - Reduced steps to get started
+
+- **e8f4c45** - feat: Set up web scraping for link analysis (#38)
+  - Comprehensive web scraping system for directory curation
+  - Automated quality scoring and analysis
+  - Support for multiple output formats (JSON, Markdown, CSV)
+  - Smart crawling and link analysis capabilities
+
+- **c4f8d8b** - fix: remove trailing slash before joining to blog
+  - Fixed URL path handling for blog routes
+
+- **11cc40c** - feat: write blog post on Hacker News launch (#32)
+  - New blog content for product launch
+
+- **b086048** - chore(deps): upgrade astro to v5.16.0
+  - Latest Astro framework with performance improvements
+
+- **509b410** - feat(CI): add lychee link checker
+  - Automated link validation in CI/CD pipeline
+  - Non-blocking link checking on pull requests
+
+- **85caf9e** - fix: use X for offsite share
+  - Updated social sharing to use X (Twitter rebrand)
+
+- **69033e1** - feat: add PUBLIC_PREVIEW env var for showing drafts in CI preview builds (#33)
+  - Preview builds now show draft and future blog posts
+  - Helps with reviewing content before publication
+
+- **2e2a996** - feat: overhaul landing page with high-conversion copy (#31)
+  - Improved landing page copy and conversion optimization
+
 - **012d454** - feat: add blogging with Astro dynamic routing (#28)
   - Full blog system with Astro Content Collections
   - Pagefind search integration
@@ -1044,29 +1235,35 @@ supabase db push
   - Top directories tables
   - Stats data generation via custom integration
 
-- **e5cf0c3** - fix: address contract issue
-  - Bug fixes and improvements
-
-- **1e1ec4c** - fix: make the homepage fully responsive
-  - Mobile-first responsive design improvements
-
-- **3c7eded** - feat: improve lighthouse metrics to above 95+
-  - Performance optimizations
-  - Lighthouse score improvements
-
-- **713c8b7** - chore(deps): update astro to v5
-  - Major Astro framework upgrade
-
-- **ee4c7d7** - fix(auth): fix session detection and persistence after login (#27)
-  - Auth session improvements
-
-- **9a05666** - feat: finalize auth system with Vue island components (#25)
-  - Authentication system implementation
-  - Protected pages: favorites, submissions, submit
-
 ### Features Since Last Documentation Update
 
-1. **Blog System** (Commit 012d454)
+1. **Web Scraping System** (Commit e8f4c45)
+   - Comprehensive directory curation and analysis tool
+   - Automated quality scoring (0-100 scale)
+   - Homepage data extraction and link analysis
+   - Smart crawling of related pages (pricing, submission, about)
+   - Anti-detection measures and proxy support
+   - Multiple output formats (JSON, Markdown, CSV, screenshots)
+   - CLI with filtering and pagination options
+   - Integration with Supabase for fetching pending/approved directories
+
+2. **CI/CD Improvements**
+   - **Lychee link checker** (Commit 509b410) - Automated link validation on PRs
+   - **PUBLIC_PREVIEW env var** (Commit 69033e1) - Show drafts in preview builds
+   - Non-blocking link checks for better workflow
+
+3. **Onboarding & UX Enhancements** (Commit 2263d4d)
+   - Streamlined onboarding process
+   - Reduced time to value for new users
+   - Improved landing page copy for conversion optimization (Commit 2e2a996)
+
+4. **Framework & Dependency Updates**
+   - **Astro v5.16.0** (Commit b086048) - Latest framework version
+   - **Puppeteer optimization** (Commit ce623d1) - Moved to dev deps for reduced bundle size
+   - **Vite 7.2.2** - Latest build tool
+   - **Tailwind CSS 4.1.17** - Latest styling framework
+
+5. **Blog System** (Commit 012d454)
    - Astro Content Collections with Markdown
    - `/blog` listing with Pagefind search
    - `/blog/[slug]` individual posts with TOC
@@ -1077,7 +1274,7 @@ supabase db push
    - BlogPosting schema structured data
    - Draft and future scheduling support
 
-2. **Statistics Page** (Commit 72296a7)
+6. **Statistics Page** (Commit 72296a7)
    - `/stats` with interactive Chart.js charts
    - Category distribution pie chart
    - Pricing breakdown doughnut chart
@@ -1087,27 +1284,28 @@ supabase db push
    - Top directories tables
    - Stats data generated at build time
 
-3. **Performance Improvements**
+7. **Performance Improvements**
    - Lighthouse scores above 95+
    - Astro v5 upgrade
    - Fully responsive homepage
    - Optimized bundle splitting
 
-4. **New Components**
+8. **New Components**
    - StatsCards, StatsCharts, TopDirectoriesTable (Vue)
    - BlogCard, Pagination, RelatedPosts (Astro)
    - ShareButtons, TableOfContents, GiscusComments (Astro)
 
-5. **New Integrations**
+9. **New Integrations**
    - `saveStatsIntegration()` - Generate stats.json
    - `pagefindIntegration()` - Blog search indexing
 
-6. **New Utilities**
-   - `src/utils/blog.ts` - Blog helpers (reading time, TOC, related posts)
+10. **New Utilities**
+    - `src/utils/blog.ts` - Blog helpers (reading time, TOC, related posts)
+    - `scripts/scraper/` - Complete web scraping toolkit
 
 ---
 
-**Last Updated**: 2025-11-19 (Updated with commits through 012d454)
-**Architecture**: Astro.js 5 SSG with Vue.js Islands
+**Last Updated**: 2025-11-23 (Updated with commits through ce623d1)
+**Architecture**: Astro.js 5.16.0 SSG with Vue.js Islands
 **Lighthouse Score**: 95+ (Performance, SEO, Accessibility, Best Practices)
-**Latest Features**: Blog system, statistics page, responsive design (commits 012d454, 72296a7)
+**Latest Features**: Web scraping system, CI/CD improvements, onboarding enhancements (commits e8f4c45, 509b410, 69033e1, 2263d4d)
