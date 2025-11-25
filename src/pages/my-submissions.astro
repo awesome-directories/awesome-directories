@@ -2,11 +2,11 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import AppHeader from "@/components/AppHeader.astro";
 import AppFooter from "@/components/AppFooter.astro";
-import SubmissionsContent from "@/components/SubmissionsContent.vue";
+import MySubmissionsContent from "@/components/MySubmissionsContent.vue";
 import "@/style.css";
 
-const title = "Submission Tracker | Awesome Directories";
-const description = "Track where you've submitted your products to directories";
+const title = "My Directory Submissions | Awesome Directories";
+const description = "Track the status of directories you've submitted for review";
 ---
 
 <BaseLayout title={title} description={description} noIndex={true}>
@@ -18,15 +18,17 @@ const description = "Track where you've submitted your products to directories";
       class="bg-gradient-to-br from-primary to-blue-600 text-white py-12 px-4"
     >
       <div class="max-w-7xl mx-auto">
-        <h1 class="text-3xl md:text-4xl font-bold mb-2">✅ Submission Tracker</h1>
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">
+          📋 My Directory Submissions
+        </h1>
         <p class="text-lg text-blue-100">
-          Track where you've submitted your products to directories
+          Track the status of directories you've submitted for review
         </p>
       </div>
     </section>
 
     <!-- Submissions Content -->
-    <SubmissionsContent client:load />
+    <MySubmissionsContent client:load />
   </main>
 
   <AppFooter />

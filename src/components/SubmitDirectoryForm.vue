@@ -25,7 +25,7 @@
       </p>
       <div class="flex gap-4 justify-center">
         <button @click="resetForm" class="btn-secondary">Submit Another</button>
-        <a href="/submissions" class="btn-primary inline-block">
+        <a href="/my-submissions" class="btn-primary inline-block">
           View My Submissions
         </a>
       </div>
