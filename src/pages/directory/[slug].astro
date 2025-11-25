@@ -48,13 +48,39 @@ function getPricingBadgeClass(pricing) {
 
 function getPricingLabel(directory) {
   const pricing = directory.pricing_type;
-  if (pricing === "free") return "💰 Free";
+  if (pricing === "free") return "Free";
   if (pricing === "paid" && directory.pricing_amount) {
-    return `💰 $${directory.pricing_amount}`;
+    return `$${directory.pricing_amount}`;
   }
-  if (pricing === "paid") return "💰 Paid";
-  if (pricing === "freemium") return "💰 Freemium";
-  return "";
+  if (pricing === "paid") return "Paid";
+  if (pricing === "freemium") return "Freemium";
+  return "N/A";
+}
+
+function getTrafficLabel(estimate) {
+  if (estimate === "high") return "High";
+  if (estimate === "medium") return "Medium";
+  if (estimate === "low") return "Low";
+  return null;
+}
+
+function getTrafficBadgeClass(estimate) {
+  if (estimate === "high") return "bg-green-100 text-green-800";
+  if (estimate === "medium") return "bg-yellow-100 text-yellow-800";
+  if (estimate === "low") return "bg-gray-100 text-gray-700";
+  return "bg-gray-100 text-gray-700";
+}
+
+function getTrustScore(spamScore) {
+  if (spamScore === null || spamScore === undefined) return null;
+  return 100 - spamScore;
+}
+
+function formatNumber(num) {
+  if (!num) return null;
+  if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+  if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+  return num.toLocaleString();
 }
 
 // SEO metadata
@@ -66,7 +92,7 @@ const canonicalUrl = `https://awesome-directories.com/directory/${directory.slug
 const ogImage =
   directory.logo_url || "https://awesome-directories.com/og-image.jpg";
 
-// Structured Data - Product Schema with AggregateRating
+// Structured Data - Product Schema with AggregateRating (using actual ratings)
 const structuredData = [
   {
     "@context": "https://schema.org",
@@ -91,11 +117,11 @@ const structuredData = [
       url: directory.submission_url || canonicalUrl,
     },
     aggregateRating:
-      directory.helpful_count > 0
+      directory.rating_count > 0
         ? {
             "@type": "AggregateRating",
-            ratingValue: "4.5",
-            ratingCount: directory.helpful_count,
+            ratingValue: directory.average_rating || 0,
+            ratingCount: directory.rating_count,
             bestRating: "5",
             worstRating: "1",
           }
@@ -126,6 +152,18 @@ const structuredData = [
     ],
   },
 ];
+
+// Check if we have any SEO metrics to display
+const hasSeoMetrics = directory.domain_rating ||
+  directory.organic_search_traffic ||
+  directory.ranking_keywords ||
+  directory.backlinks_count ||
+  directory.referring_domains;
+
+// Check if we have submission info
+const hasSubmissionInfo = directory.avg_approval_days ||
+  directory.submission_url ||
+  directory.pricing_type;
 ---
 
 <BaseLayout
@@ -199,12 +237,12 @@ const structuredData = [
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Main Content (Left Column) -->
         <article
-          class="lg:col-span-2"
+          class="lg:col-span-2 space-y-6"
           itemscope
           itemtype="https://schema.org/Product"
         >
           <!-- Header with Logo and Title -->
-          <header class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6">
+          <header class="bg-white rounded-lg shadow-sm p-6 sm:p-8">
             <div
               class="flex flex-col sm:flex-row items-start sm:items-center gap-6"
             >
@@ -241,6 +279,23 @@ const structuredData = [
                   {directory.name}
                 </h1>
 
+                <!-- Rating Display -->
+                <div class="flex items-center gap-3 mb-4">
+                  {directory.average_rating ? (
+                    <div class="flex items-center">
+                      <div class="flex">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span class={`text-lg ${star <= Math.round(directory.average_rating) ? 'text-yellow-400' : 'text-gray-300'}`}>★</span>
+                        ))}
+                      </div>
+                      <span class="ml-2 font-semibold text-gray-900">{directory.average_rating.toFixed(1)}</span>
+                      <span class="ml-1 text-sm text-gray-500">({directory.rating_count || 0} reviews)</span>
+                    </div>
+                  ) : (
+                    <span class="text-sm text-gray-500">No ratings yet</span>
+                  )}
+                </div>
+
                 <!-- Badges -->
                 <div class="flex flex-wrap items-center gap-2 mb-4">
                   {
@@ -248,7 +303,7 @@ const structuredData = [
                       <span
                         class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getDrBadgeClass(directory.domain_rating)}`}
                       >
-                        ⭐ DR: {directory.domain_rating}
+                        DR: {directory.domain_rating}
                       </span>
                     )
                   }
@@ -256,17 +311,23 @@ const structuredData = [
                   {
                     directory.is_dofollow && (
                       <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
-                        🔗 Dofollow
+                        Dofollow
                       </span>
                     )
                   }
 
                   {
-                    directory.pricing_type && (
-                      <span
-                        class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getPricingBadgeClass(directory.pricing_type)}`}
-                      >
-                        {getPricingLabel(directory)}
+                    !directory.is_dofollow && (
+                      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gray-100 text-gray-700">
+                        Nofollow
+                      </span>
+                    )
+                  }
+
+                  {
+                    directory.traffic_estimate && (
+                      <span class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getTrafficBadgeClass(directory.traffic_estimate)}`}>
+                        {getTrafficLabel(directory.traffic_estimate)} Traffic
                       </span>
                     )
                   }
@@ -288,16 +349,16 @@ const structuredData = [
 
               <!-- Primary CTA -->
               {
-                directory.submission_url && (
+                (directory.submission_url || directory.url) && (
                   <div class="flex-shrink-0 w-full sm:w-auto">
                     <a
-                      href={directory.submission_url}
+                      href={directory.submission_url || directory.url}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                       class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50"
                       itemprop="url"
                     >
-                      Visit Directory →
+                      Submit Product →
                     </a>
                   </div>
                 )
@@ -305,64 +366,137 @@ const structuredData = [
             </div>
           </header>
 
-          <!-- Stats Grid -->
-          {
-            (directory.domain_rating ||
-              directory.organic_traffic ||
-              directory.organic_keywords) && (
-              <section
-                class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6"
-                aria-labelledby="stats-heading"
+          <!-- Submission Info -->
+          {hasSubmissionInfo && (
+            <section
+              class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
+              aria-labelledby="submission-heading"
+            >
+              <h2
+                id="submission-heading"
+                class="text-xl font-bold text-gray-900 mb-4"
               >
-                <h2
-                  id="stats-heading"
-                  class="text-xl font-bold text-gray-900 mb-4"
-                >
-                  SEO Metrics
-                </h2>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {directory.domain_rating && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
-                      <div class="text-3xl font-bold text-primary">
-                        {directory.domain_rating}
-                      </div>
-                      <div class="text-sm text-gray-600 mt-1">
-                        Domain Rating
-                      </div>
-                    </div>
-                  )}
-
-                  {directory.organic_traffic && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
-                      <div class="text-3xl font-bold text-primary">
-                        {directory.organic_traffic.toLocaleString()}
-                      </div>
-                      <div class="text-sm text-gray-600 mt-1">
-                        Organic Traffic
-                      </div>
-                    </div>
-                  )}
-
-                  {directory.organic_keywords && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
-                      <div class="text-3xl font-bold text-primary">
-                        {directory.organic_keywords.toLocaleString()}
-                      </div>
-                      <div class="text-sm text-gray-600 mt-1">
-                        Organic Keywords
-                      </div>
-                    </div>
-                  )}
+                Submission Details
+              </h2>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                  <div class="text-2xl font-bold text-gray-900">
+                    {getPricingLabel(directory)}
+                  </div>
+                  <div class="text-sm text-gray-600 mt-1">Pricing</div>
                 </div>
-              </section>
-            )
-          }
+
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                  <div class="text-2xl font-bold text-gray-900">
+                    {directory.is_dofollow ? "Yes" : "No"}
+                  </div>
+                  <div class="text-sm text-gray-600 mt-1">Dofollow Link</div>
+                </div>
+
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                  <div class="text-2xl font-bold text-gray-900">
+                    {directory.avg_approval_days ? `${directory.avg_approval_days} days` : "N/A"}
+                  </div>
+                  <div class="text-sm text-gray-600 mt-1">Avg. Approval</div>
+                </div>
+
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                  <div class="text-2xl font-bold text-gray-900">
+                    {getTrafficLabel(directory.traffic_estimate) || "N/A"}
+                  </div>
+                  <div class="text-sm text-gray-600 mt-1">Traffic Level</div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          <!-- SEO & Authority Metrics -->
+          {hasSeoMetrics && (
+            <section
+              class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
+              aria-labelledby="seo-heading"
+            >
+              <h2
+                id="seo-heading"
+                class="text-xl font-bold text-gray-900 mb-4"
+              >
+                SEO & Authority Metrics
+              </h2>
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                {directory.domain_rating && (
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-3xl font-bold text-primary">
+                      {directory.domain_rating}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      Domain Rating
+                    </div>
+                  </div>
+                )}
+
+                {directory.organic_search_traffic && (
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-3xl font-bold text-primary">
+                      {formatNumber(directory.organic_search_traffic)}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      Monthly Traffic
+                    </div>
+                  </div>
+                )}
+
+                {directory.ranking_keywords && (
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-3xl font-bold text-primary">
+                      {formatNumber(directory.ranking_keywords)}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      Ranking Keywords
+                    </div>
+                  </div>
+                )}
+
+                {directory.backlinks_count && (
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-3xl font-bold text-primary">
+                      {formatNumber(directory.backlinks_count)}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      Backlinks
+                    </div>
+                  </div>
+                )}
+
+                {directory.referring_domains && (
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-3xl font-bold text-primary">
+                      {formatNumber(directory.referring_domains)}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      Referring Domains
+                    </div>
+                  </div>
+                )}
+
+                {getTrustScore(directory.spam_score) !== null && (
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class={`text-3xl font-bold ${getTrustScore(directory.spam_score) >= 70 ? 'text-green-600' : getTrustScore(directory.spam_score) >= 40 ? 'text-yellow-600' : 'text-red-600'}`}>
+                      {getTrustScore(directory.spam_score)}%
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">
+                      Trust Score
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
 
           <!-- Description -->
           {
             directory.description && (
               <section
-                class="bg-white rounded-lg shadow-sm p-6 sm:p-8 mb-6"
+                class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
                 aria-labelledby="description-heading"
               >
                 <h2
@@ -377,6 +511,33 @@ const structuredData = [
               </section>
             )
           }
+
+          <!-- Quick Links -->
+          <section class="bg-white rounded-lg shadow-sm p-6 sm:p-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Links</h2>
+            <div class="flex flex-wrap gap-3">
+              {directory.url && (
+                <a
+                  href={directory.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+                >
+                  <span class="mr-2">🌐</span> Visit Website
+                </a>
+              )}
+              {directory.submission_url && directory.submission_url !== directory.url && (
+                <a
+                  href={directory.submission_url}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  class="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors"
+                >
+                  <span class="mr-2">📤</span> Submit Product
+                </a>
+              )}
+            </div>
+          </section>
         </article>
 
         <!-- Actions Sidebar (Right Column) -->
@@ -385,7 +546,9 @@ const structuredData = [
             <DirectoryDetailActions
               client:load
               directoryId={directory.id}
-              helpfulCount={directory.helpful_count || 0}
+              averageRating={directory.average_rating || null}
+              ratingCount={directory.rating_count || 0}
+              reviewCount={directory.review_count || 0}
             />
           </div>
         </aside>
@@ -427,9 +590,17 @@ const structuredData = [
                         📂
                       </div>
                     )}
-                    <h3 class="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors">
-                      {related.name}
-                    </h3>
+                    <div class="flex-1 min-w-0">
+                      <h3 class="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors">
+                        {related.name}
+                      </h3>
+                      {related.average_rating ? (
+                        <div class="flex items-center text-sm">
+                          <span class="text-yellow-400">★</span>
+                          <span class="ml-1 text-gray-600">{related.average_rating.toFixed(1)}</span>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
 
                   {related.description && (
@@ -443,13 +614,19 @@ const structuredData = [
                       <span
                         class={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${getDrBadgeClass(related.domain_rating)}`}
                       >
-                        ⭐ DR: {related.domain_rating}
+                        DR: {related.domain_rating}
                       </span>
                     )}
 
                     {related.is_dofollow && (
                       <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                        🔗 Dofollow
+                        Dofollow
+                      </span>
+                    )}
+
+                    {related.pricing_type && (
+                      <span class={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${getPricingBadgeClass(related.pricing_type)}`}>
+                        {getPricingLabel(related)}
                       </span>
                     )}
                   </div>

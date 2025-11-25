@@ -189,12 +189,36 @@
             Clear Selection
           </button>
           <div class="flex gap-3">
-            <button
-              @click="handleExport"
-              class="px-4 py-2 text-primary bg-white border border-primary rounded-lg hover:bg-blue-50 transition-colors font-medium"
-            >
-              📥 Export List
-            </button>
+            <div class="relative" ref="exportDropdownRef">
+              <button
+                @click="showExportDropdown = !showExportDropdown"
+                class="px-4 py-2 text-primary bg-white border border-primary rounded-lg hover:bg-blue-50 transition-colors font-medium flex items-center space-x-2"
+              >
+                <span>📥 Export</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div
+                v-if="showExportDropdown"
+                class="absolute bottom-full mb-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[160px] z-10"
+              >
+                <button
+                  @click="handleExportCSV"
+                  class="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 flex items-center space-x-2"
+                >
+                  <span>📄</span>
+                  <span>Export as CSV</span>
+                </button>
+                <button
+                  @click="handleExportPDF"
+                  class="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 flex items-center space-x-2"
+                >
+                  <span>📑</span>
+                  <span>Export as PDF</span>
+                </button>
+              </div>
+            </div>
             <button @click="handleClose" class="btn-primary px-6">Done</button>
           </div>
         </div>
@@ -204,8 +228,9 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import Papa from "papaparse";
+import { jsPDF } from "jspdf";
 
 const props = defineProps({
   selectedDirectories: {
@@ -216,7 +241,25 @@ const props = defineProps({
 
 const emit = defineEmits(["close", "clear-selection"]);
 
-var completedDirectories = ref(new Set());
+const completedDirectories = ref(new Set());
+const showExportDropdown = ref(false);
+const exportDropdownRef = ref(null);
+
+// Close dropdown when clicking outside
+function handleClickOutside(event) {
+  if (exportDropdownRef.value && !exportDropdownRef.value.contains(event.target)) {
+    showExportDropdown.value = false;
+  }
+}
+
+onMounted(function () {
+  loadProgress();
+  document.addEventListener("click", handleClickOutside);
+});
+
+onUnmounted(function () {
+  document.removeEventListener("click", handleClickOutside);
+});
 
 const completedCount = computed(function () {
   return completedDirectories.value.size;
@@ -298,36 +341,126 @@ function getPricingClass(pricing) {
   return "bg-gray-100 text-gray-700";
 }
 
-function handleExport() {
-  var data = props.selectedDirectories.map(function (dir) {
+// Prepare comprehensive export data
+function prepareExportData() {
+  return props.selectedDirectories.map(function (dir) {
     return {
-      Name: dir.name,
-      URL: dir.url,
+      Name: dir.name || "",
+      URL: dir.url || "",
       "Domain Rating": dir.domain_rating || "N/A",
+      "Average Rating": dir.average_rating ? `${dir.average_rating}/5` : "No ratings",
+      "Rating Count": dir.rating_count || 0,
       Pricing: dir.pricing || "N/A",
       "Link Type": dir.is_dofollow ? "Dofollow" : "Nofollow",
-      Category: dir.category || "N/A",
+      Categories: Array.isArray(dir.categories) ? dir.categories.join(", ") : (dir.category || "N/A"),
+      "Organic Traffic": dir.organic_traffic ? dir.organic_traffic.toLocaleString() : "N/A",
+      "Avg Approval Days": dir.average_turnaround_days || "N/A",
+      "Traffic Level": dir.traffic_level || "N/A",
+      Completed: isCompleted(dir.id) ? "Yes" : "No",
     };
   });
+}
 
-  var csv = Papa.unparse(data);
+function handleExportCSV() {
+  showExportDropdown.value = false;
 
-  var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  var link = document.createElement("a");
-  var url = URL.createObjectURL(blob);
+  const data = prepareExportData();
+  const csv = Papa.unparse(data);
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
 
   link.setAttribute("href", url);
-  link.setAttribute("download", "directory-checklist.csv");
+  link.setAttribute("download", `directory-checklist-${new Date().toISOString().split('T')[0]}.csv`);
   link.style.visibility = "hidden";
 
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
 
-onMounted(function () {
-  loadProgress();
-});
+function handleExportPDF() {
+  showExportDropdown.value = false;
+
+  const doc = new jsPDF();
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 20;
+  let yPosition = margin;
+
+  // Title
+  doc.setFontSize(20);
+  doc.setFont(undefined, "bold");
+  doc.text("Directory Submission Checklist", margin, yPosition);
+  yPosition += 10;
+
+  // Subtitle with date and progress
+  doc.setFontSize(10);
+  doc.setFont(undefined, "normal");
+  doc.setTextColor(100);
+  doc.text(`Generated: ${new Date().toLocaleDateString()} | Progress: ${completedCount.value}/${props.selectedDirectories.length} (${progressPercentage.value}%)`, margin, yPosition);
+  yPosition += 15;
+
+  // Reset text color
+  doc.setTextColor(0);
+
+  // Sorted by completion status then DR
+  const sortedDirs = [...props.selectedDirectories].sort((a, b) => {
+    const aCompleted = completedDirectories.value.has(a.id);
+    const bCompleted = completedDirectories.value.has(b.id);
+    if (aCompleted !== bCompleted) return aCompleted ? 1 : -1;
+    return (b.domain_rating || 0) - (a.domain_rating || 0);
+  });
+
+  sortedDirs.forEach((dir, index) => {
+    const completed = isCompleted(dir.id);
+
+    // Check if we need a new page
+    if (yPosition > pageHeight - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+
+    // Checkbox indicator
+    doc.setFontSize(11);
+    doc.setFont(undefined, "bold");
+    const checkbox = completed ? "☑" : "☐";
+    doc.text(`${checkbox} ${dir.name || "Unknown"}`, margin, yPosition);
+
+    // URL
+    yPosition += 5;
+    doc.setFontSize(9);
+    doc.setFont(undefined, "normal");
+    doc.setTextColor(66, 133, 244);
+    doc.text(dir.url || "", margin + 5, yPosition);
+
+    // Details row
+    yPosition += 5;
+    doc.setTextColor(100);
+    const details = [];
+    if (dir.domain_rating) details.push(`DR: ${dir.domain_rating}`);
+    if (dir.pricing) details.push(dir.pricing);
+    details.push(dir.is_dofollow ? "Dofollow" : "Nofollow");
+    if (dir.average_rating) details.push(`★ ${dir.average_rating}`);
+    if (dir.organic_traffic) details.push(`Traffic: ${dir.organic_traffic.toLocaleString()}`);
+
+    doc.text(details.join(" • "), margin + 5, yPosition);
+
+    // Reset color and add spacing
+    doc.setTextColor(0);
+    yPosition += 10;
+  });
+
+  // Footer on last page
+  doc.setFontSize(8);
+  doc.setTextColor(150);
+  doc.text("Generated by Awesome Directories - awesome-directories.com", margin, pageHeight - 10);
+
+  // Save the PDF
+  doc.save(`directory-checklist-${new Date().toISOString().split('T')[0]}.pdf`);
+}
 
 watch(
   function () {
