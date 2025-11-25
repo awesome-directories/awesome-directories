@@ -80,9 +80,9 @@
           <div class="mb-3">
             <div class="relative">
               <label for="directory-search" class="sr-only">Search directories</label>
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg
-                  class="h-5 w-5 text-gray-400"
+                  class="h-5 w-5 text-gray-400 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -110,11 +110,11 @@
                   v-if="searchQuery"
                   id="search-clear"
                   @click="clearSearch"
-                  class="absolute inset-y-0 right-0 pr-3 flex items-center min-w-[44px] min-h-[44px] justify-center z-10 rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center justify-center min-w-[44px] min-h-[44px] rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors"
                   aria-label="Clear search"
                 >
                   <svg
-                    class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
+                    class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -888,6 +888,11 @@ function onTooltipLeave(el) {
 .search-input:focus {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   border-color: #3b82f6;
+}
+
+.search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .accordion-enter-active,
