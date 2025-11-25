@@ -285,7 +285,7 @@ const hasSubmissionInfo = directory.avg_approval_days ||
                     <div class="flex items-center">
                       <div class="flex">
                         {[1, 2, 3, 4, 5].map((star) => (
-                          <span class={`text-lg ${star <= Math.round(directory.average_rating) ? 'text-yellow-400' : 'text-gray-300'}`}>★</span>
+                          <span class={`text-lg ${star <= Math.round(directory.average_rating || 0) ? 'text-yellow-400' : 'text-gray-300'}`}>★</span>
                         ))}
                       </div>
                       <span class="ml-2 font-semibold text-gray-900">{directory.average_rating.toFixed(1)}</span>
@@ -594,7 +594,7 @@ const hasSubmissionInfo = directory.avg_approval_days ||
                       <h3 class="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors">
                         {related.name}
                       </h3>
-                      {related.average_rating ? (
+                      {related.average_rating != null ? (
                         <div class="flex items-center text-sm">
                           <span class="text-yellow-400">★</span>
                           <span class="ml-1 text-gray-600">{related.average_rating.toFixed(1)}</span>

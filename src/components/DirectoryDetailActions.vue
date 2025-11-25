@@ -40,7 +40,7 @@
               v-for="star in 5"
               :key="star"
               class="text-2xl"
-              :class="star <= Math.round(averageRating) ? 'text-yellow-400' : 'text-gray-300'"
+              :class="star <= Math.floor(averageRating + 0.5) ? 'text-yellow-400' : 'text-gray-300'"
             >
               ★
             </span>

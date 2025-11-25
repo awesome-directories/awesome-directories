@@ -117,7 +117,8 @@ function generateSlug(name, id) {
   }
 
   // Append part of ID to ensure uniqueness
-  return `${slug}-${id.substring(0, 8)}`;
+  const idStr = (typeof id === 'string') ? id : String(id);
+  return `${slug}-${idStr.substring(0, 8)}`;
 }
 
 /**

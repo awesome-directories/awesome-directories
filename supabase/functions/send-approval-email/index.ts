@@ -49,15 +49,15 @@ serve(async (req: Request) => {
   try {
     // Verify authorization
     const authHeader = req.headers.get("Authorization");
-    if (FUNCTION_SECRET && authHeader !== `Bearer ${FUNCTION_SECRET}`) {
-      // Also check for Supabase service role key
-      const apiKey = req.headers.get("apikey");
-      if (!apiKey) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
+    const apiKey = req.headers.get("apikey");
+    const isAuthValid = FUNCTION_SECRET
+      ? authHeader === `Bearer ${FUNCTION_SECRET}` || !!apiKey
+      : !!apiKey;
+    if (!isAuthValid) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     if (!RESEND_API_KEY) {
@@ -165,7 +165,7 @@ serve(async (req: Request) => {
  * Designed to be small, professional, and avoid spam filters
  */
 function generateApprovalEmail(payload: ApprovalPayload): string {
-  const { directory_name, directory_url, admin_notes } = payload;
+  const { directory_name, admin_notes } = payload;
 
   return `
 <!DOCTYPE html>

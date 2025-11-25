@@ -279,13 +279,21 @@ export function useProjects() {
     error.value = null;
 
     try {
+      // Fetch the existing submission to check submitted_at
+      const { data: existingSubmission, error: fetchError } = await supabase
+        .from("project_submissions")
+        .select("submitted_at")
+        .eq("id", submissionId)
+        .single();
+      if (fetchError) throw fetchError;
+
       const updates = {
         status,
         updated_at: new Date().toISOString(),
       };
 
-      // Set submitted_at if status is "submitted"
-      if (status === "submitted") {
+      // Set submitted_at if status is "submitted" and not already set
+      if (status === "submitted" && !existingSubmission?.submitted_at) {
         updates.submitted_at = new Date().toISOString();
       }
 

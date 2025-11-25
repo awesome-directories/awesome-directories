@@ -353,9 +353,9 @@ function prepareExportData() {
       Pricing: dir.pricing || "N/A",
       "Link Type": dir.is_dofollow ? "Dofollow" : "Nofollow",
       Categories: Array.isArray(dir.categories) ? dir.categories.join(", ") : (dir.category || "N/A"),
-      "Organic Traffic": dir.organic_traffic ? dir.organic_traffic.toLocaleString() : "N/A",
-      "Avg Approval Days": dir.average_turnaround_days || "N/A",
-      "Traffic Level": dir.traffic_level || "N/A",
+      "Organic Traffic": dir.organic_search_traffic ? dir.organic_search_traffic.toLocaleString() : "N/A",
+      "Avg Approval Days": dir.avg_approval_days || "N/A",
+      "Traffic Level": dir.traffic_estimate || "N/A",
       Completed: isCompleted(dir.id) ? "Yes" : "No",
     };
   });
@@ -444,7 +444,7 @@ function handleExportPDF() {
     if (dir.pricing) details.push(dir.pricing);
     details.push(dir.is_dofollow ? "Dofollow" : "Nofollow");
     if (dir.average_rating) details.push(`★ ${dir.average_rating}`);
-    if (dir.organic_traffic) details.push(`Traffic: ${dir.organic_traffic.toLocaleString()}`);
+    if (dir.organic_search_traffic) details.push(`Traffic: ${dir.organic_search_traffic.toLocaleString()}`);
 
     doc.text(details.join(" • "), margin + 5, yPosition);
 
