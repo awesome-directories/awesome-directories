@@ -96,8 +96,12 @@
         <div class="flex items-center space-x-1 text-sm text-gray-600">
           <span v-if="directory.average_rating" class="flex items-center">
             <span class="text-yellow-500">★</span>
-            <span class="ml-1 font-medium">{{ directory.average_rating.toFixed(1) }}</span>
-            <span class="text-gray-400 ml-1">({{ directory.rating_count || 0 }})</span>
+            <span class="ml-1 font-medium">{{
+              directory.average_rating.toFixed(1)
+            }}</span>
+            <span class="text-gray-400 ml-1"
+              >({{ directory.rating_count || 0 }})</span
+            >
           </span>
           <span v-else class="text-gray-400">No ratings yet</span>
         </div>

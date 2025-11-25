@@ -356,26 +356,20 @@ CREATE POLICY "Users can delete their project submissions"
 -- ============================================
 
 -- View for directory ratings with user info (for display)
-CREATE OR REPLACE VIEW directory_reviews_with_user AS
-SELECT
-  dr.id,
-  dr.directory_id,
-  dr.user_id,
-  dr.comment,
-  dr.created_at,
-  dr.updated_at,
-  drat.rating,
-  COALESCE(
-    raw_user_meta_data->>'full_name',
-    raw_user_meta_data->>'name',
-    split_part(au.email, '@', 1)
-  ) as user_name,
-  raw_user_meta_data->>'avatar_url' as user_avatar
-FROM directory_reviews dr
-LEFT JOIN directory_ratings drat ON drat.directory_id = dr.directory_id AND drat.user_id = dr.user_id
-LEFT JOIN auth.users au ON au.id = dr.user_id
-WHERE dr.comment IS NOT NULL;
-
+create view public.directory_reviews_with_user with (security_invoker = on) as
+ SELECT dr.id,
+    dr.directory_id,
+    dr.user_id,
+    dr.comment,
+    dr.created_at,
+    dr.updated_at,
+    drat.rating,
+    COALESCE(au.raw_user_meta_data ->> 'full_name'::text, au.raw_user_meta_data ->> 'name'::text, split_part(au.email::text, '@'::text, 1)) AS user_name,
+    au.raw_user_meta_data ->> 'avatar_url'::text AS user_avatar
+   FROM directory_reviews dr
+     LEFT JOIN directory_ratings drat ON drat.directory_id = dr.directory_id AND drat.user_id = dr.user_id
+     LEFT JOIN auth.users au ON au.id = dr.user_id
+  WHERE dr.comment IS NOT NULL;
 -- ============================================
 -- 8. COMMENTS
 -- ============================================

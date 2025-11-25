@@ -7,13 +7,27 @@
       role="alert"
       aria-live="assertive"
     >
-      <div class="bg-red-50 border border-red-200 rounded-lg p-4 sm:p-6 text-center">
+      <div
+        class="bg-red-50 border border-red-200 rounded-lg p-4 sm:p-6 text-center"
+      >
         <div class="text-red-600 mb-4">
-          <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            class="w-12 h-12 mx-auto"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
         </div>
-        <h2 class="text-lg font-semibold text-gray-900 mb-2">Failed to Load Directories</h2>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">
+          Failed to Load Directories
+        </h2>
         <p class="text-gray-600 mb-4">{{ error }}</p>
         <button
           @click="retryLoad"
@@ -30,7 +44,9 @@
       <div
         class="bg-white border-b border-gray-200 sticky top-0 sm:top-16 z-40 shadow-sm"
       >
-        <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
+        <div
+          class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4"
+        >
           <!-- First-Visit Tooltip -->
           <transition
             name="slide-down"
@@ -50,7 +66,8 @@
                   We pre-filtered to show you the best directories
                 </p>
                 <p class="text-gray-600">
-                  DoFollow links with high DR (70+). Tap "All Directories" to see everything.
+                  DoFollow links with high DR (70+). Tap "All Directories" to
+                  see everything.
                 </p>
               </div>
               <button
@@ -79,8 +96,12 @@
           <!-- Search Bar -->
           <div class="mb-3">
             <div class="relative">
-              <label for="directory-search" class="sr-only">Search directories</label>
-              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <label for="directory-search" class="sr-only"
+                >Search directories</label
+              >
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
                 <svg
                   class="h-5 w-5 text-gray-400 flex-shrink-0"
                   fill="none"
@@ -152,7 +173,9 @@
                 :aria-label="`Apply ${preset.label} filter`"
                 :aria-pressed="isActivePreset(preset)"
               >
-                <span class="inline-block mr-1" aria-hidden="true">{{ preset.icon }}</span>
+                <span class="inline-block mr-1" aria-hidden="true">{{
+                  preset.icon
+                }}</span>
                 <span>{{ preset.label }}</span>
               </button>
             </div>
@@ -356,11 +379,7 @@
       <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
         <!-- Loading Skeleton -->
         <div v-if="isLoading" class="space-y-4">
-          <div
-            v-for="i in 6"
-            :key="i"
-            class="animate-pulse"
-          >
+          <div v-for="i in 6" :key="i" class="animate-pulse">
             <div class="bg-gray-200 rounded-lg h-48"></div>
           </div>
         </div>
@@ -371,8 +390,18 @@
           class="text-center py-12 px-4"
         >
           <div class="mb-4">
-            <svg class="w-16 h-16 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              class="w-16 h-16 mx-auto text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           </div>
           <h2 class="text-xl font-semibold text-gray-900 mb-2">
@@ -414,8 +443,11 @@
             aria-label="Load more directories"
           >
             <span>Load More</span>
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white bg-opacity-20">
-              {{ (visibleDirectories.length - itemsToShow).toLocaleString() }} remaining
+            <span
+              class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white bg-opacity-20"
+            >
+              {{ (visibleDirectories.length - itemsToShow).toLocaleString() }}
+              remaining
             </span>
           </button>
         </div>
@@ -673,7 +705,8 @@ async function loadDirectories() {
     applyFilters();
   } catch (err) {
     console.error("Failed to load directories:", err);
-    error.value = "Unable to load directories. Please check your connection and try again.";
+    error.value =
+      "Unable to load directories. Please check your connection and try again.";
     isLoading.value = false;
   }
 }
@@ -828,44 +861,44 @@ function loadMore() {
 }
 
 function onEnter(el) {
-  el.style.height = '0';
-  el.style.overflow = 'hidden';
+  el.style.height = "0";
+  el.style.overflow = "hidden";
 
   requestAnimationFrame(function setHeight() {
-    el.style.height = el.scrollHeight + 'px';
+    el.style.height = el.scrollHeight + "px";
   });
 }
 
 function onAfterEnter(el) {
-  el.style.height = 'auto';
-  el.style.overflow = 'visible';
+  el.style.height = "auto";
+  el.style.overflow = "visible";
 }
 
 function onLeave(el) {
-  el.style.height = el.scrollHeight + 'px';
-  el.style.overflow = 'hidden';
+  el.style.height = el.scrollHeight + "px";
+  el.style.overflow = "hidden";
 
   requestAnimationFrame(function collapseHeight() {
     requestAnimationFrame(function setZeroHeight() {
-      el.style.height = '0';
+      el.style.height = "0";
     });
   });
 }
 
 function onTooltipEnter(el) {
-  el.style.maxHeight = '0';
-  el.style.overflow = 'hidden';
-  el.style.opacity = '0';
+  el.style.maxHeight = "0";
+  el.style.overflow = "hidden";
+  el.style.opacity = "0";
 }
 
 function onTooltipAfterEnter(el) {
-  el.style.maxHeight = el.scrollHeight + 'px';
-  el.style.opacity = '1';
+  el.style.maxHeight = el.scrollHeight + "px";
+  el.style.opacity = "1";
 }
 
 function onTooltipLeave(el) {
-  el.style.maxHeight = '0';
-  el.style.opacity = '0';
+  el.style.maxHeight = "0";
+  el.style.opacity = "0";
 }
 </script>
 
@@ -885,7 +918,9 @@ function onTooltipLeave(el) {
 
 .search-input {
   outline: none;
-  transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  transition:
+    box-shadow 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
 }
 
 .search-input:focus {
@@ -948,11 +983,12 @@ function onTooltipLeave(el) {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
-    opacity: .5;
+    opacity: 0.5;
   }
 }
 </style>

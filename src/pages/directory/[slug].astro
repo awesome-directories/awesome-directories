@@ -154,14 +154,16 @@ const structuredData = [
 ];
 
 // Check if we have any SEO metrics to display
-const hasSeoMetrics = directory.domain_rating ||
+const hasSeoMetrics =
+  directory.domain_rating ||
   directory.organic_search_traffic ||
   directory.ranking_keywords ||
   directory.backlinks_count ||
   directory.referring_domains;
 
 // Check if we have submission info
-const hasSubmissionInfo = directory.avg_approval_days ||
+const hasSubmissionInfo =
+  directory.avg_approval_days ||
   directory.submission_url ||
   directory.pricing_type;
 ---
@@ -281,19 +283,29 @@ const hasSubmissionInfo = directory.avg_approval_days ||
 
                 <!-- Rating Display -->
                 <div class="flex items-center gap-3 mb-4">
-                  {directory.average_rating ? (
-                    <div class="flex items-center">
-                      <div class="flex">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <span class={`text-lg ${star <= Math.round(directory.average_rating || 0) ? 'text-yellow-400' : 'text-gray-300'}`}>★</span>
-                        ))}
+                  {
+                    directory.average_rating ? (
+                      <div class="flex items-center">
+                        <div class="flex">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <span
+                              class={`text-lg ${star <= Math.round(directory.average_rating || 0) ? "text-yellow-400" : "text-gray-300"}`}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                        <span class="ml-2 font-semibold text-gray-900">
+                          {directory.average_rating.toFixed(1)}
+                        </span>
+                        <span class="ml-1 text-sm text-gray-500">
+                          ({directory.rating_count || 0} reviews)
+                        </span>
                       </div>
-                      <span class="ml-2 font-semibold text-gray-900">{directory.average_rating.toFixed(1)}</span>
-                      <span class="ml-1 text-sm text-gray-500">({directory.rating_count || 0} reviews)</span>
-                    </div>
-                  ) : (
-                    <span class="text-sm text-gray-500">No ratings yet</span>
-                  )}
+                    ) : (
+                      <span class="text-sm text-gray-500">No ratings yet</span>
+                    )
+                  }
                 </div>
 
                 <!-- Badges -->
@@ -326,7 +338,9 @@ const hasSubmissionInfo = directory.avg_approval_days ||
 
                   {
                     directory.traffic_estimate && (
-                      <span class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getTrafficBadgeClass(directory.traffic_estimate)}`}>
+                      <span
+                        class={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getTrafficBadgeClass(directory.traffic_estimate)}`}
+                      >
                         {getTrafficLabel(directory.traffic_estimate)} Traffic
                       </span>
                     )
@@ -367,130 +381,134 @@ const hasSubmissionInfo = directory.avg_approval_days ||
           </header>
 
           <!-- Submission Info -->
-          {hasSubmissionInfo && (
-            <section
-              class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
-              aria-labelledby="submission-heading"
-            >
-              <h2
-                id="submission-heading"
-                class="text-xl font-bold text-gray-900 mb-4"
+          {
+            hasSubmissionInfo && (
+              <section
+                class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
+                aria-labelledby="submission-heading"
               >
-                Submission Details
-              </h2>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                  <div class="text-2xl font-bold text-gray-900">
-                    {getPricingLabel(directory)}
+                <h2
+                  id="submission-heading"
+                  class="text-xl font-bold text-gray-900 mb-4"
+                >
+                  Submission Details
+                </h2>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-2xl font-bold text-gray-900">
+                      {getPricingLabel(directory)}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">Pricing</div>
                   </div>
-                  <div class="text-sm text-gray-600 mt-1">Pricing</div>
-                </div>
 
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                  <div class="text-2xl font-bold text-gray-900">
-                    {directory.is_dofollow ? "Yes" : "No"}
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-2xl font-bold text-gray-900">
+                      {directory.is_dofollow ? "Yes" : "No"}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">Dofollow Link</div>
                   </div>
-                  <div class="text-sm text-gray-600 mt-1">Dofollow Link</div>
-                </div>
 
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                  <div class="text-2xl font-bold text-gray-900">
-                    {directory.avg_approval_days ? `${directory.avg_approval_days} days` : "N/A"}
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-2xl font-bold text-gray-900">
+                      {directory.avg_approval_days
+                        ? `${directory.avg_approval_days} days`
+                        : "N/A"}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">Avg. Approval</div>
                   </div>
-                  <div class="text-sm text-gray-600 mt-1">Avg. Approval</div>
-                </div>
 
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                  <div class="text-2xl font-bold text-gray-900">
-                    {getTrafficLabel(directory.traffic_estimate) || "N/A"}
+                  <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-2xl font-bold text-gray-900">
+                      {getTrafficLabel(directory.traffic_estimate) || "N/A"}
+                    </div>
+                    <div class="text-sm text-gray-600 mt-1">Traffic Level</div>
                   </div>
-                  <div class="text-sm text-gray-600 mt-1">Traffic Level</div>
                 </div>
-              </div>
-            </section>
-          )}
+              </section>
+            )
+          }
 
           <!-- SEO & Authority Metrics -->
-          {hasSeoMetrics && (
-            <section
-              class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
-              aria-labelledby="seo-heading"
-            >
-              <h2
-                id="seo-heading"
-                class="text-xl font-bold text-gray-900 mb-4"
+          {
+            hasSeoMetrics && (
+              <section
+                class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
+                aria-labelledby="seo-heading"
               >
-                SEO & Authority Metrics
-              </h2>
-              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                {directory.domain_rating && (
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-3xl font-bold text-primary">
-                      {directory.domain_rating}
+                <h2
+                  id="seo-heading"
+                  class="text-xl font-bold text-gray-900 mb-4"
+                >
+                  SEO & Authority Metrics
+                </h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {directory.domain_rating && (
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div class="text-3xl font-bold text-primary">
+                        {directory.domain_rating}
+                      </div>
+                      <div class="text-sm text-gray-600 mt-1">
+                        Domain Rating
+                      </div>
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">
-                      Domain Rating
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {directory.organic_search_traffic && (
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-3xl font-bold text-primary">
-                      {formatNumber(directory.organic_search_traffic)}
+                  {directory.organic_search_traffic && (
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div class="text-3xl font-bold text-primary">
+                        {formatNumber(directory.organic_search_traffic)}
+                      </div>
+                      <div class="text-sm text-gray-600 mt-1">
+                        Monthly Traffic
+                      </div>
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">
-                      Monthly Traffic
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {directory.ranking_keywords && (
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-3xl font-bold text-primary">
-                      {formatNumber(directory.ranking_keywords)}
+                  {directory.ranking_keywords && (
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div class="text-3xl font-bold text-primary">
+                        {formatNumber(directory.ranking_keywords)}
+                      </div>
+                      <div class="text-sm text-gray-600 mt-1">
+                        Ranking Keywords
+                      </div>
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">
-                      Ranking Keywords
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {directory.backlinks_count && (
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-3xl font-bold text-primary">
-                      {formatNumber(directory.backlinks_count)}
+                  {directory.backlinks_count && (
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div class="text-3xl font-bold text-primary">
+                        {formatNumber(directory.backlinks_count)}
+                      </div>
+                      <div class="text-sm text-gray-600 mt-1">Backlinks</div>
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">
-                      Backlinks
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {directory.referring_domains && (
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-3xl font-bold text-primary">
-                      {formatNumber(directory.referring_domains)}
+                  {directory.referring_domains && (
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div class="text-3xl font-bold text-primary">
+                        {formatNumber(directory.referring_domains)}
+                      </div>
+                      <div class="text-sm text-gray-600 mt-1">
+                        Referring Domains
+                      </div>
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">
-                      Referring Domains
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {getTrustScore(directory.spam_score) !== null && (
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class={`text-3xl font-bold ${getTrustScore(directory.spam_score) >= 70 ? 'text-green-600' : getTrustScore(directory.spam_score) >= 40 ? 'text-yellow-600' : 'text-red-600'}`}>
-                      {getTrustScore(directory.spam_score)}%
+                  {getTrustScore(directory.spam_score) !== null && (
+                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                      <div
+                        class={`text-3xl font-bold ${getTrustScore(directory.spam_score) >= 70 ? "text-green-600" : getTrustScore(directory.spam_score) >= 40 ? "text-yellow-600" : "text-red-600"}`}
+                      >
+                        {getTrustScore(directory.spam_score)}%
+                      </div>
+                      <div class="text-sm text-gray-600 mt-1">Trust Score</div>
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">
-                      Trust Score
-                    </div>
-                  </div>
-                )}
-              </div>
-            </section>
-          )}
+                  )}
+                </div>
+              </section>
+            )
+          }
 
           <!-- Description -->
           {
@@ -516,26 +534,31 @@ const hasSubmissionInfo = directory.avg_approval_days ||
           <section class="bg-white rounded-lg shadow-sm p-6 sm:p-8">
             <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Links</h2>
             <div class="flex flex-wrap gap-3">
-              {directory.url && (
-                <a
-                  href={directory.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
-                >
-                  <span class="mr-2">🌐</span> Visit Website
-                </a>
-              )}
-              {directory.submission_url && directory.submission_url !== directory.url && (
-                <a
-                  href={directory.submission_url}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                  class="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors"
-                >
-                  <span class="mr-2">📤</span> Submit Product
-                </a>
-              )}
+              {
+                directory.url && (
+                  <a
+                    href={directory.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+                  >
+                    <span class="mr-2">🌐</span> Visit Website
+                  </a>
+                )
+              }
+              {
+                directory.submission_url &&
+                  directory.submission_url !== directory.url && (
+                    <a
+                      href={directory.submission_url}
+                      target="_blank"
+                      rel="noopener noreferrer nofollow"
+                      class="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors"
+                    >
+                      <span class="mr-2">📤</span> Submit Product
+                    </a>
+                  )
+              }
             </div>
           </section>
         </article>
@@ -597,7 +620,9 @@ const hasSubmissionInfo = directory.avg_approval_days ||
                       {related.average_rating != null ? (
                         <div class="flex items-center text-sm">
                           <span class="text-yellow-400">★</span>
-                          <span class="ml-1 text-gray-600">{related.average_rating.toFixed(1)}</span>
+                          <span class="ml-1 text-gray-600">
+                            {related.average_rating.toFixed(1)}
+                          </span>
                         </div>
                       ) : null}
                     </div>
@@ -625,7 +650,9 @@ const hasSubmissionInfo = directory.avg_approval_days ||
                     )}
 
                     {related.pricing_type && (
-                      <span class={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${getPricingBadgeClass(related.pricing_type)}`}>
+                      <span
+                        class={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${getPricingBadgeClass(related.pricing_type)}`}
+                      >
                         {getPricingLabel(related)}
                       </span>
                     )}

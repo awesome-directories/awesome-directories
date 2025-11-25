@@ -7,7 +7,8 @@
         Sign in to Track Submissions
       </h2>
       <p class="text-gray-600 mb-6">
-        Create projects and track your directory submissions across multiple products.
+        Create projects and track your directory submissions across multiple
+        products.
       </p>
       <button @click="handleSignIn" class="btn-primary">Sign In</button>
     </div>
@@ -23,10 +24,16 @@
     <!-- Main Content -->
     <div v-else>
       <!-- Header with Project Selector -->
-      <div class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div
+        class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+      >
         <div>
-          <h1 class="text-2xl font-bold text-gray-900 mb-1">Submission Tracker</h1>
-          <p class="text-gray-600 text-sm">Track where you've submitted your products</p>
+          <h1 class="text-2xl font-bold text-gray-900 mb-1">
+            Submission Tracker
+          </h1>
+          <p class="text-gray-600 text-sm">
+            Track where you've submitted your products
+          </p>
         </div>
 
         <div class="flex items-center gap-3">
@@ -37,13 +44,29 @@
               @change="onProjectChange"
               class="appearance-none pl-4 pr-10 py-2.5 border border-gray-300 rounded-lg text-sm font-medium bg-white focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer"
             >
-              <option v-for="project in projects" :key="project.id" :value="project.id">
+              <option
+                v-for="project in projects"
+                :key="project.id"
+                :value="project.id"
+              >
                 {{ project.name }}
               </option>
             </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-              <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3"
+            >
+              <svg
+                class="h-4 w-4 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </div>
           </div>
@@ -59,11 +82,17 @@
       </div>
 
       <!-- No Projects State -->
-      <div v-if="projects.length === 0" class="bg-white rounded-lg shadow-sm p-8 text-center">
+      <div
+        v-if="projects.length === 0"
+        class="bg-white rounded-lg shadow-sm p-8 text-center"
+      >
         <div class="text-5xl mb-4">📋</div>
-        <h2 class="text-xl font-bold text-gray-900 mb-2">Create Your First Project</h2>
+        <h2 class="text-xl font-bold text-gray-900 mb-2">
+          Create Your First Project
+        </h2>
         <p class="text-gray-600 mb-6">
-          Start tracking your directory submissions by creating a project for your product.
+          Start tracking your directory submissions by creating a project for
+          your product.
         </p>
         <button @click="showCreateProject = true" class="btn-primary">
           Create Project
@@ -75,27 +104,39 @@
         <!-- Project Stats -->
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
           <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-            <div class="text-2xl font-bold text-gray-900">{{ submissionStats.total }}</div>
+            <div class="text-2xl font-bold text-gray-900">
+              {{ submissionStats.total }}
+            </div>
             <div class="text-xs text-gray-500 mt-1">Total Tracked</div>
           </div>
           <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-            <div class="text-2xl font-bold text-yellow-600">{{ submissionStats.in_progress }}</div>
+            <div class="text-2xl font-bold text-yellow-600">
+              {{ submissionStats.in_progress }}
+            </div>
             <div class="text-xs text-gray-500 mt-1">In Progress</div>
           </div>
           <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-            <div class="text-2xl font-bold text-blue-600">{{ submissionStats.submitted }}</div>
+            <div class="text-2xl font-bold text-blue-600">
+              {{ submissionStats.submitted }}
+            </div>
             <div class="text-xs text-gray-500 mt-1">Submitted</div>
           </div>
           <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-            <div class="text-2xl font-bold text-green-600">{{ submissionStats.approved }}</div>
+            <div class="text-2xl font-bold text-green-600">
+              {{ submissionStats.approved }}
+            </div>
             <div class="text-xs text-gray-500 mt-1">Approved</div>
           </div>
           <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-            <div class="text-2xl font-bold text-red-600">{{ submissionStats.rejected }}</div>
+            <div class="text-2xl font-bold text-red-600">
+              {{ submissionStats.rejected }}
+            </div>
             <div class="text-xs text-gray-500 mt-1">Rejected</div>
           </div>
           <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-            <div class="text-2xl font-bold text-purple-600">{{ submissionStats.featured }}</div>
+            <div class="text-2xl font-bold text-purple-600">
+              {{ submissionStats.featured }}
+            </div>
             <div class="text-xs text-gray-500 mt-1">Featured</div>
           </div>
         </div>
@@ -108,7 +149,7 @@
               'px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px',
               activeTab === 'submissions'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-gray-500 hover:text-gray-700',
             ]"
           >
             Submissions
@@ -119,11 +160,14 @@
               'px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px',
               activeTab === 'pending'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-gray-500 hover:text-gray-700',
             ]"
           >
             My Directory Submissions
-            <span v-if="pendingDirectories.length > 0" class="ml-1 px-2 py-0.5 text-xs bg-yellow-100 text-yellow-800 rounded-full">
+            <span
+              v-if="pendingDirectories.length > 0"
+              class="ml-1 px-2 py-0.5 text-xs bg-yellow-100 text-yellow-800 rounded-full"
+            >
               {{ pendingDirectories.length }}
             </span>
           </button>
@@ -133,7 +177,7 @@
               'px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px',
               activeTab === 'settings'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : 'border-transparent text-gray-500 hover:text-gray-700',
             ]"
           >
             Project Settings
@@ -143,9 +187,13 @@
         <!-- Submissions Tab -->
         <div v-if="activeTab === 'submissions'">
           <!-- Filter Bar -->
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+          <div
+            class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6"
+          >
             <div class="flex items-center gap-2">
-              <label for="status-filter" class="text-sm text-gray-600">Status:</label>
+              <label for="status-filter" class="text-sm text-gray-600"
+                >Status:</label
+              >
               <select
                 id="status-filter"
                 v-model="statusFilter"
@@ -211,7 +259,9 @@
                     <input
                       type="url"
                       :value="submission.submission_link || ''"
-                      @blur="updateSubmissionLink(submission.id, $event.target.value)"
+                      @blur="
+                        updateSubmissionLink(submission.id, $event.target.value)
+                      "
                       placeholder="Add your submission link (e.g., producthunt.com/products/yourapp)"
                       class="flex-1 text-sm px-3 py-1.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
@@ -223,14 +273,27 @@
                       class="text-primary hover:text-primary-dark"
                       title="Open submission link"
                     >
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
                       </svg>
                     </a>
                   </div>
 
                   <!-- Notes -->
-                  <div v-if="submission.notes" class="text-sm text-gray-600 mb-2">
+                  <div
+                    v-if="submission.notes"
+                    class="text-sm text-gray-600 mb-2"
+                  >
                     {{ submission.notes }}
                   </div>
 
@@ -250,8 +313,18 @@
                   class="text-gray-400 hover:text-red-600 transition-colors"
                   title="Remove tracking"
                 >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
                   </svg>
                 </button>
               </div>
@@ -260,7 +333,9 @@
 
           <!-- Empty State -->
           <div v-else class="bg-gray-50 rounded-lg p-8 text-center">
-            <p class="text-gray-600 mb-4">No submissions tracked yet for this project.</p>
+            <p class="text-gray-600 mb-4">
+              No submissions tracked yet for this project.
+            </p>
             <button
               @click="showAddSubmission = true"
               class="text-sm font-medium text-primary hover:text-primary-dark"
@@ -284,7 +359,9 @@
                     <h3 class="font-bold text-xl text-gray-900">
                       {{ submission.name }}
                     </h3>
-                    <span :class="getPendingStatusBadgeClass(submission.status)">
+                    <span
+                      :class="getPendingStatusBadgeClass(submission.status)"
+                    >
                       {{ getPendingStatusLabel(submission.status) }}
                     </span>
                   </div>
@@ -342,13 +419,17 @@
                 <p class="text-sm font-semibold text-blue-900 mb-1">
                   Reviewer Notes:
                 </p>
-                <p class="text-sm text-blue-800">{{ submission.admin_notes }}</p>
+                <p class="text-sm text-blue-800">
+                  {{ submission.admin_notes }}
+                </p>
               </div>
             </div>
           </div>
 
           <div v-else class="bg-gray-50 rounded-lg p-8 text-center">
-            <p class="text-gray-600 mb-4">You haven't submitted any directories for review yet.</p>
+            <p class="text-gray-600 mb-4">
+              You haven't submitted any directories for review yet.
+            </p>
             <a href="/submit" class="btn-primary inline-block">
               Submit a Directory
             </a>
@@ -356,12 +437,17 @@
         </div>
 
         <!-- Project Settings Tab -->
-        <div v-if="activeTab === 'settings'" class="bg-white rounded-lg shadow-sm p-6">
+        <div
+          v-if="activeTab === 'settings'"
+          class="bg-white rounded-lg shadow-sm p-6"
+        >
           <h3 class="text-lg font-bold text-gray-900 mb-6">Project Settings</h3>
 
           <div class="space-y-4 max-w-md">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Project Name</label
+              >
               <input
                 v-model="editingProject.name"
                 type="text"
@@ -370,7 +456,9 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Website URL</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Website URL</label
+              >
               <input
                 v-model="editingProject.url"
                 type="url"
@@ -380,7 +468,9 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Description</label
+              >
               <textarea
                 v-model="editingProject.description"
                 rows="3"
@@ -395,7 +485,7 @@
                 :disabled="isSaving"
                 class="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50"
               >
-                {{ isSaving ? 'Saving...' : 'Save Changes' }}
+                {{ isSaving ? "Saving..." : "Save Changes" }}
               </button>
 
               <button
@@ -425,7 +515,9 @@
 
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Project Name *</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Project Name *</label
+            >
             <input
               v-model="newProject.name"
               type="text"
@@ -435,7 +527,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Website URL</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Website URL</label
+            >
             <input
               v-model="newProject.url"
               type="url"
@@ -445,7 +539,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Description</label
+            >
             <textarea
               v-model="newProject.description"
               rows="2"
@@ -467,7 +563,7 @@
             :disabled="!newProject.name || isCreating"
             class="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50"
           >
-            {{ isCreating ? 'Creating...' : 'Create Project' }}
+            {{ isCreating ? "Creating..." : "Create Project" }}
           </button>
         </div>
       </div>
@@ -525,7 +621,16 @@ const showAddSubmission = ref(false);
 
 // Computed
 const submissionStats = computed(() => {
-  if (!selectedProjectId.value) return { total: 0, not_started: 0, in_progress: 0, submitted: 0, approved: 0, rejected: 0, featured: 0 };
+  if (!selectedProjectId.value)
+    return {
+      total: 0,
+      not_started: 0,
+      in_progress: 0,
+      submitted: 0,
+      approved: 0,
+      rejected: 0,
+      featured: 0,
+    };
   return getSubmissionStats(selectedProjectId.value);
 });
 
@@ -609,7 +714,9 @@ function handleSignIn() {
 
 async function onProjectChange() {
   if (selectedProjectId.value) {
-    const project = projects.value.find((p) => p.id === selectedProjectId.value);
+    const project = projects.value.find(
+      (p) => p.id === selectedProjectId.value,
+    );
     if (project) {
       editingProject.value = { ...project };
     }
@@ -644,7 +751,10 @@ async function saveProjectSettings() {
 
   isSaving.value = true;
   try {
-    const result = await updateProject(selectedProjectId.value, editingProject.value);
+    const result = await updateProject(
+      selectedProjectId.value,
+      editingProject.value,
+    );
     if (!result.success) {
       alert(result.error || "Failed to save settings");
     }
@@ -660,7 +770,11 @@ async function confirmDeleteProject() {
   if (!selectedProjectId.value) return;
 
   const project = projects.value.find((p) => p.id === selectedProjectId.value);
-  if (!confirm(`Are you sure you want to delete "${project?.name}"? This will also delete all submission tracking data for this project.`)) {
+  if (
+    !confirm(
+      `Are you sure you want to delete "${project?.name}"? This will also delete all submission tracking data for this project.`,
+    )
+  ) {
     return;
   }
 
@@ -734,7 +848,8 @@ function getStatusSelectClass(status) {
 }
 
 function getPendingStatusBadgeClass(status) {
-  const baseClass = "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold";
+  const baseClass =
+    "inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold";
   switch (status) {
     case "pending":
       return `${baseClass} bg-yellow-100 text-yellow-800 border border-yellow-300`;
@@ -771,10 +886,10 @@ function formatDate(dateString) {
 
 function handleExport() {
   const data = filteredSubmissions.value.map((sub) => ({
-    "Directory": getDirectoryName(sub.directory_id),
-    "Status": sub.status,
+    Directory: getDirectoryName(sub.directory_id),
+    Status: sub.status,
     "Submission Link": sub.submission_link || "",
-    "Notes": sub.notes || "",
+    Notes: sub.notes || "",
     "Submitted At": sub.submitted_at ? formatDate(sub.submitted_at) : "",
     "Created At": formatDate(sub.created_at),
   }));

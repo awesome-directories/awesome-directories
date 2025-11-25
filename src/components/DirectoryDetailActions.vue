@@ -20,7 +20,9 @@
           @click="handleAddToProject"
           :disabled="isPendingSubmission || !user"
           class="w-full inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-300"
-          :title="!user ? 'Sign in to track submissions' : 'Add to your project'"
+          :title="
+            !user ? 'Sign in to track submissions' : 'Add to your project'
+          "
         >
           <span class="text-xl mr-2">📋</span>
           <span>Track Submission</span>
@@ -40,17 +42,21 @@
               v-for="star in 5"
               :key="star"
               class="text-2xl"
-              :class="star <= Math.floor(averageRating + 0.5) ? 'text-yellow-400' : 'text-gray-300'"
+              :class="
+                star <= Math.floor(averageRating + 0.5)
+                  ? 'text-yellow-400'
+                  : 'text-gray-300'
+              "
             >
               ★
             </span>
           </div>
           <span class="text-lg font-semibold text-gray-900">
-            {{ averageRating ? averageRating.toFixed(1) : '—' }}
+            {{ averageRating ? averageRating.toFixed(1) : "—" }}
           </span>
         </div>
         <span class="text-sm text-gray-500">
-          {{ ratingCount }} {{ ratingCount === 1 ? 'rating' : 'ratings' }}
+          {{ ratingCount }} {{ ratingCount === 1 ? "rating" : "ratings" }}
         </span>
       </div>
 
@@ -98,7 +104,10 @@
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-bold text-gray-900">
           Reviews
-          <span v-if="reviewCount > 0" class="text-gray-500 font-normal text-base">
+          <span
+            v-if="reviewCount > 0"
+            class="text-gray-500 font-normal text-base"
+          >
             ({{ reviewCount }})
           </span>
         </h2>
@@ -111,7 +120,7 @@
           class="w-full inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200"
         >
           <span class="mr-2">✍️</span>
-          {{ showReviewForm ? 'Cancel' : 'Write a Review' }}
+          {{ showReviewForm ? "Cancel" : "Write a Review" }}
         </button>
 
         <!-- Review Form -->
@@ -129,7 +138,7 @@
               :disabled="!newReview.trim() || isSubmittingReview"
               class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {{ isSubmittingReview ? 'Submitting...' : 'Submit Review' }}
+              {{ isSubmittingReview ? "Submitting..." : "Submit Review" }}
             </button>
           </div>
         </div>
@@ -154,13 +163,13 @@
                 v-else
                 class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm font-medium"
               >
-                {{ (review.user_name || 'U').charAt(0).toUpperCase() }}
+                {{ (review.user_name || "U").charAt(0).toUpperCase() }}
               </div>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center space-x-2 mb-1">
                 <span class="font-medium text-gray-900 text-sm">
-                  {{ review.user_name || 'Anonymous' }}
+                  {{ review.user_name || "Anonymous" }}
                 </span>
                 <span v-if="review.rating" class="flex items-center text-sm">
                   <span class="text-yellow-400">★</span>
@@ -178,7 +187,9 @@
 
       <!-- Empty State -->
       <div v-else class="text-center py-4">
-        <p class="text-gray-500 text-sm">No reviews yet. Be the first to share your experience!</p>
+        <p class="text-gray-500 text-sm">
+          No reviews yet. Be the first to share your experience!
+        </p>
       </div>
 
       <!-- Load More -->
@@ -273,12 +284,14 @@ async function loadReviews() {
   try {
     const { data, error } = await supabase
       .from("directory_reviews")
-      .select(`
+      .select(
+        `
         id,
         comment,
         created_at,
         user_id
-      `)
+      `,
+      )
       .eq("directory_id", props.directoryId)
       .not("comment", "is", null)
       .order("created_at", { ascending: false })
@@ -303,7 +316,7 @@ async function loadReviews() {
           user_name: "User", // Will be populated from auth metadata if available
           user_avatar: null,
         };
-      })
+      }),
     );
 
     reviews.value = reviewsWithDetails;
@@ -320,12 +333,14 @@ async function loadMoreReviews() {
   try {
     const { data, error } = await supabase
       .from("directory_reviews")
-      .select(`
+      .select(
+        `
         id,
         comment,
         created_at,
         user_id
-      `)
+      `,
+      )
       .eq("directory_id", props.directoryId)
       .not("comment", "is", null)
       .order("created_at", { ascending: false })
@@ -348,7 +363,7 @@ async function loadMoreReviews() {
           user_name: "User",
           user_avatar: null,
         };
-      })
+      }),
     );
 
     reviews.value = [...reviews.value, ...newReviewsWithDetails];
@@ -364,16 +379,17 @@ async function handleRating(stars) {
   try {
     isSubmittingRating.value = true;
 
-    const { error } = await supabase
-      .from("directory_ratings")
-      .upsert({
+    const { error } = await supabase.from("directory_ratings").upsert(
+      {
         directory_id: props.directoryId,
         user_id: user.value.id,
         rating: stars,
         updated_at: new Date().toISOString(),
-      }, {
+      },
+      {
         onConflict: "user_id,directory_id",
-      });
+      },
+    );
 
     if (error) throw error;
 
@@ -389,7 +405,8 @@ async function handleRating(stars) {
 }
 
 async function submitReview() {
-  if (!user.value || !newReview.value.trim() || isSubmittingReview.value) return;
+  if (!user.value || !newReview.value.trim() || isSubmittingReview.value)
+    return;
 
   try {
     isSubmittingReview.value = true;
@@ -410,7 +427,10 @@ async function submitReview() {
     const newReviewObj = {
       ...data,
       rating: userRating.value || null,
-      user_name: user.value.user_metadata?.full_name || user.value.email?.split("@")[0] || "You",
+      user_name:
+        user.value.user_metadata?.full_name ||
+        user.value.email?.split("@")[0] ||
+        "You",
       user_avatar: user.value.user_metadata?.avatar_url || null,
     };
 

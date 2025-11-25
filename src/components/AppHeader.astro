@@ -299,7 +299,10 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
     menuIconOpen?.classList.toggle("hidden");
     menuIconClose?.classList.toggle("hidden");
 
-    mobileMenuButton?.setAttribute("aria-expanded", isHidden ? "true" : "false");
+    mobileMenuButton?.setAttribute(
+      "aria-expanded",
+      isHidden ? "true" : "false",
+    );
   });
 
   var mobileMenuLinks = document.querySelectorAll(".mobile-menu-link");

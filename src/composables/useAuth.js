@@ -10,6 +10,7 @@ import {
   setLoading,
   clearAuth,
 } from "@/stores/auth";
+import log from "@/lib/logger";
 
 // Initialize auth state at module level (runs once when first imported)
 let authInitialized = false;
@@ -55,6 +56,12 @@ if (typeof window !== "undefined") {
   initializeAuth();
 }
 
+function getRedirectUrl() {
+  const redirectUrl = window.location.origin + import.meta.env.BASE_URL;
+  log.info("Init auth module with redirect: ", redirectUrl);
+  return redirectUrl;
+}
+
 export function useAuth() {
   // Use stores from nanostores (reactive)
   const user = useStore($user);
@@ -67,7 +74,7 @@ export function useAuth() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin + import.meta.env.BASE_URL,
+        redirectTo: getRedirectUrl(),
       },
     });
     if (error) throw error;
@@ -77,7 +84,7 @@ export function useAuth() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: window.location.origin + import.meta.env.BASE_URL,
+        redirectTo: getRedirectUrl(),
       },
     });
     if (error) throw error;

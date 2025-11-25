@@ -8,7 +8,9 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const FUNCTION_SECRET = Deno.env.get("FUNCTION_SECRET");
-const FROM_EMAIL = Deno.env.get("FROM_EMAIL") || "Awesome Directories <notifications@awesome-directories.com>";
+const FROM_EMAIL =
+  Deno.env.get("FROM_EMAIL") ||
+  "Awesome Directories <notifications@awesome-directories.com>";
 const SITE_URL = "https://awesome-directories.com";
 
 interface ApprovalPayload {
@@ -39,7 +41,8 @@ serve(async (req: Request) => {
   // CORS headers
   const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Headers":
+      "authorization, x-client-info, apikey, content-type",
   };
 
   if (req.method === "OPTIONS") {
@@ -62,10 +65,13 @@ serve(async (req: Request) => {
 
     if (!RESEND_API_KEY) {
       console.error("RESEND_API_KEY not configured");
-      return new Response(JSON.stringify({ error: "Email service not configured" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Email service not configured" }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
     }
 
     const body = await req.json();
@@ -85,10 +91,13 @@ serve(async (req: Request) => {
         oldRecord?.status === "approved" ||
         record.notification_sent
       ) {
-        return new Response(JSON.stringify({ message: "No notification needed" }), {
-          status: 200,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+        return new Response(
+          JSON.stringify({ message: "No notification needed" }),
+          {
+            status: 200,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
       }
 
       payload = {
@@ -104,10 +113,13 @@ serve(async (req: Request) => {
 
     // Validate payload
     if (!payload.user_email || !payload.directory_name) {
-      return new Response(JSON.stringify({ error: "Missing required fields" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Missing required fields" }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        },
+      );
     }
 
     // Generate email HTML
@@ -117,7 +129,7 @@ serve(async (req: Request) => {
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        Authorization: `Bearer ${RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -149,7 +161,7 @@ serve(async (req: Request) => {
       {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      },
     );
   } catch (error) {
     console.error("Error:", error);
@@ -206,12 +218,16 @@ function generateApprovalEmail(payload: ApprovalPayload): string {
                 Great news! Your directory submission <strong style="color: #111827;">${escapeHtml(directory_name)}</strong> has been reviewed and approved.
               </p>
 
-              ${admin_notes ? `
+              ${
+                admin_notes
+                  ? `
               <div style="margin: 0 0 24px; padding: 16px; background-color: #f3f4f6; border-radius: 6px;">
                 <p style="margin: 0 0 4px; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase;">Reviewer Notes</p>
                 <p style="margin: 0; font-size: 14px; color: #374151;">${escapeHtml(admin_notes)}</p>
               </div>
-              ` : ''}
+              `
+                  : ""
+              }
 
               <div style="text-align: center;">
                 <a href="${SITE_URL}" style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: #ffffff; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 6px;">
@@ -245,11 +261,11 @@ function generateApprovalEmail(payload: ApprovalPayload): string {
  * Escape HTML special characters to prevent XSS
  */
 function escapeHtml(text: string): string {
-  if (!text) return '';
+  if (!text) return "";
   return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }

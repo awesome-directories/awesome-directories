@@ -207,7 +207,9 @@ export function useProjects() {
       if (fetchError) throw fetchError;
 
       projectSubmissions.value = data || [];
-      log.info(`Loaded ${projectSubmissions.value.length} submissions for project ${projectId}`);
+      log.info(
+        `Loaded ${projectSubmissions.value.length} submissions for project ${projectId}`,
+      );
       return projectSubmissions.value;
     } catch (err) {
       log.error("Failed to load project submissions:", err);
@@ -232,16 +234,22 @@ export function useProjects() {
     try {
       const { data, error: upsertError } = await supabase
         .from("project_submissions")
-        .upsert({
-          project_id: projectId,
-          directory_id: directoryId,
-          status: submissionData.status || "not_started",
-          submission_link: submissionData.submission_link || null,
-          notes: submissionData.notes || null,
-          submitted_at: submissionData.status === "submitted" ? new Date().toISOString() : null,
-        }, {
-          onConflict: "project_id,directory_id",
-        })
+        .upsert(
+          {
+            project_id: projectId,
+            directory_id: directoryId,
+            status: submissionData.status || "not_started",
+            submission_link: submissionData.submission_link || null,
+            notes: submissionData.notes || null,
+            submitted_at:
+              submissionData.status === "submitted"
+                ? new Date().toISOString()
+                : null,
+          },
+          {
+            onConflict: "project_id,directory_id",
+          },
+        )
         .select()
         .single();
 
@@ -249,7 +257,7 @@ export function useProjects() {
 
       // Update local state
       const index = projectSubmissions.value.findIndex(
-        (s) => s.project_id === projectId && s.directory_id === directoryId
+        (s) => s.project_id === projectId && s.directory_id === directoryId,
       );
       if (index !== -1) {
         projectSubmissions.value[index] = data;
@@ -257,7 +265,9 @@ export function useProjects() {
         projectSubmissions.value = [data, ...projectSubmissions.value];
       }
 
-      log.info(`Updated submission for directory ${directoryId} in project ${projectId}`);
+      log.info(
+        `Updated submission for directory ${directoryId} in project ${projectId}`,
+      );
       return { success: true, submission: data };
     } catch (err) {
       log.error("Failed to upsert submission:", err);
@@ -307,7 +317,9 @@ export function useProjects() {
       if (updateError) throw updateError;
 
       // Update local state
-      const index = projectSubmissions.value.findIndex((s) => s.id === submissionId);
+      const index = projectSubmissions.value.findIndex(
+        (s) => s.id === submissionId,
+      );
       if (index !== -1) {
         projectSubmissions.value[index] = data;
       }
@@ -347,7 +359,9 @@ export function useProjects() {
       if (updateError) throw updateError;
 
       // Update local state
-      const index = projectSubmissions.value.findIndex((s) => s.id === submissionId);
+      const index = projectSubmissions.value.findIndex(
+        (s) => s.id === submissionId,
+      );
       if (index !== -1) {
         projectSubmissions.value[index] = data;
       }
@@ -381,7 +395,9 @@ export function useProjects() {
       if (deleteError) throw deleteError;
 
       // Update local state
-      projectSubmissions.value = projectSubmissions.value.filter((s) => s.id !== submissionId);
+      projectSubmissions.value = projectSubmissions.value.filter(
+        (s) => s.id !== submissionId,
+      );
 
       log.info(`Deleted submission: ${submissionId}`);
       return { success: true };
@@ -401,7 +417,7 @@ export function useProjects() {
    */
   function getSubmissionStats(projectId) {
     const submissions = projectSubmissions.value.filter(
-      (s) => s.project_id === projectId
+      (s) => s.project_id === projectId,
     );
 
     return {
