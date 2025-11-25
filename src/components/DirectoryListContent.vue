@@ -293,7 +293,7 @@
                       @change="applyFilters"
                       class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none"
                     >
-                      <option>Most Helpful</option>
+                      <option>Highest Rated</option>
                       <option>Highest DR</option>
                       <option>Newest</option>
                       <option>Alphabetical</option>
@@ -399,7 +399,6 @@
             :key="dir.id"
             :directory="dir"
             :isPendingSubmission="dir.isPending"
-            :userVotedIds="userVotedIds"
             :userFavoriteIds="userFavoriteIds"
           />
         </div>
@@ -433,7 +432,7 @@ import { useDirectory } from "@/composables/useDirectory";
 import { supabase } from "@/lib/supabase-client";
 import httpClient from "@/lib/httpclient.js";
 import DirectoryCard from "./DirectoryCard.vue";
-import log from "@/lib/logger";
+import log from "@/lib/logger.js";
 
 const props = defineProps({
   categories: {
@@ -443,14 +442,13 @@ const props = defineProps({
 });
 
 const user = useStore($user);
-const { getUserFavoriteIds, getUserVotedIds } = useDirectory();
+const { getUserFavoriteIds } = useDirectory();
 
 const allData = ref([]);
 const filteredData = ref([]);
 const pendingSubmissions = ref([]);
 const isLoading = ref(true);
 const userFavoriteIds = ref([]);
-const userVotedIds = ref([]);
 
 // Default filters: DoFollow + DR 70+ for instant value
 const DEFAULT_FILTERS = {
@@ -459,7 +457,7 @@ const DEFAULT_FILTERS = {
   drRange: "70+",
   linkType: "All",
   pricing: "All",
-  sortBy: "Most Helpful",
+  sortBy: "Highest Rated",
 };
 
 const currentFilters = ref({ ...DEFAULT_FILTERS });
@@ -503,19 +501,19 @@ const quickFilterPresets = ref([
       drRange: "All",
       linkType: "All",
       pricing: "free",
-      sortBy: "Most Helpful",
+      sortBy: "Highest Rated",
     },
   },
   {
-    id: "highest-dr",
-    label: "Highest DR",
-    icon: "📈",
+    id: "top-rated",
+    label: "Top Rated",
+    icon: "⭐",
     filters: {
       category: "All",
       drRange: "All",
       linkType: "All",
       pricing: "All",
-      sortBy: "Highest DR",
+      sortBy: "Highest Rated",
     },
   },
   {
@@ -527,7 +525,7 @@ const quickFilterPresets = ref([
       drRange: "All",
       linkType: "All",
       pricing: "All",
-      sortBy: "Most Helpful",
+      sortBy: "Highest DR",
     },
   },
 ]);
@@ -701,12 +699,11 @@ async function loadUserData() {
 
     pendingSubmissions.value = pending || [];
 
-    // Load user's favorites and votes
+    // Load user's favorites
     userFavoriteIds.value = await getUserFavoriteIds(user.value);
-    userVotedIds.value = await getUserVotedIds(user.value);
 
     log.info(
-      `Loaded ${pendingSubmissions.value.length} pending submissions, ${userFavoriteIds.value.length} favorites, ${userVotedIds.value.length} votes`,
+      `Loaded ${pendingSubmissions.value.length} pending submissions, ${userFavoriteIds.value.length} favorites`,
     );
   } catch (error) {
     log.error("Failed to load user data:", error);
@@ -726,7 +723,9 @@ function convertPendingToDirectory(pending) {
     categories: pending.categories || [],
     pricing_type: pending.pricing_type,
     pricing_amount: pending.pricing_amount,
-    helpful_count: 0,
+    average_rating: null,
+    rating_count: 0,
+    review_count: 0,
     view_count: 0,
     created_at: pending.submitted_at,
   };
@@ -797,10 +796,14 @@ function sortDirectories(dirs, sortBy) {
   const sorted = [...dirs];
 
   switch (sortBy) {
-    case "Most Helpful":
-      return sorted.sort(
-        (a, b) => (b.helpful_count || 0) - (a.helpful_count || 0),
-      );
+    case "Highest Rated":
+      return sorted.sort((a, b) => {
+        // Sort by average rating first, then by rating count
+        const ratingA = a.average_rating || 0;
+        const ratingB = b.average_rating || 0;
+        if (ratingB !== ratingA) return ratingB - ratingA;
+        return (b.rating_count || 0) - (a.rating_count || 0);
+      });
     case "Highest DR":
       return sorted.sort((a, b) => {
         if (!a.domain_rating && !b.domain_rating) return 0;

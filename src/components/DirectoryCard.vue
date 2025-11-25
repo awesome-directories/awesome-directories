@@ -92,22 +92,15 @@
     <!-- Footer -->
     <div class="pt-4 border-t border-gray-100">
       <div class="flex items-center justify-between mb-3">
-        <button
-          @click="handleHelpfulClick"
-          :disabled="isVoting || isPendingSubmission"
-          class="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          :class="{ 'text-primary font-semibold': hasVoted }"
-          :title="
-            isPendingSubmission
-              ? 'Cannot vote on pending submissions'
-              : hasVoted
-                ? 'Remove vote'
-                : 'Mark as helpful'
-          "
-        >
-          <span>{{ hasVoted ? "✓" : "👍" }}</span>
-          <span>{{ directory.helpful_count || 0 }} helpful</span>
-        </button>
+        <!-- Rating Display -->
+        <div class="flex items-center space-x-1 text-sm text-gray-600">
+          <span v-if="directory.average_rating" class="flex items-center">
+            <span class="text-yellow-500">★</span>
+            <span class="ml-1 font-medium">{{ directory.average_rating.toFixed(1) }}</span>
+            <span class="text-gray-400 ml-1">({{ directory.rating_count || 0 }})</span>
+          </span>
+          <span v-else class="text-gray-400">No ratings yet</span>
+        </div>
 
         <FavoriteButton
           v-if="directory.id"
@@ -130,11 +123,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { useStore } from "@nanostores/vue";
-import { $user } from "@/stores/auth";
-import { useDirectory } from "@/composables/useDirectory";
-import { requireAuth } from "@/utils/auth";
+import { computed } from "vue";
 import FavoriteButton from "./FavoriteButton.vue";
 
 const props = defineProps({
@@ -150,10 +139,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  userVotedIds: {
-    type: Array,
-    default: () => [],
-  },
   userFavoriteIds: {
     type: Array,
     default: () => [],
@@ -164,13 +149,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["toggle-select", "vote-updated"]);
-
-const user = useStore($user);
-const { voteDirectory, hasVoted: checkVoted } = useDirectory();
-
-const hasVoted = ref(false);
-const isVoting = ref(false);
+defineEmits(["toggle-select"]);
 
 const drBadgeClass = computed(() => {
   const dr = props.directory.domain_rating;
@@ -210,49 +189,6 @@ const displayCategories = computed(() => {
 
 const handleImageError = (e) => {
   e.target.style.display = "none";
-};
-
-// Check if user has voted on mount
-onMounted(async () => {
-  if (user.value && props.directory.id) {
-    // Check from passed prop first (optimization)
-    if (props.userVotedIds.includes(props.directory.id)) {
-      hasVoted.value = true;
-    } else {
-      // Fallback to API check
-      hasVoted.value = await checkVoted(props.directory.id, user.value);
-    }
-  }
-});
-
-const handleHelpfulClick = async () => {
-  // Require authentication
-  if (!requireAuth(user.value)) {
-    return;
-  }
-
-  if (isVoting.value) return;
-
-  try {
-    isVoting.value = true;
-
-    const result = await voteDirectory(props.directory.id, user.value);
-
-    if (result.success) {
-      // Toggle vote state
-      hasVoted.value = result.action === "added";
-
-      // Emit event to parent to refresh data
-      emit("vote-updated", {
-        directoryId: props.directory.id,
-        action: result.action,
-      });
-    }
-  } catch (error) {
-    console.error("Failed to vote:", error);
-  } finally {
-    isVoting.value = false;
-  }
 };
 </script>
 
