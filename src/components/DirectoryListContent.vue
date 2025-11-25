@@ -43,7 +43,7 @@
         <!-- Search Bar -->
         <div class="mb-3">
           <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
               <svg
                 class="h-5 w-5 text-gray-400"
                 fill="none"
@@ -62,17 +62,17 @@
               v-model="searchQuery"
               type="search"
               placeholder="Search directories..."
-              class="w-full pl-10 pr-4 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm sm:text-base bg-white transition-shadow min-h-[48px] sm:min-h-[44px]"
+              class="search-input w-full pl-10 pr-12 py-3 sm:py-2.5 border border-gray-300 rounded-lg text-sm sm:text-base bg-white min-h-[48px] sm:min-h-[44px]"
               aria-label="Search directories"
             />
             <button
               v-if="searchQuery"
               @click="clearSearch"
-              class="absolute inset-y-0 right-0 pr-3 flex items-center min-w-[44px] min-h-[44px] justify-center"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center min-w-[44px] min-h-[44px] justify-center z-10"
               aria-label="Clear search"
             >
               <svg
-                class="h-5 w-5 text-gray-400 hover:text-gray-600"
+                class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -136,116 +136,120 @@
             </svg>
           </button>
 
-          <div
-            class="transition-all duration-300 ease-in-out overflow-hidden"
-            :class="{
-              'max-h-0 opacity-0': !advancedFiltersExpanded,
-              'max-h-[1000px] opacity-100': advancedFiltersExpanded,
-            }"
+          <transition
+            name="accordion"
+            @enter="onEnter"
+            @after-enter="onAfterEnter"
+            @leave="onLeave"
           >
             <div
-              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 mt-3"
+              v-show="advancedFiltersExpanded"
+              class="overflow-hidden"
             >
-              <div>
-                <label
-                  for="filter-category"
-                  class="block text-sm font-medium text-gray-900 mb-1.5"
-                >
-                  Category
-                </label>
-                <select
-                  id="filter-category"
-                  v-model="currentFilters.category"
-                  @change="applyFilters"
-                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                >
-                  <option v-for="cat in categories" :key="cat" :value="cat">
-                    {{ cat }}
-                  </option>
-                </select>
-              </div>
+              <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 mt-3 pb-1"
+              >
+                <div>
+                  <label
+                    for="filter-category"
+                    class="block text-sm font-medium text-gray-900 mb-1.5"
+                  >
+                    Category
+                  </label>
+                  <select
+                    id="filter-category"
+                    v-model="currentFilters.category"
+                    @change="applyFilters"
+                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
+                  >
+                    <option v-for="cat in categories" :key="cat" :value="cat">
+                      {{ cat }}
+                    </option>
+                  </select>
+                </div>
 
-              <div>
-                <label
-                  for="filter-dr"
-                  class="block text-sm font-medium text-gray-900 mb-1.5"
-                >
-                  Domain Rating
-                </label>
-                <select
-                  id="filter-dr"
-                  v-model="currentFilters.drRange"
-                  @change="applyFilters"
-                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                >
-                  <option value="All">All DR</option>
-                  <option value="80+">80+</option>
-                  <option value="70+">70+</option>
-                  <option value="70-79">70-79</option>
-                  <option value="60-69">60-69</option>
-                  <option value="<60">&lt;60</option>
-                </select>
-              </div>
+                <div>
+                  <label
+                    for="filter-dr"
+                    class="block text-sm font-medium text-gray-900 mb-1.5"
+                  >
+                    Domain Rating
+                  </label>
+                  <select
+                    id="filter-dr"
+                    v-model="currentFilters.drRange"
+                    @change="applyFilters"
+                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
+                  >
+                    <option value="All">All DR</option>
+                    <option value="80+">80+</option>
+                    <option value="70+">70+</option>
+                    <option value="70-79">70-79</option>
+                    <option value="60-69">60-69</option>
+                    <option value="<60">&lt;60</option>
+                  </select>
+                </div>
 
-              <div>
-                <label
-                  for="filter-link"
-                  class="block text-sm font-medium text-gray-900 mb-1.5"
-                >
-                  Link Type
-                </label>
-                <select
-                  id="filter-link"
-                  v-model="currentFilters.linkType"
-                  @change="applyFilters"
-                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                >
-                  <option value="All">All</option>
-                  <option value="Dofollow Only">Dofollow Only</option>
-                </select>
-              </div>
+                <div>
+                  <label
+                    for="filter-link"
+                    class="block text-sm font-medium text-gray-900 mb-1.5"
+                  >
+                    Link Type
+                  </label>
+                  <select
+                    id="filter-link"
+                    v-model="currentFilters.linkType"
+                    @change="applyFilters"
+                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
+                  >
+                    <option value="All">All</option>
+                    <option value="Dofollow Only">Dofollow Only</option>
+                  </select>
+                </div>
 
-              <div>
-                <label
-                  for="filter-pricing"
-                  class="block text-sm font-medium text-gray-900 mb-1.5"
-                >
-                  Pricing
-                </label>
-                <select
-                  id="filter-pricing"
-                  v-model="currentFilters.pricing"
-                  @change="applyFilters"
-                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                >
-                  <option value="All">All</option>
-                  <option value="free">Free</option>
-                  <option value="paid">Paid</option>
-                  <option value="freemium">Freemium</option>
-                </select>
-              </div>
+                <div>
+                  <label
+                    for="filter-pricing"
+                    class="block text-sm font-medium text-gray-900 mb-1.5"
+                  >
+                    Pricing
+                  </label>
+                  <select
+                    id="filter-pricing"
+                    v-model="currentFilters.pricing"
+                    @change="applyFilters"
+                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
+                  >
+                    <option value="All">All</option>
+                    <option value="free">Free</option>
+                    <option value="paid">Paid</option>
+                    <option value="freemium">Freemium</option>
+                  </select>
+                </div>
 
-              <div>
-                <label
-                  for="filter-sort"
-                  class="block text-sm font-medium text-gray-900 mb-1.5"
-                >
-                  Sort By
-                </label>
-                <select
-                  id="filter-sort"
-                  v-model="currentFilters.sortBy"
-                  @change="applyFilters"
-                  class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
-                >
-                  <option>Most Helpful</option>
-                  <option>Highest DR</option>
-                  <option>Newest</option>
-                  <option>Alphabetical</option>
-                </select>
+                <div>
+                  <label
+                    for="filter-sort"
+                    class="block text-sm font-medium text-gray-900 mb-1.5"
+                  >
+                    Sort By
+                  </label>
+                  <select
+                    id="filter-sort"
+                    v-model="currentFilters.sortBy"
+                    @change="applyFilters"
+                    class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation"
+                  >
+                    <option>Most Helpful</option>
+                    <option>Highest DR</option>
+                    <option>Newest</option>
+                    <option>Alphabetical</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
+          </transition>
         </div>
 
         <!-- Results Summary -->
@@ -717,6 +721,31 @@ function sortDirectories(dirs, sortBy) {
 function loadMore() {
   itemsToShow.value += 30;
 }
+
+function onEnter(el) {
+  el.style.height = '0';
+  el.style.overflow = 'hidden';
+
+  requestAnimationFrame(function setHeight() {
+    el.style.height = el.scrollHeight + 'px';
+  });
+}
+
+function onAfterEnter(el) {
+  el.style.height = 'auto';
+  el.style.overflow = 'visible';
+}
+
+function onLeave(el) {
+  el.style.height = el.scrollHeight + 'px';
+  el.style.overflow = 'hidden';
+
+  requestAnimationFrame(function collapseHeight() {
+    requestAnimationFrame(function setZeroHeight() {
+      el.style.height = '0';
+    });
+  });
+}
 </script>
 
 <style scoped>
@@ -731,6 +760,22 @@ function loadMore() {
 
 .touch-manipulation {
   touch-action: manipulation;
+}
+
+.search-input {
+  outline: none;
+  transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+  outline: none;
+}
+
+.accordion-enter-active,
+.accordion-leave-active {
+  transition: height 0.3s ease-in-out;
 }
 
 @media (max-width: 640px) {
