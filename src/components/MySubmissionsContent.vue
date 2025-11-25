@@ -17,6 +17,8 @@
     <div v-else-if="isLoading" class="text-center py-12">
       <div
         class="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"
+        role="status"
+        aria-label="Loading"
       ></div>
       <p class="mt-4 text-gray-600">Loading your submissions...</p>
     </div>
@@ -570,9 +572,12 @@ function formatPricing(submission) {
   if (submission.pricing_type === "paid" && submission.pricing_amount) {
     return `$${submission.pricing_amount}`;
   }
+  if (!submission.pricing_type) {
+    return "N/A";
+  }
   return (
-    submission.pricing_type?.charAt(0).toUpperCase() +
-    submission.pricing_type?.slice(1)
+    submission.pricing_type.charAt(0).toUpperCase() +
+    submission.pricing_type.slice(1)
   );
 }
 
@@ -614,6 +619,17 @@ async function saveEdit() {
     return;
   }
 
+  // Validate URL format and protocol
+  try {
+    const url = new URL(editForm.value.url);
+    if (!url.protocol.startsWith("http")) {
+      editError.value = "URL must start with http:// or https://";
+      return;
+    }
+  } catch (e) {
+    editError.value = "Please enter a valid URL";
+    return;
+  }
   isSaving.value = true;
   editError.value = "";
 
