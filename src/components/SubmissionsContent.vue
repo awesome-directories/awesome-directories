@@ -29,7 +29,7 @@
       >
         <div>
           <h1 class="text-2xl font-bold text-gray-900 mb-1">
-            Submission Tracker
+            My Projects
           </h1>
           <p class="text-gray-600 text-sm">
             Track where you've submitted your products
