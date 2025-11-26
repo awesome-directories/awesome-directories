@@ -1,6 +1,6 @@
 /**
- * Supabase Edge Function for sending directory approval emails via Sender.net
- * This function is triggered when a pending_directories status changes to 'approved'
+ * Supabase Edge Function for sending directory rejection emails via Sender.net
+ * This function is triggered when a pending_directories status changes to 'rejected'
  * Can be called via:
  * 1. Database webhook on pending_directories table
  * 2. Direct API call from admin dashboard
@@ -9,13 +9,13 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0";
 import { sendEmail } from "../_shared/email.ts";
-import { approvalEmailTemplate } from "../_shared/email-templates.ts";
+import { rejectionEmailTemplate } from "../_shared/email-templates.ts";
 
 const FUNCTION_SECRET = Deno.env.get("FUNCTION_SECRET");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
-interface ApprovalPayload {
+interface RejectionPayload {
   user_email: string;
   directory_name: string;
   directory_url: string;
@@ -32,7 +32,7 @@ interface WebhookPayload {
     url: string;
     status: string;
     admin_notes?: string;
-    notification_sent: boolean;
+    rejection_notification_sent?: boolean;
   };
   old_record?: {
     status: string;
@@ -67,7 +67,7 @@ serve(async (req: Request) => {
     }
 
     const body = await req.json();
-    let payload: ApprovalPayload;
+    let payload: RejectionPayload;
     let recordId: string | null = null;
 
     // Handle both direct API calls and webhook payloads
@@ -77,11 +77,11 @@ serve(async (req: Request) => {
       const record = webhook.record;
       const oldRecord = webhook.old_record;
 
-      // Only send email if status changed to approved and notification not already sent
+      // Only send email if status changed to rejected and notification not already sent
       if (
-        record.status !== "approved" ||
-        oldRecord?.status === "approved" ||
-        record.notification_sent
+        record.status !== "rejected" ||
+        oldRecord?.status === "rejected" ||
+        record.rejection_notification_sent
       ) {
         return new Response(
           JSON.stringify({ message: "No notification needed" }),
@@ -101,7 +101,7 @@ serve(async (req: Request) => {
       recordId = record.id;
     } else {
       // Direct API call
-      payload = body as ApprovalPayload;
+      payload = body as RejectionPayload;
     }
 
     // Validate payload
@@ -116,7 +116,7 @@ serve(async (req: Request) => {
     }
 
     // Generate email content
-    const { html, preheader } = approvalEmailTemplate({
+    const { html, preheader } = rejectionEmailTemplate({
       directoryName: payload.directory_name,
       directoryUrl: payload.directory_url,
       adminNotes: payload.admin_notes,
@@ -125,7 +125,7 @@ serve(async (req: Request) => {
     // Send email via Sender.net
     const result = await sendEmail({
       to: payload.user_email,
-      subject: `Your directory submission "${payload.directory_name}" has been approved!`,
+      subject: `Update on your directory submission "${payload.directory_name}"`,
       html,
       preheader,
     });
@@ -141,24 +141,24 @@ serve(async (req: Request) => {
       );
     }
 
-    // Update notification_sent flag if we have a record ID
+    // Update rejection_notification_sent flag if we have a record ID
     if (recordId && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
       await supabase
         .from("pending_directories")
         .update({
-          notification_sent: true,
-          notification_sent_at: new Date().toISOString(),
+          rejection_notification_sent: true,
+          rejection_notification_sent_at: new Date().toISOString(),
         })
         .eq("id", recordId);
     }
 
-    console.log("Approval email sent successfully:", result.id);
+    console.log("Rejection email sent successfully:", result.id);
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Approval email sent",
+        message: "Rejection email sent",
         email_id: result.id,
       }),
       {
