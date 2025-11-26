@@ -1,25 +1,24 @@
 /**
- * Supabase Edge Function for sending directory approval emails via Sender.net
- * This function is triggered when a pending_directories status changes to 'approved'
+ * Supabase Edge Function for sending submission confirmation emails via Sender.net
+ * This function is triggered when a new directory is submitted (INSERT on pending_directories)
  * Can be called via:
- * 1. Database webhook on pending_directories table
- * 2. Direct API call from admin dashboard
+ * 1. Database webhook on pending_directories table (INSERT events)
+ * 2. Direct API call
  */
 
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0";
 import { sendEmail } from "../_shared/email.ts";
-import { approvalEmailTemplate } from "../_shared/email-templates.ts";
+import { submissionConfirmationTemplate } from "../_shared/email-templates.ts";
 
 const FUNCTION_SECRET = Deno.env.get("FUNCTION_SECRET");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
-interface ApprovalPayload {
+interface SubmissionPayload {
   user_email: string;
   directory_name: string;
   directory_url: string;
-  admin_notes?: string;
 }
 
 interface WebhookPayload {
@@ -31,11 +30,7 @@ interface WebhookPayload {
     name: string;
     url: string;
     status: string;
-    admin_notes?: string;
-    notification_sent: boolean;
-  };
-  old_record?: {
-    status: string;
+    confirmation_sent?: boolean;
   };
 }
 
@@ -67,24 +62,19 @@ serve(async (req: Request) => {
     }
 
     const body = await req.json();
-    let payload: ApprovalPayload;
+    let payload: SubmissionPayload;
     let recordId: string | null = null;
 
     // Handle both direct API calls and webhook payloads
-    if (body.type === "UPDATE" && body.table === "pending_directories") {
-      // Database webhook payload
+    if (body.type === "INSERT" && body.table === "pending_directories") {
+      // Database webhook payload for new submission
       const webhook = body as WebhookPayload;
       const record = webhook.record;
-      const oldRecord = webhook.old_record;
 
-      // Only send email if status changed to approved and notification not already sent
-      if (
-        record.status !== "approved" ||
-        oldRecord?.status === "approved" ||
-        record.notification_sent
-      ) {
+      // Skip if confirmation already sent
+      if (record.confirmation_sent) {
         return new Response(
-          JSON.stringify({ message: "No notification needed" }),
+          JSON.stringify({ message: "Confirmation already sent" }),
           {
             status: 200,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -96,12 +86,11 @@ serve(async (req: Request) => {
         user_email: record.user_email,
         directory_name: record.name,
         directory_url: record.url,
-        admin_notes: record.admin_notes,
       };
       recordId = record.id;
     } else {
       // Direct API call
-      payload = body as ApprovalPayload;
+      payload = body as SubmissionPayload;
     }
 
     // Validate payload
@@ -116,16 +105,15 @@ serve(async (req: Request) => {
     }
 
     // Generate email content
-    const { html, preheader } = approvalEmailTemplate({
+    const { html, preheader } = submissionConfirmationTemplate({
       directoryName: payload.directory_name,
       directoryUrl: payload.directory_url,
-      adminNotes: payload.admin_notes,
     });
 
     // Send email via Sender.net
     const result = await sendEmail({
       to: payload.user_email,
-      subject: `Your directory submission "${payload.directory_name}" has been approved!`,
+      subject: `We received your submission for "${payload.directory_name}"`,
       html,
       preheader,
     });
@@ -141,24 +129,24 @@ serve(async (req: Request) => {
       );
     }
 
-    // Update notification_sent flag if we have a record ID
+    // Update confirmation_sent flag if we have a record ID
     if (recordId && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
       await supabase
         .from("pending_directories")
         .update({
-          notification_sent: true,
-          notification_sent_at: new Date().toISOString(),
+          confirmation_sent: true,
+          confirmation_sent_at: new Date().toISOString(),
         })
         .eq("id", recordId);
     }
 
-    console.log("Approval email sent successfully:", result.id);
+    console.log("Submission confirmation email sent successfully:", result.id);
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Approval email sent",
+        message: "Confirmation email sent",
         email_id: result.id,
       }),
       {

@@ -1,25 +1,24 @@
 /**
- * Supabase Edge Function for sending directory approval emails via Sender.net
- * This function is triggered when a pending_directories status changes to 'approved'
+ * Supabase Edge Function for sending admin notifications via Sender.net
+ * This function notifies admins when new directories are submitted
  * Can be called via:
- * 1. Database webhook on pending_directories table
- * 2. Direct API call from admin dashboard
+ * 1. Database webhook on pending_directories table (INSERT events)
+ * 2. Direct API call
  */
 
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0";
 import { sendEmail } from "../_shared/email.ts";
-import { approvalEmailTemplate } from "../_shared/email-templates.ts";
+import { adminNewSubmissionTemplate } from "../_shared/email-templates.ts";
 
 const FUNCTION_SECRET = Deno.env.get("FUNCTION_SECRET");
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "admin@awesome-directories.com";
 
-interface ApprovalPayload {
-  user_email: string;
+interface AdminNotificationPayload {
   directory_name: string;
   directory_url: string;
-  admin_notes?: string;
+  submitter_email: string;
+  description?: string;
+  categories?: string[];
 }
 
 interface WebhookPayload {
@@ -27,14 +26,11 @@ interface WebhookPayload {
   table: string;
   record: {
     id: string;
-    user_email: string;
     name: string;
     url: string;
-    status: string;
-    admin_notes?: string;
-    notification_sent: boolean;
-  };
-  old_record?: {
+    user_email: string;
+    description?: string;
+    categories?: string[];
     status: string;
   };
 }
@@ -67,24 +63,17 @@ serve(async (req: Request) => {
     }
 
     const body = await req.json();
-    let payload: ApprovalPayload;
-    let recordId: string | null = null;
+    let payload: AdminNotificationPayload;
 
-    // Handle both direct API calls and webhook payloads
-    if (body.type === "UPDATE" && body.table === "pending_directories") {
-      // Database webhook payload
+    // Handle webhook payload from pending_directories table
+    if (body.type === "INSERT" && body.table === "pending_directories") {
       const webhook = body as WebhookPayload;
       const record = webhook.record;
-      const oldRecord = webhook.old_record;
 
-      // Only send email if status changed to approved and notification not already sent
-      if (
-        record.status !== "approved" ||
-        oldRecord?.status === "approved" ||
-        record.notification_sent
-      ) {
+      // Only notify for new pending submissions
+      if (record.status !== "pending") {
         return new Response(
-          JSON.stringify({ message: "No notification needed" }),
+          JSON.stringify({ message: "Not a pending submission" }),
           {
             status: 200,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -93,21 +82,21 @@ serve(async (req: Request) => {
       }
 
       payload = {
-        user_email: record.user_email,
         directory_name: record.name,
         directory_url: record.url,
-        admin_notes: record.admin_notes,
+        submitter_email: record.user_email,
+        description: record.description,
+        categories: record.categories,
       };
-      recordId = record.id;
     } else {
       // Direct API call
-      payload = body as ApprovalPayload;
+      payload = body as AdminNotificationPayload;
     }
 
     // Validate payload
-    if (!payload.user_email || !payload.directory_name) {
+    if (!payload.directory_name || !payload.directory_url) {
       return new Response(
-        JSON.stringify({ error: "Missing required fields: user_email, directory_name" }),
+        JSON.stringify({ error: "Missing required fields: directory_name, directory_url" }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -116,22 +105,24 @@ serve(async (req: Request) => {
     }
 
     // Generate email content
-    const { html, preheader } = approvalEmailTemplate({
+    const { html, preheader } = adminNewSubmissionTemplate({
       directoryName: payload.directory_name,
       directoryUrl: payload.directory_url,
-      adminNotes: payload.admin_notes,
+      submitterEmail: payload.submitter_email,
+      description: payload.description,
+      categories: payload.categories,
     });
 
-    // Send email via Sender.net
+    // Send email to admin via Sender.net
     const result = await sendEmail({
-      to: payload.user_email,
-      subject: `Your directory submission "${payload.directory_name}" has been approved!`,
+      to: ADMIN_EMAIL,
+      subject: `New Directory Submission: ${payload.directory_name}`,
       html,
       preheader,
     });
 
     if (!result.success) {
-      console.error("Failed to send email:", result.error);
+      console.error("Failed to send admin notification:", result.error);
       return new Response(
         JSON.stringify({ error: "Failed to send email", details: result.error }),
         {
@@ -141,24 +132,12 @@ serve(async (req: Request) => {
       );
     }
 
-    // Update notification_sent flag if we have a record ID
-    if (recordId && SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
-      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-      await supabase
-        .from("pending_directories")
-        .update({
-          notification_sent: true,
-          notification_sent_at: new Date().toISOString(),
-        })
-        .eq("id", recordId);
-    }
-
-    console.log("Approval email sent successfully:", result.id);
+    console.log("Admin notification sent successfully:", result.id);
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Approval email sent",
+        message: "Admin notification sent",
         email_id: result.id,
       }),
       {
