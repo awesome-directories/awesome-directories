@@ -1,7 +1,6 @@
 import {
   extractDomain,
   batchArray,
-  pollApifyRun,
   fetchDirectoriesFromDatabase,
   createDomainMapping,
 } from "./utils.ts";
@@ -38,6 +37,81 @@ interface AhrefsMetrics {
     backlinks?: number;
     refdomains?: number;
   };
+}
+
+async function pollApifyRunWithBackoff(
+  runId: string,
+  defaultDatasetId: string,
+  apifyToken: string,
+  maxAttempts: number,
+  initialIntervalMs: number,
+  maxIntervalMs: number,
+): Promise<AhrefsMetrics[]> {
+  var attempt = 0;
+  var intervalMs = initialIntervalMs;
+
+  while (attempt < maxAttempts) {
+    attempt++;
+
+    console.log(
+      `Polling attempt ${attempt}/${maxAttempts} for run ${runId} (interval: ${intervalMs}ms)`,
+    );
+
+    var statusResponse = await fetch(
+      `https://api.apify.com/v2/actor-runs/${runId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${apifyToken}`,
+        },
+      },
+    );
+
+    if (!statusResponse.ok) {
+      console.error(`Failed to get run status: ${statusResponse.status}`);
+      await sleep(intervalMs);
+      intervalMs = Math.min(intervalMs * 1.5, maxIntervalMs);
+      continue;
+    }
+
+    var statusData = await statusResponse.json();
+    var status = statusData.data.status;
+
+    console.log(`Run ${runId} status: ${status}`);
+
+    if (status === "SUCCEEDED") {
+      var datasetResponse = await fetch(
+        `https://api.apify.com/v2/datasets/${defaultDatasetId}/items`,
+        {
+          headers: {
+            Authorization: `Bearer ${apifyToken}`,
+          },
+        },
+      );
+
+      if (!datasetResponse.ok) {
+        throw new Error(`Failed to fetch dataset: ${datasetResponse.status}`);
+      }
+
+      return await datasetResponse.json();
+    }
+
+    if (status === "FAILED" || status === "ABORTED" || status === "TIMED-OUT") {
+      throw new Error(`Apify run ${runId} ended with status: ${status}`);
+    }
+
+    await sleep(intervalMs);
+    intervalMs = Math.min(intervalMs * 1.5, maxIntervalMs);
+  }
+
+  throw new Error(
+    `Polling timed out after ${maxAttempts} attempts for run ${runId}`,
+  );
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise(function sleepResolve(resolve) {
+    setTimeout(resolve, ms);
+  });
 }
 
 async function fetchAhrefsMetrics(
@@ -92,7 +166,18 @@ async function fetchAhrefsMetrics(
 
     console.log(`Actor run started: ${runId}`);
 
-    return await pollApifyRun(runId, defaultDatasetId, apifyToken, 10);
+    var maxAttempts = 60;
+    var initialIntervalMs = 5000;
+    var maxIntervalMs = 60000;
+
+    return await pollApifyRunWithBackoff(
+      runId,
+      defaultDatasetId,
+      apifyToken,
+      maxAttempts,
+      initialIntervalMs,
+      maxIntervalMs,
+    );
   } catch (error) {
     console.error("Error fetching Ahrefs metrics:", error);
     throw error;
