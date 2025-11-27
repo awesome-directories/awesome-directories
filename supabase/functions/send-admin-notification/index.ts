@@ -47,21 +47,6 @@ serve(async (req: Request) => {
   }
 
   try {
-    // Verify authorization
-    const authHeader = req.headers.get("Authorization");
-    const apiKey = req.headers.get("apikey");
-    const isAuthValid = FUNCTION_SECRET
-      ? authHeader === `Bearer ${FUNCTION_SECRET}` || !!apiKey
-      : !!apiKey;
-
-    if (!isAuthValid) {
-      console.error("Authorization failed");
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
     const body = await req.json();
     let payload: AdminNotificationPayload;
 
