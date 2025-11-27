@@ -1,12 +1,12 @@
 /**
  * Shared email utilities for Supabase Edge Functions
- * Uses Sender.net API for transactional emails
+ * Uses Resend API for transactional emails
  */
 
-const SENDER_API_URL = "https://api.sender.net/v2/transactional";
-const SENDER_API_TOKEN = Deno.env.get("SENDER_API_TOKEN");
-const FROM_NAME = Deno.env.get("FROM_NAME") || "Awesome Directories";
-const FROM_EMAIL = Deno.env.get("FROM_EMAIL") || "notifications@awesome-directories.com";
+import { Resend } from "npm:resend@4.0.0";
+
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const FROM_EMAIL = "Awesome Directories <noreply@notification.awesome-directories.com>";
 const REPLY_TO_EMAIL = Deno.env.get("REPLY_TO_EMAIL") || "support@awesome-directories.com";
 const SITE_URL = Deno.env.get("SITE_URL") || "https://awesome-directories.com";
 
@@ -25,43 +25,32 @@ export interface SendResult {
 }
 
 /**
- * Send an email via Sender.net API
+ * Send an email via Resend API
  */
 export async function sendEmail(options: EmailOptions): Promise<SendResult> {
-  if (!SENDER_API_TOKEN) {
-    console.error("SENDER_API_TOKEN not configured");
+  if (!RESEND_API_KEY) {
+    console.error("RESEND_API_KEY not configured");
     return { success: false, error: "Email service not configured" };
   }
 
   try {
-    const response = await fetch(SENDER_API_URL, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${SENDER_API_TOKEN}`,
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify({
-        title: options.title || options.subject,
-        subject: options.subject,
-        from: FROM_NAME,
-        reply_to: REPLY_TO_EMAIL,
-        editor: "html",
-        preheader: options.preheader || "",
-        content: options.html,
-        recipients: [{ email: options.to }],
-      }),
+    const resend = new Resend(RESEND_API_KEY);
+
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [options.to],
+      subject: options.subject,
+      html: options.html,
+      reply_to: REPLY_TO_EMAIL,
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Sender.net API error:", errorText);
-      return { success: false, error: `API error: ${response.status}` };
+    if (error) {
+      console.error("Resend API error:", error);
+      return { success: false, error: error.message };
     }
 
-    const data = await response.json();
-    console.log("Email sent successfully:", data.data?.id);
-    return { success: true, id: data.data?.id };
+    console.log("Email sent successfully:", data?.id);
+    return { success: true, id: data?.id };
   } catch (error) {
     console.error("Failed to send email:", error);
     return { success: false, error: error.message };

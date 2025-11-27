@@ -1,5 +1,5 @@
 /**
- * Supabase Edge Function for sending welcome emails to new users via Sender.net
+ * Supabase Edge Function for sending welcome emails to new users via Resend
  * This function is triggered when a new user signs up (INSERT on auth.users via webhook)
  * Can be called via:
  * 1. Database webhook on auth.users table (INSERT events)
@@ -125,7 +125,7 @@ serve(async (req: Request) => {
       userName: payload.user_name,
     });
 
-    // Send email via Sender.net
+    // Send email via Resend
     const result = await sendEmail({
       to: payload.user_email,
       subject: "Welcome to Awesome Directories!",

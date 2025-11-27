@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS email_logs (
     email_to VARCHAR(255) NOT NULL,
     email_subject TEXT,
 
-    -- Sender.net tracking
-    sender_email_id VARCHAR(100),  -- ID returned from Sender.net API
+    -- Email provider tracking
+    sender_email_id VARCHAR(100),  -- ID returned from email provider (Resend) API
 
     -- Status
     status VARCHAR(20) NOT NULL DEFAULT 'sent',  -- sent, failed, bounced

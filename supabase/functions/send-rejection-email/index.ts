@@ -1,5 +1,5 @@
 /**
- * Supabase Edge Function for sending directory rejection emails via Sender.net
+ * Supabase Edge Function for sending directory rejection emails via Resend
  * This function is triggered when a pending_directories status changes to 'rejected'
  * Can be called via:
  * 1. Database webhook on pending_directories table
@@ -122,7 +122,7 @@ serve(async (req: Request) => {
       adminNotes: payload.admin_notes,
     });
 
-    // Send email via Sender.net
+    // Send email via Resend
     const result = await sendEmail({
       to: payload.user_email,
       subject: `Update on your directory submission "${payload.directory_name}"`,
