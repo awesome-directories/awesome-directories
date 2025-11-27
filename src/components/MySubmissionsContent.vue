@@ -26,27 +26,27 @@
     <!-- Main Content -->
     <div v-else>
       <!-- Stats Summary -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-          <div class="text-2xl font-bold text-gray-900">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
+        <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center">
+          <div class="text-xl sm:text-2xl font-bold text-gray-900">
             {{ stats.total }}
           </div>
           <div class="text-xs text-gray-500 mt-1">Total Submitted</div>
         </div>
-        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-          <div class="text-2xl font-bold text-yellow-600">
+        <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center">
+          <div class="text-xl sm:text-2xl font-bold text-yellow-600">
             {{ stats.pending }}
           </div>
           <div class="text-xs text-gray-500 mt-1">Pending Review</div>
         </div>
-        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-          <div class="text-2xl font-bold text-green-600">
+        <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center">
+          <div class="text-xl sm:text-2xl font-bold text-green-600">
             {{ stats.approved }}
           </div>
           <div class="text-xs text-gray-500 mt-1">Approved</div>
         </div>
-        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
-          <div class="text-2xl font-bold text-red-600">
+        <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center">
+          <div class="text-xl sm:text-2xl font-bold text-red-600">
             {{ stats.rejected }}
           </div>
           <div class="text-xs text-gray-500 mt-1">Rejected</div>
@@ -181,18 +181,20 @@
             <!-- Actions -->
             <div
               v-if="submission.status === 'pending'"
-              class="flex items-center gap-2"
+              class="flex items-center gap-1 sm:gap-2 flex-shrink-0"
             >
               <button
                 @click="handleEdit(submission)"
-                class="p-2 text-gray-400 hover:text-primary transition-colors rounded-lg hover:bg-gray-50"
+                class="min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center text-gray-400 hover:text-primary active:text-primary transition-colors rounded-lg hover:bg-gray-50 active:bg-gray-100 touch-manipulation"
                 title="Edit submission"
+                aria-label="Edit submission"
               >
                 <svg
                   class="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     stroke-linecap="round"
@@ -204,14 +206,16 @@
               </button>
               <button
                 @click="handleDelete(submission)"
-                class="p-2 text-gray-400 hover:text-red-600 transition-colors rounded-lg hover:bg-gray-50"
+                class="min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center text-gray-400 hover:text-red-600 active:text-red-600 transition-colors rounded-lg hover:bg-gray-50 active:bg-gray-100 touch-manipulation"
                 title="Delete submission"
+                aria-label="Delete submission"
               >
                 <svg
                   class="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     stroke-linecap="round"
@@ -293,17 +297,26 @@
     <!-- Edit Modal -->
     <div
       v-if="showEditModal"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4"
+      class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-modal-title"
+      @keydown.escape="showEditModal = false"
     >
       <div
-        class="fixed inset-0 bg-gray-900 bg-opacity-75"
+        class="fixed inset-0 bg-gray-900/75"
         @click="showEditModal = false"
+        aria-hidden="true"
       ></div>
 
       <div
-        class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto"
+        class="relative bg-white rounded-t-2xl sm:rounded-xl shadow-xl w-full sm:max-w-2xl p-4 sm:p-6 max-h-[95vh] sm:max-h-[90vh] overflow-y-auto safe-area-inset-bottom"
       >
-        <h3 class="text-lg font-bold text-gray-900 mb-4">Edit Submission</h3>
+        <!-- Mobile drag indicator -->
+        <div class="sm:hidden flex justify-center mb-3 -mt-1">
+          <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
+        </div>
+        <h3 id="edit-modal-title" class="text-lg font-bold text-gray-900 mb-4">Edit Submission</h3>
 
         <div class="space-y-4">
           <!-- Name -->
@@ -416,17 +429,17 @@
           <p class="text-sm text-red-600">{{ editError }}</p>
         </div>
 
-        <div class="flex justify-end gap-3 mt-6">
+        <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-6">
           <button
             @click="showEditModal = false"
-            class="px-4 py-2 text-gray-700 font-medium hover:text-gray-900"
+            class="px-4 py-3 sm:py-2 text-gray-700 font-medium hover:text-gray-900 active:text-gray-900 min-h-[48px] sm:min-h-[44px] touch-manipulation rounded-xl sm:rounded-lg border border-gray-300 sm:border-0"
           >
             Cancel
           </button>
           <button
             @click="saveEdit"
             :disabled="isSaving"
-            class="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50"
+            class="px-6 py-3 sm:py-2 bg-primary text-white font-medium rounded-xl sm:rounded-lg hover:bg-primary-dark active:bg-primary-dark transition-colors disabled:opacity-50 min-h-[48px] sm:min-h-[44px] touch-manipulation"
           >
             {{ isSaving ? "Saving..." : "Save Changes" }}
           </button>
@@ -713,5 +726,20 @@ async function handleDelete(submission) {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+.safe-area-inset-bottom {
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 640px) {
+  .safe-area-inset-bottom {
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
 }
 </style>

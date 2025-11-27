@@ -1,42 +1,44 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
     <!-- Auth Required Message -->
-    <div v-if="!user" class="bg-white rounded-lg shadow-sm p-8 text-center">
-      <div class="text-5xl mb-4">🔒</div>
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">
+    <div v-if="!user" class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center">
+      <div class="text-4xl sm:text-5xl mb-4" aria-hidden="true">🔒</div>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
         Sign in to View Favorites
       </h2>
-      <p class="text-gray-600 mb-6">
+      <p class="text-sm sm:text-base text-gray-600 mb-6">
         You need to be signed in to view and manage your favorite directories.
       </p>
-      <button @click="handleSignIn" class="btn-primary">Sign In</button>
+      <button @click="handleSignIn" class="btn-primary min-h-[48px] px-6 touch-manipulation">Sign In</button>
     </div>
 
     <!-- Loading State -->
-    <div v-else-if="isLoading" class="text-center py-12">
+    <div v-else-if="isLoading" class="text-center py-8 sm:py-12">
       <div
-        class="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"
+        class="inline-block h-10 w-10 sm:h-12 sm:w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"
+        role="status"
+        aria-label="Loading"
       ></div>
-      <p class="mt-4 text-gray-600">Loading your favorites...</p>
+      <p class="mt-4 text-sm sm:text-base text-gray-600">Loading your favorites...</p>
     </div>
 
     <!-- Empty State -->
     <div
       v-else-if="favorites.length === 0"
-      class="bg-white rounded-lg shadow-sm p-8 text-center"
+      class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center"
     >
-      <div class="text-5xl mb-4">💔</div>
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">No Favorites Yet</h2>
-      <p class="text-gray-600 mb-6">
+      <div class="text-4xl sm:text-5xl mb-4" aria-hidden="true">💔</div>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">No Favorites Yet</h2>
+      <p class="text-sm sm:text-base text-gray-600 mb-6">
         Start exploring directories and add them to your favorites!
       </p>
-      <a href="/" class="btn-primary inline-block"> Browse Directories </a>
+      <a href="/" class="btn-primary inline-flex items-center justify-center min-h-[48px] px-6 touch-manipulation"> Browse Directories </a>
     </div>
 
     <!-- Favorites List -->
     <div v-else>
-      <div class="mb-6 flex items-center justify-between">
-        <p class="text-gray-700">
+      <div class="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <p class="text-sm sm:text-base text-gray-700">
           You have
           <span class="font-semibold">{{ favorites.length }}</span>
           {{ favorites.length === 1 ? "favorite" : "favorites" }}
@@ -45,25 +47,26 @@
         <button
           v-if="favorites.length > 0"
           @click="handleExportFavorites"
-          class="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
+          class="text-sm font-medium text-primary hover:text-primary-dark active:text-primary-dark transition-colors min-h-[44px] px-3 py-2 -ml-3 sm:ml-0 rounded-lg touch-manipulation"
         >
           📥 Export to CSV
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         <div
           v-for="favorite in favorites"
           :key="favorite.id"
-          class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow relative"
+          class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 hover:shadow-md transition-shadow relative"
         >
           <!-- Remove Button -->
           <button
             @click="handleRemoveFavorite(favorite.directory_id)"
-            class="absolute top-4 right-4 text-gray-400 hover:text-red-600 transition-colors"
+            class="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-red-600 active:text-red-600 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full hover:bg-gray-50 touch-manipulation"
             title="Remove from favorites"
+            aria-label="Remove from favorites"
           >
-            <span class="text-xl">❌</span>
+            <span class="text-lg sm:text-xl" aria-hidden="true">❌</span>
           </button>
 
           <!-- Directory Info -->
@@ -119,7 +122,7 @@
           <!-- View Button -->
           <a
             :href="`/directory/${favorite.directory?.slug}`"
-            class="inline-block w-full text-center text-sm font-medium text-primary hover:text-primary-dark transition-colors py-2 px-4 border border-primary rounded-lg hover:bg-primary hover:text-white"
+            class="inline-flex items-center justify-center w-full text-center text-sm font-medium text-primary hover:text-white active:text-white transition-colors py-3 sm:py-2 px-4 border border-primary rounded-xl sm:rounded-lg hover:bg-primary active:bg-primary min-h-[48px] sm:min-h-[44px] touch-manipulation"
           >
             View Details →
           </a>

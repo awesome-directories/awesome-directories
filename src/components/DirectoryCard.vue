@@ -1,22 +1,26 @@
 <template>
-  <div class="card p-5 h-full flex flex-col relative">
+  <div class="card p-4 sm:p-5 h-full flex flex-col relative">
     <!-- Pending Submission Badge -->
     <div
       v-if="isPendingSubmission"
-      class="absolute top-4 right-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-300"
+      class="absolute top-3 right-3 sm:top-4 sm:right-4 inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-300"
       title="This is your pending submission, visible only to you"
     >
-      ⏳ Pending Review
+      ⏳ <span class="hidden sm:inline ml-1">Pending Review</span><span class="sm:hidden ml-1">Pending</span>
     </div>
 
     <!-- Checkbox for selection -->
-    <input
+    <label
       v-if="selectable && !isPendingSubmission"
-      type="checkbox"
-      :checked="isSelected"
-      @change="$emit('toggle-select', directory)"
-      class="absolute top-4 right-4 w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer"
-    />
+      class="absolute top-3 right-3 sm:top-4 sm:right-4 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer touch-manipulation"
+    >
+      <input
+        type="checkbox"
+        :checked="isSelected"
+        @change="$emit('toggle-select', directory)"
+        class="w-6 h-6 sm:w-5 sm:h-5 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer"
+      />
+    </label>
 
     <!-- Logo/Icon -->
     <div class="flex items-start space-x-4 mb-4">
@@ -118,7 +122,7 @@
 
       <a
         :href="`/directory/${directory.slug}`"
-        class="inline-block w-full text-center text-sm font-medium text-primary hover:text-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded py-2"
+        class="inline-flex items-center justify-center w-full text-center text-sm font-medium text-primary hover:text-primary-dark active:text-primary-dark transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg py-3 sm:py-2 min-h-[48px] sm:min-h-[44px] touch-manipulation"
       >
         View Details →
       </a>
@@ -202,5 +206,10 @@ const handleImageError = (e) => {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 </style>

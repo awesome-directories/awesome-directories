@@ -1,8 +1,8 @@
 <template>
-  <div class="space-y-4">
+  <div class="space-y-3 sm:space-y-4">
     <!-- User Actions Card -->
-    <div class="bg-white rounded-lg shadow-sm p-6">
-      <h2 class="text-lg font-bold text-gray-900 mb-4">Your Actions</h2>
+    <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6">
+      <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Your Actions</h2>
 
       <div class="space-y-3">
         <!-- Favorite Button -->
@@ -19,43 +19,44 @@
         <button
           @click="handleAddToProject"
           :disabled="isPendingSubmission || !user"
-          class="w-full inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 hover:bg-gray-50 border-2 border-gray-300"
+          class="w-full inline-flex items-center justify-center px-4 sm:px-6 py-3 sm:py-3 text-sm sm:text-base font-semibold rounded-xl sm:rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 hover:bg-gray-50 active:bg-gray-100 border-2 border-gray-300 min-h-[52px] sm:min-h-[48px] touch-manipulation"
           :title="
             !user ? 'Sign in to track submissions' : 'Add to your project'
           "
         >
-          <span class="text-xl mr-2">📋</span>
+          <span class="text-lg sm:text-xl mr-2" aria-hidden="true">📋</span>
           <span>Track Submission</span>
         </button>
       </div>
     </div>
 
     <!-- Rating Card -->
-    <div class="bg-white rounded-lg shadow-sm p-6">
-      <h2 class="text-lg font-bold text-gray-900 mb-4">Rate this Directory</h2>
+    <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6">
+      <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Rate this Directory</h2>
 
       <!-- Current Rating Display -->
-      <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center justify-between mb-4 gap-2">
         <div class="flex items-center space-x-2">
           <div class="flex">
             <span
               v-for="star in 5"
               :key="star"
-              class="text-2xl"
+              class="text-xl sm:text-2xl"
               :class="
                 star <= Math.floor(averageRating + 0.5)
                   ? 'text-yellow-400'
                   : 'text-gray-300'
               "
+              aria-hidden="true"
             >
               ★
             </span>
           </div>
-          <span class="text-lg font-semibold text-gray-900">
+          <span class="text-base sm:text-lg font-semibold text-gray-900">
             {{ averageRating ? averageRating.toFixed(1) : "—" }}
           </span>
         </div>
-        <span class="text-sm text-gray-500">
+        <span class="text-xs sm:text-sm text-gray-500 whitespace-nowrap">
           {{ ratingCount }} {{ ratingCount === 1 ? "rating" : "ratings" }}
         </span>
       </div>
@@ -63,7 +64,7 @@
       <!-- User Rating Input -->
       <div v-if="user && !isPendingSubmission" class="mb-4">
         <p class="text-sm text-gray-600 mb-2">Your rating:</p>
-        <div class="flex items-center space-x-1">
+        <div class="flex items-center">
           <button
             v-for="star in 5"
             :key="star"
@@ -71,7 +72,7 @@
             @mouseenter="hoverRating = star"
             @mouseleave="hoverRating = 0"
             :disabled="isSubmittingRating"
-            class="text-3xl transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 rounded disabled:opacity-50"
+            class="text-3xl sm:text-3xl transition-transform hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 rounded disabled:opacity-50 min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
             :class="
               (hoverRating || userRating) >= star
                 ? 'text-yellow-400'
@@ -92,7 +93,7 @@
         <p class="text-sm text-gray-600 mb-2">Sign in to rate this directory</p>
         <button
           @click="handleSignIn"
-          class="text-sm font-medium text-primary hover:text-primary-dark"
+          class="text-sm font-medium text-primary hover:text-primary-dark active:text-primary-dark min-h-[44px] px-3 touch-manipulation"
         >
           Sign In →
         </button>
@@ -100,13 +101,13 @@
     </div>
 
     <!-- Reviews Section -->
-    <div class="bg-white rounded-lg shadow-sm p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-bold text-gray-900">
+    <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6">
+      <div class="flex items-center justify-between mb-3 sm:mb-4">
+        <h2 class="text-base sm:text-lg font-bold text-gray-900">
           Reviews
           <span
             v-if="reviewCount > 0"
-            class="text-gray-500 font-normal text-base"
+            class="text-gray-500 font-normal text-sm sm:text-base"
           >
             ({{ reviewCount }})
           </span>
@@ -117,9 +118,9 @@
       <div v-if="user && !isPendingSubmission" class="mb-4">
         <button
           @click="showReviewForm = !showReviewForm"
-          class="w-full inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200"
+          class="w-full inline-flex items-center justify-center px-4 py-3 sm:py-2 text-sm font-medium rounded-xl sm:rounded-lg transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300 min-h-[48px] sm:min-h-[44px] touch-manipulation"
         >
-          <span class="mr-2">✍️</span>
+          <span class="mr-2" aria-hidden="true">✍️</span>
           {{ showReviewForm ? "Cancel" : "Write a Review" }}
         </button>
 
@@ -129,14 +130,14 @@
             v-model="newReview"
             rows="4"
             placeholder="Share your experience with this directory..."
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-sm"
+            class="w-full px-3 py-3 sm:py-2 border border-gray-300 rounded-xl sm:rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none text-base sm:text-sm"
             :disabled="isSubmittingReview"
           ></textarea>
-          <div class="flex justify-end mt-2">
+          <div class="flex justify-end mt-3 sm:mt-2">
             <button
               @click="submitReview"
               :disabled="!newReview.trim() || isSubmittingReview"
-              class="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              class="px-4 sm:px-4 py-3 sm:py-2 text-sm font-medium text-white bg-primary rounded-xl sm:rounded-lg hover:bg-primary-dark active:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px] sm:min-h-[44px] touch-manipulation"
             >
               {{ isSubmittingReview ? "Submitting..." : "Submit Review" }}
             </button>
@@ -196,7 +197,7 @@
       <button
         v-if="hasMoreReviews"
         @click="loadMoreReviews"
-        class="w-full mt-4 py-2 text-sm font-medium text-primary hover:text-primary-dark"
+        class="w-full mt-4 py-3 sm:py-2 text-sm font-medium text-primary hover:text-primary-dark active:text-primary-dark min-h-[48px] sm:min-h-[44px] touch-manipulation rounded-lg"
       >
         Load more reviews
       </button>

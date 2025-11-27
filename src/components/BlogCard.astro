@@ -14,49 +14,49 @@ var postSlug = getPostSlug(post);
 ---
 
 <article
-  class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+  class="bg-white rounded-xl sm:rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
 >
   {
     coverImage && (
-      <a href={`/blog/${postSlug}`} class="block">
+      <a href={`/blog/${postSlug}`} class="block touch-manipulation">
         <img
           src={coverImage}
           alt={coverImageAlt || title}
-          class="w-full h-48 object-cover"
+          class="w-full h-40 sm:h-48 object-cover"
           loading="lazy"
         />
       </a>
     )
   }
 
-  <div class="p-6">
-    <div class="flex items-center gap-2 text-sm text-gray-600 mb-3">
+  <div class="p-4 sm:p-6">
+    <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">
       <time datetime={date.toISOString()}>
         {formatDate(date)}
       </time>
-      <span>•</span>
+      <span aria-hidden="true">•</span>
       <span>{readingTime} min read</span>
     </div>
 
-    <a href={`/blog/${postSlug}`} class="block group">
+    <a href={`/blog/${postSlug}`} class="block group touch-manipulation">
       <h2
-        class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors"
+        class="text-lg sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors line-clamp-2"
       >
         {title}
       </h2>
     </a>
 
-    <p class="text-gray-600 mb-4 line-clamp-3">
+    <p class="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 line-clamp-2 sm:line-clamp-3">
       {description}
     </p>
 
-    <div class="flex flex-wrap gap-2 mb-4">
+    <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
       {
         tags.slice(0, 3).map(function mapTags(tag) {
           return (
             <a
               href={`/blog/tags/${tag.toLowerCase()}`}
-              class="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 transition-colors"
+              class="inline-flex items-center px-2.5 sm:px-3 py-1 sm:py-1 text-xs sm:text-sm bg-blue-100 text-blue-800 rounded-full hover:bg-blue-200 active:bg-blue-200 transition-colors min-h-[32px] sm:min-h-[28px] touch-manipulation"
             >
               #{tag}
             </a>
@@ -65,14 +65,41 @@ var postSlug = getPostSlug(post);
       }
     </div>
 
-    <div class="flex items-center justify-between text-sm text-gray-600">
+    <div class="flex items-center justify-between text-xs sm:text-sm text-gray-600 pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-100">
       <span>By {author}</span>
       <a
         href={`/blog/${postSlug}`}
-        class="text-blue-600 hover:text-blue-800 font-medium"
+        class="text-blue-600 hover:text-blue-800 active:text-blue-800 font-medium min-h-[44px] sm:min-h-[36px] inline-flex items-center touch-manipulation"
       >
         Read more →
       </a>
     </div>
   </div>
 </article>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (max-width: 640px) {
+    .sm\:line-clamp-3 {
+      -webkit-line-clamp: 2;
+    }
+  }
+</style>

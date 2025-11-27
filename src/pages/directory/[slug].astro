@@ -182,7 +182,7 @@ const hasSubmissionInfo =
   <main class="min-h-screen bg-gray-50">
     <!-- Breadcrumb Navigation -->
     <nav aria-label="Breadcrumb" class="bg-white border-b border-gray-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
         <ol
           class="flex items-center space-x-2 text-sm"
           itemscope
@@ -235,8 +235,8 @@ const hasSubmissionInfo =
     </nav>
 
     <!-- Directory Detail Section -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         <!-- Main Content (Left Column) -->
         <article
           class="lg:col-span-2 space-y-6"
@@ -244,9 +244,9 @@ const hasSubmissionInfo =
           itemtype="https://schema.org/Product"
         >
           <!-- Header with Logo and Title -->
-          <header class="bg-white rounded-lg shadow-sm p-6 sm:p-8">
+          <header class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
             <div
-              class="flex flex-col sm:flex-row items-start sm:items-center gap-6"
+              class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
             >
               <!-- Logo -->
               <div class="flex-shrink-0">
@@ -275,7 +275,7 @@ const hasSubmissionInfo =
               <!-- Title and Meta -->
               <div class="flex-1 min-w-0">
                 <h1
-                  class="text-3xl sm:text-4xl font-bold text-gray-900 mb-3"
+                  class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3"
                   itemprop="name"
                 >
                   {directory.name}
@@ -364,12 +364,12 @@ const hasSubmissionInfo =
               <!-- Primary CTA -->
               {
                 (directory.submission_url || directory.url) && (
-                  <div class="flex-shrink-0 w-full sm:w-auto">
+                  <div class="flex-shrink-0 w-full sm:w-auto mt-2 sm:mt-0">
                     <a
                       href={`${directory.submission_url || directory.url}?ref=awesome-directories.com`}
 
                       rel="noopener noreferrer nofollow"
-                      class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary focus:ring-opacity-50"
+                      class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:py-3 bg-primary hover:bg-primary-dark active:bg-primary-dark text-white font-semibold rounded-xl sm:rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-opacity-50 min-h-[52px] sm:min-h-[48px] touch-manipulation"
                       itemprop="url"
                     >
                       Submit Product →
@@ -384,44 +384,44 @@ const hasSubmissionInfo =
           {
             hasSubmissionInfo && (
               <section
-                class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
+                class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 md:p-8"
                 aria-labelledby="submission-heading"
               >
                 <h2
                   id="submission-heading"
-                  class="text-xl font-bold text-gray-900 mb-4"
+                  class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4"
                 >
                   Submission Details
                 </h2>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold text-gray-900">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                  <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                    <div class="text-lg sm:text-2xl font-bold text-gray-900">
                       {getPricingLabel(directory)}
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">Pricing</div>
+                    <div class="text-xs sm:text-sm text-gray-600 mt-1">Pricing</div>
                   </div>
 
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold text-gray-900">
+                  <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                    <div class="text-lg sm:text-2xl font-bold text-gray-900">
                       {directory.is_dofollow ? "Yes" : "No"}
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">Dofollow Link</div>
+                    <div class="text-xs sm:text-sm text-gray-600 mt-1">Dofollow Link</div>
                   </div>
 
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold text-gray-900">
+                  <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                    <div class="text-lg sm:text-2xl font-bold text-gray-900">
                       {directory.avg_approval_days
-                        ? `${directory.avg_approval_days} days`
+                        ? `${directory.avg_approval_days}d`
                         : "N/A"}
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">Avg. Approval</div>
+                    <div class="text-xs sm:text-sm text-gray-600 mt-1">Avg. Approval</div>
                   </div>
 
-                  <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold text-gray-900">
+                  <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                    <div class="text-lg sm:text-2xl font-bold text-gray-900">
                       {getTrafficLabel(directory.traffic_estimate) || "N/A"}
                     </div>
-                    <div class="text-sm text-gray-600 mt-1">Traffic Level</div>
+                    <div class="text-xs sm:text-sm text-gray-600 mt-1">Traffic Level</div>
                   </div>
                 </div>
               </section>
@@ -432,77 +432,77 @@ const hasSubmissionInfo =
           {
             hasSeoMetrics && (
               <section
-                class="bg-white rounded-lg shadow-sm p-6 sm:p-8"
+                class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 md:p-8"
                 aria-labelledby="seo-heading"
               >
                 <h2
                   id="seo-heading"
-                  class="text-xl font-bold text-gray-900 mb-4"
+                  class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4"
                 >
                   SEO & Authority Metrics
                 </h2>
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
                   {directory.domain_rating && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
-                      <div class="text-3xl font-bold text-primary">
+                    <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                      <div class="text-2xl sm:text-3xl font-bold text-primary">
                         {directory.domain_rating}
                       </div>
-                      <div class="text-sm text-gray-600 mt-1">
+                      <div class="text-xs sm:text-sm text-gray-600 mt-1">
                         Domain Rating
                       </div>
                     </div>
                   )}
 
                   {directory.organic_search_traffic && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
-                      <div class="text-3xl font-bold text-primary">
+                    <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                      <div class="text-2xl sm:text-3xl font-bold text-primary">
                         {formatNumber(directory.organic_search_traffic)}
                       </div>
-                      <div class="text-sm text-gray-600 mt-1">
+                      <div class="text-xs sm:text-sm text-gray-600 mt-1">
                         Monthly Traffic
                       </div>
                     </div>
                   )}
 
                   {directory.ranking_keywords && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
-                      <div class="text-3xl font-bold text-primary">
+                    <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                      <div class="text-2xl sm:text-3xl font-bold text-primary">
                         {formatNumber(directory.ranking_keywords)}
                       </div>
-                      <div class="text-sm text-gray-600 mt-1">
-                        Ranking Keywords
+                      <div class="text-xs sm:text-sm text-gray-600 mt-1">
+                        Keywords
                       </div>
                     </div>
                   )}
 
                   {directory.backlinks_count && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
-                      <div class="text-3xl font-bold text-primary">
+                    <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                      <div class="text-2xl sm:text-3xl font-bold text-primary">
                         {formatNumber(directory.backlinks_count)}
                       </div>
-                      <div class="text-sm text-gray-600 mt-1">Backlinks</div>
+                      <div class="text-xs sm:text-sm text-gray-600 mt-1">Backlinks</div>
                     </div>
                   )}
 
                   {directory.referring_domains && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
-                      <div class="text-3xl font-bold text-primary">
+                    <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
+                      <div class="text-2xl sm:text-3xl font-bold text-primary">
                         {formatNumber(directory.referring_domains)}
                       </div>
-                      <div class="text-sm text-gray-600 mt-1">
-                        Referring Domains
+                      <div class="text-xs sm:text-sm text-gray-600 mt-1">
+                        Ref. Domains
                       </div>
                     </div>
                   )}
 
                   {getTrustScore(directory.spam_score) !== null && (
-                    <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
                       <div
-                        class={`text-3xl font-bold ${getTrustScore(directory.spam_score) >= 70 ? "text-green-600" : getTrustScore(directory.spam_score) >= 40 ? "text-yellow-600" : "text-red-600"}`}
+                        class={`text-2xl sm:text-3xl font-bold ${getTrustScore(directory.spam_score) >= 70 ? "text-green-600" : getTrustScore(directory.spam_score) >= 40 ? "text-yellow-600" : "text-red-600"}`}
                       >
                         {getTrustScore(directory.spam_score)}%
                       </div>
-                      <div class="text-sm text-gray-600 mt-1">Trust Score</div>
+                      <div class="text-xs sm:text-sm text-gray-600 mt-1">Trust Score</div>
                     </div>
                   )}
                 </div>
@@ -531,17 +531,17 @@ const hasSubmissionInfo =
           }
 
           <!-- Quick Links -->
-          <section class="bg-white rounded-lg shadow-sm p-6 sm:p-8">
-            <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Links</h2>
-            <div class="flex flex-wrap gap-3">
+          <section class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+            <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Quick Links</h2>
+            <div class="flex flex-col sm:flex-row flex-wrap gap-3">
               {
                 directory.url && (
                   <a
                     href={`${directory.url}?ref=awesome-directories.com`}
                     rel="noopener noreferrer"
-                    class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+                    class="inline-flex items-center justify-center px-4 py-3 sm:py-2 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-gray-700 font-medium rounded-xl sm:rounded-lg transition-colors min-h-[48px] sm:min-h-[44px] touch-manipulation"
                   >
-                    <span class="mr-2">🌐</span> Visit Website
+                    <span class="mr-2" aria-hidden="true">🌐</span> Visit Website
                   </a>
                 )
               }
@@ -552,9 +552,9 @@ const hasSubmissionInfo =
                       href={directory.submission_url}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
-                      class="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-dark text-white font-medium rounded-lg transition-colors"
+                      class="inline-flex items-center justify-center px-4 py-3 sm:py-2 bg-primary hover:bg-primary-dark active:bg-primary-dark text-white font-medium rounded-xl sm:rounded-lg transition-colors min-h-[48px] sm:min-h-[44px] touch-manipulation"
                     >
-                      <span class="mr-2">📤</span> Submit Product
+                      <span class="mr-2" aria-hidden="true">📤</span> Submit Product
                     </a>
                   )
               }
@@ -668,11 +668,16 @@ const hasSubmissionInfo =
   <AppFooter />
 </BaseLayout>
 
-<style scoped>
+<style>
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 </style>
