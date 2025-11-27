@@ -27,7 +27,7 @@ Your complete Awesome Directories application has been built according to the te
 - Row Level Security (RLS) policies
 - User authentication system
 - Real-time capabilities
-- 388 pre-seeded directories
+- 300+ pre-seeded directories
 
 ✅ **Integrations**
 
@@ -56,7 +56,7 @@ Your complete Awesome Directories application has been built according to the te
    - Paste and run
 
 3. **Seed the database:**
-   - The seed data is in `supabase/seed-data.json` (388 directories)
+   - The seed data is in `supabase/seed-data.json` (300+ directories)
    - You can import via Supabase Table Editor or use the JavaScript client:
 
    ```javascript

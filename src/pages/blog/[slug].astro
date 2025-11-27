@@ -16,6 +16,10 @@ import {
   generateTableOfContents,
 } from "@/utils/blog";
 
+function formatCaption(caption: string): string {
+  return caption.replace(/\n/g, '<br>');
+}
+
 export const getStaticPaths = (async () => {
   const publishedPosts = await getPublishedPosts();
 
@@ -193,7 +197,7 @@ const ogImage = coverImage || `${siteUrl}/og-image.png`;
                 {coverCaption && (
                   <figcaption
                     class="text-sm text-gray-500 text-center mb-6"
-                    set:html={coverCaption}
+                    set:html={formatCaption(coverCaption)}
                   />
                 )}
               </figure>

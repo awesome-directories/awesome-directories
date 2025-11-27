@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Awesome Directories** is a curated directory aggregator web application that helps indie hackers, bootstrappers, and solopreneurs discover high-quality product launch directories for their SaaS products. The site aggregates 388+ verified directories with advanced filtering capabilities.
+**Awesome Directories** is a curated directory aggregator web application that helps indie hackers, bootstrappers, and solopreneurs discover high-quality product launch directories for their SaaS products. The site aggregates 300+ verified directories with advanced filtering capabilities.
 
 - **Live Site**: https://awesome-directories.com
 - **Repository**: awesome-directories/awesome-directories
@@ -744,7 +744,7 @@ For Supabase Edge Functions:
 
 ### Seed Data
 
-- 388+ directories in JSON format
+- 300+ directories in JSON format
 - Location: `supabase/seeds/directories.json`
 - Parser script: `scripts/parse-directories.js`
 - Manual updates via PR to seed data file

@@ -17,7 +17,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 
 ### Core Features
 
-- ✅ **388+ Curated Directories** - Pre-loaded with quality directories
+- ✅ **300+ Curated Directories** - Pre-loaded with quality directories
 - 🔍 **Advanced Filtering** - Filter by DR, category, pricing, dofollow status
 - ⚡ **Instant Search** - Real-time search across names, descriptions, categories
 - 📋 **Multi-Select Checklist** - Select directories and export as PDF or CSV
