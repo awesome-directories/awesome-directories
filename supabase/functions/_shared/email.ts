@@ -141,7 +141,7 @@ export function wrapEmailTemplate(content: string, previewText?: string): string
                 <tr>
                   <td style="text-align: center;">
                     <p style="margin: 0 0 8px; font-size: 13px; color: #71717a;">
-                      Discover 388+ directories for your next launch
+                      Discover 300+ directories for your next launch
                     </p>
                     <p style="margin: 0; font-size: 12px; color: #a1a1aa;">
                       <a href="${SITE_URL}" style="color: #71717a;">awesome-directories.com</a>

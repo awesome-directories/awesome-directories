@@ -29,12 +29,21 @@ export function approvalEmailTemplate(params: {
     </div>
 
     <h1 style="margin: 0 0 16px; font-size: 22px; font-weight: 700; color: #18181b; text-align: center; line-height: 1.3;">
-      Your submission has been approved!
+      You're awesome — your directory is approved!
     </h1>
 
     <p style="margin: 0 0 24px; font-size: 15px; line-height: 1.6; color: #52525b; text-align: center;">
-      Great news! <strong style="color: #18181b;">${escapeHtml(directoryName)}</strong> has been reviewed and added to Awesome Directories.
+      Great news! <strong style="color: #18181b;">${escapeHtml(directoryName)}</strong> has been reviewed and approved. Contributors like you make Awesome Directories better for everyone.
     </p>
+
+    <div style="margin: 0 0 24px; padding: 16px; background-color: #f0fdf4; border-radius: 8px;">
+      <p style="margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #166534;">What happens next?</p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #3f3f46; line-height: 1.6;">
+        <li>Your directory is queued for the next site update</li>
+        <li>Expect to see it live within 24 hours (usually much sooner)</li>
+        <li>No action needed — just sit back and watch it appear!</li>
+      </ul>
+    </div>
 
     ${adminNotes ? `
     <div style="margin: 0 0 24px; padding: 16px; background-color: #f4f4f5; border-radius: 8px; border-left: 4px solid #2563eb;">
@@ -169,7 +178,7 @@ export function welcomeEmailTemplate(params: {
       <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
         <tr>
           <td style="padding: 8px 0; font-size: 14px; color: #3f3f46;">
-            <strong style="color: #2563eb;">Browse 388+ directories</strong> with filters for DR, pricing, and categories
+            <strong style="color: #2563eb;">Browse 300+ directories</strong> with filters for DR, pricing, and categories
           </td>
         </tr>
         <tr>
@@ -196,8 +205,8 @@ export function welcomeEmailTemplate(params: {
   `;
 
   return {
-    html: wrapEmailTemplate(content, "Welcome to Awesome Directories - discover 388+ launch directories"),
-    preheader: "Welcome to Awesome Directories - discover 388+ launch directories",
+    html: wrapEmailTemplate(content, "Welcome to Awesome Directories - discover 300+ launch directories"),
+    preheader: "Welcome to Awesome Directories - discover 300+ launch directories",
   };
 }
 
