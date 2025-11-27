@@ -1,7 +1,6 @@
 import {
   extractDomain,
   batchArray,
-  pollApifyRun,
   fetchDirectoriesFromDatabase,
   createDomainMapping,
 } from "./utils.ts";
@@ -38,6 +37,81 @@ interface AhrefsMetrics {
     backlinks?: number;
     refdomains?: number;
   };
+}
+
+async function pollApifyRunWithBackoff(
+  runId: string,
+  defaultDatasetId: string,
+  apifyToken: string,
+  maxAttempts: number,
+  initialIntervalMs: number,
+  maxIntervalMs: number,
+): Promise<AhrefsMetrics[]> {
+  var attempt = 0;
+  var intervalMs = initialIntervalMs;
+
+  while (attempt < maxAttempts) {
+    attempt++;
+
+    console.log(
+      `Polling attempt ${attempt}/${maxAttempts} for run ${runId} (interval: ${intervalMs}ms)`,
+    );
+
+    var statusResponse = await fetch(
+      `https://api.apify.com/v2/actor-runs/${runId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${apifyToken}`,
+        },
+      },
+    );
+
+    if (!statusResponse.ok) {
+      console.error(`Failed to get run status: ${statusResponse.status}`);
+      await sleep(intervalMs);
+      intervalMs = Math.min(intervalMs * 1.5, maxIntervalMs);
+      continue;
+    }
+
+    var statusData = await statusResponse.json();
+    var status = statusData.data.status;
+
+    console.log(`Run ${runId} status: ${status}`);
+
+    if (status === "SUCCEEDED") {
+      var datasetResponse = await fetch(
+        `https://api.apify.com/v2/datasets/${defaultDatasetId}/items`,
+        {
+          headers: {
+            Authorization: `Bearer ${apifyToken}`,
+          },
+        },
+      );
+
+      if (!datasetResponse.ok) {
+        throw new Error(`Failed to fetch dataset: ${datasetResponse.status}`);
+      }
+
+      return await datasetResponse.json();
+    }
+
+    if (status === "FAILED" || status === "ABORTED" || status === "TIMED-OUT") {
+      throw new Error(`Apify run ${runId} ended with status: ${status}`);
+    }
+
+    await sleep(intervalMs);
+    intervalMs = Math.min(intervalMs * 1.5, maxIntervalMs);
+  }
+
+  throw new Error(
+    `Polling timed out after ${maxAttempts} attempts for run ${runId}`,
+  );
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise(function sleepResolve(resolve) {
+    setTimeout(resolve, ms);
+  });
 }
 
 async function fetchAhrefsMetrics(
@@ -92,11 +166,33 @@ async function fetchAhrefsMetrics(
 
     console.log(`Actor run started: ${runId}`);
 
-    return await pollApifyRun(runId, defaultDatasetId, apifyToken, 10);
+    var maxAttempts = 60;
+    var initialIntervalMs = 5000;
+    var maxIntervalMs = 60000;
+
+    return await pollApifyRunWithBackoff(
+      runId,
+      defaultDatasetId,
+      apifyToken,
+      maxAttempts,
+      initialIntervalMs,
+      maxIntervalMs,
+    );
   } catch (error) {
     console.error("Error fetching Ahrefs metrics:", error);
     throw error;
   }
+}
+
+function toIntegerOrNull(value: unknown): number | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  var num = Number(value);
+  if (isNaN(num)) {
+    return null;
+  }
+  return Math.round(num);
 }
 
 async function updateDirectoryMetrics(
@@ -114,20 +210,16 @@ async function updateDirectoryMetrics(
     var metrics = metricsArray[i];
 
     if (metrics.type === "authority" && metrics.website_authority) {
-      domainRating = metrics.website_authority.domainRating ?? domainRating;
-      backlinksCount = metrics.website_authority.backlinks ?? backlinksCount;
-      referringDomains =
-        metrics.website_authority.refdomains ?? referringDomains;
+      domainRating = toIntegerOrNull(metrics.website_authority.domainRating) ?? domainRating;
+      backlinksCount = toIntegerOrNull(metrics.website_authority.backlinks) ?? backlinksCount;
+      referringDomains = toIntegerOrNull(metrics.website_authority.refdomains) ?? referringDomains;
       consolidatedData.authority = metrics.website_authority;
     }
 
     if (metrics.type === "backlinks" && metrics.backlink_check) {
-      domainRating =
-        domainRating ?? metrics.backlink_check.domainRating ?? null;
-      backlinksCount =
-        backlinksCount ?? metrics.backlink_check.backlinks ?? null;
-      referringDomains =
-        referringDomains ?? metrics.backlink_check.refdomains ?? null;
+      domainRating = domainRating ?? toIntegerOrNull(metrics.backlink_check.domainRating);
+      backlinksCount = backlinksCount ?? toIntegerOrNull(metrics.backlink_check.backlinks);
+      referringDomains = referringDomains ?? toIntegerOrNull(metrics.backlink_check.refdomains);
       consolidatedData.backlinks = metrics.backlink_check;
       if (metrics.top_backlinks) {
         consolidatedData.top_backlinks = metrics.top_backlinks;
@@ -147,7 +239,7 @@ async function updateDirectoryMetrics(
         metrics.website_traffic &&
         metrics.website_traffic.trafficMonthlyAvg !== undefined
       ) {
-        organicTraffic = metrics.website_traffic.trafficMonthlyAvg;
+        organicTraffic = toIntegerOrNull(metrics.website_traffic.trafficMonthlyAvg);
       }
       consolidatedData.traffic = {
         monthly_avg: metrics.website_traffic?.trafficMonthlyAvg,
