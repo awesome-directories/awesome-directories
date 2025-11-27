@@ -590,14 +590,6 @@ watch(
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
-.touch-manipulation {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.overscroll-contain {
-  overscroll-behavior: contain;
-}
 
 /* Details element chevron rotation */
 details[open] .details-chevron {

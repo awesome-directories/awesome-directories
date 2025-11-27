@@ -409,7 +409,11 @@ const hasSubmissionInfo =
                   </div>
 
                   <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
-                    <div class="text-lg sm:text-2xl font-bold text-gray-900">
+                    <div
+                      class="text-lg sm:text-2xl font-bold text-gray-900"
+                      title={directory.avg_approval_days ? `${directory.avg_approval_days} days` : "Not available"}
+                      aria-label={directory.avg_approval_days ? `${directory.avg_approval_days} days` : "Not available"}
+                    >
                       {directory.avg_approval_days
                         ? `${directory.avg_approval_days}d`
                         : "N/A"}
@@ -668,16 +672,4 @@ const hasSubmissionInfo =
   <AppFooter />
 </BaseLayout>
 
-<style>
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
 
-  .touch-manipulation {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-</style>

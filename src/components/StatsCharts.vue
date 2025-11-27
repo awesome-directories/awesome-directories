@@ -197,9 +197,7 @@ function createCategoryChart() {
             generateLabels: (chart) => {
               const chartData = chart.data;
               return chartData.labels.map((label, i) => ({
-                text: isMobile.value
-                  ? `${label} (${chartData.datasets[0].data[i]})`
-                  : `${label} (${chartData.datasets[0].data[i]})`,
+                text: `${label} (${chartData.datasets[0].data[i]})`,
                 fillStyle: chartData.datasets[0].backgroundColor[i],
                 hidden: false,
                 index: i,

@@ -5,6 +5,7 @@
       v-if="isPendingSubmission"
       class="absolute top-3 right-3 sm:top-4 sm:right-4 inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-300"
       title="This is your pending submission, visible only to you"
+      aria-label="Pending Review"
     >
       ⏳ <span class="hidden sm:inline ml-1">Pending Review</span><span class="sm:hidden ml-1">Pending</span>
     </div>
@@ -19,6 +20,7 @@
         :checked="isSelected"
         @change="$emit('toggle-select', directory)"
         class="w-6 h-6 sm:w-5 sm:h-5 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer"
+        :aria-label="`Select ${directory.name} for checklist`"
       />
     </label>
 

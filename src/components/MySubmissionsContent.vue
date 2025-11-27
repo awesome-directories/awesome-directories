@@ -732,10 +732,6 @@ async function handleDelete(submission) {
   padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
 }
 
-.touch-manipulation {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
 
 @media (max-width: 640px) {
   .safe-area-inset-bottom {
