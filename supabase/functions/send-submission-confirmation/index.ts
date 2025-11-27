@@ -1,5 +1,5 @@
 /**
- * Supabase Edge Function for sending submission confirmation emails via Sender.net
+ * Supabase Edge Function for sending submission confirmation emails via Resend
  * This function is triggered when a new directory is submitted (INSERT on pending_directories)
  * Can be called via:
  * 1. Database webhook on pending_directories table (INSERT events)
@@ -110,7 +110,7 @@ serve(async (req: Request) => {
       directoryUrl: payload.directory_url,
     });
 
-    // Send email via Sender.net
+    // Send email via Resend
     const result = await sendEmail({
       to: payload.user_email,
       subject: `We received your submission for "${payload.directory_name}"`,

@@ -1,5 +1,5 @@
 /**
- * Supabase Edge Function for sending directory approval emails via Sender.net
+ * Supabase Edge Function for sending directory approval emails via Resend
  * This function is triggered when a pending_directories status changes to 'approved'
  * Can be called via:
  * 1. Database webhook on pending_directories table
@@ -122,7 +122,7 @@ serve(async (req: Request) => {
       adminNotes: payload.admin_notes,
     });
 
-    // Send email via Sender.net
+    // Send email via Resend
     const result = await sendEmail({
       to: payload.user_email,
       subject: `Your directory submission "${payload.directory_name}" has been approved!`,

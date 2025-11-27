@@ -1,5 +1,5 @@
 /**
- * Supabase Edge Function for sending admin notifications via Sender.net
+ * Supabase Edge Function for sending admin notifications via Resend
  * This function notifies admins when new directories are submitted
  * Can be called via:
  * 1. Database webhook on pending_directories table (INSERT events)
@@ -113,7 +113,7 @@ serve(async (req: Request) => {
       categories: payload.categories,
     });
 
-    // Send email to admin via Sender.net
+    // Send email to admin via Resend
     const result = await sendEmail({
       to: ADMIN_EMAIL,
       subject: `New Directory Submission: ${payload.directory_name}`,
