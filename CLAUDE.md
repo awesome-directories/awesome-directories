@@ -57,7 +57,11 @@
 - **Supabase Edge Functions** (Deno runtime)
   - `update-seo-data` - Updates Ahrefs metrics via pg_cron scheduled jobs
   - `send-approval-email` - Sends approval emails via Resend when directories are approved
-- **Resend** - Transactional email service for approval notifications
+  - `send-rejection-email` - Sends rejection emails with feedback
+  - `send-welcome-email` - Sends welcome emails on user signup
+  - `send-submission-confirmation` - Confirms directory submission receipt
+  - `send-admin-notification` - Notifies admins of new submissions
+- **Resend** - Transactional email service for all notifications
 - **Mautic** - Self-hosted CRM for newsletter (crm.meysam.io) - _planned/optional_
 - **Pirsch** - Privacy-first analytics - _optional_
 - **Ahrefs API** - SEO metrics (DR, traffic estimates)
@@ -95,6 +99,7 @@
 │   │   ├── privacy.astro          # Privacy Policy
 │   │   ├── favorites.astro        # User favorites page (auth required)
 │   │   ├── submissions.astro      # User submissions tracker (auth required)
+│   │   ├── my-submissions.astro   # User's directory submissions status (auth required)
 │   │   ├── submit.astro           # Submit new directory form (auth required)
 │   │   ├── 404.astro              # 404 error page
 │   │   ├── directory/
@@ -132,7 +137,8 @@
 │   │   ├── ChecklistModal.vue     # Export modal (Vue island)
 │   │   ├── FavoriteButton.vue     # Favorite button component
 │   │   ├── FavoritesContent.vue   # Favorites page content
-│   │   ├── SubmissionsContent.vue # Submissions tracker content
+│   │   ├── SubmissionsContent.vue # Project submissions tracker content
+│   │   ├── MySubmissionsContent.vue # User's directory submissions status
 │   │   ├── SubmitDirectoryForm.vue # Directory submission form
 │   │   ├── GithubStars.vue        # GitHub stars badge (Vue island)
 │   │   ├── ProductHuntBadge.vue   # Product Hunt link badge (Vue island)
@@ -179,18 +185,30 @@
 │   │   ├── 003_add_moz_metrics.sql # Moz API integration fields
 │   │   ├── 004_setup_cron_jobs.sql # pg_cron for automated updates
 │   │   ├── 005_setup_http_extension.sql # HTTP extension for webhooks
-│   │   └── 006_reviews_projects_schema.sql # Reviews, ratings, projects tables
+│   │   ├── 006_reviews_projects_schema.sql # Reviews, ratings, projects tables
+│   │   └── 007_email_system.sql       # Email preferences, logs, notification tracking
 │   ├── seeds/
 │   │   ├── directories.sql        # SQL seed data
 │   │   └── directories.json       # JSON seed data
 │   └── functions/
+│       ├── _shared/               # Shared utilities for Edge Functions
+│       │   ├── email.ts           # Email sending utilities (Resend API)
+│       │   └── email-templates.ts # HTML email templates
 │       ├── update-seo-data/       # Edge function for SEO updates
 │       │   ├── index.ts           # Main function handler
 │       │   ├── ahrefs.ts          # Ahrefs API integration
 │       │   ├── utils.ts           # Helper utilities
 │       │   └── deno.json          # Deno configuration
-│       └── send-approval-email/   # Edge function for approval notifications
-│           └── index.ts           # Sends emails via Resend API
+│       ├── send-approval-email/   # Edge function for approval notifications
+│       │   └── index.ts           # Sends approval emails via Resend
+│       ├── send-rejection-email/  # Edge function for rejection notifications
+│       │   └── index.ts           # Sends rejection emails with feedback
+│       ├── send-welcome-email/    # Edge function for welcome emails
+│       │   └── index.ts           # Sends welcome emails on signup
+│       ├── send-submission-confirmation/ # Edge function for submission confirmation
+│       │   └── index.ts           # Confirms directory submission receipt
+│       └── send-admin-notification/ # Edge function for admin notifications
+│           └── index.ts           # Notifies admins of new submissions
 ├── scripts/
 │   ├── parse-directories.js       # Parse dataset
 │   ├── seed-database.js           # Populate database
@@ -363,9 +381,21 @@ LOG_LEVEL=INFO                 # Log level: DEBUG, INFO, WARN, ERROR
    - Tracks subscription/unsubscription status
    - Mautic contact ID for synchronization
 
-9. **directory_reviews_with_user** (View)
-   - Combines reviews with user info for display
-   - Includes user_name and user_avatar from auth.users
+9. **email_preferences**
+   - User email preferences for opt-out management
+   - Categories: submission_updates, welcome_emails, review_notifications, weekly_digest, marketing_emails
+   - Opt-out model (all default to true except marketing)
+   - RLS enabled for user-specific access
+
+10. **email_logs**
+    - Tracks all sent emails for analytics and debugging
+    - Fields: email_type, email_to, email_subject, sender_email_id, status, error_message
+    - Related entity references (directory_id, review_id)
+    - Used for duplicate prevention
+
+11. **directory_reviews_with_user** (View)
+    - Combines reviews with user info for display
+    - Includes user_name and user_avatar from auth.users
 
 ### Key Indexes
 
@@ -459,6 +489,12 @@ Custom Astro integration (`src/integrations/pagefind.js`):
 - Updates directories table with latest SEO data
 - Batch processing to avoid API rate limits
 
+**`supabase/functions/_shared/`**:
+
+- Shared email utilities used by all email Edge Functions
+- `email.ts` - Core email sending via Resend API, HTML escaping, template wrapper
+- `email-templates.ts` - Professional HTML email templates for all notification types
+
 **`supabase/functions/send-approval-email/`**:
 
 - Sends approval emails via Resend API
@@ -467,6 +503,30 @@ Custom Astro integration (`src/integrations/pagefind.js`):
 - Generates professional HTML email with approval confirmation
 - Includes admin notes if provided
 - Prevents duplicate notifications via notification_sent flag
+
+**`supabase/functions/send-rejection-email/`**:
+
+- Sends rejection emails with constructive feedback
+- Includes rejection reason and suggestions for improvement
+- Triggered when pending_directories status changes to 'rejected'
+
+**`supabase/functions/send-welcome-email/`**:
+
+- Sends welcome emails to new users
+- Triggered on user signup via database webhook
+- Introduces key features and getting started guide
+
+**`supabase/functions/send-submission-confirmation/`**:
+
+- Confirms receipt of directory submission
+- Sent immediately when user submits a new directory
+- Includes submission details and expected review timeline
+
+**`supabase/functions/send-admin-notification/`**:
+
+- Notifies admins of new directory submissions
+- Includes directory details for quick review
+- Sends to ADMIN_EMAIL configured in environment
 
 ## Key Composables & Logic
 
@@ -527,7 +587,8 @@ Newsletter subscription to Mautic CRM:
 - `/terms` - Terms of Service (terms.astro)
 - `/privacy` - Privacy Policy (privacy.astro)
 - `/favorites` - User favorites page (favorites.astro) - requires authentication
-- `/submissions` - User submissions tracker (submissions.astro) - requires authentication
+- `/submissions` - Project submissions tracker (submissions.astro) - requires authentication
+- `/my-submissions` - User's directory submissions status (my-submissions.astro) - requires authentication
 - `/submit` - Submit new directory form (submit.astro) - requires authentication
 - `/directory/[slug]` - Dynamic directory detail pages (directory/[slug].astro)
   - Generated statically at build time via `getStaticPaths()`
@@ -809,17 +870,18 @@ Scores are categorized as:
 2. **DirectoryDetailActions.vue** - Favorite/rating actions on directory detail pages
 3. **FavoritesContent.vue** - User's saved directories with management
 4. **SubmissionsContent.vue** - User's project-based submission tracking dashboard
-5. **SubmitDirectoryForm.vue** - Directory submission form with validation
-6. **FavoriteButton.vue** - Reusable favorite toggle button
-7. **DirectoryFilter.vue** - Advanced filtering sidebar
-8. **DirectoryCard.vue** - Individual directory card component
-9. **AuthModal.vue** / **AuthModalWrapper.vue** - Authentication modals
-10. **ChecklistModal.vue** - Multi-select export functionality
-11. **StatsCards.vue** - Overview statistics cards
-12. **StatsCharts.vue** - Interactive Chart.js charts (pie, bar, doughnut)
-13. **TopDirectoriesTable.vue** - Top directories rankings by various metrics
-14. **ProductHuntBadge.vue** - Product Hunt link badge
-15. **GithubStars.vue** - GitHub stars badge
+5. **MySubmissionsContent.vue** - User's directory submissions status tracker
+6. **SubmitDirectoryForm.vue** - Directory submission form with validation
+7. **FavoriteButton.vue** - Reusable favorite toggle button
+8. **DirectoryFilter.vue** - Advanced filtering sidebar
+9. **DirectoryCard.vue** - Individual directory card component
+10. **AuthModal.vue** / **AuthModalWrapper.vue** - Authentication modals
+11. **ChecklistModal.vue** - Multi-select export functionality
+12. **StatsCards.vue** - Overview statistics cards
+13. **StatsCharts.vue** - Interactive Chart.js charts (pie, bar, doughnut)
+14. **TopDirectoriesTable.vue** - Top directories rankings by various metrics
+15. **ProductHuntBadge.vue** - Product Hunt link badge
+16. **GithubStars.vue** - GitHub stars badge
 
 ### Key Astro Components
 
@@ -859,7 +921,7 @@ All Vue components use `client:load` directive in Astro pages for client-side hy
 - Google & GitHub OAuth via Supabase
 - Session persistence in localStorage
 - Auth state reactivity via nanostores
-- Protected pages: `/favorites`, `/submissions`, `/submit`
+- Protected pages: `/favorites`, `/submissions`, `/my-submissions`, `/submit`
 - Auth utilities in `src/utils/auth.js`
 - Client-side auth checks in Vue components
 
@@ -1145,7 +1207,7 @@ supabase db push
 
 - [ ] Build succeeds without errors (`bun run build`)
 - [ ] Preview works locally (`bun run preview`)
-- [ ] All pages load correctly (/, /about, /stats, /blog, /terms, /privacy, /404)
+- [ ] All pages load correctly (/, /about, /stats, /blog, /terms, /privacy, /my-submissions, /404)
 - [ ] Filters and search work on home page
 - [ ] SEO meta tags are correct on all pages
 - [ ] Images load and are optimized
@@ -1171,16 +1233,20 @@ supabase db push
 
 - [ ] Favorite button toggles correctly
 - [ ] Favorites page shows user's saved directories
-- [ ] Submission tracker works and saves status
+- [ ] Project submission tracker works and saves status
+- [ ] My submissions page shows directory submissions status
 - [ ] Directory submission form validates and submits
 - [ ] Helpful voting works (anonymous and authenticated)
+- [ ] Email notifications are sent correctly
 
 **Database & State:**
 
 - [ ] Favorites sync with `user_favorites` table
-- [ ] Submissions sync with `user_submissions` table
+- [ ] Project submissions sync with `project_submissions` table
 - [ ] Pending directories appear in `pending_directories` table
 - [ ] Votes increment/decrement `helpful_count` correctly
+- [ ] Email logs are created in `email_logs` table
+- [ ] Email preferences respect user settings in `email_preferences` table
 
 **Blog:**
 
@@ -1237,6 +1303,45 @@ supabase db push
 
 ### Commit History (Most Recent)
 
+- **74706ed** - feat: switch email provider from Sender.net to Resend (#50)
+  - Consolidated on Resend API for all transactional emails
+  - Updated email Edge Functions to use shared utilities
+
+- **484b590** - feat: add email integration with Sender.net (#49)
+  - Initial email system setup (later migrated to Resend)
+
+- **3a5ab80** - fix: modify user facing title for projects
+  - Improved project page titles for clarity
+
+- **7fe2b26** - feat: design directory submissions status page (#47)
+  - New `/my-submissions` page for tracking submitted directories
+  - New `MySubmissionsContent.vue` component with stats and filtering
+  - Status tracking: pending, approved, rejected
+
+- **b40f8c9** - fix: finally make the magnifying glass styling go away
+  - Fixed persistent search icon styling issues
+
+- **a091d9b** - fix: make all styles scoped
+  - Improved CSS isolation across components
+
+- **f03163b** - fix: address search bar icon absolute position issue
+  - Fixed search input icon positioning
+
+- **5c81962** - fix: add ref to quick links as well
+  - Improved link handling in components
+
+- **63c07ca** - fix: add ref to directory websites
+  - Enhanced directory URL handling
+
+- **f984ba7** - fix: remove directory submission from projects
+  - Separated directory submissions from project submissions
+
+- **7a304f2** - docs: update CLAUDE.md with latest features and improvements (#45)
+  - Documentation updates
+
+- **ab2a278** - fix: add RLS to directory reviews
+  - Enhanced security for directory reviews table
+
 - **765b0db** - feat: add review, rating, export and pending directory approval (#44)
   - Directory reviews and ratings system (1-5 stars)
   - Projects feature for tracking submissions per project
@@ -1244,119 +1349,83 @@ supabase db push
   - New database tables: directory_reviews, directory_ratings, projects, project_submissions
   - New Edge Function: send-approval-email
 
-- **a4c8243** - fix: handle search icon container size issue
-  - Fixed search icon sizing in the UI
-
-- **c109cf2** - fix: address responsiveness issues
-  - Improved mobile responsiveness across the site
-
-- **ec93bef** - fix: address issue on search bar
-  - Fixed search bar functionality
-
-- **6e2976f** - fix: address mobile responsiveness of the filters
-  - Improved filter sidebar on mobile devices
-
-- **b4db9ef** - feat(blog): write the third blog post (#43)
-  - New blog post: Reddit marketing account warmup guide
-
-- **2054424** - feat: add Product Hunt badge (#41)
-  - ProductHuntBadge.vue component in header
-
-- **090f99d** - fix: use all DR as default filter (#42)
-  - Changed default DR filter to show all directories
-
-- **ce623d1** - fix: remove puppeteer from the main deps
-  - Moved puppeteer to dev dependencies for web scraper only
-  - Reduced production bundle size
-
-- **2263d4d** - Streamline onboarding to reduce time to value (#36)
-  - Improved onboarding process
-  - Reduced steps to get started
-
-- **e8f4c45** - feat: Set up web scraping for link analysis (#38)
-  - Comprehensive web scraping system for directory curation
-  - Automated quality scoring and analysis
-  - Support for multiple output formats (JSON, Markdown, CSV)
-  - Smart crawling and link analysis capabilities
-
 ### Features Since Last Documentation Update
 
-1. **Reviews & Ratings System** (Commit 765b0db)
+1. **Comprehensive Email System** (Commits 74706ed, 484b590)
+   - 5 Edge Functions for different email types:
+     - `send-approval-email` - Directory approval notifications
+     - `send-rejection-email` - Directory rejection with feedback
+     - `send-welcome-email` - New user onboarding
+     - `send-submission-confirmation` - Submission receipt confirmation
+     - `send-admin-notification` - Admin alerts for new submissions
+   - Shared email utilities in `_shared/` directory
+   - Professional HTML email templates
+   - Email preferences and opt-out management
+   - Email logging for analytics and debugging
+   - Uses Resend API for reliable delivery
+
+2. **My Submissions Page** (Commit 7fe2b26)
+   - New `/my-submissions` route for tracking directory submissions
+   - `MySubmissionsContent.vue` component with:
+     - Stats summary (total, pending, approved, rejected)
+     - Status filtering dropdown
+     - Submission cards with status badges
+     - Direct link to submit new directories
+   - Separate from project submission tracking
+
+3. **Database Email Infrastructure** (Migration 007)
+   - `email_preferences` table for user opt-out management
+   - `email_logs` table for tracking all sent emails
+   - Additional notification columns on `pending_directories`
+   - RLS policies for secure access
+   - Helper function `check_email_preference()`
+
+4. **Reviews & Ratings System** (Commit 765b0db)
    - Directory ratings (1-5 stars) with aggregated statistics
    - User comments on directories
    - Automatic average_rating and rating_count calculations via triggers
    - New tables: directory_reviews, directory_ratings
    - View: directory_reviews_with_user for display with user info
+   - RLS added for directory reviews (commit ab2a278)
 
-2. **Projects Feature** (Commit 765b0db)
+5. **Projects Feature** (Commit 765b0db)
    - Users can create multiple projects
    - Track directory submissions per project
    - Status tracking: not_started, in_progress, submitted, approved, rejected, featured
    - Submission link field for tracking actual submission URLs
    - New composable: useProjects.js
+   - Separated from directory submissions (commit f984ba7)
 
-3. **Email Notifications** (Commit 765b0db)
-   - New Edge Function: send-approval-email
-   - Sends emails via Resend API when directories are approved
-   - Professional HTML email templates
-   - Notification tracking to prevent duplicates
+6. **UI/UX Improvements**
+   - Search bar and icon fixes (commits b40f8c9, f03163b, a091d9b)
+   - Scoped styles for better CSS isolation
+   - Project title clarity improvements (commit 3a5ab80)
+   - Reference handling for links (commits 5c81962, 63c07ca)
 
-4. **Product Hunt Integration** (Commit 2054424)
-   - ProductHuntBadge.vue component
-   - Links to Product Hunt product page
+### New Database Tables (Migration 007)
 
-5. **UI/UX Improvements**
-   - Mobile responsiveness fixes (commits c109cf2, 6e2976f)
-   - Search icon container sizing fix (commit a4c8243)
-   - Search bar functionality fix (commit ec93bef)
-   - Default DR filter now shows all directories (commit 090f99d)
-
-6. **Blog Content** (Commit b4db9ef)
-   - New blog post: Reddit marketing account warmup guide
-   - Blog posts now use MDX format for enhanced features
-
-7. **Web Scraping System** (Commit e8f4c45)
-   - Comprehensive directory curation and analysis tool
-   - Automated quality scoring (0-100 scale)
-   - Homepage data extraction and link analysis
-   - Smart crawling of related pages (pricing, submission, about)
-   - Anti-detection measures and proxy support
-   - Multiple output formats (JSON, Markdown, CSV, screenshots)
-   - CLI with filtering and pagination options
-   - Integration with Supabase for fetching pending/approved directories
-
-8. **Onboarding Improvements** (Commit 2263d4d)
-   - Streamlined onboarding process
-   - Reduced time to value for new users
-
-9. **Performance & Dependencies**
-   - Puppeteer moved to dev dependencies (commit ce623d1)
-   - Astro v5.16.0
-   - Vite 7.2.2
-   - Tailwind CSS 4.1.17
-
-### New Database Tables (Migration 006)
-
-- **directory_ratings** - User ratings (1-5 stars), one per user per directory
-- **directory_reviews** - User comments, multiple per user per directory
-- **projects** - User projects for tracking submissions
-- **project_submissions** - Directory submission tracking per project
-
-### New Composables
-
-- **useProjects.js** - Project CRUD and submission tracking
+- **email_preferences** - User email opt-out preferences
+- **email_logs** - Email sending history and analytics
 
 ### New Components
 
-- **ProductHuntBadge.vue** - Product Hunt link badge
+- **MySubmissionsContent.vue** - User's directory submissions status tracker
 
 ### New Edge Functions
 
-- **send-approval-email** - Sends approval emails via Resend API
+- **send-approval-email** - Directory approval notifications
+- **send-rejection-email** - Directory rejection notifications
+- **send-welcome-email** - New user welcome emails
+- **send-submission-confirmation** - Submission confirmation emails
+- **send-admin-notification** - Admin notification for new submissions
+
+### New Pages
+
+- **/my-submissions** - User's directory submissions status page
 
 ---
 
-**Last Updated**: 2025-11-25 (Updated with commits through 765b0db)
+**Last Updated**: 2025-11-27 (Updated with commits through 74706ed)
 **Architecture**: Astro.js 5.16.0 SSG with Vue.js Islands
 **Lighthouse Score**: 95+ (Performance, SEO, Accessibility, Best Practices)
-**Latest Features**: Reviews & ratings, projects, email notifications, Product Hunt badge (commits 765b0db, 2054424)
+**Latest Features**: Comprehensive email system, my-submissions page, email preferences (commits 74706ed, 7fe2b26)
