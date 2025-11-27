@@ -184,6 +184,17 @@ async function fetchAhrefsMetrics(
   }
 }
 
+function toIntegerOrNull(value: unknown): number | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  var num = Number(value);
+  if (isNaN(num)) {
+    return null;
+  }
+  return Math.round(num);
+}
+
 async function updateDirectoryMetrics(
   supabaseClient,
   directoryId: string,
@@ -199,20 +210,16 @@ async function updateDirectoryMetrics(
     var metrics = metricsArray[i];
 
     if (metrics.type === "authority" && metrics.website_authority) {
-      domainRating = metrics.website_authority.domainRating ?? domainRating;
-      backlinksCount = metrics.website_authority.backlinks ?? backlinksCount;
-      referringDomains =
-        metrics.website_authority.refdomains ?? referringDomains;
+      domainRating = toIntegerOrNull(metrics.website_authority.domainRating) ?? domainRating;
+      backlinksCount = toIntegerOrNull(metrics.website_authority.backlinks) ?? backlinksCount;
+      referringDomains = toIntegerOrNull(metrics.website_authority.refdomains) ?? referringDomains;
       consolidatedData.authority = metrics.website_authority;
     }
 
     if (metrics.type === "backlinks" && metrics.backlink_check) {
-      domainRating =
-        domainRating ?? metrics.backlink_check.domainRating ?? null;
-      backlinksCount =
-        backlinksCount ?? metrics.backlink_check.backlinks ?? null;
-      referringDomains =
-        referringDomains ?? metrics.backlink_check.refdomains ?? null;
+      domainRating = domainRating ?? toIntegerOrNull(metrics.backlink_check.domainRating);
+      backlinksCount = backlinksCount ?? toIntegerOrNull(metrics.backlink_check.backlinks);
+      referringDomains = referringDomains ?? toIntegerOrNull(metrics.backlink_check.refdomains);
       consolidatedData.backlinks = metrics.backlink_check;
       if (metrics.top_backlinks) {
         consolidatedData.top_backlinks = metrics.top_backlinks;
@@ -232,7 +239,7 @@ async function updateDirectoryMetrics(
         metrics.website_traffic &&
         metrics.website_traffic.trafficMonthlyAvg !== undefined
       ) {
-        organicTraffic = metrics.website_traffic.trafficMonthlyAvg;
+        organicTraffic = toIntegerOrNull(metrics.website_traffic.trafficMonthlyAvg);
       }
       consolidatedData.traffic = {
         monthly_avg: metrics.website_traffic?.trafficMonthlyAvg,
