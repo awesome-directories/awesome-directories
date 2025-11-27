@@ -611,7 +611,7 @@
           </div>
 
           <!-- Helpful tip -->
-          <p class="text-sm text-gray-500 mt-6">
+          <p v-if="activeFilterChips.length > 0" class="text-sm text-gray-500 mt-6">
             💡 Tip: Click on any filter chip above to remove it individually
           </p>
         </div>
