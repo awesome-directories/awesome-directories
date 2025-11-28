@@ -2,7 +2,9 @@
   <div class="space-y-3 sm:space-y-4">
     <!-- User Actions Card -->
     <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6">
-      <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Your Actions</h2>
+      <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
+        Your Actions
+      </h2>
 
       <div class="space-y-3">
         <!-- Favorite Button -->
@@ -32,7 +34,9 @@
 
     <!-- Rating Card -->
     <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6">
-      <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Rate this Directory</h2>
+      <h2 class="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">
+        Rate this Directory
+      </h2>
 
       <!-- Current Rating Display -->
       <div class="flex items-center justify-between mb-4 gap-2">

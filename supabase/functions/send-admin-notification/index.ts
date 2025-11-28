@@ -11,7 +11,8 @@ import { sendEmail } from "../_shared/email.ts";
 import { adminNewSubmissionTemplate } from "../_shared/email-templates.ts";
 
 const FUNCTION_SECRET = Deno.env.get("FUNCTION_SECRET");
-const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "admin@awesome-directories.com";
+const ADMIN_EMAIL =
+  Deno.env.get("ADMIN_EMAIL") || "admin@awesome-directories.com";
 
 interface AdminNotificationPayload {
   directory_name: string;
@@ -62,7 +63,7 @@ serve(async (req: Request) => {
           {
             status: 200,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
+          },
         );
       }
 
@@ -81,11 +82,13 @@ serve(async (req: Request) => {
     // Validate payload
     if (!payload.directory_name || !payload.directory_url) {
       return new Response(
-        JSON.stringify({ error: "Missing required fields: directory_name, directory_url" }),
+        JSON.stringify({
+          error: "Missing required fields: directory_name, directory_url",
+        }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
@@ -109,11 +112,14 @@ serve(async (req: Request) => {
     if (!result.success) {
       console.error("Failed to send admin notification:", result.error);
       return new Response(
-        JSON.stringify({ error: "Failed to send email", details: result.error }),
+        JSON.stringify({
+          error: "Failed to send email",
+          details: result.error,
+        }),
         {
           status: 500,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
@@ -128,7 +134,7 @@ serve(async (req: Request) => {
       {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      },
     );
   } catch (error) {
     console.error("Error:", error);

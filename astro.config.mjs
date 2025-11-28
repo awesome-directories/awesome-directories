@@ -123,7 +123,6 @@ export default defineConfig({
       include: ["vue", "@supabase/supabase-js"],
     },
   },
-
   compressHTML: true,
   scopedStyleStrategy: "class",
 });

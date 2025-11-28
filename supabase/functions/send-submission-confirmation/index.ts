@@ -63,7 +63,7 @@ serve(async (req: Request) => {
           {
             status: 200,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
+          },
         );
       }
 
@@ -81,11 +81,13 @@ serve(async (req: Request) => {
     // Validate payload
     if (!payload.user_email || !payload.directory_name) {
       return new Response(
-        JSON.stringify({ error: "Missing required fields: user_email, directory_name" }),
+        JSON.stringify({
+          error: "Missing required fields: user_email, directory_name",
+        }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
@@ -106,11 +108,14 @@ serve(async (req: Request) => {
     if (!result.success) {
       console.error("Failed to send email:", result.error);
       return new Response(
-        JSON.stringify({ error: "Failed to send email", details: result.error }),
+        JSON.stringify({
+          error: "Failed to send email",
+          details: result.error,
+        }),
         {
           status: 500,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
@@ -137,7 +142,7 @@ serve(async (req: Request) => {
       {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      },
     );
   } catch (error) {
     console.error("Error:", error);

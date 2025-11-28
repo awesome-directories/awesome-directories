@@ -6,8 +6,10 @@
 import { Resend } from "npm:resend@4.0.0";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const FROM_EMAIL = "Awesome Directories <noreply@notification.awesome-directories.com>";
-const REPLY_TO_EMAIL = Deno.env.get("REPLY_TO_EMAIL") || "support@awesome-directories.com";
+const FROM_EMAIL =
+  "Awesome Directories <noreply@notification.awesome-directories.com>";
+const REPLY_TO_EMAIL =
+  Deno.env.get("REPLY_TO_EMAIL") || "support@awesome-directories.com";
 const SITE_URL = Deno.env.get("SITE_URL") || "https://awesome-directories.com";
 
 export interface EmailOptions {
@@ -81,7 +83,10 @@ export function getSiteUrl(): string {
  * Base email template wrapper
  * Production-ready HTML email template compatible with major email clients
  */
-export function wrapEmailTemplate(content: string, previewText?: string): string {
+export function wrapEmailTemplate(
+  content: string,
+  previewText?: string,
+): string {
   return `<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -175,7 +180,9 @@ export function wrapEmailTemplate(content: string, previewText?: string): string
 /**
  * Generate a status badge HTML
  */
-export function statusBadge(status: "approved" | "rejected" | "pending" | "submitted"): string {
+export function statusBadge(
+  status: "approved" | "rejected" | "pending" | "submitted",
+): string {
   const styles: Record<string, { bg: string; text: string; label: string }> = {
     approved: { bg: "#dcfce7", text: "#166534", label: "Approved" },
     rejected: { bg: "#fee2e2", text: "#991b1b", label: "Rejected" },
@@ -190,6 +197,10 @@ export function statusBadge(status: "approved" | "rejected" | "pending" | "submi
 /**
  * Generate a CTA button HTML
  */
-export function ctaButton(text: string, url: string, color: string = "#2563eb"): string {
+export function ctaButton(
+  text: string,
+  url: string,
+  color: string = "#2563eb",
+): string {
   return `<a href="${url}" style="display: inline-block; padding: 12px 24px; background-color: ${color}; color: #ffffff; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 8px; text-align: center;">${escapeHtml(text)}</a>`;
 }

@@ -17,10 +17,14 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero Section -->
       <div class="text-center mb-8 sm:mb-12">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+        <h1
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4"
+        >
           Directory Statistics
         </h1>
-        <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-2">
+        <p
+          class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-2"
+        >
           Comprehensive analytics and insights from our curated collection of
           launch directories. All data is updated during each build.
         </p>
@@ -28,24 +32,32 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
 
       <!-- Overview Cards -->
       <div class="mb-8 sm:mb-12">
-        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Overview</h2>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+          Overview
+        </h2>
         <StatsCards client:load />
       </div>
 
       <!-- Charts Section -->
       <div class="mb-8 sm:mb-12">
-        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Analytics</h2>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+          Analytics
+        </h2>
         <StatsCharts client:load />
       </div>
 
       <!-- Top Directories Tables -->
       <div class="mb-8 sm:mb-12">
-        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Top Directories</h2>
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+          Top Directories
+        </h2>
         <TopDirectoriesTable client:load />
       </div>
 
       <!-- Additional Info -->
-      <div class="card p-4 sm:p-6 md:p-8 bg-blue-50 border-blue-200 rounded-xl sm:rounded-lg">
+      <div
+        class="card p-4 sm:p-6 md:p-8 bg-blue-50 border-blue-200 rounded-xl sm:rounded-lg"
+      >
         <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3">
           About These Statistics
         </h2>
@@ -54,7 +66,9 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
           directory database. All metrics include only active, verified
           directories to ensure data quality.
         </p>
-        <ul class="list-disc list-inside text-sm sm:text-base text-gray-700 space-y-2">
+        <ul
+          class="list-disc list-inside text-sm sm:text-base text-gray-700 space-y-2"
+        >
           <li>
             <strong>Domain Rating (DR):</strong> Authority score from 0-100, higher
             is better

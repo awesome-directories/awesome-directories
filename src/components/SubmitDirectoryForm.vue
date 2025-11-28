@@ -1,13 +1,23 @@
 <template>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
     <!-- Auth Required Message -->
-    <div v-if="!user" class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center">
+    <div
+      v-if="!user"
+      class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center"
+    >
       <div class="text-4xl sm:text-5xl mb-4" aria-hidden="true">🔒</div>
-      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Sign in to Submit</h2>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+        Sign in to Submit
+      </h2>
       <p class="text-sm sm:text-base text-gray-600 mb-6">
         You need to be signed in to submit a directory for review.
       </p>
-      <button @click="handleSignIn" class="btn-primary min-h-[48px] px-6 touch-manipulation">Sign In</button>
+      <button
+        @click="handleSignIn"
+        class="btn-primary min-h-[48px] px-6 touch-manipulation"
+      >
+        Sign In
+      </button>
     </div>
 
     <!-- Success Message -->
@@ -24,8 +34,16 @@
         within 3-5 business days.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-        <button @click="resetForm" class="btn-secondary min-h-[48px] touch-manipulation order-2 sm:order-1">Submit Another</button>
-        <a href="/my-submissions" class="btn-primary inline-flex items-center justify-center min-h-[48px] touch-manipulation order-1 sm:order-2">
+        <button
+          @click="resetForm"
+          class="btn-secondary min-h-[48px] touch-manipulation order-2 sm:order-1"
+        >
+          Submit Another
+        </button>
+        <a
+          href="/my-submissions"
+          class="btn-primary inline-flex items-center justify-center min-h-[48px] touch-manipulation order-1 sm:order-2"
+        >
           View My Submissions
         </a>
       </div>
@@ -192,7 +210,9 @@
           <label class="block text-sm font-semibold text-gray-700 mb-3">
             Categories
           </label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3"
+          >
             <label
               v-for="category in availableCategories"
               :key="category"
@@ -204,7 +224,9 @@
                 :value="category"
                 class="w-5 h-5 sm:w-4 sm:h-4 text-primary focus:ring-primary border-gray-300 rounded flex-shrink-0"
               />
-              <span class="ml-3 sm:ml-2 text-sm text-gray-700">{{ category }}</span>
+              <span class="ml-3 sm:ml-2 text-sm text-gray-700">{{
+                category
+              }}</span>
             </label>
           </div>
         </div>
@@ -226,7 +248,12 @@
           >
             {{ isSubmitting ? "Submitting..." : "Submit Directory" }}
           </button>
-          <a href="/" class="btn-secondary flex-shrink-0 text-center min-h-[52px] sm:min-h-[48px] inline-flex items-center justify-center rounded-xl sm:rounded-lg touch-manipulation order-2"> Cancel </a>
+          <a
+            href="/"
+            class="btn-secondary flex-shrink-0 text-center min-h-[52px] sm:min-h-[48px] inline-flex items-center justify-center rounded-xl sm:rounded-lg touch-manipulation order-2"
+          >
+            Cancel
+          </a>
         </div>
       </form>
     </div>

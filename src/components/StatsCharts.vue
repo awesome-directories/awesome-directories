@@ -8,7 +8,11 @@
     <p class="mt-4 text-gray-600 text-sm sm:text-base">Loading charts...</p>
   </div>
 
-  <div v-else-if="error" class="card p-4 sm:p-8 bg-red-50 border-red-200" role="alert">
+  <div
+    v-else-if="error"
+    class="card p-4 sm:p-8 bg-red-50 border-red-200"
+    role="alert"
+  >
     <p class="text-red-700 text-sm sm:text-base">{{ error }}</p>
   </div>
 
@@ -19,7 +23,10 @@
         Category Distribution
       </h3>
       <div class="relative h-64 sm:h-80">
-        <canvas ref="categoryChart" aria-label="Category distribution pie chart"></canvas>
+        <canvas
+          ref="categoryChart"
+          aria-label="Category distribution pie chart"
+        ></canvas>
       </div>
     </div>
 
@@ -29,7 +36,10 @@
         Pricing Breakdown
       </h3>
       <div class="relative h-64 sm:h-80">
-        <canvas ref="pricingChart" aria-label="Pricing breakdown doughnut chart"></canvas>
+        <canvas
+          ref="pricingChart"
+          aria-label="Pricing breakdown doughnut chart"
+        ></canvas>
       </div>
     </div>
 
@@ -39,7 +49,10 @@
         Link Type Distribution
       </h3>
       <div class="relative h-56 sm:h-80">
-        <canvas ref="linkTypeChart" aria-label="Link type distribution bar chart"></canvas>
+        <canvas
+          ref="linkTypeChart"
+          aria-label="Link type distribution bar chart"
+        ></canvas>
       </div>
     </div>
 
@@ -49,7 +62,10 @@
         Domain Rating Distribution
       </h3>
       <div class="relative h-56 sm:h-80">
-        <canvas ref="drRangeChart" aria-label="Domain rating distribution bar chart"></canvas>
+        <canvas
+          ref="drRangeChart"
+          aria-label="Domain rating distribution bar chart"
+        ></canvas>
       </div>
     </div>
 
@@ -59,7 +75,10 @@
         Recent Additions Timeline
       </h3>
       <div class="relative h-48 sm:h-64">
-        <canvas ref="timelineChart" aria-label="Recent additions timeline bar chart"></canvas>
+        <canvas
+          ref="timelineChart"
+          aria-label="Recent additions timeline bar chart"
+        ></canvas>
       </div>
     </div>
   </div>
@@ -161,7 +180,9 @@ function createCategoryChart() {
   const maxCategories = isMobile.value ? 6 : 10;
   const topCategories = stats.value.categories.slice(0, maxCategories);
   const labels = topCategories.map((cat) =>
-    isMobile.value && cat.name.length > 12 ? cat.name.substring(0, 12) + "..." : cat.name
+    isMobile.value && cat.name.length > 12
+      ? cat.name.substring(0, 12) + "..."
+      : cat.name,
   );
   const data = topCategories.map((cat) => cat.count);
 

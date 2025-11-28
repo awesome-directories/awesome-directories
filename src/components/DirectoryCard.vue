@@ -7,7 +7,8 @@
       title="This is your pending submission, visible only to you"
       aria-label="Pending Review"
     >
-      ⏳ <span class="hidden sm:inline ml-1">Pending Review</span><span class="sm:hidden ml-1">Pending</span>
+      ⏳ <span class="hidden sm:inline ml-1">Pending Review</span
+      ><span class="sm:hidden ml-1">Pending</span>
     </div>
 
     <!-- Checkbox for selection -->

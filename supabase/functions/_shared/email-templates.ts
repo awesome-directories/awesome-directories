@@ -45,12 +45,16 @@ export function approvalEmailTemplate(params: {
       </ul>
     </div>
 
-    ${adminNotes ? `
+    ${
+      adminNotes
+        ? `
     <div style="margin: 0 0 24px; padding: 16px; background-color: #f4f4f5; border-radius: 8px; border-left: 4px solid #2563eb;">
       <p style="margin: 0 0 4px; font-size: 11px; font-weight: 600; color: #71717a; text-transform: uppercase; letter-spacing: 0.5px;">Reviewer Notes</p>
       <p style="margin: 0; font-size: 14px; color: #3f3f46; line-height: 1.5;">${escapeHtml(adminNotes)}</p>
     </div>
-    ` : ""}
+    `
+        : ""
+    }
 
     <div style="text-align: center;">
       ${ctaButton("View Directory", SITE_URL)}
@@ -58,7 +62,10 @@ export function approvalEmailTemplate(params: {
   `;
 
   return {
-    html: wrapEmailTemplate(content, `Your directory "${directoryName}" has been approved!`),
+    html: wrapEmailTemplate(
+      content,
+      `Your directory "${directoryName}" has been approved!`,
+    ),
     preheader: `Your directory "${directoryName}" has been approved!`,
   };
 }
@@ -86,18 +93,22 @@ export function rejectionEmailTemplate(params: {
       Unfortunately, <strong style="color: #18181b;">${escapeHtml(directoryName)}</strong> wasn't approved for inclusion in Awesome Directories at this time.
     </p>
 
-    ${adminNotes ? `
+    ${
+      adminNotes
+        ? `
     <div style="margin: 0 0 24px; padding: 16px; background-color: #f4f4f5; border-radius: 8px; border-left: 4px solid #ef4444;">
       <p style="margin: 0 0 4px; font-size: 11px; font-weight: 600; color: #71717a; text-transform: uppercase; letter-spacing: 0.5px;">Feedback</p>
       <p style="margin: 0; font-size: 14px; color: #3f3f46; line-height: 1.5;">${escapeHtml(adminNotes)}</p>
     </div>
-    ` : `
+    `
+        : `
     <div style="margin: 0 0 24px; padding: 16px; background-color: #f4f4f5; border-radius: 8px;">
       <p style="margin: 0; font-size: 14px; color: #52525b; line-height: 1.5;">
         Common reasons for rejection include: duplicate directories, inactive websites, or content that doesn't fit our directory focus.
       </p>
     </div>
-    `}
+    `
+    }
 
     <p style="margin: 0 0 24px; font-size: 14px; color: #71717a; text-align: center;">
       Feel free to submit other directories that might be a better fit.
@@ -109,7 +120,10 @@ export function rejectionEmailTemplate(params: {
   `;
 
   return {
-    html: wrapEmailTemplate(content, `Update on your submission "${directoryName}"`),
+    html: wrapEmailTemplate(
+      content,
+      `Update on your submission "${directoryName}"`,
+    ),
     preheader: `Update on your submission "${directoryName}"`,
   };
 }
@@ -151,7 +165,10 @@ export function submissionConfirmationTemplate(params: {
   `;
 
   return {
-    html: wrapEmailTemplate(content, `We received your submission for "${directoryName}"`),
+    html: wrapEmailTemplate(
+      content,
+      `We received your submission for "${directoryName}"`,
+    ),
     preheader: `We received your submission for "${directoryName}"`,
   };
 }
@@ -159,10 +176,13 @@ export function submissionConfirmationTemplate(params: {
 /**
  * Welcome Email for New Users
  */
-export function welcomeEmailTemplate(params: {
-  userName?: string;
-}): { html: string; preheader: string } {
-  const greeting = params.userName ? `Hi ${escapeHtml(params.userName)}!` : "Welcome!";
+export function welcomeEmailTemplate(params: { userName?: string }): {
+  html: string;
+  preheader: string;
+} {
+  const greeting = params.userName
+    ? `Hi ${escapeHtml(params.userName)}!`
+    : "Welcome!";
 
   const content = `
     <h1 style="margin: 0 0 16px; font-size: 22px; font-weight: 700; color: #18181b; text-align: center; line-height: 1.3;">
@@ -205,8 +225,12 @@ export function welcomeEmailTemplate(params: {
   `;
 
   return {
-    html: wrapEmailTemplate(content, "Welcome to Awesome Directories - discover 300+ launch directories"),
-    preheader: "Welcome to Awesome Directories - discover 300+ launch directories",
+    html: wrapEmailTemplate(
+      content,
+      "Welcome to Awesome Directories - discover 300+ launch directories",
+    ),
+    preheader:
+      "Welcome to Awesome Directories - discover 300+ launch directories",
   };
 }
 
@@ -220,7 +244,13 @@ export function adminNewSubmissionTemplate(params: {
   description?: string;
   categories?: string[];
 }): { html: string; preheader: string } {
-  const { directoryName, directoryUrl, submitterEmail, description, categories } = params;
+  const {
+    directoryName,
+    directoryUrl,
+    submitterEmail,
+    description,
+    categories,
+  } = params;
 
   const content = `
     <div style="text-align: center; margin-bottom: 24px;">
@@ -249,19 +279,27 @@ export function adminNewSubmissionTemplate(params: {
           <td style="padding: 8px 0; font-size: 13px; color: #71717a;">Submitted by</td>
           <td style="padding: 8px 0; font-size: 14px; color: #3f3f46;">${escapeHtml(submitterEmail)}</td>
         </tr>
-        ${categories && categories.length > 0 ? `
+        ${
+          categories && categories.length > 0
+            ? `
         <tr>
           <td style="padding: 8px 0; font-size: 13px; color: #71717a;">Categories</td>
-          <td style="padding: 8px 0; font-size: 14px; color: #3f3f46;">${categories.map(c => escapeHtml(c)).join(", ")}</td>
+          <td style="padding: 8px 0; font-size: 14px; color: #3f3f46;">${categories.map((c) => escapeHtml(c)).join(", ")}</td>
         </tr>
-        ` : ""}
+        `
+            : ""
+        }
       </table>
-      ${description ? `
+      ${
+        description
+          ? `
       <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e4e4e7;">
         <p style="margin: 0 0 4px; font-size: 13px; color: #71717a;">Description</p>
         <p style="margin: 0; font-size: 14px; color: #3f3f46; line-height: 1.5;">${escapeHtml(description)}</p>
       </div>
-      ` : ""}
+      `
+          : ""
+      }
     </div>
 
     <div style="text-align: center;">
@@ -285,7 +323,8 @@ export function reviewNotificationTemplate(params: {
   rating: number;
   comment?: string;
 }): { html: string; preheader: string } {
-  const { directoryName, directorySlug, reviewerName, rating, comment } = params;
+  const { directoryName, directorySlug, reviewerName, rating, comment } =
+    params;
   const reviewer = reviewerName || "Someone";
   const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
 
@@ -301,11 +340,15 @@ export function reviewNotificationTemplate(params: {
     <div style="margin: 0 0 24px; padding: 20px; background-color: #f4f4f5; border-radius: 8px; text-align: center;">
       <div style="font-size: 24px; color: #f59e0b; letter-spacing: 2px; margin-bottom: 8px;">${stars}</div>
       <p style="margin: 0; font-size: 14px; color: #71717a;">${rating} out of 5 stars</p>
-      ${comment ? `
+      ${
+        comment
+          ? `
       <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e4e4e7; text-align: left;">
         <p style="margin: 0; font-size: 14px; color: #3f3f46; line-height: 1.6; font-style: italic;">"${escapeHtml(comment)}"</p>
       </div>
-      ` : ""}
+      `
+          : ""
+      }
     </div>
 
     <div style="text-align: center;">

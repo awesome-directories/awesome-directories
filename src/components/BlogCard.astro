@@ -30,7 +30,9 @@ var postSlug = getPostSlug(post);
   }
 
   <div class="p-4 sm:p-6">
-    <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">
+    <div
+      class="flex items-center gap-2 text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3"
+    >
       <time datetime={date.toISOString()}>
         {formatDate(date)}
       </time>
@@ -46,7 +48,9 @@ var postSlug = getPostSlug(post);
       </h2>
     </a>
 
-    <p class="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 line-clamp-2 sm:line-clamp-3">
+    <p
+      class="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 line-clamp-2 sm:line-clamp-3"
+    >
       {description}
     </p>
 
@@ -65,7 +69,9 @@ var postSlug = getPostSlug(post);
       }
     </div>
 
-    <div class="flex items-center justify-between text-xs sm:text-sm text-gray-600 pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+    <div
+      class="flex items-center justify-between text-xs sm:text-sm text-gray-600 pt-3 sm:pt-0 border-t sm:border-t-0 border-gray-100"
+    >
       <span>By {author}</span>
       <a
         href={`/blog/${postSlug}`}

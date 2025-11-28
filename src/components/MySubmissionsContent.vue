@@ -27,25 +27,33 @@
     <div v-else>
       <!-- Stats Summary -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
-        <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center">
+        <div
+          class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center"
+        >
           <div class="text-xl sm:text-2xl font-bold text-gray-900">
             {{ stats.total }}
           </div>
           <div class="text-xs text-gray-500 mt-1">Total Submitted</div>
         </div>
-        <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center">
+        <div
+          class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center"
+        >
           <div class="text-xl sm:text-2xl font-bold text-yellow-600">
             {{ stats.pending }}
           </div>
           <div class="text-xs text-gray-500 mt-1">Pending Review</div>
         </div>
-        <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center">
+        <div
+          class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center"
+        >
           <div class="text-xl sm:text-2xl font-bold text-green-600">
             {{ stats.approved }}
           </div>
           <div class="text-xs text-gray-500 mt-1">Approved</div>
         </div>
-        <div class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center">
+        <div
+          class="bg-white rounded-xl sm:rounded-lg shadow-sm p-3 sm:p-4 text-center"
+        >
           <div class="text-xl sm:text-2xl font-bold text-red-600">
             {{ stats.rejected }}
           </div>
@@ -87,7 +95,9 @@
         class="bg-white rounded-lg shadow-sm p-8 text-center"
       >
         <div class="text-5xl mb-4">📋</div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">No Submissions Yet</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">
+          No Submissions Yet
+        </h2>
         <p class="text-gray-600 mb-6">
           Help grow our directory collection by submitting directories you know
           about.
@@ -316,7 +326,9 @@
         <div class="sm:hidden flex justify-center mb-3 -mt-1">
           <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
         </div>
-        <h3 id="edit-modal-title" class="text-lg font-bold text-gray-900 mb-4">Edit Submission</h3>
+        <h3 id="edit-modal-title" class="text-lg font-bold text-gray-900 mb-4">
+          Edit Submission
+        </h3>
 
         <div class="space-y-4">
           <!-- Name -->
@@ -472,12 +484,14 @@ const isSaving = ref(false);
 // Computed
 const stats = computed(() => {
   const total = submissions.value.length;
-  const pending = submissions.value.filter((s) => s.status === "pending").length;
+  const pending = submissions.value.filter(
+    (s) => s.status === "pending",
+  ).length;
   const approved = submissions.value.filter(
-    (s) => s.status === "approved"
+    (s) => s.status === "approved",
   ).length;
   const rejected = submissions.value.filter(
-    (s) => s.status === "rejected"
+    (s) => s.status === "rejected",
   ).length;
 
   return { total, pending, approved, rejected };
@@ -670,7 +684,7 @@ async function saveEdit() {
 
     // Update local state
     const index = submissions.value.findIndex(
-      (s) => s.id === editingSubmission.value.id
+      (s) => s.id === editingSubmission.value.id,
     );
     if (index !== -1) {
       submissions.value[index] = {
@@ -692,7 +706,7 @@ async function saveEdit() {
 async function handleDelete(submission) {
   if (
     !confirm(
-      `Are you sure you want to delete "${submission.name}"? This action cannot be undone.`
+      `Are you sure you want to delete "${submission.name}"? This action cannot be undone.`,
     )
   ) {
     return;
@@ -731,7 +745,6 @@ async function handleDelete(submission) {
 .safe-area-inset-bottom {
   padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
 }
-
 
 @media (max-width: 640px) {
   .safe-area-inset-bottom {

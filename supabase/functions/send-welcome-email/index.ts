@@ -53,7 +53,10 @@ serve(async (req: Request) => {
     let userId: string | null = null;
 
     // Handle webhook payload from auth.users table
-    if (body.type === "INSERT" && (body.table === "users" || body.schema === "auth")) {
+    if (
+      body.type === "INSERT" &&
+      (body.table === "users" || body.schema === "auth")
+    ) {
       const webhook = body as AuthWebhookPayload;
       const record = webhook.record;
 
@@ -80,7 +83,7 @@ serve(async (req: Request) => {
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
@@ -100,7 +103,7 @@ serve(async (req: Request) => {
           {
             status: 200,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
+          },
         );
       }
     }
@@ -121,11 +124,14 @@ serve(async (req: Request) => {
     if (!result.success) {
       console.error("Failed to send email:", result.error);
       return new Response(
-        JSON.stringify({ error: "Failed to send email", details: result.error }),
+        JSON.stringify({
+          error: "Failed to send email",
+          details: result.error,
+        }),
         {
           status: 500,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
-        }
+        },
       );
     }
 
@@ -152,7 +158,7 @@ serve(async (req: Request) => {
       {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      },
     );
   } catch (error) {
     console.error("Error:", error);

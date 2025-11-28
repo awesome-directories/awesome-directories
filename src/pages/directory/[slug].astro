@@ -244,7 +244,9 @@ const hasSubmissionInfo =
           itemtype="https://schema.org/Product"
         >
           <!-- Header with Logo and Title -->
-          <header class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+          <header
+            class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 md:p-8"
+          >
             <div
               class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
             >
@@ -367,7 +369,6 @@ const hasSubmissionInfo =
                   <div class="flex-shrink-0 w-full sm:w-auto mt-2 sm:mt-0">
                     <a
                       href={`${directory.submission_url || directory.url}?ref=awesome-directories.com`}
-
                       rel="noopener noreferrer nofollow"
                       class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 sm:py-3 bg-primary hover:bg-primary-dark active:bg-primary-dark text-white font-semibold rounded-xl sm:rounded-lg transition-colors shadow-md hover:shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-opacity-50 min-h-[52px] sm:min-h-[48px] touch-manipulation"
                       itemprop="url"
@@ -398,34 +399,50 @@ const hasSubmissionInfo =
                     <div class="text-lg sm:text-2xl font-bold text-gray-900">
                       {getPricingLabel(directory)}
                     </div>
-                    <div class="text-xs sm:text-sm text-gray-600 mt-1">Pricing</div>
+                    <div class="text-xs sm:text-sm text-gray-600 mt-1">
+                      Pricing
+                    </div>
                   </div>
 
                   <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
                     <div class="text-lg sm:text-2xl font-bold text-gray-900">
                       {directory.is_dofollow ? "Yes" : "No"}
                     </div>
-                    <div class="text-xs sm:text-sm text-gray-600 mt-1">Dofollow Link</div>
+                    <div class="text-xs sm:text-sm text-gray-600 mt-1">
+                      Dofollow Link
+                    </div>
                   </div>
 
                   <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
                     <div
                       class="text-lg sm:text-2xl font-bold text-gray-900"
-                      title={directory.avg_approval_days ? `${directory.avg_approval_days} days` : "Not available"}
-                      aria-label={directory.avg_approval_days ? `${directory.avg_approval_days} days` : "Not available"}
+                      title={
+                        directory.avg_approval_days
+                          ? `${directory.avg_approval_days} days`
+                          : "Not available"
+                      }
+                      aria-label={
+                        directory.avg_approval_days
+                          ? `${directory.avg_approval_days} days`
+                          : "Not available"
+                      }
                     >
                       {directory.avg_approval_days
                         ? `${directory.avg_approval_days}d`
                         : "N/A"}
                     </div>
-                    <div class="text-xs sm:text-sm text-gray-600 mt-1">Avg. Approval</div>
+                    <div class="text-xs sm:text-sm text-gray-600 mt-1">
+                      Avg. Approval
+                    </div>
                   </div>
 
                   <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-xl sm:rounded-lg">
                     <div class="text-lg sm:text-2xl font-bold text-gray-900">
                       {getTrafficLabel(directory.traffic_estimate) || "N/A"}
                     </div>
-                    <div class="text-xs sm:text-sm text-gray-600 mt-1">Traffic Level</div>
+                    <div class="text-xs sm:text-sm text-gray-600 mt-1">
+                      Traffic Level
+                    </div>
                   </div>
                 </div>
               </section>
@@ -484,7 +501,9 @@ const hasSubmissionInfo =
                       <div class="text-2xl sm:text-3xl font-bold text-primary">
                         {formatNumber(directory.backlinks_count)}
                       </div>
-                      <div class="text-xs sm:text-sm text-gray-600 mt-1">Backlinks</div>
+                      <div class="text-xs sm:text-sm text-gray-600 mt-1">
+                        Backlinks
+                      </div>
                     </div>
                   )}
 
@@ -506,7 +525,9 @@ const hasSubmissionInfo =
                       >
                         {getTrustScore(directory.spam_score)}%
                       </div>
-                      <div class="text-xs sm:text-sm text-gray-600 mt-1">Trust Score</div>
+                      <div class="text-xs sm:text-sm text-gray-600 mt-1">
+                        Trust Score
+                      </div>
                     </div>
                   )}
                 </div>
@@ -535,8 +556,12 @@ const hasSubmissionInfo =
           }
 
           <!-- Quick Links -->
-          <section class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
-            <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Quick Links</h2>
+          <section
+            class="bg-white rounded-xl sm:rounded-lg shadow-sm p-4 sm:p-6 md:p-8"
+          >
+            <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">
+              Quick Links
+            </h2>
             <div class="flex flex-col sm:flex-row flex-wrap gap-3">
               {
                 directory.url && (
@@ -545,7 +570,10 @@ const hasSubmissionInfo =
                     rel="noopener noreferrer"
                     class="inline-flex items-center justify-center px-4 py-3 sm:py-2 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-gray-700 font-medium rounded-xl sm:rounded-lg transition-colors min-h-[48px] sm:min-h-[44px] touch-manipulation"
                   >
-                    <span class="mr-2" aria-hidden="true">🌐</span> Visit Website
+                    <span class="mr-2" aria-hidden="true">
+                      🌐
+                    </span>{" "}
+                    Visit Website
                   </a>
                 )
               }
@@ -558,7 +586,10 @@ const hasSubmissionInfo =
                       rel="noopener noreferrer nofollow"
                       class="inline-flex items-center justify-center px-4 py-3 sm:py-2 bg-primary hover:bg-primary-dark active:bg-primary-dark text-white font-medium rounded-xl sm:rounded-lg transition-colors min-h-[48px] sm:min-h-[44px] touch-manipulation"
                     >
-                      <span class="mr-2" aria-hidden="true">📤</span> Submit Product
+                      <span class="mr-2" aria-hidden="true">
+                        📤
+                      </span>{" "}
+                      Submit Product
                     </a>
                   )
               }
@@ -671,5 +702,3 @@ const hasSubmissionInfo =
 
   <AppFooter />
 </BaseLayout>
-
-

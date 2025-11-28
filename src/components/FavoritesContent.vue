@@ -1,7 +1,10 @@
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
     <!-- Auth Required Message -->
-    <div v-if="!user" class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center">
+    <div
+      v-if="!user"
+      class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center"
+    >
       <div class="text-4xl sm:text-5xl mb-4" aria-hidden="true">🔒</div>
       <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
         Sign in to View Favorites
@@ -9,7 +12,12 @@
       <p class="text-sm sm:text-base text-gray-600 mb-6">
         You need to be signed in to view and manage your favorite directories.
       </p>
-      <button @click="handleSignIn" class="btn-primary min-h-[48px] px-6 touch-manipulation">Sign In</button>
+      <button
+        @click="handleSignIn"
+        class="btn-primary min-h-[48px] px-6 touch-manipulation"
+      >
+        Sign In
+      </button>
     </div>
 
     <!-- Loading State -->
@@ -19,7 +27,9 @@
         role="status"
         aria-label="Loading"
       ></div>
-      <p class="mt-4 text-sm sm:text-base text-gray-600">Loading your favorites...</p>
+      <p class="mt-4 text-sm sm:text-base text-gray-600">
+        Loading your favorites...
+      </p>
     </div>
 
     <!-- Empty State -->
@@ -28,16 +38,25 @@
       class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center"
     >
       <div class="text-4xl sm:text-5xl mb-4" aria-hidden="true">💔</div>
-      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">No Favorites Yet</h2>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+        No Favorites Yet
+      </h2>
       <p class="text-sm sm:text-base text-gray-600 mb-6">
         Start exploring directories and add them to your favorites!
       </p>
-      <a href="/" class="btn-primary inline-flex items-center justify-center min-h-[48px] px-6 touch-manipulation"> Browse Directories </a>
+      <a
+        href="/"
+        class="btn-primary inline-flex items-center justify-center min-h-[48px] px-6 touch-manipulation"
+      >
+        Browse Directories
+      </a>
     </div>
 
     <!-- Favorites List -->
     <div v-else>
-      <div class="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div
+        class="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+      >
         <p class="text-sm sm:text-base text-gray-700">
           You have
           <span class="font-semibold">{{ favorites.length }}</span>
@@ -53,7 +72,9 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+      >
         <div
           v-for="favorite in favorites"
           :key="favorite.id"

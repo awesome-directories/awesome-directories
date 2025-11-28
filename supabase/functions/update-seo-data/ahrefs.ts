@@ -210,16 +210,23 @@ async function updateDirectoryMetrics(
     var metrics = metricsArray[i];
 
     if (metrics.type === "authority" && metrics.website_authority) {
-      domainRating = toIntegerOrNull(metrics.website_authority.domainRating) ?? domainRating;
-      backlinksCount = toIntegerOrNull(metrics.website_authority.backlinks) ?? backlinksCount;
-      referringDomains = toIntegerOrNull(metrics.website_authority.refdomains) ?? referringDomains;
+      domainRating =
+        toIntegerOrNull(metrics.website_authority.domainRating) ?? domainRating;
+      backlinksCount =
+        toIntegerOrNull(metrics.website_authority.backlinks) ?? backlinksCount;
+      referringDomains =
+        toIntegerOrNull(metrics.website_authority.refdomains) ??
+        referringDomains;
       consolidatedData.authority = metrics.website_authority;
     }
 
     if (metrics.type === "backlinks" && metrics.backlink_check) {
-      domainRating = domainRating ?? toIntegerOrNull(metrics.backlink_check.domainRating);
-      backlinksCount = backlinksCount ?? toIntegerOrNull(metrics.backlink_check.backlinks);
-      referringDomains = referringDomains ?? toIntegerOrNull(metrics.backlink_check.refdomains);
+      domainRating =
+        domainRating ?? toIntegerOrNull(metrics.backlink_check.domainRating);
+      backlinksCount =
+        backlinksCount ?? toIntegerOrNull(metrics.backlink_check.backlinks);
+      referringDomains =
+        referringDomains ?? toIntegerOrNull(metrics.backlink_check.refdomains);
       consolidatedData.backlinks = metrics.backlink_check;
       if (metrics.top_backlinks) {
         consolidatedData.top_backlinks = metrics.top_backlinks;
@@ -239,7 +246,9 @@ async function updateDirectoryMetrics(
         metrics.website_traffic &&
         metrics.website_traffic.trafficMonthlyAvg !== undefined
       ) {
-        organicTraffic = toIntegerOrNull(metrics.website_traffic.trafficMonthlyAvg);
+        organicTraffic = toIntegerOrNull(
+          metrics.website_traffic.trafficMonthlyAvg,
+        );
       }
       consolidatedData.traffic = {
         monthly_avg: metrics.website_traffic?.trafficMonthlyAvg,

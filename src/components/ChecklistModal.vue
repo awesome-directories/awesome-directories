@@ -25,7 +25,9 @@
         class="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200"
       >
         <div class="flex items-center space-x-3 min-w-0">
-          <div class="text-2xl sm:text-3xl flex-shrink-0" aria-hidden="true">✅</div>
+          <div class="text-2xl sm:text-3xl flex-shrink-0" aria-hidden="true">
+            ✅
+          </div>
           <div class="min-w-0">
             <h2
               id="checklist-modal-title"
@@ -65,7 +67,10 @@
 
       <!-- Content -->
       <div class="flex-1 overflow-y-auto p-4 sm:p-6 overscroll-contain">
-        <div v-if="selectedDirectories.length === 0" class="text-center py-8 sm:py-12">
+        <div
+          v-if="selectedDirectories.length === 0"
+          class="text-center py-8 sm:py-12"
+        >
           <div class="text-5xl sm:text-6xl mb-4" aria-hidden="true">📋</div>
           <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
             No directories selected
@@ -122,7 +127,9 @@
                 />
               </svg>
             </summary>
-            <ul class="text-xs sm:text-sm text-blue-800 space-y-1 px-3 sm:px-4 pb-3 sm:pb-4 ml-8 sm:ml-9">
+            <ul
+              class="text-xs sm:text-sm text-blue-800 space-y-1 px-3 sm:px-4 pb-3 sm:pb-4 ml-8 sm:ml-9"
+            >
               <li>• Check each directory as you complete the submission</li>
               <li>• Click directory names to open them in a new tab</li>
               <li>• Your progress is saved automatically</li>
@@ -134,7 +141,9 @@
           <div class="flex items-center justify-between mb-4 gap-4">
             <div class="text-xs sm:text-sm text-gray-600 whitespace-nowrap">
               <span class="font-semibold">{{ completedCount }}</span> of
-              <span class="font-semibold">{{ selectedDirectories.length }}</span>
+              <span class="font-semibold">{{
+                selectedDirectories.length
+              }}</span>
               completed
             </div>
             <div class="flex items-center space-x-2 flex-shrink-0">
@@ -148,7 +157,9 @@
                   aria-valuemax="100"
                 ></div>
               </div>
-              <span class="text-xs sm:text-sm font-semibold text-gray-700 w-10 text-right">
+              <span
+                class="text-xs sm:text-sm font-semibold text-gray-700 w-10 text-right"
+              >
                 {{ progressPercentage }}%
               </span>
             </div>
@@ -228,7 +239,9 @@
       </div>
 
       <!-- Footer -->
-      <div class="border-t border-gray-200 p-4 sm:p-6 bg-gray-50 safe-area-inset-bottom">
+      <div
+        class="border-t border-gray-200 p-4 sm:p-6 bg-gray-50 safe-area-inset-bottom"
+      >
         <div class="flex flex-col sm:flex-row gap-3 justify-between">
           <button
             @click="handleClearSelection"
@@ -589,7 +602,6 @@ watch(
 .safe-area-inset-bottom {
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
-
 
 /* Details element chevron rotation */
 details[open] .details-chevron {

@@ -18,22 +18,24 @@ These features appeal to technical users who appreciate efficiency and clever UX
 
 **The "Vim Mode" for Directory Browsing**
 
-| Aspect | Details |
-|--------|---------|
-| **Concept** | Press `?` to see all shortcuts. Use `j/k` to navigate directories, `f` to favorite, `o` to open, `s` to submit, `/` to search, `g` for go-to commands |
-| **Shortcuts** | `j/k` = up/down, `enter` = open detail, `f` = favorite, `e` = expand, `1-5` = rate, `gg` = top, `G` = bottom, `n/p` = next/prev page |
-| **Easter Egg** | Konami code unlocks "Ultra Mode" theme |
-| **Impact** | HIGH - Instant viral appeal on HackerNews/Twitter |
-| **Effort** | Medium (2-3 days) |
-| **IH Appeal** | VERY HIGH - Technical founders love this |
+| Aspect         | Details                                                                                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Concept**    | Press `?` to see all shortcuts. Use `j/k` to navigate directories, `f` to favorite, `o` to open, `s` to submit, `/` to search, `g` for go-to commands |
+| **Shortcuts**  | `j/k` = up/down, `enter` = open detail, `f` = favorite, `e` = expand, `1-5` = rate, `gg` = top, `G` = bottom, `n/p` = next/prev page                  |
+| **Easter Egg** | Konami code unlocks "Ultra Mode" theme                                                                                                                |
+| **Impact**     | HIGH - Instant viral appeal on HackerNews/Twitter                                                                                                     |
+| **Effort**     | Medium (2-3 days)                                                                                                                                     |
+| **IH Appeal**  | VERY HIGH - Technical founders love this                                                                                                              |
 
 **Pros:**
+
 - Differentiator - no other directory site has this
 - Perfect for the IH/dev audience
 - Low barrier, high delight
 - Shareable ("did you know about the keyboard shortcuts?")
 
 **Cons:**
+
 - Needs careful keyboard conflict handling
 - Mobile users won't use it
 - Requires good visual feedback
@@ -42,12 +44,12 @@ These features appeal to technical users who appreciate efficiency and clever UX
 
 **Universal search & actions like Notion/Linear**
 
-| Feature | Behavior |
-|---------|----------|
-| **Search** | Fuzzy search across directories, blog posts, actions |
+| Feature     | Behavior                                                                 |
+| ----------- | ------------------------------------------------------------------------ |
+| **Search**  | Fuzzy search across directories, blog posts, actions                     |
 | **Actions** | "Go to favorites", "Submit directory", "Export list", "Toggle dark mode" |
-| **Recent** | Show recent searches and visited directories |
-| **Context** | Different commands based on current page |
+| **Recent**  | Show recent searches and visited directories                             |
+| **Context** | Different commands based on current page                                 |
 
 **Impact:** HIGH | **Effort:** Medium | **IH Appeal:** HIGH
 
@@ -56,6 +58,7 @@ These features appeal to technical users who appreciate efficiency and clever UX
 **Optional "Matrix" or "Dracula" theme for the hardcore crowd**
 
 Press `t` to toggle between:
+
 - Default clean theme
 - Terminal/dark theme with monospace fonts
 - "Ship it" theme (inspired by Product Hunt orange)
@@ -72,21 +75,23 @@ Features that help users execute their launch strategy more effectively.
 
 **Visual timeline for planning directory submissions**
 
-| Feature | Description |
-|---------|-------------|
-| **Calendar View** | See submission deadlines, Product Hunt launch date, etc. |
-| **Suggested Schedule** | AI-powered: "Submit to these 5 directories this week" |
-| **Time Zones** | Account for directory review times |
-| **Reminders** | Browser notifications for scheduled submissions |
-| **Export** | Export to Google Calendar / iCal |
+| Feature                | Description                                              |
+| ---------------------- | -------------------------------------------------------- |
+| **Calendar View**      | See submission deadlines, Product Hunt launch date, etc. |
+| **Suggested Schedule** | AI-powered: "Submit to these 5 directories this week"    |
+| **Time Zones**         | Account for directory review times                       |
+| **Reminders**          | Browser notifications for scheduled submissions          |
+| **Export**             | Export to Google Calendar / iCal                         |
 
 **Pros:**
+
 - Solves real pain point (launch planning is chaotic)
 - Increases engagement (users return to check calendar)
 - Differentiator from other directory lists
 - Natural upsell path (premium planning features)
 
 **Cons:**
+
 - Complex to build well
 - Needs notification infrastructure
 - Calendar UX is hard to get right
@@ -97,15 +102,16 @@ Features that help users execute their launch strategy more effectively.
 
 **Pre-written copy that users can customize**
 
-| Template Type | Content |
-|---------------|---------|
-| **Product Descriptions** | 50-word, 100-word, 250-word versions |
-| **Taglines** | 10 variations with formulas |
-| **Social Proof** | "Featured in X directories, Y users" |
-| **Call-to-Actions** | Various CTAs for different directories |
-| **Category-Specific** | Templates for SaaS, AI tools, dev tools, etc. |
+| Template Type            | Content                                       |
+| ------------------------ | --------------------------------------------- |
+| **Product Descriptions** | 50-word, 100-word, 250-word versions          |
+| **Taglines**             | 10 variations with formulas                   |
+| **Social Proof**         | "Featured in X directories, Y users"          |
+| **Call-to-Actions**      | Various CTAs for different directories        |
+| **Category-Specific**    | Templates for SaaS, AI tools, dev tools, etc. |
 
 **User Flow:**
+
 1. User creates a "Launch Profile" with product details
 2. System generates all submission materials
 3. One-click copy for each directory's requirements
@@ -123,6 +129,7 @@ Features that help users execute their launch strategy more effectively.
 - Week 4: "Follow Up" - Check submissions, respond to reviews
 
 Each step shows:
+
 - Recommended directories for this phase
 - Time estimates
 - Success metrics to track
@@ -133,11 +140,11 @@ Each step shows:
 
 **Crowdsourced data on how long directories take to respond**
 
-| Directory | Avg Response | Approval Rate | Best Time to Submit |
-|-----------|--------------|---------------|---------------------|
-| Product Hunt | 1-2 days | 85% | Tuesday 12:01 AM PT |
-| BetaList | 2-3 weeks | 60% | Monday morning |
-| AlternativeTo | 1 week | 70% | Any weekday |
+| Directory     | Avg Response | Approval Rate | Best Time to Submit |
+| ------------- | ------------ | ------------- | ------------------- |
+| Product Hunt  | 1-2 days     | 85%           | Tuesday 12:01 AM PT |
+| BetaList      | 2-3 weeks    | 60%           | Monday morning      |
+| AlternativeTo | 1 week       | 70%           | Any weekday         |
 
 User-submitted data: "I submitted on X, heard back on Y"
 
@@ -151,13 +158,13 @@ User-submitted data: "I submitted on X, heard back on Y"
 
 **Track YOUR launch across all directories**
 
-| Metric | Display |
-|--------|---------|
-| **Submission Progress** | Visual progress bar (50 of 100 directories submitted) |
-| **Approval Rate** | Your approval % vs. community average |
-| **Traffic Attribution** | Which directories sent most visitors (requires UTM tracking) |
-| **ROI Calculator** | "You spent $200 on paid directories, estimate 500 visitors = $0.40/visitor" |
-| **Milestone Badges** | "First 10 submissions", "100 directories master", etc. |
+| Metric                  | Display                                                                     |
+| ----------------------- | --------------------------------------------------------------------------- |
+| **Submission Progress** | Visual progress bar (50 of 100 directories submitted)                       |
+| **Approval Rate**       | Your approval % vs. community average                                       |
+| **Traffic Attribution** | Which directories sent most visitors (requires UTM tracking)                |
+| **ROI Calculator**      | "You spent $200 on paid directories, estimate 500 visitors = $0.40/visitor" |
+| **Milestone Badges**    | "First 10 submissions", "100 directories master", etc.                      |
 
 **Impact:** VERY HIGH | **Effort:** Medium-High | **IH Appeal:** VERY HIGH
 
@@ -165,12 +172,12 @@ User-submitted data: "I submitted on X, heard back on Y"
 
 **Community-driven engagement**
 
-| Leaderboard | Purpose |
-|-------------|---------|
-| **Top Submitters This Month** | Gamification |
-| **Most Helpful Reviews** | Quality reviews |
-| **Rising Products** | Products getting most directory approvals |
-| **Directory of the Week** | Editorial spotlight |
+| Leaderboard                   | Purpose                                   |
+| ----------------------------- | ----------------------------------------- |
+| **Top Submitters This Month** | Gamification                              |
+| **Most Helpful Reviews**      | Quality reviews                           |
+| **Rising Products**           | Products getting most directory approvals |
+| **Directory of the Week**     | Editorial spotlight                       |
 
 **Impact:** MEDIUM | **Effort:** Low-Medium | **IH Appeal:** MEDIUM
 
@@ -178,13 +185,13 @@ User-submitted data: "I submitted on X, heard back on Y"
 
 **Side-by-side comparison of 2-4 directories**
 
-| Metric | ProductHunt | BetaList | AlternativeTo |
-|--------|-------------|----------|---------------|
-| DR | 91 | 78 | 85 |
-| Link Type | DoFollow | NoFollow | DoFollow |
-| Price | Free | $99 | Free |
-| Avg. Response | 2 days | 14 days | 7 days |
-| Category Fit | High | High | Medium |
+| Metric        | ProductHunt | BetaList | AlternativeTo |
+| ------------- | ----------- | -------- | ------------- |
+| DR            | 91          | 78       | 85            |
+| Link Type     | DoFollow    | NoFollow | DoFollow      |
+| Price         | Free        | $99      | Free          |
+| Avg. Response | 2 days      | 14 days  | 7 days        |
+| Category Fit  | High        | High     | Medium        |
 
 **Impact:** HIGH | **Effort:** Low | **IH Appeal:** HIGH
 
@@ -196,20 +203,22 @@ User-submitted data: "I submitted on X, heard back on Y"
 
 **Real stories from founders who used the directories**
 
-| Content | Format |
-|---------|--------|
-| **Quick Wins** | "I got 500 visitors from X directory in 2 weeks" |
-| **Detailed Breakdowns** | "My 30-day launch strategy with results" |
-| **Failed Launches** | "What I learned from a failed directory campaign" |
-| **AMA Style** | Founders answer questions about their launches |
+| Content                 | Format                                            |
+| ----------------------- | ------------------------------------------------- |
+| **Quick Wins**          | "I got 500 visitors from X directory in 2 weeks"  |
+| **Detailed Breakdowns** | "My 30-day launch strategy with results"          |
+| **Failed Launches**     | "What I learned from a failed directory campaign" |
+| **AMA Style**           | Founders answer questions about their launches    |
 
 **User-Generated Content Flow:**
+
 1. User submits launch story
 2. Community votes/comments
 3. Best stories get featured on homepage
 4. Builds SEO content automatically
 
 **Pros:**
+
 - Massive SEO value (long-tail content)
 - Social proof for the platform
 - Community engagement
@@ -217,6 +226,7 @@ User-submitted data: "I submitted on X, heard back on Y"
 - User-generated = low maintenance
 
 **Cons:**
+
 - Needs moderation
 - Quality control is important
 - Might take time to build critical mass
@@ -239,6 +249,7 @@ User-submitted data: "I submitted on X, heard back on Y"
 **Beyond reviews: tactical discussions per directory**
 
 Threads like:
+
 - "Best time to post on Product Hunt?"
 - "How to get featured on BetaList?"
 - "AlternativeTo tips and tricks"
@@ -253,13 +264,13 @@ Threads like:
 
 **Automated guidance after signup**
 
-| Day | Email |
-|-----|-------|
-| 0 | Welcome + Quick Win directories |
-| 3 | "How to write the perfect directory submission" |
-| 7 | "This week's top 5 underrated directories" |
-| 14 | "Check your submission progress" |
-| 30 | "Launch story showcase + request for feedback" |
+| Day | Email                                           |
+| --- | ----------------------------------------------- |
+| 0   | Welcome + Quick Win directories                 |
+| 3   | "How to write the perfect directory submission" |
+| 7   | "This week's top 5 underrated directories"      |
+| 14  | "Check your submission progress"                |
+| 30  | "Launch story showcase + request for feedback"  |
 
 **Impact:** HIGH | **Effort:** Low-Medium | **IH Appeal:** HIGH
 
@@ -268,6 +279,7 @@ Threads like:
 **One-click "Add to my list" from any website**
 
 Features:
+
 - While browsing any site, detect if it's a directory
 - Add to favorites/tracking with one click
 - See if you've already submitted
@@ -283,6 +295,7 @@ Input: Product name, URL, 1-sentence description
 Output: Customized submissions for top 10 directories
 
 Each output tailored to:
+
 - Directory's character limits
 - Directory's preferred format
 - Directory's audience
@@ -305,6 +318,7 @@ Each output tailored to:
 **Automation triggers**
 
 Events:
+
 - Directory approved -> Post to Slack
 - New directory added -> Send email
 - Submission status changed -> Update Notion
@@ -319,16 +333,16 @@ Events:
 
 **Unlock badges for milestones**
 
-| Badge | Requirement |
-|-------|-------------|
-| First Launch | Submit to first directory |
-| Rising Star | Get 5 directory approvals |
-| Directory Master | Submit to 100+ directories |
-| Top Contributor | Write 10+ helpful reviews |
-| Streak King | Submit daily for 7 days |
-| Sharp Shooter | 100% approval rate (min 10) |
-| Scholar | Read all blog posts |
-| Community Hero | Help 5 other launchers |
+| Badge            | Requirement                 |
+| ---------------- | --------------------------- |
+| First Launch     | Submit to first directory   |
+| Rising Star      | Get 5 directory approvals   |
+| Directory Master | Submit to 100+ directories  |
+| Top Contributor  | Write 10+ helpful reviews   |
+| Streak King      | Submit daily for 7 days     |
+| Sharp Shooter    | 100% approval rate (min 10) |
+| Scholar          | Read all blog posts         |
+| Community Hero   | Help 5 other launchers      |
 
 Display on user profile, shareable on social.
 
@@ -363,16 +377,16 @@ Encourages exploration, reduces decision fatigue
 
 **Sustainable revenue model**
 
-| Feature | Free | Pro ($9/mo) |
-|---------|------|-------------|
-| Directory access | All | All |
-| Projects | 1 | Unlimited |
-| AI descriptions | 3/month | Unlimited |
-| Response time data | Limited | Full |
-| Export formats | CSV | CSV, JSON, Notion, Sheets |
-| Priority support | - | Yes |
-| Early access to new directories | - | Yes |
-| Remove "Made with AD" from exports | - | Yes |
+| Feature                            | Free    | Pro ($9/mo)               |
+| ---------------------------------- | ------- | ------------------------- |
+| Directory access                   | All     | All                       |
+| Projects                           | 1       | Unlimited                 |
+| AI descriptions                    | 3/month | Unlimited                 |
+| Response time data                 | Limited | Full                      |
+| Export formats                     | CSV     | CSV, JSON, Notion, Sheets |
+| Priority support                   | -       | Yes                       |
+| Early access to new directories    | -       | Yes                       |
+| Remove "Made with AD" from exports | -       | Yes                       |
 
 **Impact:** HIGH (for sustainability) | **Effort:** Medium | **IH Appeal:** MEDIUM
 
@@ -392,6 +406,7 @@ Encourages exploration, reduces decision fatigue
 **Productized knowledge**
 
 "The Complete Directory Launch Playbook"
+
 - 30-day launch schedule
 - Template library
 - Video walkthroughs
@@ -452,6 +467,7 @@ Encourages exploration, reduces decision fatigue
 **Dynamic social cards**
 
 When sharing awesome-directories.com/directory/producthunt:
+
 - Auto-generated image with directory logo, DR score, key stats
 - Template: "ProductHunt | DR 91 | DoFollow | Free"
 
@@ -465,49 +481,49 @@ When sharing awesome-directories.com/directory/producthunt:
 
 High impact, low effort - ship ASAP
 
-| # | Feature | Impact | Effort | IH Appeal |
-|---|---------|--------|--------|-----------|
-| 1 | Keyboard Navigation | VERY HIGH | Low-Med | VERY HIGH |
-| 2 | Dark Mode | VERY HIGH | Medium | VERY HIGH |
-| 3 | Toast Notifications | HIGH | Low | HIGH |
-| 4 | Directory Comparison | HIGH | Low | HIGH |
-| 5 | Random Directory | LOW | Very Low | MEDIUM |
+| #   | Feature              | Impact    | Effort   | IH Appeal |
+| --- | -------------------- | --------- | -------- | --------- |
+| 1   | Keyboard Navigation  | VERY HIGH | Low-Med  | VERY HIGH |
+| 2   | Dark Mode            | VERY HIGH | Medium   | VERY HIGH |
+| 3   | Toast Notifications  | HIGH      | Low      | HIGH      |
+| 4   | Directory Comparison | HIGH      | Low      | HIGH      |
+| 5   | Random Directory     | LOW       | Very Low | MEDIUM    |
 
 ### Tier 2: Core Value (2-4 weeks)
 
 Significant improvements to core product
 
-| # | Feature | Impact | Effort | IH Appeal |
-|---|---------|--------|--------|-----------|
-| 6 | Submission Templates | VERY HIGH | Medium | VERY HIGH |
-| 7 | AI Submission Generator | VERY HIGH | Medium | VERY HIGH |
-| 8 | Launch Stories | VERY HIGH | Medium | VERY HIGH |
-| 9 | Response Time Tracker | HIGH | Medium | VERY HIGH |
-| 10 | Achievement System | HIGH | Low-Med | HIGH |
+| #   | Feature                 | Impact    | Effort  | IH Appeal |
+| --- | ----------------------- | --------- | ------- | --------- |
+| 6   | Submission Templates    | VERY HIGH | Medium  | VERY HIGH |
+| 7   | AI Submission Generator | VERY HIGH | Medium  | VERY HIGH |
+| 8   | Launch Stories          | VERY HIGH | Medium  | VERY HIGH |
+| 9   | Response Time Tracker   | HIGH      | Medium  | VERY HIGH |
+| 10  | Achievement System      | HIGH      | Low-Med | HIGH      |
 
 ### Tier 3: Platform Features (1-2 months)
 
 Transform from tool to platform
 
-| # | Feature | Impact | Effort | IH Appeal |
-|---|---------|--------|--------|-----------|
-| 11 | Personal Dashboard | VERY HIGH | Med-High | VERY HIGH |
-| 12 | Launch Calendar | VERY HIGH | High | VERY HIGH |
-| 13 | Launch Wizard | HIGH | Medium | HIGH |
-| 14 | Email Drip Campaign | HIGH | Low-Med | HIGH |
-| 15 | Command Palette (Cmd+K) | HIGH | Medium | HIGH |
+| #   | Feature                 | Impact    | Effort   | IH Appeal |
+| --- | ----------------------- | --------- | -------- | --------- |
+| 11  | Personal Dashboard      | VERY HIGH | Med-High | VERY HIGH |
+| 12  | Launch Calendar         | VERY HIGH | High     | VERY HIGH |
+| 13  | Launch Wizard           | HIGH      | Medium   | HIGH      |
+| 14  | Email Drip Campaign     | HIGH      | Low-Med  | HIGH      |
+| 15  | Command Palette (Cmd+K) | HIGH      | Medium   | HIGH      |
 
 ### Tier 4: Growth Features (3+ months)
 
 Community and monetization
 
-| # | Feature | Impact | Effort | IH Appeal |
-|---|---------|--------|--------|-----------|
-| 16 | Launch Buddy Matching | HIGH | Medium | HIGH |
-| 17 | Browser Extension | HIGH | Med-High | HIGH |
-| 18 | Premium Tier | HIGH | Medium | MEDIUM |
-| 19 | Leaderboards | MEDIUM | Low-Med | MEDIUM |
-| 20 | Notion/Sheets Integration | MEDIUM | Medium | MEDIUM |
+| #   | Feature                   | Impact | Effort   | IH Appeal |
+| --- | ------------------------- | ------ | -------- | --------- |
+| 16  | Launch Buddy Matching     | HIGH   | Medium   | HIGH      |
+| 17  | Browser Extension         | HIGH   | Med-High | HIGH      |
+| 18  | Premium Tier              | HIGH   | Medium   | MEDIUM    |
+| 19  | Leaderboards              | MEDIUM | Low-Med  | MEDIUM    |
+| 20  | Notion/Sheets Integration | MEDIUM | Medium   | MEDIUM    |
 
 ---
 
