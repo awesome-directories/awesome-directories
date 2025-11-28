@@ -168,9 +168,5 @@ onMounted(async () => {
   // Load all directories for accurate stats
   await fetchDirectories(false, true);
   await fetchGitHubStats();
-
-  if (window.pirsch) {
-    window.pirsch("Stats Page View");
-  }
 });
 </script>

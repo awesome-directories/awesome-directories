@@ -65,9 +65,5 @@ const loadFavorites = async () => {
 
 onMounted(() => {
   loadFavorites();
-
-  if (window.pirsch) {
-    window.pirsch("Favorites Page View");
-  }
 });
 </script>

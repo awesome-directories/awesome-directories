@@ -158,9 +158,5 @@ const loadSubmissions = async () => {
 
 onMounted(() => {
   loadSubmissions();
-
-  if (window.pirsch) {
-    window.pirsch("Submissions Page View");
-  }
 });
 </script>
