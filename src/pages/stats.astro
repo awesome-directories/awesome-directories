@@ -13,48 +13,62 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
 >
   <AppHeader />
 
-  <main class="min-h-screen bg-gray-50 py-12">
+  <main class="min-h-screen bg-gray-50 py-8 sm:py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero Section -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+      <div class="text-center mb-8 sm:mb-12">
+        <h1
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4"
+        >
           Directory Statistics
         </h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p
+          class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-2"
+        >
           Comprehensive analytics and insights from our curated collection of
           launch directories. All data is updated during each build.
         </p>
       </div>
 
       <!-- Overview Cards -->
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Overview</h2>
+      <div class="mb-8 sm:mb-12">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+          Overview
+        </h2>
         <StatsCards client:load />
       </div>
 
       <!-- Charts Section -->
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Analytics</h2>
+      <div class="mb-8 sm:mb-12">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+          Analytics
+        </h2>
         <StatsCharts client:load />
       </div>
 
       <!-- Top Directories Tables -->
-      <div class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Top Directories</h2>
+      <div class="mb-8 sm:mb-12">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+          Top Directories
+        </h2>
         <TopDirectoriesTable client:load />
       </div>
 
       <!-- Additional Info -->
-      <div class="card p-8 bg-blue-50 border-blue-200">
-        <h2 class="text-xl font-bold text-gray-900 mb-3">
+      <div
+        class="card p-4 sm:p-6 md:p-8 bg-blue-50 border-blue-200 rounded-xl sm:rounded-lg"
+      >
+        <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3">
           About These Statistics
         </h2>
-        <p class="text-gray-700 mb-4">
+        <p class="text-sm sm:text-base text-gray-700 mb-4">
           These statistics are calculated at build time from our verified
           directory database. All metrics include only active, verified
           directories to ensure data quality.
         </p>
-        <ul class="list-disc list-inside text-gray-700 space-y-2">
+        <ul
+          class="list-disc list-inside text-sm sm:text-base text-gray-700 space-y-2"
+        >
           <li>
             <strong>Domain Rating (DR):</strong> Authority score from 0-100, higher
             is better

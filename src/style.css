@@ -170,6 +170,7 @@
 
   .touch-manipulation {
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .safe-area-inset-bottom {
@@ -188,6 +189,29 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  .overscroll-contain {
+    overscroll-behavior: contain;
+  }
+
+  .overscroll-none {
+    overscroll-behavior: none;
+  }
+
+  /* Line clamping utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -198,11 +222,12 @@
 
 @media (max-width: 640px) {
   .card {
-    @apply rounded-lg;
+    @apply rounded-xl;
   }
 
   select {
     font-size: 16px;
+    min-height: 48px;
   }
 
   input[type="search"],
@@ -210,6 +235,27 @@
   input[type="text"],
   input[type="url"] {
     font-size: 16px;
+    min-height: 48px;
+  }
+
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Increase touch targets on mobile */
+  .btn,
+  .btn-primary,
+  .btn-secondary {
+    min-height: 52px;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+  }
+}
+
+/* Smooth scrolling (respects prefers-reduced-motion) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 

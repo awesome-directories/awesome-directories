@@ -28,9 +28,7 @@
         class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
       >
         <div>
-          <h1 class="text-2xl font-bold text-gray-900 mb-1">
-            My Projects
-          </h1>
+          <h1 class="text-2xl font-bold text-gray-900 mb-1">My Projects</h1>
           <p class="text-gray-600 text-sm">
             Track where you've submitted your products
           </p>
@@ -218,7 +216,9 @@
                     <div class="relative inline-block">
                       <select
                         :value="submission.status"
-                        @change="updateStatus(submission.id, $event.target.value)"
+                        @change="
+                          updateStatus(submission.id, $event.target.value)
+                        "
                         :class="getStatusSelectClass(submission.status)"
                         class="text-xs font-semibold py-1 rounded-full border-0 cursor-pointer focus:ring-2 focus:ring-primary appearance-none bg-no-repeat"
                         :style="getStatusSelectStyle(submission.status)"
@@ -558,9 +558,7 @@
           class="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-primary/5 to-blue-50"
         >
           <div>
-            <h3 class="text-lg font-bold text-gray-900">
-              Track New Directory
-            </h3>
+            <h3 class="text-lg font-bold text-gray-900">Track New Directory</h3>
             <p class="text-sm text-gray-600 mt-0.5">
               Add directories to track for this project
             </p>
@@ -614,7 +612,10 @@
               v-if="directorySearchQuery"
               class="mt-2 flex items-center gap-2 text-sm text-gray-600"
             >
-              <span>{{ filteredAvailableDirectories.length }} directories found</span>
+              <span
+                >{{ filteredAvailableDirectories.length }} directories
+                found</span
+              >
               <button
                 @click="directorySearchQuery = ''"
                 class="text-primary hover:text-primary-dark"
@@ -677,7 +678,9 @@
                   </div>
 
                   <div
-                    v-if="directory.categories && directory.categories.length > 0"
+                    v-if="
+                      directory.categories && directory.categories.length > 0
+                    "
                     class="flex flex-wrap gap-1"
                   >
                     <span
@@ -736,10 +739,18 @@
           <div v-else class="text-center py-12">
             <div class="text-4xl mb-3">🔍</div>
             <p class="text-gray-600 mb-2">
-              {{ directorySearchQuery ? "No matching directories found" : "No more directories to add" }}
+              {{
+                directorySearchQuery
+                  ? "No matching directories found"
+                  : "No more directories to add"
+              }}
             </p>
             <p class="text-sm text-gray-500">
-              {{ directorySearchQuery ? "Try a different search term" : "You've tracked all available directories!" }}
+              {{
+                directorySearchQuery
+                  ? "Try a different search term"
+                  : "You've tracked all available directories!"
+              }}
             </p>
           </div>
         </div>
@@ -839,34 +850,34 @@ const showAddSubmission = ref(false);
 const directorySearchQuery = ref("");
 const isLoadingDirectories = ref(false);
 const isAddingDirectory = ref(null);
-const availableDirectories = computed(function() {
-  var trackedIds = projectSubmissions.value.map(function(s) {
+const availableDirectories = computed(function () {
+  var trackedIds = projectSubmissions.value.map(function (s) {
     return s.directory_id;
   });
-  return directories.value.filter(function(d) {
+  return directories.value.filter(function (d) {
     return !trackedIds.includes(d.id);
   });
 });
 
-const filteredAvailableDirectories = computed(function() {
+const filteredAvailableDirectories = computed(function () {
   var query = directorySearchQuery.value.toLowerCase().trim();
   if (!query) {
     return availableDirectories.value.slice(0, 50);
   }
 
-  return availableDirectories.value.filter(function(dir) {
+  return availableDirectories.value.filter(function (dir) {
     var matchesName = dir.name.toLowerCase().includes(query);
     var matchesUrl = dir.url && dir.url.toLowerCase().includes(query);
     var matchesCategories =
       dir.categories &&
-      dir.categories.some(function(cat) {
+      dir.categories.some(function (cat) {
         return cat.toLowerCase().includes(query);
       });
     return matchesName || matchesUrl || matchesCategories;
   });
 });
 
-const submissionStats = computed(function() {
+const submissionStats = computed(function () {
   if (!selectedProjectId.value) {
     return {
       total: 0,
@@ -893,11 +904,11 @@ const submissionStats = computed(function() {
   return stats;
 });
 
-const filteredSubmissions = computed(function() {
+const filteredSubmissions = computed(function () {
   var filtered = projectSubmissions.value;
 
   if (statusFilter.value !== "all") {
-    filtered = filtered.filter(function(s) {
+    filtered = filtered.filter(function (s) {
       return s.status === statusFilter.value;
     });
   }
@@ -1142,9 +1153,10 @@ function getStatusSelectStyle(status) {
     paddingLeft: paddingLeft + "rem",
     paddingRight: paddingRight + "rem",
     minWidth: totalWidth + "rem",
-    backgroundImage: "url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')",
+    backgroundImage:
+      "url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')",
     backgroundPosition: "right 0.35rem center",
-    backgroundSize: "0.9em"
+    backgroundSize: "0.9em",
   };
 }
 
@@ -1225,14 +1237,14 @@ async function handleQuickAdd(directory) {
     var result = await upsertSubmission(
       selectedProjectId.value,
       directory.id,
-      "not_started"
+      "not_started",
     );
 
     if (result.success) {
       await loadProjectSubmissions(selectedProjectId.value);
       directorySearchQuery.value = "";
 
-      setTimeout(function() {
+      setTimeout(function () {
         showAddSubmission.value = false;
         isAddingDirectory.value = null;
       }, 500);

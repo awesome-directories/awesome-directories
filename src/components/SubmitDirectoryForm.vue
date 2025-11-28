@@ -1,31 +1,49 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
     <!-- Auth Required Message -->
-    <div v-if="!user" class="bg-white rounded-lg shadow-sm p-8">
-      <div class="text-5xl mb-4">🔒</div>
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">Sign in to Submit</h2>
-      <p class="text-gray-600 mb-6">
+    <div
+      v-if="!user"
+      class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center"
+    >
+      <div class="text-4xl sm:text-5xl mb-4" aria-hidden="true">🔒</div>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+        Sign in to Submit
+      </h2>
+      <p class="text-sm sm:text-base text-gray-600 mb-6">
         You need to be signed in to submit a directory for review.
       </p>
-      <button @click="handleSignIn" class="btn-primary">Sign In</button>
+      <button
+        @click="handleSignIn"
+        class="btn-primary min-h-[48px] px-6 touch-manipulation"
+      >
+        Sign In
+      </button>
     </div>
 
     <!-- Success Message -->
     <div
       v-else-if="submissionSuccess"
-      class="bg-white rounded-lg shadow-sm p-8 text-center"
+      class="bg-white rounded-xl sm:rounded-lg shadow-sm p-6 sm:p-8 text-center"
     >
-      <div class="text-5xl mb-4">🎉</div>
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">
+      <div class="text-4xl sm:text-5xl mb-4" aria-hidden="true">🎉</div>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
         Submission Received!
       </h2>
-      <p class="text-gray-600 mb-6">
+      <p class="text-sm sm:text-base text-gray-600 mb-6 px-2">
         Thank you for your submission. We'll review it and get back to you
         within 3-5 business days.
       </p>
-      <div class="flex gap-4 justify-center">
-        <button @click="resetForm" class="btn-secondary">Submit Another</button>
-        <a href="/my-submissions" class="btn-primary inline-block">
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+        <button
+          @click="resetForm"
+          class="btn-secondary min-h-[48px] touch-manipulation order-2 sm:order-1"
+        >
+          Submit Another
+        </button>
+        <a
+          href="/my-submissions"
+          class="btn-primary inline-flex items-center justify-center min-h-[48px] touch-manipulation order-1 sm:order-2"
+        >
           View My Submissions
         </a>
       </div>
@@ -189,22 +207,26 @@
 
         <!-- Categories -->
         <div class="mb-6">
-          <label class="block text-sm font-semibold text-gray-700 mb-2">
+          <label class="block text-sm font-semibold text-gray-700 mb-3">
             Categories
           </label>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3"
+          >
             <label
               v-for="category in availableCategories"
               :key="category"
-              class="flex items-center"
+              class="flex items-center p-3 sm:p-2 rounded-lg hover:bg-gray-50 active:bg-gray-100 cursor-pointer touch-manipulation min-h-[44px]"
             >
               <input
                 v-model="form.categories"
                 type="checkbox"
                 :value="category"
-                class="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded"
+                class="w-5 h-5 sm:w-4 sm:h-4 text-primary focus:ring-primary border-gray-300 rounded flex-shrink-0"
               />
-              <span class="ml-2 text-sm text-gray-700">{{ category }}</span>
+              <span class="ml-3 sm:ml-2 text-sm text-gray-700">{{
+                category
+              }}</span>
             </label>
           </div>
         </div>
@@ -218,15 +240,20 @@
         </div>
 
         <!-- Submit Button -->
-        <div class="flex gap-4">
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button
             type="submit"
             :disabled="isSubmitting"
-            class="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            class="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px] sm:min-h-[48px] rounded-xl sm:rounded-lg touch-manipulation order-1"
           >
             {{ isSubmitting ? "Submitting..." : "Submit Directory" }}
           </button>
-          <a href="/" class="btn-secondary flex-shrink-0"> Cancel </a>
+          <a
+            href="/"
+            class="btn-secondary flex-shrink-0 text-center min-h-[52px] sm:min-h-[48px] inline-flex items-center justify-center rounded-xl sm:rounded-lg touch-manipulation order-2"
+          >
+            Cancel
+          </a>
         </div>
       </form>
     </div>
