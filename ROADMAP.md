@@ -1,7 +1,7 @@
 # Awesome Directories Product Roadmap
 
-> **Last Updated**: 2025-11-28
-> **Version**: 2.0.0
+> **Last Updated**: 2025-11-29
+> **Version**: 2.0.1
 > **Status**: Active Development
 
 A strategic product roadmap for Awesome Directories—the curated directory aggregator helping indie hackers, bootstrappers, and solopreneurs discover high-quality launch directories for their SaaS products.
@@ -184,11 +184,16 @@ Awesome Directories exists to solve the chaos of SaaS product launches. While hu
 
 | Feature | What Exists | What's Missing | Priority |
 |---------|-------------|----------------|----------|
-| Reviews & Ratings | Database schema, triggers, aggregation logic | UI for submitting reviews on directory detail pages | **P0** |
 | Email Preferences Page | Database tables, RLS policies, helper functions | User settings page to manage email preferences | **P1** |
 | Weekly Digest Email | email_preferences.weekly_digest column | Edge Function to generate and send digests | **P2** |
 | Review Notifications | email_preferences.review_notifications column | Edge Function to notify when directories are reviewed | **P2** |
-| Directory Reviews View | `directory_reviews_with_user` database view | Display reviews on directory detail pages | **P0** |
+
+### Recently Completed
+
+| Feature | Description | Completion Date |
+|---------|-------------|-----------------|
+| Reviews & Ratings UI | Full review submission form, star ratings, user display with avatars | 2025-11-29 |
+| Directory Reviews Display | Reviews shown with user names, avatars, timestamps on detail pages | 2025-11-29 |
 
 ### Not Yet Implemented
 
@@ -241,8 +246,8 @@ Awesome Directories exists to solve the chaos of SaaS product launches. While hu
 
 | Priority | Feature | Score | Effort | Status | Notes |
 |----------|---------|-------|--------|--------|-------|
-| P0 | Reviews UI on Directory Pages | 9.5 | S | Partial | Schema + triggers exist, need frontend |
-| P0 | Display Reviews with Ratings | 9.2 | S | Partial | View exists, need to query and render |
+| P0 | Reviews UI on Directory Pages | 9.5 | S | **Complete** | User info stored at review time, displays name + avatar |
+| P0 | Display Reviews with Ratings | 9.2 | S | **Complete** | Reviews show user name, avatar, rating, timestamp |
 | P1 | Email Preferences Settings Page | 8.8 | S | Partial | DB exists, need settings UI |
 | P1 | Toast Notification System | 8.5 | XS | Planned | Replace browser alerts |
 | P2 | Weekly Digest Edge Function | 7.5 | M | Partial | Preference exists, need function |
@@ -704,6 +709,13 @@ bun start
 ---
 
 ## Changelog
+
+### Version 2.0.1 (2025-11-29)
+- **Completed**: Reviews UI on Directory Pages (P0)
+- **Completed**: Display Reviews with Ratings (P0)
+- Added user_name and user_avatar_url columns to directory_reviews for denormalized user display
+- Reviews now show actual user names and avatars from OAuth metadata
+- Moved Reviews features from "Partially Implemented" to "Recently Completed"
 
 ### Version 2.0.0 (2025-11-28)
 - Complete restructure following strategic roadmap methodology

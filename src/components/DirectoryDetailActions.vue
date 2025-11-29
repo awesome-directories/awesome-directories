@@ -159,8 +159,8 @@
           <div class="flex items-start space-x-3">
             <div class="flex-shrink-0">
               <img
-                v-if="review.user_avatar"
-                :src="review.user_avatar"
+                v-if="review.user_avatar_url"
+                :src="review.user_avatar_url"
                 :alt="review.user_name"
                 class="w-8 h-8 rounded-full"
               />
@@ -294,7 +294,9 @@ async function loadReviews() {
         id,
         comment,
         created_at,
-        user_id
+        user_id,
+        user_name,
+        user_avatar_url
       `,
       )
       .eq("directory_id", props.directoryId)
@@ -304,8 +306,8 @@ async function loadReviews() {
 
     if (error) throw error;
 
-    // Fetch user info and ratings separately
-    const reviewsWithDetails = await Promise.all(
+    // Fetch ratings for each reviewer
+    const reviewsWithRatings = await Promise.all(
       (data || []).map(async (review) => {
         // Get user's rating for this directory
         const { data: ratingData } = await supabase
@@ -318,13 +320,11 @@ async function loadReviews() {
         return {
           ...review,
           rating: ratingData?.rating || null,
-          user_name: "User", // Will be populated from auth metadata if available
-          user_avatar: null,
         };
       }),
     );
 
-    reviews.value = reviewsWithDetails;
+    reviews.value = reviewsWithRatings;
     hasMoreReviews.value = (data || []).length >= reviewsPerPage;
   } catch (error) {
     log.error("Failed to load reviews:", error);
@@ -343,7 +343,9 @@ async function loadMoreReviews() {
         id,
         comment,
         created_at,
-        user_id
+        user_id,
+        user_name,
+        user_avatar_url
       `,
       )
       .eq("directory_id", props.directoryId)
@@ -353,7 +355,7 @@ async function loadMoreReviews() {
 
     if (error) throw error;
 
-    const newReviewsWithDetails = await Promise.all(
+    const newReviewsWithRatings = await Promise.all(
       (data || []).map(async (review) => {
         const { data: ratingData } = await supabase
           .from("directory_ratings")
@@ -365,13 +367,11 @@ async function loadMoreReviews() {
         return {
           ...review,
           rating: ratingData?.rating || null,
-          user_name: "User",
-          user_avatar: null,
         };
       }),
     );
 
-    reviews.value = [...reviews.value, ...newReviewsWithDetails];
+    reviews.value = [...reviews.value, ...newReviewsWithRatings];
     hasMoreReviews.value = (data || []).length >= reviewsPerPage;
   } catch (error) {
     log.error("Failed to load more reviews:", error);
@@ -416,27 +416,32 @@ async function submitReview() {
   try {
     isSubmittingReview.value = true;
 
+    // Extract user display info from OAuth metadata
+    const userName =
+      user.value.user_metadata?.full_name ||
+      user.value.user_metadata?.name ||
+      user.value.email?.split("@")[0] ||
+      "Anonymous";
+    const userAvatarUrl = user.value.user_metadata?.avatar_url || null;
+
     const { data, error } = await supabase
       .from("directory_reviews")
       .insert({
         directory_id: props.directoryId,
         user_id: user.value.id,
         comment: newReview.value.trim(),
+        user_name: userName,
+        user_avatar_url: userAvatarUrl,
       })
       .select()
       .single();
 
     if (error) throw error;
 
-    // Add to local reviews list
+    // Add to local reviews list with user info
     const newReviewObj = {
       ...data,
       rating: userRating.value || null,
-      user_name:
-        user.value.user_metadata?.full_name ||
-        user.value.email?.split("@")[0] ||
-        "You",
-      user_avatar: user.value.user_metadata?.avatar_url || null,
     };
 
     reviews.value = [newReviewObj, ...reviews.value];
