@@ -240,11 +240,15 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 - [x] **AppHeader** — Token-based navigation with dark mode support
 - [x] **AppFooter** — Token-based footer with newsletter form
 - [x] **DirectoryCard** — Fully token-based with DR colors, badges, metrics
+- [x] **DirectoryFilter** — Filter bar with token-based selects and cards
+- [x] **AuthModal** — OAuth modal with full dark mode support
+- [x] **StatsCards** — Overview statistics cards with token-based styling
+- [x] **StatsCharts** — Chart.js wrapper with token-based loading/error states
+- [x] **TopDirectoriesTable** — Data tables with token-based rows, headers, badges
+- [x] **Toast** — Notification toasts with semantic colors
 - [ ] Button (utility classes in style.css)
 - [ ] Input (utility classes in style.css)
 - [ ] Badge (inline in DirectoryCard, needs extraction)
-- [ ] Modal
-- [ ] Toast
 - [ ] Skeleton
 
 ### Component Specifications
@@ -291,13 +295,13 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 ## Page Designs
 
 ### Home Page
-**Status**: In Progress
+**Status**: Complete ✅
 **Key Components**: Hero, FilterBar, DirectoryGrid, FeaturedDirectories
 **Completed**:
 - Hero section with brand gradient
 - Why section with feature cards
 - Featured directories section with token-based styling
-**Pending**: DirectoryFilter.vue token migration
+- DirectoryFilter.vue fully migrated to design tokens
 
 ### Directory Detail
 **Status**: Not started
@@ -305,14 +309,19 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 **Notes**: Sticky sidebar for actions on desktop
 
 ### Stats Page
-**Status**: Not started
-**Key Components**: StatsCards, Charts (with dark mode colors)
+**Status**: Complete ✅
+**Key Components**: StatsCards, StatsCharts, TopDirectoriesTable
+**Completed**:
+- Full page layout with token-based styling
+- StatsCards with semantic icon colors
+- StatsCharts with loading/error states
+- TopDirectoriesTable with DR and votes badges
 
 ---
 
 ## Dark Mode
 
-**Status**: Phase 2 (component migration)
+**Status**: Phase 2 Complete ✅
 
 **Approach**:
 - CSS custom properties for all colors
@@ -327,8 +336,13 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 - [x] AppFooter dark mode compatible
 - [x] DirectoryCard dark mode compatible
 - [x] Home page hero and sections dark mode compatible
-- [ ] DirectoryFilter dark mode migration pending
-- [ ] Other pages pending migration
+- [x] DirectoryFilter dark mode compatible
+- [x] AuthModal dark mode compatible
+- [x] Stats page dark mode compatible
+- [x] StatsCards dark mode compatible
+- [x] StatsCharts dark mode compatible
+- [x] TopDirectoriesTable dark mode compatible
+- [x] Toast dark mode compatible
 
 ---
 
@@ -370,10 +384,10 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 
 | Phase | Scope | Status | PR |
 |-------|-------|--------|----|
-| 1. Foundation | Tokens, Tailwind config, dark mode infra | Complete | #58 |
-| 2. Components | ThemeToggle, DirectoryCard, AppHeader, AppFooter | In Progress | — |
-| 3. Core Pages | Home, Detail, Filters redesign | In Progress | — |
-| 4. Polish | Dark mode activation, toasts, motion | Planned | — |
+| 1. Foundation | Tokens, Tailwind config, dark mode infra | ✅ Complete | #58 |
+| 2. Components | ThemeToggle, DirectoryCard, AppHeader, AppFooter, DirectoryFilter, AuthModal, StatsCards, StatsCharts, TopDirectoriesTable, Toast | ✅ Complete | — |
+| 3. Core Pages | Home, Stats pages fully migrated | ✅ Complete | — |
+| 4. Polish | Dark mode activation, toasts, motion | 🔄 In Progress | — |
 
 ---
 
@@ -381,6 +395,8 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 
 | Date | Change |
 |------|--------|
+| 2025-11-30 | Phase 3: Migrated stats.astro page to design tokens with StatsCards, StatsCharts, TopDirectoriesTable components. |
+| 2025-11-30 | Phase 2: Migrated DirectoryFilter.vue, AuthModal.vue to design tokens. Full dark mode support. |
 | 2025-11-30 | Phase 2: Migrated AppHeader, AppFooter, DirectoryCard, home page to design tokens. Added ThemeToggle component. |
 | 2025-11-30 | Phase 1: Initial design system created. Direction: Linear Clarity. Tokens defined in tokens.css. |
 

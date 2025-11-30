@@ -1,28 +1,20 @@
 <template>
-  <div v-if="loading" class="text-center py-8 sm:py-12">
-    <div
-      class="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-primary"
-      role="status"
-      aria-label="Loading"
-    ></div>
-    <p class="mt-4 text-gray-600 text-sm sm:text-base">Loading charts...</p>
+  <div v-if="loading" class="loading-container">
+    <div class="loading-spinner" role="status" aria-label="Loading"></div>
+    <p class="loading-text">Loading charts...</p>
   </div>
 
-  <div
-    v-else-if="error"
-    class="card p-4 sm:p-8 bg-red-50 border-red-200"
-    role="alert"
-  >
-    <p class="text-red-700 text-sm sm:text-base">{{ error }}</p>
+  <div v-else-if="error" class="error-card" role="alert">
+    <p class="error-text">{{ error }}</p>
   </div>
 
-  <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+  <div v-else class="charts-grid">
     <!-- Category Distribution -->
-    <div class="card p-4 sm:p-6">
-      <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
+    <div class="chart-card">
+      <h3 class="chart-title">
         Category Distribution
       </h3>
-      <div class="relative h-64 sm:h-80">
+      <div class="chart-container chart-container-tall">
         <canvas
           ref="categoryChart"
           aria-label="Category distribution pie chart"
@@ -31,11 +23,11 @@
     </div>
 
     <!-- Pricing Breakdown -->
-    <div class="card p-4 sm:p-6">
-      <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
+    <div class="chart-card">
+      <h3 class="chart-title">
         Pricing Breakdown
       </h3>
-      <div class="relative h-64 sm:h-80">
+      <div class="chart-container chart-container-tall">
         <canvas
           ref="pricingChart"
           aria-label="Pricing breakdown doughnut chart"
@@ -44,11 +36,11 @@
     </div>
 
     <!-- Link Types -->
-    <div class="card p-4 sm:p-6">
-      <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
+    <div class="chart-card">
+      <h3 class="chart-title">
         Link Type Distribution
       </h3>
-      <div class="relative h-56 sm:h-80">
+      <div class="chart-container">
         <canvas
           ref="linkTypeChart"
           aria-label="Link type distribution bar chart"
@@ -57,11 +49,11 @@
     </div>
 
     <!-- Domain Rating Ranges -->
-    <div class="card p-4 sm:p-6">
-      <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
+    <div class="chart-card">
+      <h3 class="chart-title">
         Domain Rating Distribution
       </h3>
-      <div class="relative h-56 sm:h-80">
+      <div class="chart-container">
         <canvas
           ref="drRangeChart"
           aria-label="Domain rating distribution bar chart"
@@ -70,11 +62,11 @@
     </div>
 
     <!-- Recent Additions Timeline (Full Width) -->
-    <div class="card p-4 sm:p-6 lg:col-span-2">
-      <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
+    <div class="chart-card chart-card-full">
+      <h3 class="chart-title">
         Recent Additions Timeline
       </h3>
-      <div class="relative h-48 sm:h-64">
+      <div class="chart-container chart-container-short">
         <canvas
           ref="timelineChart"
           aria-label="Recent additions timeline bar chart"
@@ -598,14 +590,160 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* Loading State */
+.loading-container {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+@media (min-width: 640px) {
+  .loading-container {
+    padding: 3rem 0;
+  }
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 2px solid var(--color-border-primary);
+  border-top-color: var(--color-brand-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@media (min-width: 640px) {
+  .loading-spinner {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-.animate-spin {
-  animation: spin 1s linear infinite;
+.loading-text {
+  margin-top: 1rem;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .loading-text {
+    font-size: 1rem;
+  }
+}
+
+/* Error State */
+.error-card {
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .error-card {
+    padding: 2rem;
+  }
+}
+
+.error-text {
+  color: var(--color-error-text);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .error-text {
+    font-size: 1rem;
+  }
+}
+
+/* Charts Grid */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .charts-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Chart Card */
+.chart-card {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-primary);
+  box-shadow: var(--shadow-sm);
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .chart-card {
+    padding: 1.5rem;
+  }
+}
+
+.chart-card-full {
+  grid-column: 1 / -1;
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .chart-title {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Chart Container */
+.chart-container {
+  position: relative;
+  height: 14rem;
+}
+
+@media (min-width: 640px) {
+  .chart-container {
+    height: 20rem;
+  }
+}
+
+.chart-container-tall {
+  height: 16rem;
+}
+
+@media (min-width: 640px) {
+  .chart-container-tall {
+    height: 20rem;
+  }
+}
+
+.chart-container-short {
+  height: 12rem;
+}
+
+@media (min-width: 640px) {
+  .chart-container-short {
+    height: 16rem;
+  }
 }
 
 /* Ensure charts don't overflow on mobile */

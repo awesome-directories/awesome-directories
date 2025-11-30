@@ -1,22 +1,20 @@
 <template>
-  <div v-if="loading" class="text-center py-12">
-    <div
-      class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"
-    ></div>
-    <p class="mt-4 text-gray-600">Loading statistics...</p>
+  <div v-if="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Loading statistics...</p>
   </div>
 
-  <div v-else-if="error" class="card p-8 bg-red-50 border-red-200">
-    <p class="text-red-700">{{ error }}</p>
+  <div v-else-if="error" class="error-card">
+    <p class="error-text">{{ error }}</p>
   </div>
 
-  <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div v-else class="stats-grid">
     <!-- Total Directories Card -->
-    <div class="card p-6 hover:shadow-lg transition-shadow">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-medium text-gray-600">Total Directories</h3>
+    <div class="stat-card">
+      <div class="stat-header">
+        <h3 class="stat-label">Total Directories</h3>
         <svg
-          class="w-8 h-8 text-primary"
+          class="stat-icon stat-icon-primary"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -29,18 +27,18 @@
           ></path>
         </svg>
       </div>
-      <p class="text-3xl font-bold text-gray-900">
+      <p class="stat-value">
         {{ stats.overview.totalDirectories }}
       </p>
-      <p class="text-sm text-gray-500 mt-1">Verified & Active</p>
+      <p class="stat-description">Verified & Active</p>
     </div>
 
     <!-- Average DR Card -->
-    <div class="card p-6 hover:shadow-lg transition-shadow">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-medium text-gray-600">Average DR</h3>
+    <div class="stat-card">
+      <div class="stat-header">
+        <h3 class="stat-label">Average DR</h3>
         <svg
-          class="w-8 h-8 text-green-600"
+          class="stat-icon stat-icon-success"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -53,14 +51,14 @@
           ></path>
         </svg>
       </div>
-      <p class="text-3xl font-bold text-gray-900">
+      <p class="stat-value">
         {{ stats.overview.averageDR }}
       </p>
-      <div class="mt-2">
-        <div class="w-full bg-gray-200 rounded-full h-2">
+      <div class="dr-bar-container">
+        <div class="dr-bar-track">
           <div
-            class="h-2 rounded-full transition-all"
-            :class="getDRColorClass(stats.overview.averageDR)"
+            class="dr-bar-fill"
+            :class="getDRBarClass(stats.overview.averageDR)"
             :style="{ width: stats.overview.averageDR + '%' }"
           ></div>
         </div>
@@ -68,11 +66,11 @@
     </div>
 
     <!-- Total Categories Card -->
-    <div class="card p-6 hover:shadow-lg transition-shadow">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-medium text-gray-600">Categories</h3>
+    <div class="stat-card">
+      <div class="stat-header">
+        <h3 class="stat-label">Categories</h3>
         <svg
-          class="w-8 h-8 text-purple-600"
+          class="stat-icon stat-icon-secondary"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -85,18 +83,18 @@
           ></path>
         </svg>
       </div>
-      <p class="text-3xl font-bold text-gray-900">
+      <p class="stat-value">
         {{ stats.overview.totalCategories }}
       </p>
-      <p class="text-sm text-gray-500 mt-1">Unique Categories</p>
+      <p class="stat-description">Unique Categories</p>
     </div>
 
     <!-- Free vs Paid Ratio Card -->
-    <div class="card p-6 hover:shadow-lg transition-shadow">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-medium text-gray-600">Free Directories</h3>
+    <div class="stat-card">
+      <div class="stat-header">
+        <h3 class="stat-label">Free Directories</h3>
         <svg
-          class="w-8 h-8 text-blue-600"
+          class="stat-icon stat-icon-info"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -109,18 +107,18 @@
           ></path>
         </svg>
       </div>
-      <p class="text-3xl font-bold text-gray-900">{{ freePercentage }}%</p>
-      <p class="text-sm text-gray-500 mt-1">
+      <p class="stat-value">{{ freePercentage }}%</p>
+      <p class="stat-description">
         {{ stats.overview.freeCount }} of {{ stats.overview.totalDirectories }}
       </p>
     </div>
 
     <!-- Total Votes Card -->
-    <div class="card p-6 hover:shadow-lg transition-shadow">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-medium text-gray-600">Total Helpful Votes</h3>
+    <div class="stat-card">
+      <div class="stat-header">
+        <h3 class="stat-label">Total Helpful Votes</h3>
         <svg
-          class="w-8 h-8 text-yellow-600"
+          class="stat-icon stat-icon-warning"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -133,18 +131,18 @@
           ></path>
         </svg>
       </div>
-      <p class="text-3xl font-bold text-gray-900">
+      <p class="stat-value">
         {{ formatNumber(stats.overview.totalVotes) }}
       </p>
-      <p class="text-sm text-gray-500 mt-1">Community Engagement</p>
+      <p class="stat-description">Community Engagement</p>
     </div>
 
     <!-- Total Views Card -->
-    <div class="card p-6 hover:shadow-lg transition-shadow">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-medium text-gray-600">Total Views</h3>
+    <div class="stat-card">
+      <div class="stat-header">
+        <h3 class="stat-label">Total Views</h3>
         <svg
-          class="w-8 h-8 text-indigo-600"
+          class="stat-icon stat-icon-primary"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -163,18 +161,18 @@
           ></path>
         </svg>
       </div>
-      <p class="text-3xl font-bold text-gray-900">
+      <p class="stat-value">
         {{ formatNumber(stats.overview.totalViews) }}
       </p>
-      <p class="text-sm text-gray-500 mt-1">Directory Visits</p>
+      <p class="stat-description">Directory Visits</p>
     </div>
 
     <!-- Dofollow Links Card -->
-    <div class="card p-6 hover:shadow-lg transition-shadow">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-medium text-gray-600">Dofollow Links</h3>
+    <div class="stat-card">
+      <div class="stat-header">
+        <h3 class="stat-label">Dofollow Links</h3>
         <svg
-          class="w-8 h-8 text-green-600"
+          class="stat-icon stat-icon-success"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -187,16 +185,16 @@
           ></path>
         </svg>
       </div>
-      <p class="text-3xl font-bold text-gray-900">{{ dofollowPercentage }}%</p>
-      <p class="text-sm text-gray-500 mt-1">Pass SEO Value</p>
+      <p class="stat-value">{{ dofollowPercentage }}%</p>
+      <p class="stat-description">Pass SEO Value</p>
     </div>
 
     <!-- Recent Additions Card -->
-    <div class="card p-6 hover:shadow-lg transition-shadow">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-medium text-gray-600">Added (30d)</h3>
+    <div class="stat-card">
+      <div class="stat-header">
+        <h3 class="stat-label">Added (30d)</h3>
         <svg
-          class="w-8 h-8 text-orange-600"
+          class="stat-icon stat-icon-accent"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -209,10 +207,10 @@
           ></path>
         </svg>
       </div>
-      <p class="text-3xl font-bold text-gray-900">
+      <p class="stat-value">
         {{ stats.recentAdditions.last30Days }}
       </p>
-      <p class="text-sm text-gray-500 mt-1">New This Month</p>
+      <p class="stat-description">New This Month</p>
     </div>
   </div>
 </template>
@@ -259,12 +257,11 @@ const dofollowPercentage = computed(() => {
   return Math.round((stats.value.linkTypes.dofollow / total) * 100);
 });
 
-function getDRColorClass(dr) {
-  if (dr >= 80) return "bg-green-600";
-  if (dr >= 60) return "bg-green-500";
-  if (dr >= 40) return "bg-yellow-500";
-  if (dr >= 20) return "bg-orange-500";
-  return "bg-red-500";
+function getDRBarClass(dr) {
+  if (dr >= 80) return "dr-bar-high";
+  if (dr >= 60) return "dr-bar-good";
+  if (dr >= 40) return "dr-bar-medium";
+  return "dr-bar-low";
 }
 
 function formatNumber(num) {
@@ -301,3 +298,167 @@ onMounted(() => {
   loadStats();
 });
 </script>
+
+<style scoped>
+/* Loading State */
+.loading-container {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid var(--color-border-primary);
+  border-top-color: var(--color-brand-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  margin-top: 1rem;
+  color: var(--color-text-secondary);
+}
+
+/* Error State */
+.error-card {
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+}
+
+.error-text {
+  color: var(--color-error-text);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Stat Card */
+.stat-card {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-primary);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  transition: box-shadow var(--duration-fast) var(--ease-default);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.stat-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.stat-icon-primary {
+  color: var(--color-brand-primary);
+}
+
+.stat-icon-secondary {
+  color: var(--color-brand-secondary);
+}
+
+.stat-icon-success {
+  color: var(--color-success);
+}
+
+.stat-icon-warning {
+  color: var(--color-warning);
+}
+
+.stat-icon-info {
+  color: var(--color-info);
+}
+
+.stat-icon-accent {
+  color: var(--color-brand-accent);
+}
+
+.stat-value {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.stat-description {
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+  margin-top: 0.25rem;
+}
+
+/* DR Bar */
+.dr-bar-container {
+  margin-top: 0.5rem;
+}
+
+.dr-bar-track {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.dr-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--ease-default);
+}
+
+.dr-bar-high {
+  background-color: var(--color-dr-high);
+}
+
+.dr-bar-good {
+  background-color: var(--color-dr-good);
+}
+
+.dr-bar-medium {
+  background-color: var(--color-dr-medium);
+}
+
+.dr-bar-low {
+  background-color: var(--color-text-tertiary);
+}
+</style>
