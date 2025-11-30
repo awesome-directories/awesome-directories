@@ -159,7 +159,10 @@ import { useStore } from "@nanostores/vue";
 import { $user } from "@/stores/auth";
 import { supabase } from "@/lib/supabase-client";
 import { showAuthModal } from "@/utils/auth";
+import { useToast } from "@/composables/useToast";
 import log from "@/lib/logger";
+
+var { error: showError } = useToast();
 
 const user = useStore($user);
 const favorites = ref([]);
@@ -238,7 +241,7 @@ async function handleRemoveFavorite(directoryId) {
     log.info(`Removed favorite: ${directoryId}`);
   } catch (error) {
     log.error("Failed to remove favorite:", error);
-    alert("Failed to remove favorite. Please try again.");
+    showError("Failed to remove favorite. Please try again.");
   }
 }
 
