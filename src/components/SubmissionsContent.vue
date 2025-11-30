@@ -1065,8 +1065,8 @@ async function confirmDeleteProject() {
         await loadProjectSubmissions(selectedProjectId.value);
       } else {
         selectedProjectId.value = null;
-      showSuccess("Project deleted successfully");
       }
+      showSuccess("Project deleted successfully");
     } else {
       showError(result.error || "Failed to delete project");
     }
