@@ -807,8 +807,11 @@ import { $user } from "@/stores/auth";
 import { useProjects } from "@/composables/useProjects";
 import { supabase } from "@/lib/supabase-client";
 import { showAuthModal } from "@/utils/auth";
+import { useToast } from "@/composables/useToast";
 import Papa from "papaparse";
 import log from "@/lib/logger";
+
+var { error: showError, success: showSuccess } = useToast();
 
 const user = useStore($user);
 
@@ -1007,12 +1010,13 @@ async function createProject() {
       editingProject.value = { ...result.project };
       showCreateProject.value = false;
       newProject.value = { name: "", url: "", description: "" };
+      showSuccess("Project created successfully");
     } else {
-      alert(result.error || "Failed to create project");
+      showError(result.error || "Failed to create project");
     }
   } catch (error) {
     log.error("Failed to create project:", error);
-    alert("Failed to create project");
+    showError("Failed to create project");
   } finally {
     isCreating.value = false;
   }
@@ -1027,12 +1031,14 @@ async function saveProjectSettings() {
       selectedProjectId.value,
       editingProject.value,
     );
-    if (!result.success) {
-      alert(result.error || "Failed to save settings");
+    if (result.success) {
+      showSuccess("Settings saved successfully");
+    } else {
+      showError(result.error || "Failed to save settings");
     }
   } catch (error) {
     log.error("Failed to save project settings:", error);
-    alert("Failed to save settings");
+    showError("Failed to save settings");
   } finally {
     isSaving.value = false;
   }
@@ -1059,13 +1065,14 @@ async function confirmDeleteProject() {
         await loadProjectSubmissions(selectedProjectId.value);
       } else {
         selectedProjectId.value = null;
+      showSuccess("Project deleted successfully");
       }
     } else {
-      alert(result.error || "Failed to delete project");
+      showError(result.error || "Failed to delete project");
     }
   } catch (error) {
     log.error("Failed to delete project:", error);
-    alert("Failed to delete project");
+    showError("Failed to delete project");
   }
 }
 
@@ -1249,12 +1256,12 @@ async function handleQuickAdd(directory) {
         isAddingDirectory.value = null;
       }, 500);
     } else {
-      alert(result.error || "Failed to add directory");
+      showError(result.error || "Failed to add directory");
       isAddingDirectory.value = null;
     }
   } catch (error) {
     log.error("Failed to add directory:", error);
-    alert("Failed to add directory");
+    showError("Failed to add directory");
     isAddingDirectory.value = null;
   }
 }

@@ -1,6 +1,7 @@
 ---
 import "@/style.css";
 import AuthModalWrapper from "@/components/AuthModalWrapper.vue";
+import Toast from "@/components/Toast.vue";
 
 interface Props {
   title?: string;
@@ -256,6 +257,8 @@ const twitterHandle = "@meysamazing";
     <slot />
     <!-- Global Auth Modal -->
     <AuthModalWrapper client:load />
+    <!-- Global Toast Notifications -->
+    <Toast client:load />
 
     <!-- No-JS Fallback Message -->
     <noscript>
