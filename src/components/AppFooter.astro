@@ -2,25 +2,25 @@
 var currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-gray-900 text-gray-300">
+<footer class="app-footer">
   <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
       <div>
-        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
+        <h2 class="footer-heading">
           Awesome Directories
         </h2>
-        <p class="text-sm text-gray-300 mb-3 sm:mb-4 leading-relaxed">
+        <p class="footer-text mb-3 sm:mb-4 leading-relaxed">
           Hand-picked directories that actually drive traffic—filter by DR,
           export to CSV, and track submissions per project. Built by an indie
           hacker who got tired of garbage directory lists.
         </p>
-        <p class="text-sm text-gray-300">
+        <p class="footer-text">
           Built by
           <a
             href="https://meysam.io"
             target="_blank"
             rel="noopener"
-            class="text-blue-400 hover:text-blue-300 transition-colors underline"
+            class="footer-link-accent"
           >
             Meysam
           </a>
@@ -28,47 +28,32 @@ var currentYear = new Date().getFullYear();
       </div>
 
       <div>
-        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
+        <h2 class="footer-heading">
           Links
         </h2>
         <ul class="space-y-2 sm:space-y-2.5">
           <li>
-            <a
-              href="/about"
-              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
-            >
+            <a href="/about" class="footer-link">
               About
             </a>
           </li>
           <li>
-            <a
-              href="/submit"
-              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
-            >
+            <a href="/submit" class="footer-link">
               Submit Directory
             </a>
           </li>
           <li>
-            <a
-              href="/stats"
-              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
-            >
+            <a href="/stats" class="footer-link">
               Public Stats
             </a>
           </li>
           <li>
-            <a
-              href="/terms"
-              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
-            >
+            <a href="/terms" class="footer-link">
               Terms of Service
             </a>
           </li>
           <li>
-            <a
-              href="/privacy"
-              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
-            >
+            <a href="/privacy" class="footer-link">
               Privacy Policy
             </a>
           </li>
@@ -77,7 +62,7 @@ var currentYear = new Date().getFullYear();
               href="https://github.com/awesome-directories/awesome-directories"
               target="_blank"
               rel="noopener"
-              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+              class="footer-link"
             >
               GitHub Repository
             </a>
@@ -87,19 +72,19 @@ var currentYear = new Date().getFullYear();
               href="https://github.com/sponsors/meysam81"
               target="_blank"
               rel="noopener"
-              class="text-sm text-gray-300 hover:text-white transition-colors inline-block py-1"
+              class="footer-link"
             >
-              💝 GitHub Sponsors
+              <span aria-hidden="true">💝</span> GitHub Sponsors
             </a>
           </li>
         </ul>
       </div>
 
       <div class="sm:col-span-2 lg:col-span-1">
-        <h2 class="text-white font-bold text-base sm:text-lg mb-3 sm:mb-4">
+        <h2 class="footer-heading">
           Don't Miss the Next High-DR Directory We Add
         </h2>
-        <p class="text-sm text-gray-300 mb-3 leading-relaxed">
+        <p class="footer-text mb-3 leading-relaxed">
           We add new verified directories weekly. Be the first to know—plus get
           actionable launch strategies that actually work.
         </p>
@@ -110,38 +95,36 @@ var currentYear = new Date().getFullYear();
             type="email"
             required
             placeholder="Your email"
-            class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px]"
+            class="newsletter-input"
           />
 
           <button
             id="newsletter-submit"
             type="submit"
-            class="w-full btn-primary min-h-[44px]"
+            class="newsletter-button"
           >
             Join 100+ Founders
           </button>
 
-          <p id="newsletter-success" class="text-sm text-success hidden"></p>
-          <p id="newsletter-error" class="text-sm text-danger hidden"></p>
+          <p id="newsletter-success" class="newsletter-message success hidden"></p>
+          <p id="newsletter-error" class="newsletter-message error hidden"></p>
 
-          <p class="text-xs text-gray-400 leading-relaxed">
+          <p class="footer-fine-print">
             One email per week. Unsubscribe anytime. We hate spam too.
           </p>
         </form>
       </div>
     </div>
 
-    <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">
-      <div
-        class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 gap-4"
-      >
-        <p class="text-xs sm:text-sm text-gray-400 text-center md:text-left">
+    <div class="footer-bottom">
+      <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 gap-4">
+        <p class="footer-copyright">
           © {currentYear} Awesome Directories. Open source under
           <a
             href="https://github.com/awesome-directories/awesome-directories/blob/main/LICENSE"
             target="_blank"
             rel="noopener"
-            class="text-gray-300 hover:text-white transition-colors underline"
+            class="footer-link-inline"
           >
             Apache 2.0 License
           </a>
@@ -152,14 +135,15 @@ var currentYear = new Date().getFullYear();
             href="https://github.com/awesome-directories/awesome-directories"
             target="_blank"
             rel="noopener"
-            class="text-gray-400 hover:text-white transition-colors inline-flex items-center justify-center min-h-[44px] min-w-[44px]"
+            class="footer-social-link"
             aria-label="Visit our GitHub repository"
           >
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path
                 fill-rule="evenodd"
                 d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                clip-rule="evenodd"></path>
+                clip-rule="evenodd"
+              />
             </svg>
           </a>
 
@@ -167,42 +151,11 @@ var currentYear = new Date().getFullYear();
             href="https://x.com/meysamazing"
             target="_blank"
             rel="noopener"
-            class="text-gray-400 hover:text-white transition-colors inline-flex items-center justify-center min-h-[44px] min-w-[44px]"
+            class="footer-social-link"
             aria-label="Follow us on X (formerly Twitter)"
           >
-            <svg
-              version="1.1"
-              id="svg5"
-              xmlns:svg="http://www.w3.org/2000/svg"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              x="0px"
-              y="0px"
-              viewBox="0 0 1668.56 1221.19"
-              style="enable-background:new 0 0 1668.56 1221.19;"
-              xml:space="preserve"
-            >
-              <style type="text/css">
-                .st0 {
-                  stroke: #ffffff;
-                  stroke-miterlimit: 10;
-                }
-                .st1 {
-                  fill: #ffffff;
-                }
-              </style>
-              <g>
-                <circle class="st0" cx="834.28" cy="610.6" r="481.33"></circle>
-                <g id="layer1" transform="translate(52.390088,-25.058597)">
-                  <path
-                    id="path1009"
-                    class="st1"
-                    d="M485.39,356.79l230.07,307.62L483.94,914.52h52.11l202.7-218.98l163.77,218.98h177.32
-			L836.82,589.6l215.5-232.81h-52.11L813.54,558.46L662.71,356.79H485.39z M562.02,395.17h81.46l359.72,480.97h-81.46L562.02,395.17
-			z"
-                  ></path>
-                </g>
-              </g>
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
         </div>
@@ -210,6 +163,193 @@ var currentYear = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<style>
+  .app-footer {
+    background-color: var(--color-bg-inverse);
+    color: var(--color-text-inverse);
+  }
+
+  .footer-heading {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: white;
+  }
+
+  @media (min-width: 640px) {
+    .footer-heading {
+      font-size: 1.125rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .footer-text {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .footer-link {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--duration-fast) var(--ease-default);
+    display: inline-block;
+    padding: 0.25rem 0;
+    text-decoration: none;
+  }
+
+  .footer-link:hover {
+    color: white;
+  }
+
+  .footer-link-accent {
+    color: var(--color-brand-accent);
+    transition: color var(--duration-fast) var(--ease-default);
+    text-decoration: underline;
+  }
+
+  .footer-link-accent:hover {
+    color: white;
+  }
+
+  .footer-link-inline {
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--duration-fast) var(--ease-default);
+    text-decoration: underline;
+  }
+
+  .footer-link-inline:hover {
+    color: white;
+  }
+
+  /* Newsletter Form */
+  .newsletter-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    color: white;
+    font-size: 0.875rem;
+    min-height: 44px;
+    transition: border-color var(--duration-fast) var(--ease-default),
+                background-color var(--duration-fast) var(--ease-default);
+  }
+
+  .newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .newsletter-input:focus {
+    outline: none;
+    border-color: var(--color-brand-primary);
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .newsletter-button {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-brand-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-default);
+  }
+
+  .newsletter-button:hover {
+    background-color: var(--color-brand-primary-hover);
+  }
+
+  .newsletter-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .newsletter-message {
+    font-size: 0.875rem;
+  }
+
+  .newsletter-message.success {
+    color: var(--color-success);
+  }
+
+  .newsletter-message.error {
+    color: var(--color-error);
+  }
+
+  .footer-fine-print {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.625;
+  }
+
+  /* Footer Bottom */
+  .footer-bottom {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  @media (min-width: 640px) {
+    .footer-bottom {
+      margin-top: 3rem;
+      padding-top: 2rem;
+    }
+  }
+
+  .footer-copyright {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .footer-copyright {
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .footer-copyright {
+      text-align: left;
+    }
+  }
+
+  .footer-social-link {
+    color: rgba(255, 255, 255, 0.5);
+    transition: color var(--duration-fast) var(--ease-default);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .footer-social-link:hover {
+    color: white;
+  }
+
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
 
 <script>
   import { supabase } from "@/lib/supabase-client";
@@ -272,7 +412,7 @@ var currentYear = new Date().getFullYear();
       }
 
       if (successMessage) {
-        successMessage.textContent = "✅ Subscribed! Check your email.";
+        successMessage.textContent = "Subscribed! Check your email.";
         successMessage.classList.remove("hidden");
       }
       emailInput.value = "";
@@ -288,7 +428,7 @@ var currentYear = new Date().getFullYear();
       }
     } finally {
       if (submitButton) submitButton.disabled = false;
-      if (submitButton) submitButton.textContent = "Subscribe";
+      if (submitButton) submitButton.textContent = "Join 100+ Founders";
     }
   });
 </script>
