@@ -91,43 +91,35 @@ var structuredData = [
   <!-- Skip to main content link for accessibility -->
   <a
     href="#directory-list"
-    class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-lg"
+    class="skip-link"
   >
     Skip to directory list
   </a>
 
   <AppHeader />
 
-  <main class="min-h-screen bg-gray-50">
-    <!-- Compact Hero Section -->
-    <section
-      class="bg-gradient-to-br from-primary to-blue-600 text-white py-8 sm:py-10 md:py-12 lg:py-16 px-4"
-    >
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
       <div class="max-w-8xl mx-auto">
         <div class="max-w-4xl mx-auto text-center">
-          <h1
-            class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 px-2 leading-tight"
-          >
+          <h1 class="hero-title">
             Hand-picked Launch Directories with Real DR Scores
           </h1>
-          <p
-            class="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-50 px-2 max-w-3xl mx-auto"
-          >
+          <p class="hero-subtitle">
             {totalCount}+ curated directories · {drCount}+ verified DR scores ·
             Updated weekly
           </p>
-          <div
-            class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-2"
-          >
+          <div class="hero-actions">
             <a
               href="#directory-list"
-              class="btn-primary bg-white text-primary hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] px-6 sm:px-8 w-full sm:w-auto inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+              class="hero-btn-primary"
             >
               Browse Directories
             </a>
             <a
               href="/stats"
-              class="border-2 border-white text-white hover:bg-white hover:text-primary min-h-[48px] sm:min-h-[44px] px-6 sm:px-8 w-full sm:w-auto inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+              class="hero-btn-secondary"
             >
               View Statistics
             </a>
@@ -141,75 +133,57 @@ var structuredData = [
       <DirectoryListContent client:load categories={categories} />
     </div>
 
-    <!-- Why Awesome Directories Section (After browsing directories) -->
-    <section
-      class="bg-white py-12 sm:py-16 lg:py-20 px-4 border-t border-gray-200"
-    >
+    <!-- Why Awesome Directories Section -->
+    <section class="why-section">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
-          <h2
-            class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4"
-          >
+          <h2 class="section-title">
             Why Awesome Directories?
           </h2>
-          <p
-            class="text-gray-600 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto"
-          >
+          <p class="section-subtitle">
             Stop wasting hours researching directories. We've done the work for
             you—curated, verified, and ready to launch.
           </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8 lg:gap-12 mb-12">
+        <div class="features-grid">
           <!-- Feature 1 -->
-          <div
-            class="text-center p-6 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <div
-              class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <span class="text-3xl" aria-hidden="true">✓</span>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span aria-hidden="true">✓</span>
             </div>
-            <h3 class="font-bold text-lg lg:text-xl text-gray-900 mb-2">
+            <h3 class="feature-title">
               Verified DR Scores
             </h3>
-            <p class="text-gray-600 text-sm lg:text-base">
+            <p class="feature-description">
               Real Ahrefs domain ratings updated weekly. No guessing, no dead
               links—just quality directories.
             </p>
           </div>
 
           <!-- Feature 2 -->
-          <div
-            class="text-center p-6 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <div
-              class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <span class="text-3xl" aria-hidden="true">🚀</span>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span aria-hidden="true">🚀</span>
             </div>
-            <h3 class="font-bold text-lg lg:text-xl text-gray-900 mb-2">
+            <h3 class="feature-title">
               Smart Filtering
             </h3>
-            <p class="text-gray-600 text-sm lg:text-base">
+            <p class="feature-description">
               One-tap presets like "Quick Wins" or "Premium" get you the best
               directories instantly. No analysis paralysis.
             </p>
           </div>
 
           <!-- Feature 3 -->
-          <div
-            class="text-center p-6 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <div
-              class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <span class="text-3xl" aria-hidden="true">📊</span>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <span aria-hidden="true">📊</span>
             </div>
-            <h3 class="font-bold text-lg lg:text-xl text-gray-900 mb-2">
+            <h3 class="feature-title">
               Track Submissions
             </h3>
-            <p class="text-gray-600 text-sm lg:text-base">
+            <p class="feature-description">
               Mark directories as submitted per project. Never double-submit or
               lose track of your launch progress.
             </p>
@@ -217,39 +191,37 @@ var structuredData = [
         </div>
 
         <!-- Featured Directories -->
-        <div class="border-t border-gray-200 pt-12">
+        <div class="featured-section">
           <div class="text-center mb-8">
-            <h3
-              class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2"
-            >
+            <h3 class="featured-title">
               Top DoFollow Directories by DR
             </h3>
-            <p class="text-gray-600 text-sm sm:text-base">
+            <p class="featured-subtitle">
               Start here—these are the directories that drive real traffic.
             </p>
           </div>
 
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <div class="featured-grid">
             {
               featuredDirectories.map(function renderFeatured(directory) {
                 return (
                   <a
                     href={`/directory/${directory.slug}`}
-                    class="flex items-center justify-between p-4 sm:p-5 bg-gray-50 rounded-lg hover:bg-gray-100 hover:shadow-md transition-all border border-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    class="featured-card"
                   >
                     <div class="flex-1 min-w-0">
-                      <h4 class="font-semibold text-gray-900 truncate text-base sm:text-lg">
+                      <h4 class="featured-card-title">
                         {directory.name}
                       </h4>
-                      <p class="text-sm text-gray-500 truncate">
+                      <p class="featured-card-category">
                         {directory.categories?.[0] || "Directory"}
                       </p>
                     </div>
                     <div class="flex items-center gap-2 ml-4 flex-shrink-0">
-                      <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
+                      <span class="badge-dofollow">
                         DoFollow
                       </span>
-                      <span class="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-blue-100 text-blue-800">
+                      <span class="badge-dr">
                         DR {directory.domain_rating}
                       </span>
                     </div>
@@ -267,7 +239,8 @@ var structuredData = [
 </BaseLayout>
 
 <style scoped>
-  .sr-only {
+  /* Skip Link */
+  .skip-link {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -279,14 +252,447 @@ var structuredData = [
     border-width: 0;
   }
 
-  .focus\:not-sr-only:focus {
-    position: static;
+  .skip-link:focus {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 9999;
     width: auto;
     height: auto;
-    padding: 0;
+    padding: 0.5rem 1rem;
     margin: 0;
     overflow: visible;
     clip: auto;
     white-space: normal;
+    background-color: var(--color-brand-primary);
+    color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Main Content */
+  .main-content {
+    min-height: 100vh;
+    background-color: var(--color-bg-secondary);
+  }
+
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+    color: white;
+    padding: 2rem 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .hero-section {
+      padding: 2.5rem 1rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-section {
+      padding: 3rem 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-section {
+      padding: 4rem 1rem;
+    }
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    padding: 0 0.5rem;
+    line-height: 1.25;
+  }
+
+  @media (min-width: 640px) {
+    .hero-title {
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 2.25rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .hero-title {
+      font-size: 3.75rem;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0 0.5rem;
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .hero-subtitle {
+      font-size: 1.125rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-subtitle {
+      font-size: 1.5rem;
+    }
+  }
+
+  .hero-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .hero-actions {
+      flex-direction: row;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+  }
+
+  .hero-btn-primary {
+    background-color: white;
+    color: var(--color-brand-primary);
+    min-height: 48px;
+    padding: 0 1.5rem;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    transition: background-color var(--duration-fast) var(--ease-default);
+  }
+
+  @media (min-width: 640px) {
+    .hero-btn-primary {
+      min-height: 44px;
+      padding: 0 2rem;
+      width: auto;
+    }
+  }
+
+  .hero-btn-primary:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  .hero-btn-primary:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  .hero-btn-secondary {
+    border: 2px solid white;
+    color: white;
+    min-height: 48px;
+    padding: 0 1.5rem;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    transition: background-color var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default);
+  }
+
+  @media (min-width: 640px) {
+    .hero-btn-secondary {
+      min-height: 44px;
+      padding: 0 2rem;
+      width: auto;
+    }
+  }
+
+  .hero-btn-secondary:hover {
+    background-color: white;
+    color: var(--color-brand-primary);
+  }
+
+  .hero-btn-secondary:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  /* Why Section */
+  .why-section {
+    background-color: var(--color-bg-primary);
+    padding: 3rem 1rem;
+    border-top: 1px solid var(--color-border-primary);
+  }
+
+  @media (min-width: 640px) {
+    .why-section {
+      padding: 4rem 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .why-section {
+      padding: 5rem 1rem;
+    }
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-title {
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .section-subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) {
+    .section-subtitle {
+      font-size: 1.125rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-subtitle {
+      font-size: 1.25rem;
+    }
+  }
+
+  /* Features Grid */
+  .features-grid {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  .feature-card {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    transition: background-color var(--duration-fast) var(--ease-default);
+  }
+
+  .feature-card:hover {
+    background-color: var(--color-bg-tertiary);
+  }
+
+  .feature-icon {
+    width: 4rem;
+    height: 4rem;
+    background-color: var(--color-brand-primary);
+    opacity: 0.1;
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .feature-icon span {
+    font-size: 1.875rem;
+  }
+
+  .feature-title {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .feature-title {
+      font-size: 1.25rem;
+    }
+  }
+
+  .feature-description {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 1024px) {
+    .feature-description {
+      font-size: 1rem;
+    }
+  }
+
+  /* Featured Section */
+  .featured-section {
+    border-top: 1px solid var(--color-border-primary);
+    padding-top: 3rem;
+  }
+
+  .featured-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .featured-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-title {
+      font-size: 1.875rem;
+    }
+  }
+
+  .featured-subtitle {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 640px) {
+    .featured-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  /* Featured Grid */
+  .featured-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .featured-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .featured-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border-primary);
+    text-decoration: none;
+    transition: background-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default);
+  }
+
+  @media (min-width: 640px) {
+    .featured-card {
+      padding: 1.25rem;
+    }
+  }
+
+  .featured-card:hover {
+    background-color: var(--color-bg-tertiary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .featured-card:focus-visible {
+    outline: var(--ring-width) solid var(--ring-color);
+    outline-offset: var(--ring-offset);
+  }
+
+  .featured-card-title {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .featured-card-title {
+      font-size: 1.125rem;
+    }
+  }
+
+  .featured-card-category {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .badge-dofollow {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+  }
+
+  .badge-dr {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    font-weight: 700;
+    background-color: var(--color-info-bg);
+    color: var(--color-info-text);
   }
 </style>

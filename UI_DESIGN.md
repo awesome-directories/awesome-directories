@@ -1,8 +1,8 @@
 # Awesome Directories — UI Design System
 
 > **Last Updated**: 2025-11-30
-> **Design Version**: 1.0
-> **Status**: Phase 1 In Progress
+> **Design Version**: 1.1
+> **Status**: Phase 2 In Progress - Components
 > **Direction**: Linear Clarity
 
 ## Design Philosophy
@@ -236,14 +236,16 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 
 ### Implemented
 
-- [ ] Button
-- [ ] Input
-- [ ] Badge
-- [ ] Card
+- [x] **ThemeToggle** — Sun/moon icon toggle with localStorage persistence
+- [x] **AppHeader** — Token-based navigation with dark mode support
+- [x] **AppFooter** — Token-based footer with newsletter form
+- [x] **DirectoryCard** — Fully token-based with DR colors, badges, metrics
+- [ ] Button (utility classes in style.css)
+- [ ] Input (utility classes in style.css)
+- [ ] Badge (inline in DirectoryCard, needs extraction)
 - [ ] Modal
 - [ ] Toast
 - [ ] Skeleton
-- [ ] ThemeToggle
 
 ### Component Specifications
 
@@ -289,9 +291,13 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 ## Page Designs
 
 ### Home Page
-**Status**: Not started
+**Status**: In Progress
 **Key Components**: Hero, FilterBar, DirectoryGrid, FeaturedDirectories
-**Notes**: Hero uses gradient from `brand-primary` to `brand-secondary`
+**Completed**:
+- Hero section with brand gradient
+- Why section with feature cards
+- Featured directories section with token-based styling
+**Pending**: DirectoryFilter.vue token migration
 
 ### Directory Detail
 **Status**: Not started
@@ -306,7 +312,7 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 
 ## Dark Mode
 
-**Status**: Phase 1 (infrastructure)
+**Status**: Phase 2 (component migration)
 
 **Approach**:
 - CSS custom properties for all colors
@@ -314,6 +320,15 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 - Respects `prefers-color-scheme` by default
 - Toggle persists to localStorage
 - Transition: 200ms on background-color
+
+**Implemented**:
+- [x] ThemeToggle component with sun/moon icons
+- [x] AppHeader dark mode compatible
+- [x] AppFooter dark mode compatible
+- [x] DirectoryCard dark mode compatible
+- [x] Home page hero and sections dark mode compatible
+- [ ] DirectoryFilter dark mode migration pending
+- [ ] Other pages pending migration
 
 ---
 
@@ -355,9 +370,9 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 
 | Phase | Scope | Status | PR |
 |-------|-------|--------|----|
-| 1. Foundation | Tokens, Tailwind config, dark mode infra | In Progress | — |
-| 2. Components | UI component library | Planned | — |
-| 3. Core Pages | Home, Detail, Filters redesign | Planned | — |
+| 1. Foundation | Tokens, Tailwind config, dark mode infra | Complete | #58 |
+| 2. Components | ThemeToggle, DirectoryCard, AppHeader, AppFooter | In Progress | — |
+| 3. Core Pages | Home, Detail, Filters redesign | In Progress | — |
 | 4. Polish | Dark mode activation, toasts, motion | Planned | — |
 
 ---
@@ -366,7 +381,8 @@ Precision meets clarity. We build interfaces that feel as reliable as the data t
 
 | Date | Change |
 |------|--------|
-| 2025-11-30 | Initial design system created. Direction: Linear Clarity. |
+| 2025-11-30 | Phase 2: Migrated AppHeader, AppFooter, DirectoryCard, home page to design tokens. Added ThemeToggle component. |
+| 2025-11-30 | Phase 1: Initial design system created. Direction: Linear Clarity. Tokens defined in tokens.css. |
 
 ---
 
