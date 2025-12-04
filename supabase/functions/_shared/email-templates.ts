@@ -375,7 +375,7 @@ export function adminUserRegistrationTemplate(params: {
 
   const content = `
     <div style="text-align: center; margin-bottom: 24px;">
-      <span style="display: inline-block; padding: 6px 12px; background-color: #dbeafe; color: #1e40af; font-size: 12px; font-weight: 600; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.5px;">New User</span>
+      ${statusBadge("submitted")}
     </div>
 
     <h1 style="margin: 0 0 16px; font-size: 22px; font-weight: 700; color: #18181b; text-align: center; line-height: 1.3;">

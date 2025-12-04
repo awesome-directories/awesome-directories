@@ -12,6 +12,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0";
 import { sendEmail } from "../_shared/email.ts";
 import { adminUserRegistrationTemplate } from "../_shared/email-templates.ts";
 
+const FUNCTION_SECRET = Deno.env.get("FUNCTION_SECRET");
 const ADMIN_EMAIL =
   Deno.env.get("ADMIN_EMAIL") || "admin@awesome-directories.com";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
@@ -186,7 +187,8 @@ serve(async (req: Request) => {
     );
   } catch (error) {
     console.error("Error:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
