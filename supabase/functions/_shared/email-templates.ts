@@ -361,3 +361,71 @@ export function reviewNotificationTemplate(params: {
     preheader: `${reviewer} reviewed ${directoryName}`,
   };
 }
+
+/**
+ * Admin Notification for New User Registration
+ */
+export function adminUserRegistrationTemplate(params: {
+  userEmail: string;
+  userName?: string;
+  authProvider?: string;
+  registeredAt: string;
+}): { html: string; preheader: string } {
+  const { userEmail, userName, authProvider, registeredAt } = params;
+
+  const content = `
+    <div style="text-align: center; margin-bottom: 24px;">
+      ${statusBadge("submitted")}
+    </div>
+
+    <h1 style="margin: 0 0 16px; font-size: 22px; font-weight: 700; color: #18181b; text-align: center; line-height: 1.3;">
+      New User Registration
+    </h1>
+
+    <p style="margin: 0 0 24px; font-size: 15px; line-height: 1.6; color: #52525b; text-align: center;">
+      A new user has signed up for Awesome Directories.
+    </p>
+
+    <div style="margin: 0 0 24px; padding: 16px; background-color: #f4f4f5; border-radius: 8px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr>
+          <td style="padding: 8px 0; font-size: 13px; color: #71717a; width: 100px;">Email</td>
+          <td style="padding: 8px 0; font-size: 14px; color: #18181b; font-weight: 600;">${escapeHtml(userEmail)}</td>
+        </tr>
+        ${
+          userName
+            ? `
+        <tr>
+          <td style="padding: 8px 0; font-size: 13px; color: #71717a;">Name</td>
+          <td style="padding: 8px 0; font-size: 14px; color: #3f3f46;">${escapeHtml(userName)}</td>
+        </tr>
+        `
+            : ""
+        }
+        ${
+          authProvider
+            ? `
+        <tr>
+          <td style="padding: 8px 0; font-size: 13px; color: #71717a;">Auth Provider</td>
+          <td style="padding: 8px 0; font-size: 14px; color: #3f3f46;">${escapeHtml(authProvider)}</td>
+        </tr>
+        `
+            : ""
+        }
+        <tr>
+          <td style="padding: 8px 0; font-size: 13px; color: #71717a;">Registered</td>
+          <td style="padding: 8px 0; font-size: 14px; color: #3f3f46;">${escapeHtml(registeredAt)}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="text-align: center;">
+      ${ctaButton("View in Supabase", "https://supabase.com/dashboard")}
+    </div>
+  `;
+
+  return {
+    html: wrapEmailTemplate(content, `New user registered: ${userEmail}`),
+    preheader: `New user registered: ${userEmail}`,
+  };
+}
