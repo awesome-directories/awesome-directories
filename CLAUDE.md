@@ -62,7 +62,7 @@
   - `send-submission-confirmation` - Confirms directory submission receipt
   - `send-admin-notification` - Notifies admins of new submissions
 - **Resend** - Transactional email service for all notifications
-- **Mautic** - Self-hosted CRM for newsletter (crm.meysam.io) - _planned/optional_
+- **Listmonk** - Self-hosted newsletter service (newsletter.meysam.io)
 - **Pirsch** - Privacy-first analytics - _optional_
 - **Ahrefs API** - SEO metrics (DR, traffic estimates)
 - **Giscus** - GitHub Discussions for comments - _optional_
@@ -157,7 +157,7 @@
 │   │   ├── useDirectories.js      # Data filtering (client-side)
 │   │   ├── useDirectory.js        # Single directory operations (favorites)
 │   │   ├── useProjects.js         # Project management for tracking submissions
-│   │   └── useMauticNewsletter.js # Newsletter subscription
+│   │   └── useListmonkNewsletter.js # Newsletter subscription (Listmonk)
 │   ├── lib/
 │   │   ├── supabase-server.js     # Supabase client (build-time)
 │   │   ├── supabase-client.js     # Supabase client (runtime)
@@ -286,8 +286,6 @@ VITE_SUPABASE_ANON_KEY=<anon-key>
 Optional (for full features):
 
 ```env
-VITE_MAUTIC_BASE_URL=https://mautic.your-domain.com
-VITE_MAUTIC_FORM_ID=<form-id>
 VITE_PIRSCH_SITE_ID=<site-id>
 VITE_GITHUB_REPO=awesome-directories/awesome-directories
 VITE_GITHUB_REPO_ID=<repo-id>
@@ -377,9 +375,9 @@ LOG_LEVEL=INFO                 # Log level: DEBUG, INFO, WARN, ERROR
    - Unique constraint per user/URL to prevent duplicates
 
 8. **newsletter_signups**
-   - Email capture with Mautic integration
+   - Email capture (legacy - Listmonk now handles subscriptions directly)
    - Tracks subscription/unsubscription status
-   - Mautic contact ID for synchronization
+   - Used as backup storage for newsletter signups
 
 9. **email_preferences**
    - User email preferences for opt-out management
@@ -570,12 +568,14 @@ Project and submission tracking:
 - Stats: `getSubmissionStats()` - counts by status
 - Used for tracking directory submissions per project
 
-### useMauticNewsletter.js (Optional)
+### useListmonkNewsletter.js
 
-Newsletter subscription to Mautic CRM:
+Newsletter subscription via self-hosted Listmonk:
 
-- Captures email, name, product name
-- Error handling and validation
+- Subscribes users to the Listmonk newsletter list
+- Posts directly to Listmonk subscription endpoint
+- Includes Altcha captcha integration for spam protection
+- Error handling and Pirsch analytics tracking
 
 ## Routing
 
@@ -707,7 +707,6 @@ Blog posts support:
 For GitHub Actions:
 
 - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`
-- `VITE_MAUTIC_BASE_URL`, `VITE_MAUTIC_FORM_ID` (optional)
 - `VITE_PIRSCH_SITE_ID` (optional)
 - `VITE_GITHUB_*` (optional, for Giscus)
 - `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`
