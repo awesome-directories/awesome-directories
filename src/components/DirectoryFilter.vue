@@ -1,16 +1,14 @@
 <template>
   <div id="directory-app">
-    <div class="bg-white border-b border-gray-200 sticky top-16 z-40 shadow-sm">
+    <div class="filter-bar">
       <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Category</label
-            >
+            <label class="filter-label">Category</label>
             <select
               v-model="currentFilters.category"
               @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+              class="filter-select"
             >
               <option v-for="cat in categories" :key="cat" :value="cat">
                 {{ cat }}
@@ -19,13 +17,11 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Domain Rating</label
-            >
+            <label class="filter-label">Domain Rating</label>
             <select
               v-model="currentFilters.drRange"
               @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+              class="filter-select"
             >
               <option value="All">All DR</option>
               <option value="80+">80+</option>
@@ -36,13 +32,11 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Link Type</label
-            >
+            <label class="filter-label">Link Type</label>
             <select
               v-model="currentFilters.linkType"
               @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+              class="filter-select"
             >
               <option value="All">All</option>
               <option value="Dofollow Only">Dofollow Only</option>
@@ -50,13 +44,11 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Pricing</label
-            >
+            <label class="filter-label">Pricing</label>
             <select
               v-model="currentFilters.pricing"
               @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+              class="filter-select"
             >
               <option value="All">All</option>
               <option value="free">Free</option>
@@ -66,13 +58,11 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1"
-              >Sort By</label
-            >
+            <label class="filter-label">Sort By</label>
             <select
               v-model="currentFilters.sortBy"
               @change="applyFilters"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+              class="filter-select"
             >
               <option>Most Helpful</option>
               <option>Highest DR</option>
@@ -86,7 +76,7 @@
           v-if="hasActiveFilters"
           class="mt-4 flex items-center justify-between"
         >
-          <div class="text-sm text-gray-600">
+          <div class="filter-count">
             Showing
             <span class="font-semibold">{{ filteredData.length }}</span>
             directories
@@ -94,7 +84,7 @@
 
           <button
             @click="resetAllFilters"
-            class="text-sm text-primary hover:text-primary-dark font-medium"
+            class="filter-clear-btn"
           >
             Clear all filters
           </button>
@@ -104,34 +94,34 @@
 
     <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div v-if="isLoading" class="text-center py-12">
-        <div class="text-gray-600">Loading directories...</div>
+        <div class="loading-text">Loading directories...</div>
       </div>
 
       <div v-else-if="filteredData.length === 0" class="text-center py-12">
-        <div class="text-gray-600 mb-4">
+        <div class="empty-text">
           No directories found matching your filters.
         </div>
-        <button @click="resetAllFilters" class="btn-primary">
+        <button @click="resetAllFilters" class="btn-primary mt-4">
           Reset Filters
         </button>
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="dir in filteredData" :key="dir.slug" class="card p-6">
+        <div v-for="dir in filteredData" :key="dir.slug" class="directory-card-simple">
           <div class="flex items-start justify-between mb-3">
-            <h3 class="text-lg font-semibold text-gray-900">
+            <h3 class="card-title-simple">
               <a
                 :href="`/directory/${dir.slug}`"
-                class="hover:text-primary transition-colors"
+                class="card-link"
               >
                 {{ dir.name }}
               </a>
             </h3>
-            <span v-if="dir.domain_rating" class="badge badge-blue"
+            <span v-if="dir.domain_rating" class="badge badge-info"
               >DR {{ dir.domain_rating }}</span
             >
           </div>
-          <p v-if="dir.description" class="text-sm text-gray-600 mb-4">
+          <p v-if="dir.description" class="card-description-simple">
             {{
               dir.description.length > 150
                 ? dir.description.substring(0, 150) + "..."
@@ -142,14 +132,14 @@
             <span
               v-for="cat in dir.categories"
               :key="cat"
-              class="badge badge-gray"
+              class="badge badge-neutral"
               >{{ cat }}</span
             >
           </div>
           <div class="flex items-center justify-between text-sm">
-            <span class="text-gray-600">{{ dir.pricing_type || "Free" }}</span>
-            <span v-if="dir.is_dofollow" class="text-success">✓ Dofollow</span>
-            <span v-else class="text-gray-400">Nofollow</span>
+            <span class="pricing-text">{{ dir.pricing_type || "Free" }}</span>
+            <span v-if="dir.is_dofollow" class="dofollow-text">✓ Dofollow</span>
+            <span v-else class="nofollow-text">Nofollow</span>
           </div>
         </div>
       </div>
@@ -336,3 +326,152 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Filter Bar */
+.filter-bar {
+  background-color: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border-primary);
+  position: sticky;
+  top: 4rem;
+  z-index: var(--z-sticky);
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  min-height: 44px;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-default),
+              box-shadow var(--duration-fast) var(--ease-default);
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2371717A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px var(--color-brand-primary-alpha);
+}
+
+.filter-select option {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+.filter-count {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.filter-clear-btn {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-brand-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: -0.5rem;
+  border-radius: var(--radius-md);
+  transition: color var(--duration-fast) var(--ease-default),
+              background-color var(--duration-fast) var(--ease-default);
+}
+
+.filter-clear-btn:hover {
+  color: var(--color-brand-primary-hover);
+  background-color: var(--color-brand-primary-alpha);
+}
+
+.filter-clear-btn:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Loading & Empty States */
+.loading-text {
+  color: var(--color-text-secondary);
+}
+
+.empty-text {
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* Simple Directory Card (for this view) */
+.directory-card-simple {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-primary);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  transition: box-shadow var(--duration-fast) var(--ease-default),
+              border-color var(--duration-fast) var(--ease-default),
+              transform var(--duration-fast) var(--ease-default);
+}
+
+.directory-card-simple:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-brand-primary);
+}
+
+@media (hover: hover) {
+  .directory-card-simple:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.card-title-simple {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.card-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+
+.card-link:hover {
+  color: var(--color-brand-primary);
+}
+
+.card-description-simple {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.pricing-text {
+  color: var(--color-text-secondary);
+}
+
+.dofollow-text {
+  color: var(--color-success);
+  font-weight: 500;
+}
+
+.nofollow-text {
+  color: var(--color-text-tertiary);
+}
+</style>

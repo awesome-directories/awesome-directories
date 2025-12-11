@@ -1,29 +1,26 @@
 <template>
   <div
-    class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
-    style="position: fixed"
+    class="modal-container"
     role="dialog"
     aria-modal="true"
     aria-labelledby="auth-modal-title"
     @keydown.escape="handleClose"
   >
     <div
-      class="fixed inset-0 bg-gray-900/75 transition-opacity"
+      class="modal-backdrop"
       @click="handleClose"
       aria-hidden="true"
     ></div>
 
-    <div
-      class="relative bg-white rounded-t-2xl sm:rounded-xl shadow-xl w-full sm:max-w-md p-6 pb-8 sm:pb-6 transform transition-all safe-area-inset-bottom"
-    >
+    <div class="modal-panel">
       <!-- Mobile drag indicator -->
-      <div class="sm:hidden flex justify-center mb-3 -mt-1">
-        <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
+      <div class="drag-indicator-container">
+        <div class="drag-indicator"></div>
       </div>
 
       <button
         @click="handleClose"
-        class="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 transition-colors min-w-[48px] min-h-[48px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center rounded-full hover:bg-gray-100 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        class="modal-close-btn"
         aria-label="Close modal"
       >
         <svg
@@ -44,13 +41,10 @@
 
       <div class="text-center pt-2 sm:pt-0">
         <div class="text-4xl sm:text-5xl mb-4" aria-hidden="true">🚀</div>
-        <h2
-          id="auth-modal-title"
-          class="text-xl sm:text-2xl font-bold text-gray-900 mb-2"
-        >
+        <h2 id="auth-modal-title" class="modal-title">
           Welcome to Awesome Directories
         </h2>
-        <p class="text-gray-600 mb-6 text-sm sm:text-base">
+        <p class="modal-subtitle">
           Sign in to save favorites and track submissions
         </p>
 
@@ -58,7 +52,7 @@
           <button
             @click="handleGoogleSignIn"
             :disabled="isLoading"
-            class="w-full flex items-center justify-center space-x-3 px-4 py-3.5 sm:py-3 border border-gray-300 rounded-xl sm:rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px] sm:min-h-[48px] touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            class="oauth-btn oauth-btn-google"
           >
             <svg
               class="w-5 h-5 flex-shrink-0"
@@ -82,7 +76,7 @@
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            <span class="font-medium text-gray-700 text-sm sm:text-base">
+            <span class="oauth-btn-text">
               {{
                 isLoading && activeProvider === "google"
                   ? "Signing in..."
@@ -94,7 +88,7 @@
           <button
             @click="handleGithubSignIn"
             :disabled="isLoading"
-            class="w-full flex items-center justify-center space-x-3 px-4 py-3.5 sm:py-3 bg-gray-900 text-white rounded-xl sm:rounded-lg hover:bg-gray-800 active:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px] sm:min-h-[48px] touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2"
+            class="oauth-btn oauth-btn-github"
           >
             <svg
               class="w-5 h-5 flex-shrink-0"
@@ -108,7 +102,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <span class="font-medium text-sm sm:text-base">
+            <span class="oauth-btn-text">
               {{
                 isLoading && activeProvider === "github"
                   ? "Signing in..."
@@ -119,17 +113,17 @@
 
           <div
             v-if="errorMessage"
-            class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg"
+            class="error-alert"
             role="alert"
           >
-            <p class="text-sm text-red-600">{{ errorMessage }}</p>
+            <p class="error-text">{{ errorMessage }}</p>
           </div>
         </div>
 
-        <div class="mt-6 pt-6 border-t border-gray-200">
+        <div class="modal-footer">
           <button
             @click="handleClose"
-            class="text-sm text-gray-600 hover:text-gray-900 active:text-gray-900 transition-colors font-medium min-h-[48px] sm:min-h-[44px] px-4 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
+            class="skip-btn"
           >
             Continue without account
           </button>
@@ -198,13 +192,276 @@ async function handleGithubSignIn() {
 </script>
 
 <style scoped>
-.safe-area-inset-bottom {
-  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+/* Modal Container */
+.modal-container {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
 }
 
-@media (max-width: 640px) {
-  .safe-area-inset-bottom {
-    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+@media (min-width: 640px) {
+  .modal-container {
+    align-items: center;
+    padding: 1rem;
   }
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(0 0 0 / 0.75);
+  transition: opacity var(--duration-normal) var(--ease-default);
+}
+
+/* Modal Panel */
+.modal-panel {
+  position: relative;
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  padding: 1.5rem 1.5rem 2rem;
+  transform: translateY(0);
+  transition: transform var(--duration-normal) var(--ease-default);
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
+}
+
+@media (min-width: 640px) {
+  .modal-panel {
+    max-width: 28rem;
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+  }
+}
+
+/* Drag Indicator (mobile) */
+.drag-indicator-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  margin-top: -0.25rem;
+}
+
+@media (min-width: 640px) {
+  .drag-indicator-container {
+    display: none;
+  }
+}
+
+.drag-indicator {
+  width: 2.5rem;
+  height: 0.25rem;
+  background-color: var(--color-border-secondary);
+  border-radius: var(--radius-full);
+}
+
+/* Close Button */
+.modal-close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: var(--color-text-tertiary);
+  min-width: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: color var(--duration-fast) var(--ease-default),
+              background-color var(--duration-fast) var(--ease-default);
+}
+
+@media (min-width: 640px) {
+  .modal-close-btn {
+    top: 1rem;
+    right: 1rem;
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+.modal-close-btn:hover {
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg-tertiary);
+}
+
+.modal-close-btn:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Modal Title */
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .modal-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Modal Subtitle */
+.modal-subtitle {
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .modal-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* OAuth Buttons */
+.oauth-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-xl);
+  min-height: 52px;
+  touch-action: manipulation;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default),
+              border-color var(--duration-fast) var(--ease-default);
+}
+
+@media (min-width: 640px) {
+  .oauth-btn {
+    padding: 0.75rem 1rem;
+    min-height: 48px;
+    border-radius: var(--radius-lg);
+  }
+}
+
+.oauth-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.oauth-btn:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Google Button */
+.oauth-btn-google {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+}
+
+.oauth-btn-google:hover:not(:disabled) {
+  background-color: var(--color-bg-tertiary);
+}
+
+.oauth-btn-google:active:not(:disabled) {
+  background-color: var(--color-border-primary);
+}
+
+.oauth-btn-google .oauth-btn-text {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .oauth-btn-google .oauth-btn-text {
+    font-size: 1rem;
+  }
+}
+
+/* GitHub Button */
+.oauth-btn-github {
+  background-color: var(--color-bg-inverse);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-bg-inverse);
+}
+
+.oauth-btn-github:hover:not(:disabled) {
+  background-color: #27272A;
+  border-color: #27272A;
+}
+
+.oauth-btn-github:active:not(:disabled) {
+  background-color: #3F3F46;
+  border-color: #3F3F46;
+}
+
+.oauth-btn-github .oauth-btn-text {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .oauth-btn-github .oauth-btn-text {
+    font-size: 1rem;
+  }
+}
+
+/* Error Alert */
+.error-alert {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-lg);
+}
+
+.error-text {
+  font-size: 0.875rem;
+  color: var(--color-error-text);
+}
+
+/* Modal Footer */
+.modal-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border-primary);
+}
+
+/* Skip Button */
+.skip-btn {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  min-height: 48px;
+  padding: 0 1rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: color var(--duration-fast) var(--ease-default);
+}
+
+@media (min-width: 640px) {
+  .skip-btn {
+    min-height: 44px;
+  }
+}
+
+.skip-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.skip-btn:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
 }
 </style>

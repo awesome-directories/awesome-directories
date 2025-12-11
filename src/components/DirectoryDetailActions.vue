@@ -215,8 +215,11 @@ import { useStore } from "@nanostores/vue";
 import { $user } from "@/stores/auth";
 import { supabase } from "@/lib/supabase-client";
 import { showAuthModal } from "@/utils/auth";
+import { useToast } from "@/composables/useToast";
 import FavoriteButton from "./FavoriteButton.vue";
 import log from "@/lib/logger";
+
+var { error: showError, success: showSuccess } = useToast();
 
 const props = defineProps({
   directoryId: {
@@ -403,7 +406,7 @@ async function handleRating(stars) {
     log.info(`Rated directory ${props.directoryId} with ${stars} stars`);
   } catch (error) {
     log.error("Failed to submit rating:", error);
-    alert("Failed to submit rating. Please try again.");
+    showError("Failed to submit rating. Please try again.", "Rating Error");
   } finally {
     isSubmittingRating.value = false;
   }
@@ -451,7 +454,7 @@ async function submitReview() {
     log.info(`Added review to directory ${props.directoryId}`);
   } catch (error) {
     log.error("Failed to submit review:", error);
-    alert("Failed to submit review. Please try again.");
+    showError("Failed to submit review. Please try again.", "Review Error");
   } finally {
     isSubmittingReview.value = false;
   }

@@ -2,11 +2,12 @@
 import Logo from "./Logo.astro";
 import GithubStars from "./GithubStars.vue";
 import ProductHuntBadge from "./ProductHuntBadge.vue";
+import ThemeToggle from "./ThemeToggle.vue";
 ---
 
 <header
   id="app-header"
-  class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm"
+  class="app-header sticky top-0 z-sticky"
 >
   <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16 sm:h-16">
@@ -28,73 +29,75 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
 
         <a
           href="/blog"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center px-2"
+          class="nav-link"
         >
           Blog
         </a>
 
         <a
           href="/submit"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base whitespace-nowrap min-h-[44px] flex items-center px-2"
+          class="nav-link whitespace-nowrap"
         >
           Submit Directory
         </a>
 
         <a
           href="/about"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center px-2"
+          class="nav-link"
         >
           About
         </a>
 
         <a
           href="/stats"
-          class="text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm lg:text-base min-h-[44px] flex items-center px-2"
+          class="nav-link"
         >
           Stats
         </a>
 
+        <ThemeToggle client:load />
+
         <div id="user-menu-container" class="relative hidden">
           <button
             id="user-menu-button"
-            class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors min-h-[44px] min-w-[44px] px-2 rounded-lg hover:bg-gray-50 touch-manipulation"
+            class="user-menu-button"
             aria-label="User menu"
             aria-expanded="false"
           >
             <div
               id="user-avatar"
-              class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-medium text-sm"
+              class="w-9 h-9 rounded-full bg-brand-primary text-white flex items-center justify-center font-medium text-sm"
             >
             </div>
           </button>
 
           <div
             id="user-menu-dropdown"
-            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 border border-gray-200"
+            class="dropdown-menu hidden absolute right-0 mt-2 w-48"
           >
             <a
               href="/favorites"
-              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] flex items-center touch-manipulation"
+              class="dropdown-item"
             >
-              ❤️ My Favorites
+              <span aria-hidden="true">❤️</span> My Favorites
             </a>
             <a
               href="/my-submissions"
-              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] flex items-center touch-manipulation"
+              class="dropdown-item"
             >
-              📋 My Submissions
+              <span aria-hidden="true">📋</span> My Submissions
             </a>
             <a
               href="/submissions"
-              class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] flex items-center touch-manipulation"
+              class="dropdown-item"
             >
-              ✅ My Projects
+              <span aria-hidden="true">✅</span> My Projects
             </a>
             <button
               id="sign-out-button"
-              class="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 min-h-[48px] sm:min-h-[44px] touch-manipulation"
+              class="dropdown-item w-full text-left"
             >
-              🚪 Sign Out
+              <span aria-hidden="true">🚪</span> Sign Out
             </button>
           </div>
         </div>
@@ -107,44 +110,47 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
         </button>
       </nav>
 
-      <button
-        id="mobile-menu-button"
-        class="md:hidden p-2 text-gray-600 hover:text-gray-900 min-h-[48px] min-w-[48px] flex items-center justify-center rounded-lg hover:bg-gray-50 -mr-2 touch-manipulation active:bg-gray-100 transition-colors"
-        aria-label="Toggle mobile menu"
-        aria-expanded="false"
-      >
-        <svg
-          id="menu-icon-open"
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+      <div class="flex items-center gap-2 md:hidden">
+        <ThemeToggle client:load />
+        <button
+          id="mobile-menu-button"
+          class="mobile-menu-button"
+          aria-label="Toggle mobile menu"
+          aria-expanded="false"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-        <svg
-          id="menu-icon-close"
-          class="w-6 h-6 hidden"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-      </button>
+          <svg
+            id="menu-icon-open"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg
+            id="menu-icon-close"
+            class="w-6 h-6 hidden"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div
       id="mobile-menu"
-      class="hidden md:hidden py-3 border-t border-gray-200 transition-all duration-200"
+      class="mobile-menu hidden md:hidden"
     >
       <nav class="flex flex-col space-y-1">
         <div class="flex items-center justify-start gap-2 px-3 py-2 mb-1">
@@ -156,56 +162,56 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
 
         <a
           href="/blog"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] flex items-center touch-manipulation"
+          class="mobile-nav-link mobile-menu-link"
         >
           Blog
         </a>
         <a
           href="/submit"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] flex items-center touch-manipulation"
+          class="mobile-nav-link mobile-menu-link"
         >
           Submit Directory
         </a>
         <a
           href="/about"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] flex items-center touch-manipulation"
+          class="mobile-nav-link mobile-menu-link"
         >
           About
         </a>
         <a
           href="/stats"
-          class="text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] flex items-center touch-manipulation"
+          class="mobile-nav-link mobile-menu-link"
         >
           Stats
         </a>
 
         <div
           id="mobile-user-links"
-          class="hidden pt-2 border-t border-gray-200 space-y-1 mt-2"
+          class="mobile-user-section hidden"
         >
           <a
             href="/favorites"
-            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] touch-manipulation"
+            class="mobile-nav-link mobile-menu-link"
           >
-            ❤️ My Favorites
+            <span aria-hidden="true">❤️</span> My Favorites
           </a>
           <a
             href="/my-submissions"
-            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] touch-manipulation"
+            class="mobile-nav-link mobile-menu-link"
           >
-            📋 My Submissions
+            <span aria-hidden="true">📋</span> My Submissions
           </a>
           <a
             href="/submissions"
-            class="block text-gray-700 hover:text-primary font-medium mobile-menu-link px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] touch-manipulation"
+            class="mobile-nav-link mobile-menu-link"
           >
-            ✅ My Projects
+            <span aria-hidden="true">✅</span> My Projects
           </a>
           <button
             id="mobile-sign-out-button"
-            class="w-full text-left text-gray-700 hover:text-primary font-medium px-3 py-3 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[48px] touch-manipulation"
+            class="mobile-nav-link w-full text-left"
           >
-            🚪 Sign Out
+            <span aria-hidden="true">🚪</span> Sign Out
           </button>
         </div>
 
@@ -221,12 +227,172 @@ import ProductHuntBadge from "./ProductHuntBadge.vue";
 </header>
 
 <style scoped>
-  .touch-manipulation {
-    touch-action: manipulation;
+  /* Header container */
+  .app-header {
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-border-primary);
+    box-shadow: var(--shadow-sm);
   }
 
-  #mobile-menu {
+  /* Navigation links */
+  .nav-link {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    font-size: 0.875rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  @media (min-width: 1024px) {
+    .nav-link {
+      font-size: 1rem;
+    }
+  }
+
+  .nav-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  /* User menu button */
+  .user-menu-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-secondary);
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem;
+    border-radius: var(--radius-lg);
+    transition: color var(--duration-fast) var(--ease-default),
+                background-color var(--duration-fast) var(--ease-default);
+    touch-action: manipulation;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .user-menu-button:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-tertiary);
+  }
+
+  /* Dropdown menu */
+  .dropdown-menu {
+    background-color: var(--color-bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 0.25rem 0;
+    border: 1px solid var(--color-border-primary);
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    min-height: 48px;
+    transition: background-color var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default);
+    touch-action: manipulation;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  @media (min-width: 640px) {
+    .dropdown-item {
+      min-height: 44px;
+    }
+  }
+
+  .dropdown-item:hover {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+  }
+
+  /* Mobile menu button */
+  .mobile-menu-button {
+    padding: 0.5rem;
+    color: var(--color-text-secondary);
+    min-height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    margin-right: -0.5rem;
+    transition: color var(--duration-fast) var(--ease-default),
+                background-color var(--duration-fast) var(--ease-default);
+    touch-action: manipulation;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .mobile-menu-button:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-tertiary);
+  }
+
+  .mobile-menu-button:active {
+    background-color: var(--color-border-primary);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--color-border-primary);
+    transition: all 0.2s ease-out;
     animation: slideDown 0.2s ease-out;
+  }
+
+  /* Mobile navigation links */
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: var(--radius-lg);
+    min-height: 48px;
+    transition: color var(--duration-fast) var(--ease-default),
+                background-color var(--duration-fast) var(--ease-default);
+    touch-action: manipulation;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--color-brand-primary);
+    background-color: var(--color-bg-tertiary);
+  }
+
+  .mobile-nav-link:active {
+    background-color: var(--color-border-primary);
+  }
+
+  /* Mobile user section */
+  .mobile-user-section {
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border-primary);
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Touch manipulation utility */
+  .touch-manipulation {
+    touch-action: manipulation;
   }
 
   @keyframes slideDown {

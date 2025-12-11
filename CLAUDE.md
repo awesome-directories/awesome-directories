@@ -50,6 +50,15 @@
 - `loglevel` ^1.9.2 - Logging utility
 - `prettier` ^3.6.2 - Code formatting
 
+### Design System
+
+The project uses a custom design system called **Linear Clarity** (v1.0):
+
+- **Design Tokens**: Centralized in `src/styles/tokens.css`
+- **Dark Mode**: Full support with system preference detection
+- **CSS Custom Properties**: Colors, typography, spacing, shadows, animations
+- **Theme Toggle**: Manual light/dark/system selection with localStorage persistence
+
 ### Backend & Services
 
 - **Supabase** - PostgreSQL + Auth + Realtime
@@ -145,6 +154,7 @@
 │   │   ├── StatsCards.vue         # Statistics overview cards (Vue island)
 │   │   ├── StatsCharts.vue        # Interactive Chart.js charts (Vue island)
 │   │   ├── TopDirectoriesTable.vue # Top directories rankings (Vue island)
+│   │   ├── ThemeToggle.vue        # Dark/light mode toggle (Vue island)
 │   │   ├── BlogCard.astro         # Blog post card component
 │   │   ├── Pagination.astro       # Pagination component
 │   │   ├── RelatedPosts.astro     # Related blog posts
@@ -152,11 +162,14 @@
 │   │   ├── ShareButton.astro      # Individual share button
 │   │   ├── TableOfContents.astro  # Blog post TOC
 │   │   └── GiscusComments.astro   # GitHub Discussions comments
+│   ├── styles/
+│   │   └── tokens.css             # Design tokens (Linear Clarity v1.0)
 │   ├── composables/                # Vue Composition API logic
 │   │   ├── useAuth.js             # Authentication (client-side)
 │   │   ├── useDirectories.js      # Data filtering (client-side)
 │   │   ├── useDirectory.js        # Single directory operations (favorites)
 │   │   ├── useProjects.js         # Project management for tracking submissions
+│   │   ├── useTheme.js            # Dark/light mode management
 │   │   └── useMauticNewsletter.js # Newsletter subscription
 │   ├── lib/
 │   │   ├── supabase-server.js     # Supabase client (build-time)
@@ -175,8 +188,9 @@
 │   ├── utils/
 │   │   ├── auth.js                # Authentication utilities
 │   │   └── blog.ts                # Blog utilities (reading time, TOC, related posts)
+│   ├── config.js                  # Supabase configuration exports
 │   ├── env.d.ts                   # TypeScript environment types
-│   └── style.css                  # Global Tailwind imports
+│   └── style.css                  # Global styles with design tokens import
 ├── supabase/
 │   ├── config.toml                # Supabase project config
 │   ├── migrations/
@@ -186,7 +200,9 @@
 │   │   ├── 004_setup_cron_jobs.sql # pg_cron for automated updates
 │   │   ├── 005_setup_http_extension.sql # HTTP extension for webhooks
 │   │   ├── 006_reviews_projects_schema.sql # Reviews, ratings, projects tables
-│   │   └── 007_email_system.sql       # Email preferences, logs, notification tracking
+│   │   ├── 007_email_system.sql       # Email preferences, logs, notification tracking
+│   │   ├── 008_rls_policies.sql       # RLS policy for approved pending directories
+│   │   └── 009_add_user_info_to_reviews.sql # User name/avatar on reviews
 │   ├── seeds/
 │   │   ├── directories.sql        # SQL seed data
 │   │   └── directories.json       # JSON seed data
@@ -349,6 +365,8 @@ LOG_LEVEL=INFO                 # Log level: DEBUG, INFO, WARN, ERROR
    - Multiple comments per user per directory allowed
    - Must have either rating or comment content
    - Triggers auto-update review_count on directories table
+   - Stores `user_name` and `user_avatar_url` at creation time for display
+   - Fallback to "Anonymous" for missing user info
 
 4. **user_favorites**
    - User-specific saved directories (auth required)
@@ -570,6 +588,17 @@ Project and submission tracking:
 - Stats: `getSubmissionStats()` - counts by status
 - Used for tracking directory submissions per project
 
+### useTheme.js
+
+Dark/light mode management:
+
+- State: `theme` (light/dark/system), `isDark`
+- Methods: `setTheme()`, `toggleTheme()`, `cycleTheme()`, `initTheme()`
+- System preference detection via `prefers-color-scheme`
+- LocalStorage persistence with key `awesome-directories-theme`
+- Smooth transition animations when switching themes
+- Exported for both Vue composable and non-Vue (Astro script) usage
+
 ### useMauticNewsletter.js (Optional)
 
 Newsletter subscription to Mautic CRM:
@@ -669,6 +698,88 @@ Blog posts support:
 - Content paths: `src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}`
 - Minimal config (uses Tailwind v4 defaults)
 - PostCSS plugin integration
+
+## Design System: Linear Clarity
+
+The project uses a custom design system called **Linear Clarity v1.0**, providing consistent visual language and full dark mode support.
+
+### Design Tokens (`src/styles/tokens.css`)
+
+All visual properties are defined as CSS custom properties:
+
+**Color Palette:**
+- Backgrounds: `--color-bg-primary` (white/#FFFFFF), `--color-bg-secondary`, `--color-bg-tertiary`
+- Text: `--color-text-primary` (dark/#18181B), `--color-text-secondary`, `--color-text-tertiary`
+- Brand: `--color-brand-primary` (Indigo/#6366F1), `--color-brand-secondary` (Violet), `--color-brand-accent` (Cyan)
+- Semantic: Success (green), Warning (amber), Error (red), Info (blue) with `-bg` and `-text` variants
+- Domain Rating: `--color-dr-high`, `--color-dr-good`, `--color-dr-medium`, `--color-dr-low`
+
+**Typography:**
+- Font families: `--font-sans` (Inter), `--font-mono` (JetBrains Mono)
+- Sizes: `--text-xs` (0.75rem) through `--text-5xl` (3rem)
+- Weights: `--font-normal` (400) through `--font-bold` (700)
+
+**Spacing & Layout:**
+- Scale: `--space-0` through `--space-24` (0 to 6rem)
+- Border radius: `--radius-sm` (0.25rem) through `--radius-full` (9999px)
+- Shadows: `--shadow-xs` through `--shadow-xl`
+- Max widths: `--max-width-sm` through `--max-width-2xl`
+
+**Animation:**
+- Durations: `--duration-instant` (50ms) through `--duration-slower` (500ms)
+- Easings: `--ease-default`, `--ease-in`, `--ease-out`, `--ease-bounce`
+
+### Dark Mode
+
+Dark mode is implemented via a `.dark` class on the `<html>` element:
+
+```html
+<html class="dark">  <!-- Dark mode active -->
+<html class="light"> <!-- Light mode active -->
+```
+
+**Implementation details:**
+- Flash prevention: Inline script in `<head>` reads localStorage before paint
+- System preference: Respects `prefers-color-scheme` when set to "system"
+- Persistence: Stored in `localStorage` with key `awesome-directories-theme`
+- Transitions: Smooth color transitions via `.transitioning` class
+
+**Theme values:**
+- `light` - Force light mode
+- `dark` - Force dark mode
+- `system` - Follow system preference
+
+### Using Design Tokens in Components
+
+All components should use CSS custom properties for theme-awareness:
+
+```css
+/* Good - uses design tokens */
+.card {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Avoid - hardcoded values */
+.card {
+  background-color: #ffffff;
+  color: #18181b;
+}
+```
+
+### Component Classes
+
+The design system provides reusable component classes in `style.css`:
+
+- `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-ghost` - Button variants
+- `.card`, `.card-interactive` - Card containers
+- `.input` - Form input styling
+- `.badge`, `.badge-success`, `.badge-warning`, `.badge-error` - Status badges
+- `.skeleton` - Loading skeleton animation
+- `.link-style` - Styled link with underline
 
 ## Deployment Pipeline
 
@@ -882,6 +993,7 @@ Scores are categorized as:
 14. **TopDirectoriesTable.vue** - Top directories rankings by various metrics
 15. **ProductHuntBadge.vue** - Product Hunt link badge
 16. **GithubStars.vue** - GitHub stars badge
+17. **ThemeToggle.vue** - Dark/light mode toggle button
 
 ### Key Astro Components
 
@@ -911,10 +1023,14 @@ All Vue components use `client:load` directive in Astro pages for client-side hy
 
 ### Styling
 
-- Tailwind CSS utility classes
-- Mobile-first responsive design
-- WCAG 2.1 AA accessibility compliance (goal)
-- Semantic HTML structure
+- **Design System**: Linear Clarity v1.0 with centralized design tokens
+- **Tailwind CSS**: Utility classes integrated with design tokens
+- **Dark Mode**: Full support via `.dark` class on `<html>` element
+- **CSS Custom Properties**: All colors, spacing, typography in `src/styles/tokens.css`
+- **Theme-aware Components**: All components use CSS variables for automatic dark mode
+- **Mobile-first**: Responsive design with touch-friendly targets (44px min)
+- **WCAG 2.1 AA**: Accessibility compliance (goal)
+- **Semantic HTML**: Proper heading structure and ARIA labels
 
 ### Authentication
 
@@ -1214,6 +1330,15 @@ supabase db push
 - [ ] No console errors in production build
 - [ ] Lighthouse score > 95 (Performance, SEO, Accessibility)
 
+**Dark Mode & Theming:**
+
+- [ ] Theme toggle works (light/dark modes)
+- [ ] System preference detection works
+- [ ] Theme persists across page reloads
+- [ ] All components render correctly in both modes
+- [ ] No flash of wrong theme on page load
+- [ ] Smooth transition animations between themes
+
 **Directory Detail Pages:**
 
 - [ ] All directory detail pages generate correctly
@@ -1303,129 +1428,143 @@ supabase db push
 
 ### Commit History (Most Recent)
 
-- **74706ed** - feat: switch email provider from Sender.net to Resend (#50)
-  - Consolidated on Resend API for all transactional emails
-  - Updated email Edge Functions to use shared utilities
+- **2da9434** - feat(UI): transform interface into beautiful user experience (#59)
+  - Complete UI overhaul with Linear Clarity design system
+  - Enhanced visual hierarchy and component styling
+  - Improved interactions and micro-animations
 
-- **484b590** - feat: add email integration with Sender.net (#49)
-  - Initial email system setup (later migrated to Resend)
+- **31e1894** - feat(design): implement Linear Clarity design system foundation (#58)
+  - New design tokens in `src/styles/tokens.css`
+  - Comprehensive CSS custom properties for colors, typography, spacing
+  - Full dark mode support with system preference detection
+  - New `ThemeToggle.vue` and `useTheme.js` composable
+  - Smooth theme transition animations
 
-- **3a5ab80** - fix: modify user facing title for projects
-  - Improved project page titles for clarity
+- **5b40584** - feat(reviews): display actual user names and avatars on reviews (#57)
+  - Added `user_name` and `user_avatar_url` columns to directory_reviews
+  - Reviews now show actual reviewer names and avatars
+  - Graceful fallback to "Anonymous" for legacy reviews
 
-- **7fe2b26** - feat: design directory submissions status page (#47)
-  - New `/my-submissions` page for tracking submitted directories
-  - New `MySubmissionsContent.vue` component with stats and filtering
-  - Status tracking: pending, approved, rejected
+- **787a818** - fix(UI): Make entire website fully responsive (#54)
+  - Full responsiveness across all pages and components
+  - Touch-friendly targets (44px minimum)
+  - Mobile-optimized navigation and filters
 
-- **b40f8c9** - fix: finally make the magnifying glass styling go away
-  - Fixed persistent search icon styling issues
+- **8609138** - feat: enrich directory card with more valuable info
+  - Enhanced DirectoryCard with traffic, backlinks, and top countries
+  - DR bar visualization
+  - Quick stats section with referring domains
 
-- **a091d9b** - fix: make all styles scoped
-  - Improved CSS isolation across components
+- **06ebfe8** - fix: use official badge from PH
+  - Updated to official Product Hunt badge
 
-- **f03163b** - fix: address search bar icon absolute position issue
-  - Fixed search input icon positioning
+- **9c7aa87** - fix: remove custom events for pageview
+  - Streamlined analytics tracking
 
-- **5c81962** - fix: add ref to quick links as well
-  - Improved link handling in components
+- **4459ad1** - Design search bar behavior with filters (#52)
+  - Improved search and filter UX
 
-- **63c07ca** - fix: add ref to directory websites
-  - Enhanced directory URL handling
-
-- **f984ba7** - fix: remove directory submission from projects
-  - Separated directory submissions from project submissions
-
-- **7a304f2** - docs: update CLAUDE.md with latest features and improvements (#45)
-  - Documentation updates
-
-- **ab2a278** - fix: add RLS to directory reviews
-  - Enhanced security for directory reviews table
-
-- **765b0db** - feat: add review, rating, export and pending directory approval (#44)
-  - Directory reviews and ratings system (1-5 stars)
-  - Projects feature for tracking submissions per project
-  - Email notifications via Resend for approved directories
-  - New database tables: directory_reviews, directory_ratings, projects, project_submissions
-  - New Edge Function: send-approval-email
+- **8fea7a3** - fix: add RLS for approved pending directories
+  - Migration 008: Public can view approved pending directories
 
 ### Features Since Last Documentation Update
 
-1. **Comprehensive Email System** (Commits 74706ed, 484b590)
-   - 5 Edge Functions for different email types:
-     - `send-approval-email` - Directory approval notifications
-     - `send-rejection-email` - Directory rejection with feedback
-     - `send-welcome-email` - New user onboarding
-     - `send-submission-confirmation` - Submission receipt confirmation
-     - `send-admin-notification` - Admin alerts for new submissions
-   - Shared email utilities in `_shared/` directory
-   - Professional HTML email templates
-   - Email preferences and opt-out management
-   - Email logging for analytics and debugging
-   - Uses Resend API for reliable delivery
+1. **Linear Clarity Design System** (Commits 31e1894, 2da9434)
+   - Comprehensive design tokens in `src/styles/tokens.css`
+   - CSS custom properties for:
+     - Colors (backgrounds, text, brand, semantic)
+     - Typography (font families, sizes, weights, line heights)
+     - Spacing (consistent spacing scale)
+     - Border radius, shadows, animations
+   - Dark mode with system preference detection
+   - Smooth theme transition animations
+   - Component styles using design tokens
 
-2. **My Submissions Page** (Commit 7fe2b26)
-   - New `/my-submissions` route for tracking directory submissions
-   - `MySubmissionsContent.vue` component with:
-     - Stats summary (total, pending, approved, rejected)
-     - Status filtering dropdown
-     - Submission cards with status badges
-     - Direct link to submit new directories
-   - Separate from project submission tracking
+2. **Dark Mode Support** (Commit 31e1894)
+   - New `ThemeToggle.vue` component in header
+   - New `useTheme.js` composable with:
+     - Light/dark/system theme options
+     - LocalStorage persistence
+     - System preference listener
+     - Smooth CSS transitions
+   - Flash prevention with inline script in `<head>`
+   - All components updated for theme-awareness
 
-3. **Database Email Infrastructure** (Migration 007)
-   - `email_preferences` table for user opt-out management
-   - `email_logs` table for tracking all sent emails
-   - Additional notification columns on `pending_directories`
-   - RLS policies for secure access
-   - Helper function `check_email_preference()`
+3. **Reviews with User Info** (Commit 5b40584, Migration 009)
+   - `user_name` and `user_avatar_url` columns in `directory_reviews`
+   - Captures user info at review creation time
+   - Avoids RLS issues with auth.users table
+   - Graceful fallback for anonymous display
 
-4. **Reviews & Ratings System** (Commit 765b0db)
-   - Directory ratings (1-5 stars) with aggregated statistics
-   - User comments on directories
-   - Automatic average_rating and rating_count calculations via triggers
-   - New tables: directory_reviews, directory_ratings
-   - View: directory_reviews_with_user for display with user info
-   - RLS added for directory reviews (commit ab2a278)
+4. **Enhanced Directory Cards** (Commit 8609138)
+   - Traffic metrics with formatted numbers
+   - Backlinks count display
+   - Top country with flag emoji
+   - DR visualization bar
+   - Referring domains in quick stats
 
-5. **Projects Feature** (Commit 765b0db)
-   - Users can create multiple projects
-   - Track directory submissions per project
-   - Status tracking: not_started, in_progress, submitted, approved, rejected, featured
-   - Submission link field for tracking actual submission URLs
-   - New composable: useProjects.js
-   - Separated from directory submissions (commit f984ba7)
+5. **Responsive UI Overhaul** (Commit 787a818)
+   - Full mobile responsiveness
+   - Touch-friendly targets (44-48px min height)
+   - Mobile navigation improvements
+   - Responsive charts and tables
 
-6. **UI/UX Improvements**
-   - Search bar and icon fixes (commits b40f8c9, f03163b, a091d9b)
-   - Scoped styles for better CSS isolation
-   - Project title clarity improvements (commit 3a5ab80)
-   - Reference handling for links (commits 5c81962, 63c07ca)
+6. **RLS for Approved Pending Directories** (Migration 008)
+   - Public can view approved pending directories
+   - Enables directory listing without auth
 
-### New Database Tables (Migration 007)
+### New Design System Files
 
-- **email_preferences** - User email opt-out preferences
-- **email_logs** - Email sending history and analytics
+- **src/styles/tokens.css** - Design tokens (colors, typography, spacing, etc.)
 
 ### New Components
 
-- **MySubmissionsContent.vue** - User's directory submissions status tracker
+- **ThemeToggle.vue** - Dark/light mode toggle button
 
-### New Edge Functions
+### New Composables
 
-- **send-approval-email** - Directory approval notifications
-- **send-rejection-email** - Directory rejection notifications
-- **send-welcome-email** - New user welcome emails
-- **send-submission-confirmation** - Submission confirmation emails
-- **send-admin-notification** - Admin notification for new submissions
+- **useTheme.js** - Theme management (light/dark/system)
 
-### New Pages
+### New Database Migrations
 
-- **/my-submissions** - User's directory submissions status page
+- **008_rls_policies.sql** - RLS for approved pending directories
+- **009_add_user_info_to_reviews.sql** - User name/avatar on reviews
+
+### Design Token Categories
+
+```css
+/* Colors */
+--color-bg-primary, --color-bg-secondary, --color-bg-tertiary
+--color-text-primary, --color-text-secondary, --color-text-tertiary
+--color-brand-primary, --color-brand-secondary, --color-brand-accent
+--color-success, --color-warning, --color-error, --color-info
+
+/* Typography */
+--font-sans, --font-mono
+--text-xs through --text-5xl
+--font-normal, --font-medium, --font-semibold, --font-bold
+
+/* Spacing */
+--space-0 through --space-24
+
+/* Border Radius */
+--radius-none through --radius-full
+
+/* Shadows */
+--shadow-xs through --shadow-xl
+
+/* Animations */
+--duration-instant, --duration-fast, --duration-normal, --duration-slow
+--ease-default, --ease-in, --ease-out, --ease-in-out, --ease-bounce
+
+/* Z-Index Scale */
+--z-base through --z-toast
+```
 
 ---
 
-**Last Updated**: 2025-11-27 (Updated with commits through 74706ed)
+**Last Updated**: 2025-11-30 (Updated with commits through 2da9434)
 **Architecture**: Astro.js 5.16.0 SSG with Vue.js Islands
+**Design System**: Linear Clarity v1.0 with full dark mode support
 **Lighthouse Score**: 95+ (Performance, SEO, Accessibility, Best Practices)
-**Latest Features**: Comprehensive email system, my-submissions page, email preferences (commits 74706ed, 7fe2b26)
+**Latest Features**: Linear Clarity design system, dark mode, reviews with user info, responsive UI (commits 2da9434, 31e1894, 5b40584, 787a818)

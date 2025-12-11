@@ -13,18 +13,14 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
 >
   <AppHeader />
 
-  <main class="min-h-screen bg-gray-50 py-8 sm:py-12">
+  <main class="stats-main">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero Section -->
       <div class="text-center mb-8 sm:mb-12">
-        <h1
-          class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4"
-        >
+        <h1 class="stats-title">
           Directory Statistics
         </h1>
-        <p
-          class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-2"
-        >
+        <p class="stats-subtitle">
           Comprehensive analytics and insights from our curated collection of
           launch directories. All data is updated during each build.
         </p>
@@ -32,7 +28,7 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
 
       <!-- Overview Cards -->
       <div class="mb-8 sm:mb-12">
-        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+        <h2 class="section-heading">
           Overview
         </h2>
         <StatsCards client:load />
@@ -40,7 +36,7 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
 
       <!-- Charts Section -->
       <div class="mb-8 sm:mb-12">
-        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+        <h2 class="section-heading">
           Analytics
         </h2>
         <StatsCharts client:load />
@@ -48,27 +44,23 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
 
       <!-- Top Directories Tables -->
       <div class="mb-8 sm:mb-12">
-        <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+        <h2 class="section-heading">
           Top Directories
         </h2>
         <TopDirectoriesTable client:load />
       </div>
 
       <!-- Additional Info -->
-      <div
-        class="card p-4 sm:p-6 md:p-8 bg-blue-50 border-blue-200 rounded-xl sm:rounded-lg"
-      >
-        <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3">
+      <div class="info-card">
+        <h2 class="info-card-title">
           About These Statistics
         </h2>
-        <p class="text-sm sm:text-base text-gray-700 mb-4">
+        <p class="info-card-text">
           These statistics are calculated at build time from our verified
           directory database. All metrics include only active, verified
           directories to ensure data quality.
         </p>
-        <ul
-          class="list-disc list-inside text-sm sm:text-base text-gray-700 space-y-2"
-        >
+        <ul class="info-card-list">
           <li>
             <strong>Domain Rating (DR):</strong> Authority score from 0-100, higher
             is better
@@ -91,3 +83,136 @@ import TopDirectoriesTable from "@/components/TopDirectoriesTable.vue";
 
   <AppFooter />
 </BaseLayout>
+
+<style>
+  .stats-main {
+    min-height: 100vh;
+    background-color: var(--color-bg-secondary);
+    padding: 2rem 0;
+  }
+
+  @media (min-width: 640px) {
+    .stats-main {
+      padding: 3rem 0;
+    }
+  }
+
+  .stats-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .stats-title {
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .stats-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .stats-subtitle {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .stats-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .stats-subtitle {
+      font-size: 1.125rem;
+    }
+  }
+
+  .section-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-heading {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .info-card {
+    background-color: var(--color-info-bg);
+    border: 1px solid var(--color-info);
+    border-radius: var(--radius-xl);
+    padding: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .info-card {
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .info-card {
+      padding: 2rem;
+    }
+  }
+
+  .info-card-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .info-card-title {
+      font-size: 1.25rem;
+    }
+  }
+
+  .info-card-text {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .info-card-text {
+      font-size: 1rem;
+    }
+  }
+
+  .info-card-list {
+    list-style-type: disc;
+    list-style-position: inside;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .info-card-list {
+      font-size: 1rem;
+    }
+  }
+
+  .info-card-list strong {
+    color: var(--color-text-primary);
+  }
+</style>
