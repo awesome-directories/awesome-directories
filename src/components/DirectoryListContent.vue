@@ -42,7 +42,7 @@
     <div v-else>
       <!-- Sticky Filter Bar -->
       <div
-        class="bg-white border-b border-gray-200 sticky top-0 sm:top-16 z-40 shadow-sm"
+        class="filter-bar sticky top-0 sm:top-16 z-40"
       >
         <div
           class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4"
@@ -56,23 +56,23 @@
           >
             <div
               v-if="showTooltip"
-              class="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3"
+              class="tooltip-banner mb-3 p-3 rounded-lg flex items-start gap-3"
               role="status"
               aria-live="polite"
             >
               <span class="text-lg flex-shrink-0" aria-hidden="true">👋</span>
-              <div class="flex-1 text-sm text-gray-700">
+              <div class="flex-1 text-sm tooltip-text">
                 <p class="font-medium mb-1">
                   We pre-filtered to show you the best directories
                 </p>
-                <p class="text-gray-600">
+                <p class="tooltip-subtext">
                   DoFollow links with high DR (70+). Tap "All Directories" to
                   see everything.
                 </p>
               </div>
               <button
                 @click="dismissTooltip"
-                class="text-gray-400 hover:text-gray-600 focus:text-gray-600 flex-shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                class="tooltip-dismiss flex-shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2 rounded-lg transition-colors focus:outline-none"
                 aria-label="Dismiss notification"
               >
                 <svg
@@ -104,7 +104,7 @@
                 v-model="searchQuery"
                 type="search"
                 placeholder="Search directories..."
-                class="search-input w-full pl-10 pr-12 py-3 sm:py-2.5 border border-gray-300 rounded-lg text-sm sm:text-base bg-white min-h-[48px] sm:min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent transition-all"
+                class="search-input w-full pl-10 pr-12 py-3 sm:py-2.5 rounded-lg text-sm sm:text-base min-h-[48px] sm:min-h-[44px] focus:outline-none transition-all"
                 aria-label="Search directories"
                 :aria-describedby="searchQuery ? 'search-clear' : undefined"
               />
@@ -113,11 +113,11 @@
                   v-if="searchQuery"
                   id="search-clear"
                   @click="clearSearch"
-                  class="absolute inset-y-0 right-0 w-12 flex items-center justify-center rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors z-10"
+                  class="search-clear-btn absolute inset-y-0 right-0 w-12 flex items-center justify-center rounded-r-lg focus:outline-none transition-colors z-10"
                   aria-label="Clear search"
                 >
                   <svg
-                    class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
+                    class="h-5 w-5 transition-colors"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -142,7 +142,7 @@
             role="group"
             aria-label="Active filters"
           >
-            <span class="text-xs text-gray-500 mr-1">Active:</span>
+            <span class="filter-chips-label text-xs mr-1">Active:</span>
             <transition-group
               name="chip"
               tag="div"
@@ -152,7 +152,7 @@
                 v-for="chip in activeFilterChips"
                 :key="chip.key"
                 @click="removeFilter(chip.key)"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-primary/10 text-primary text-xs font-medium rounded-full hover:bg-primary/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
+                class="filter-chip inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-full transition-colors focus:outline-none"
                 :aria-label="`Remove ${chip.type} filter: ${chip.label}`"
               >
                 <span>{{ chip.label }}</span>
@@ -175,7 +175,7 @@
             <button
               v-if="activeFilterChips.length > 1"
               @click="resetAllFilters"
-              class="text-xs text-gray-500 hover:text-gray-700 underline underline-offset-2 ml-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 rounded"
+              class="clear-all-btn text-xs underline underline-offset-2 ml-1 focus:outline-none rounded"
               aria-label="Clear all filters"
             >
               Clear all
@@ -194,10 +194,10 @@
                 :key="preset.id"
                 @click="applyQuickFilter(preset)"
                 :class="[
-                  'flex-shrink-0 px-4 py-2.5 sm:py-2 rounded-full text-sm font-medium transition-all min-h-[44px] sm:min-h-[40px] whitespace-nowrap touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+                  'quick-filter-pill flex-shrink-0 px-4 py-2.5 sm:py-2 rounded-full text-sm font-medium transition-all min-h-[44px] sm:min-h-[40px] whitespace-nowrap touch-manipulation focus:outline-none',
                   isActivePreset(preset)
-                    ? 'bg-primary text-white shadow-sm focus-visible:ring-primary'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300 focus-visible:ring-gray-400',
+                    ? 'quick-filter-pill-active'
+                    : 'quick-filter-pill-inactive',
                 ]"
                 :aria-label="`Apply ${preset.label} filter`"
                 :aria-pressed="isActivePreset(preset)"
@@ -211,10 +211,10 @@
           </div>
 
           <!-- Advanced Filters Accordion -->
-          <div class="border-t border-gray-200 pt-3">
+          <div class="advanced-filters-section pt-3">
             <button
               @click="toggleAdvancedFilters"
-              class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 min-h-[48px] sm:min-h-[44px] w-full justify-between touch-manipulation active:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              class="advanced-filters-toggle flex items-center gap-2 text-sm font-medium min-h-[48px] sm:min-h-[44px] w-full justify-between touch-manipulation -mx-2 px-2 rounded-lg transition-colors focus:outline-none"
               aria-label="Toggle advanced filters"
               :aria-expanded="advancedFiltersExpanded"
               aria-controls="advanced-filters"
@@ -256,7 +256,7 @@
                   <div>
                     <label
                       for="filter-category"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                      class="filter-label block text-sm font-medium mb-1.5"
                     >
                       Category
                     </label>
@@ -265,10 +265,10 @@
                       v-model="currentFilters.category"
                       @change="applyFilters"
                       :class="[
-                        'w-full px-3 py-3 sm:py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none border',
+                        'filter-select w-full px-3 py-3 sm:py-2.5 rounded-lg text-base sm:text-sm min-h-[48px] sm:min-h-[44px] touch-manipulation transition-colors focus:outline-none border',
                         currentFilters.category !== 'All'
-                          ? 'border-primary/50 bg-primary/5'
-                          : 'border-gray-300',
+                          ? 'filter-select-active'
+                          : '',
                       ]"
                     >
                       <option v-for="cat in categories" :key="cat" :value="cat">
@@ -280,7 +280,7 @@
                   <div>
                     <label
                       for="filter-dr"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                      class="filter-label block text-sm font-medium mb-1.5"
                     >
                       Domain Rating
                     </label>
@@ -289,10 +289,10 @@
                       v-model="currentFilters.drRange"
                       @change="applyFilters"
                       :class="[
-                        'w-full px-3 py-3 sm:py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none border',
+                        'filter-select w-full px-3 py-3 sm:py-2.5 rounded-lg text-base sm:text-sm min-h-[48px] sm:min-h-[44px] touch-manipulation transition-colors focus:outline-none border',
                         currentFilters.drRange !== 'All'
-                          ? 'border-primary/50 bg-primary/5'
-                          : 'border-gray-300',
+                          ? 'filter-select-active'
+                          : '',
                       ]"
                     >
                       <option value="All">All DR</option>
@@ -307,7 +307,7 @@
                   <div>
                     <label
                       for="filter-link"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                      class="filter-label block text-sm font-medium mb-1.5"
                     >
                       Link Type
                     </label>
@@ -316,10 +316,10 @@
                       v-model="currentFilters.linkType"
                       @change="applyFilters"
                       :class="[
-                        'w-full px-3 py-3 sm:py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none border',
+                        'filter-select w-full px-3 py-3 sm:py-2.5 rounded-lg text-base sm:text-sm min-h-[48px] sm:min-h-[44px] touch-manipulation transition-colors focus:outline-none border',
                         currentFilters.linkType !== 'All'
-                          ? 'border-primary/50 bg-primary/5'
-                          : 'border-gray-300',
+                          ? 'filter-select-active'
+                          : '',
                       ]"
                     >
                       <option value="All">All</option>
@@ -330,7 +330,7 @@
                   <div>
                     <label
                       for="filter-pricing"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                      class="filter-label block text-sm font-medium mb-1.5"
                     >
                       Pricing
                     </label>
@@ -339,10 +339,10 @@
                       v-model="currentFilters.pricing"
                       @change="applyFilters"
                       :class="[
-                        'w-full px-3 py-3 sm:py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none border',
+                        'filter-select w-full px-3 py-3 sm:py-2.5 rounded-lg text-base sm:text-sm min-h-[48px] sm:min-h-[44px] touch-manipulation transition-colors focus:outline-none border',
                         currentFilters.pricing !== 'All'
-                          ? 'border-primary/50 bg-primary/5'
-                          : 'border-gray-300',
+                          ? 'filter-select-active'
+                          : '',
                       ]"
                     >
                       <option value="All">All</option>
@@ -355,7 +355,7 @@
                   <div>
                     <label
                       for="filter-sort"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
+                      class="filter-label block text-sm font-medium mb-1.5"
                     >
                       Sort By
                     </label>
@@ -363,7 +363,7 @@
                       id="filter-sort"
                       v-model="currentFilters.sortBy"
                       @change="applyFilters"
-                      class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none"
+                      class="filter-select w-full px-3 py-3 sm:py-2.5 rounded-lg text-base sm:text-sm min-h-[48px] sm:min-h-[44px] touch-manipulation transition-colors focus:outline-none border"
                     >
                       <option>Highest Rated</option>
                       <option>Highest DR</option>
@@ -378,15 +378,15 @@
 
           <!-- Results Summary -->
           <div
-            class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-gray-200"
+            class="results-summary mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3"
             role="status"
             aria-live="polite"
             aria-atomic="true"
           >
             <div class="flex items-center gap-2 flex-wrap">
               <!-- Result count with context -->
-              <span class="text-sm text-gray-700">
-                <span class="font-semibold text-gray-900">{{
+              <span class="results-text text-sm">
+                <span class="results-count font-semibold">{{
                   visibleDirectories.length.toLocaleString()
                 }}</span>
                 <template v-if="isDefaultState">
@@ -411,7 +411,7 @@
                   hasActiveFilters &&
                   activeFilterChips.length > 1
                 "
-                class="text-xs text-blue-700 bg-blue-50 px-2 py-1 rounded-full inline-flex items-center gap-1"
+                class="search-scope-badge text-xs px-2 py-1 rounded-full inline-flex items-center gap-1"
               >
                 <svg
                   class="w-3 h-3"
@@ -433,7 +433,7 @@
               <!-- Pending submissions badge -->
               <span
                 v-if="pendingSubmissions.length > 0"
-                class="text-xs text-yellow-800 bg-yellow-50 px-2 py-1 rounded-full"
+                class="pending-badge text-xs px-2 py-1 rounded-full"
               >
                 {{ pendingSubmissions.length }} pending
               </span>
@@ -442,7 +442,7 @@
             <button
               v-if="!isDefaultState"
               @click="resetToDefault"
-              class="text-sm text-primary hover:text-primary-dark font-medium whitespace-nowrap min-h-[48px] sm:min-h-[44px] px-3 -mx-3 sm:mx-0 sm:px-2 flex items-center gap-1.5 touch-manipulation active:bg-gray-50 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              class="reset-filters-btn text-sm font-medium whitespace-nowrap min-h-[48px] sm:min-h-[44px] px-3 -mx-3 sm:mx-0 sm:px-2 flex items-center gap-1.5 touch-manipulation rounded-lg transition-colors focus:outline-none"
               aria-label="Reset to default filters"
             >
               <svg
@@ -466,24 +466,24 @@
       </div>
 
       <!-- Directory Grid -->
-      <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
+      <div class="directory-grid-container max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
         <!-- Loading Skeleton -->
         <div v-if="isLoading" class="space-y-4">
-          <div v-for="i in 6" :key="i" class="animate-pulse">
-            <div class="bg-gray-200 rounded-lg h-48"></div>
+          <div v-for="i in 6" :key="i" class="skeleton-card animate-pulse">
+            <div class="skeleton-content rounded-lg h-48"></div>
           </div>
         </div>
 
         <!-- Empty State -->
         <div
           v-else-if="visibleDirectories.length === 0"
-          class="text-center py-12 px-4"
+          class="empty-state text-center py-12 px-4"
           role="status"
           aria-live="polite"
         >
-          <div class="mb-4">
+          <div class="empty-state-icon mb-4">
             <svg
-              class="w-16 h-16 mx-auto text-gray-400"
+              class="w-16 h-16 mx-auto"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -499,7 +499,7 @@
           </div>
 
           <!-- Different messages based on context -->
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">
+          <h2 class="empty-state-title text-xl font-semibold mb-2">
             <template v-if="currentFilters.search">
               No results for "{{ currentFilters.search }}"
             </template>
@@ -508,7 +508,7 @@
 
           <!-- Show active filters -->
           <div v-if="activeFilterChips.length > 0" class="mb-4">
-            <p class="text-gray-600 mb-3">
+            <p class="empty-state-text mb-3">
               <template
                 v-if="currentFilters.search && activeFilterChips.length > 1"
               >
@@ -526,12 +526,12 @@
                 v-for="chip in activeFilterChips"
                 :key="chip.key"
                 @click="removeFilter(chip.key)"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full hover:bg-red-50 hover:text-red-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 group"
+                class="empty-state-chip inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-colors focus:outline-none group"
                 :aria-label="`Remove ${chip.type} filter: ${chip.label}`"
               >
                 <span>{{ chip.label }}</span>
                 <svg
-                  class="w-4 h-4 text-gray-400 group-hover:text-red-500"
+                  class="w-4 h-4 empty-state-chip-icon"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -558,7 +558,7 @@
                 activeFilterChips.length > 1
               "
               @click="searchAllDirectories"
-              class="w-full btn-primary min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2"
+              class="empty-state-btn-primary w-full min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation focus:outline-none inline-flex items-center justify-center gap-2"
             >
               <svg
                 class="w-5 h-5"
@@ -588,12 +588,12 @@
             <button
               @click="resetAllFilters"
               :class="[
-                'w-full min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors',
+                'w-full min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation focus:outline-none inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors',
                 currentFilters.search &&
                 searchOnlyResultsCount > 0 &&
                 activeFilterChips.length > 1
-                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  : 'btn-primary',
+                  ? 'empty-state-btn-secondary'
+                  : 'empty-state-btn-primary',
               ]"
             >
               <svg
@@ -622,9 +622,9 @@
           <!-- Helpful tip -->
           <p
             v-if="activeFilterChips.length > 0"
-            class="text-sm text-gray-500 mt-6"
+            class="empty-state-tip text-sm mt-6"
           >
-            💡 Tip: Click on any filter chip above to remove it individually
+            Tip: Click on any filter chip above to remove it individually
           </p>
         </div>
 
@@ -1207,6 +1207,13 @@ function onTooltipLeave(el) {
 </script>
 
 <style scoped>
+/* ========================================
+   DESIGN TOKEN-BASED STYLES
+   All colors reference CSS custom properties
+   from src/styles/tokens.css
+   ======================================== */
+
+/* Utility Classes */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -1220,16 +1227,58 @@ function onTooltipLeave(el) {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Filter Bar */
+.filter-bar {
+  background-color: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Tooltip Banner */
+.tooltip-banner {
+  background-color: var(--color-info-bg);
+  border: 1px solid var(--color-info);
+}
+
+.tooltip-text {
+  color: var(--color-text-secondary);
+}
+
+.tooltip-subtext {
+  color: var(--color-text-tertiary);
+}
+
+.tooltip-dismiss {
+  color: var(--color-text-tertiary);
+}
+
+.tooltip-dismiss:hover,
+.tooltip-dismiss:focus {
+  color: var(--color-text-secondary);
+}
+
+.tooltip-dismiss:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Search Input */
 .search-input {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+  color: var(--color-text-primary);
   outline: none;
-  transition:
-    box-shadow 0.2s ease-in-out,
-    border-color 0.2s ease-in-out;
+  transition: box-shadow var(--duration-fast) var(--ease-default),
+              border-color var(--duration-fast) var(--ease-default);
+}
+
+.search-input::placeholder {
+  color: var(--color-text-tertiary);
 }
 
 .search-input:focus {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px var(--color-border-focus);
+  border-color: var(--color-brand-primary);
 }
 
 .search-input::-webkit-search-cancel-button {
@@ -1237,14 +1286,260 @@ function onTooltipLeave(el) {
   appearance: none;
 }
 
+.search-clear-btn {
+  color: var(--color-text-tertiary);
+}
+
+.search-clear-btn:hover {
+  color: var(--color-text-secondary);
+}
+
+.search-clear-btn:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Filter Chips */
+.filter-chips-label {
+  color: var(--color-text-tertiary);
+}
+
+.filter-chip {
+  background-color: var(--color-brand-primary-alpha);
+  color: var(--color-brand-primary);
+}
+
+.filter-chip:hover {
+  background-color: var(--color-brand-primary-alpha-hover);
+}
+
+.filter-chip:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+.clear-all-btn {
+  color: var(--color-text-tertiary);
+}
+
+.clear-all-btn:hover {
+  color: var(--color-text-secondary);
+}
+
+.clear-all-btn:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Quick Filter Pills */
+.quick-filter-pill {
+  transition: background-color var(--duration-fast) var(--ease-default),
+              color var(--duration-fast) var(--ease-default),
+              box-shadow var(--duration-fast) var(--ease-default);
+}
+
+.quick-filter-pill-active {
+  background-color: var(--color-brand-primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-filter-pill-active:focus-visible {
+  outline: var(--ring-width) solid var(--color-brand-primary);
+  outline-offset: var(--ring-offset);
+}
+
+.quick-filter-pill-inactive {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+}
+
+.quick-filter-pill-inactive:hover {
+  background-color: var(--color-border-primary);
+}
+
+.quick-filter-pill-inactive:active {
+  background-color: var(--color-border-secondary);
+}
+
+.quick-filter-pill-inactive:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Advanced Filters Section */
+.advanced-filters-section {
+  border-top: 1px solid var(--color-border-primary);
+}
+
+.advanced-filters-toggle {
+  color: var(--color-text-secondary);
+}
+
+.advanced-filters-toggle:hover {
+  color: var(--color-text-primary);
+}
+
+.advanced-filters-toggle:active {
+  background-color: var(--color-bg-tertiary);
+}
+
+.advanced-filters-toggle:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Filter Labels and Selects */
+.filter-label {
+  color: var(--color-text-primary);
+}
+
+.filter-select {
+  background-color: var(--color-bg-primary);
+  border-color: var(--color-border-primary);
+  color: var(--color-text-primary);
+}
+
+.filter-select:focus {
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 0 0 2px var(--color-border-focus);
+}
+
+.filter-select-active {
+  border-color: var(--color-brand-primary);
+  background-color: var(--color-brand-primary-alpha);
+}
+
+/* Results Summary */
+.results-summary {
+  border-top: 1px solid var(--color-border-primary);
+}
+
+.results-text {
+  color: var(--color-text-secondary);
+}
+
+.results-count {
+  color: var(--color-text-primary);
+}
+
+.search-scope-badge {
+  background-color: var(--color-info-bg);
+  color: var(--color-info-text);
+}
+
+.pending-badge {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.reset-filters-btn {
+  color: var(--color-brand-primary);
+}
+
+.reset-filters-btn:hover {
+  color: var(--color-brand-primary-hover);
+}
+
+.reset-filters-btn:active {
+  background-color: var(--color-bg-tertiary);
+}
+
+.reset-filters-btn:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+/* Directory Grid Container */
+.directory-grid-container {
+  background-color: var(--color-bg-secondary);
+}
+
+/* Loading Skeleton */
+.skeleton-card {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+}
+
+.skeleton-content {
+  background-color: var(--color-bg-tertiary);
+}
+
+/* Empty State */
+.empty-state {
+  color: var(--color-text-secondary);
+}
+
+.empty-state-icon {
+  color: var(--color-text-tertiary);
+}
+
+.empty-state-title {
+  color: var(--color-text-primary);
+}
+
+.empty-state-text {
+  color: var(--color-text-secondary);
+}
+
+.empty-state-chip {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+}
+
+.empty-state-chip:hover {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.empty-state-chip-icon {
+  color: var(--color-text-tertiary);
+}
+
+.empty-state-chip:hover .empty-state-chip-icon {
+  color: var(--color-error);
+}
+
+.empty-state-btn-primary {
+  background-color: var(--color-brand-primary);
+  color: white;
+  border-radius: var(--radius-lg);
+}
+
+.empty-state-btn-primary:hover {
+  background-color: var(--color-brand-primary-hover);
+}
+
+.empty-state-btn-primary:focus-visible {
+  outline: var(--ring-width) solid var(--ring-color);
+  outline-offset: var(--ring-offset);
+}
+
+.empty-state-btn-secondary {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+}
+
+.empty-state-btn-secondary:hover {
+  background-color: var(--color-border-primary);
+}
+
+.empty-state-tip {
+  color: var(--color-text-tertiary);
+}
+
+/* ========================================
+   TRANSITIONS
+   ======================================== */
+
 .accordion-enter-active,
 .accordion-leave-active {
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height var(--duration-normal) var(--ease-default);
 }
 
 .slide-down-enter-active,
 .slide-down-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--duration-normal) var(--ease-default);
 }
 
 .slide-down-enter-from,
@@ -1256,7 +1551,7 @@ function onTooltipLeave(el) {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity var(--duration-fast) var(--ease-default);
 }
 
 .fade-enter-from,
@@ -1266,11 +1561,11 @@ function onTooltipLeave(el) {
 
 /* Filter chip transitions */
 .chip-enter-active {
-  transition: all 0.2s ease-out;
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
 .chip-leave-active {
-  transition: all 0.15s ease-in;
+  transition: all var(--duration-instant) var(--ease-in);
 }
 
 .chip-enter-from {
@@ -1284,7 +1579,7 @@ function onTooltipLeave(el) {
 }
 
 .chip-move {
-  transition: transform 0.2s ease;
+  transition: transform var(--duration-fast) var(--ease-default);
 }
 
 @media (max-width: 640px) {
@@ -1300,11 +1595,15 @@ function onTooltipLeave(el) {
   .slide-down-enter-active,
   .slide-down-leave-active,
   .fade-enter-active,
-  .fade-leave-active {
+  .fade-leave-active,
+  .chip-enter-active,
+  .chip-leave-active,
+  .chip-move {
     transition: none;
   }
 }
 
+/* Loading Animation */
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

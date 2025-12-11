@@ -467,7 +467,10 @@ import { useStore } from "@nanostores/vue";
 import { $user } from "@/stores/auth";
 import { supabase } from "@/lib/supabase-client";
 import { showAuthModal } from "@/utils/auth";
+import { useToast } from "@/composables/useToast";
 import log from "@/lib/logger";
+
+var { error: showError, success: showSuccess } = useToast();
 
 const user = useStore($user);
 const submissions = ref([]);
@@ -724,9 +727,10 @@ async function handleDelete(submission) {
     // Remove from local state
     submissions.value = submissions.value.filter((s) => s.id !== submission.id);
     log.info(`Deleted submission: ${submission.name}`);
+    showSuccess("Submission deleted successfully");
   } catch (error) {
     log.error("Failed to delete submission:", error);
-    alert("Failed to delete submission. Please try again.");
+    showError("Failed to delete submission. Please try again.");
   }
 }
 </script>
