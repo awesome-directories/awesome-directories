@@ -30,8 +30,32 @@ const twitterHandle = "@meysamazing";
 ---
 
 <!doctype html>
-<html lang="en" prefix="og: https://ogp.me/ns#">
+<html lang="en" prefix="og: https://ogp.me/ns#" class="light">
   <head>
+    <!-- Prevent flash of wrong theme -->
+    <script is:inline>
+      (function() {
+        var STORAGE_KEY = 'awesome-directories-theme';
+        var savedTheme = 'system';
+        try {
+          savedTheme = localStorage.getItem(STORAGE_KEY) || 'system';
+        } catch (e) {}
+
+        var effectiveTheme = savedTheme;
+        if (savedTheme === 'system') {
+          effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        var html = document.documentElement;
+        if (effectiveTheme === 'dark') {
+          html.classList.remove('light');
+          html.classList.add('dark');
+        } else {
+          html.classList.remove('dark');
+          html.classList.add('light');
+        }
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
