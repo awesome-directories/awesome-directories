@@ -1,7 +1,6 @@
 ---
 import Logo from "./Logo.astro";
 import GithubStars from "./GithubStars.vue";
-import LaunchBadge from "./LaunchIgniterBadge.vue";
 ---
 
 <header
@@ -21,9 +20,6 @@ import LaunchBadge from "./LaunchIgniterBadge.vue";
       <nav class="hidden md:flex items-center space-x-4 lg:space-x-6">
         <div class="min-w-[50px] flex items-center justify-center">
           <GithubStars client:load />
-        </div>
-        <div class="min-w-[50px] flex items-center justify-center">
-          <LaunchBadge />
         </div>
 
         <a
@@ -151,7 +147,6 @@ import LaunchBadge from "./LaunchIgniterBadge.vue";
           <div class="min-w-[50px] flex items-center">
             <GithubStars client:load />
           </div>
-          <LaunchBadge />
         </div>
 
         <a
