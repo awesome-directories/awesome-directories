@@ -1,3 +1,4 @@
+import { ApifyClient } from "https://esm.sh/apify-client@2.21.0";
 import {
   extractDomain,
   batchArray,
@@ -39,86 +40,13 @@ interface AhrefsMetrics {
   };
 }
 
-async function pollApifyRunWithBackoff(
-  runId: string,
-  defaultDatasetId: string,
-  apifyToken: string,
-  maxAttempts: number,
-  initialIntervalMs: number,
-  maxIntervalMs: number,
-): Promise<AhrefsMetrics[]> {
-  var attempt = 0;
-  var intervalMs = initialIntervalMs;
-
-  while (attempt < maxAttempts) {
-    attempt++;
-
-    console.log(
-      `Polling attempt ${attempt}/${maxAttempts} for run ${runId} (interval: ${intervalMs}ms)`,
-    );
-
-    var statusResponse = await fetch(
-      `https://api.apify.com/v2/actor-runs/${runId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${apifyToken}`,
-        },
-      },
-    );
-
-    if (!statusResponse.ok) {
-      console.error(`Failed to get run status: ${statusResponse.status}`);
-      await sleep(intervalMs);
-      intervalMs = Math.min(intervalMs * 1.5, maxIntervalMs);
-      continue;
-    }
-
-    var statusData = await statusResponse.json();
-    var status = statusData.data.status;
-
-    console.log(`Run ${runId} status: ${status}`);
-
-    if (status === "SUCCEEDED") {
-      var datasetResponse = await fetch(
-        `https://api.apify.com/v2/datasets/${defaultDatasetId}/items`,
-        {
-          headers: {
-            Authorization: `Bearer ${apifyToken}`,
-          },
-        },
-      );
-
-      if (!datasetResponse.ok) {
-        throw new Error(`Failed to fetch dataset: ${datasetResponse.status}`);
-      }
-
-      return await datasetResponse.json();
-    }
-
-    if (status === "FAILED" || status === "ABORTED" || status === "TIMED-OUT") {
-      throw new Error(`Apify run ${runId} ended with status: ${status}`);
-    }
-
-    await sleep(intervalMs);
-    intervalMs = Math.min(intervalMs * 1.5, maxIntervalMs);
-  }
-
-  throw new Error(
-    `Polling timed out after ${maxAttempts} attempts for run ${runId}`,
-  );
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise(function sleepResolve(resolve) {
-    setTimeout(resolve, ms);
-  });
-}
-
 async function fetchAhrefsMetrics(
   urls: string[],
   apifyToken: string,
   proxyUrl: string,
 ): Promise<AhrefsMetrics[]> {
+  var client = new ApifyClient({ token: apifyToken });
+
   var input = {
     urls: urls,
     include_web_authority: true,
@@ -142,42 +70,17 @@ async function fetchAhrefsMetrics(
   try {
     console.log(`Calling Apify for URLs: ${urls.join(", ")}`);
 
-    var runResponse = await fetch(
-      "https://api.apify.com/v2/acts/radeance~ahrefs-scraper/runs",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apifyToken}`,
-        },
-        body: JSON.stringify(input),
-      },
-    );
+    var runData = await client.actor("radeance~ahrefs-scraper").call(input, {
+      waitSecs: 900,
+    });
 
-    if (!runResponse.ok) {
-      throw new Error(
-        `Apify API error: ${runResponse.status} ${runResponse.statusText}`,
-      );
-    }
+    console.log(`Actor run completed: ${runData.id}`);
 
-    var runData = await runResponse.json();
-    var runId = runData.data.id;
-    var defaultDatasetId = runData.data.defaultDatasetId;
+    var datasetItems = await client
+      .dataset(runData.defaultDatasetId)
+      .listItems();
 
-    console.log(`Actor run started: ${runId}`);
-
-    var maxAttempts = 60;
-    var initialIntervalMs = 5000;
-    var maxIntervalMs = 60000;
-
-    return await pollApifyRunWithBackoff(
-      runId,
-      defaultDatasetId,
-      apifyToken,
-      maxAttempts,
-      initialIntervalMs,
-      maxIntervalMs,
-    );
+    return datasetItems.items;
   } catch (error) {
     console.error("Error fetching Ahrefs metrics:", error);
     throw error;
