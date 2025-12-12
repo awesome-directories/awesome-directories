@@ -70,7 +70,7 @@ async function fetchAhrefsMetrics(
   try {
     console.log(`Calling Apify for URLs: ${urls.join(", ")}`);
 
-    var runData = await client.actor("radeance~ahrefs-scraper").call(input, {
+    var runData = await client.actor("radeance/ahrefs-scraper").call(input, {
       waitSecs: 900,
     });
 
