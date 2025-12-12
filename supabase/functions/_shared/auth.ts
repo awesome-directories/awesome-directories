@@ -65,7 +65,9 @@ export function verifyServiceRole(req: Request): AuthResult {
       .replace(/-/g, "+")
       .replace(/_/g, "/");
 
-    const payloadJson = atob(normalizedBase64);
+    // Add padding to make the length a multiple of 4
+    const padding = '='.repeat((4 - (normalizedBase64.length % 4)) % 4);
+    const payloadJson = atob(normalizedBase64 + padding);
     const payload = JSON.parse(payloadJson);
 
     // Check for service_role
@@ -73,7 +75,7 @@ export function verifyServiceRole(req: Request): AuthResult {
       return {
         authorized: false,
         error: "Forbidden: service_role required",
-        role: payload.role,
+
       };
     }
 
