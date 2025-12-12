@@ -11,8 +11,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0";
 import { sendEmail } from "../_shared/email.ts";
 import { adminUserRegistrationTemplate } from "../_shared/email-templates.ts";
-
-const FUNCTION_SECRET = Deno.env.get("FUNCTION_SECRET");
+import { requireServiceRole } from "../_shared/auth.ts";
 const ADMIN_EMAIL =
   Deno.env.get("ADMIN_EMAIL") || "admin@awesome-directories.com";
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
@@ -55,6 +54,10 @@ serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
+
+  // Verify service_role authorization
+  const authError = requireServiceRole(req, corsHeaders);
+  if (authError) return authError;
 
   try {
     const body = await req.json();

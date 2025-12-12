@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { updateAhrefsMetrics } from "./ahrefs.ts";
+import { requireServiceRole } from "../_shared/auth.ts";
 
 addEventListener("unhandledrejection", function handleUnhandledRejection(ev) {
   console.error("unhandledrejection", ev.reason);
@@ -25,11 +26,14 @@ serve(async function handleRequest(req) {
     });
   }
 
+  // Verify service_role authorization
+  const authError = requireServiceRole(req);
+  if (authError) return authError;
+
   try {
     var supabaseUrl = Deno.env.get("SUPABASE_URL");
     var supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     var apifyToken = Deno.env.get("APIFY_API_TOKEN");
-    var functionSecret = Deno.env.get("FUNCTION_SECRET");
     var proxyUrl = Deno.env.get("PROXY_URL") || "";
 
     if (!supabaseUrl || !supabaseServiceKey) {
@@ -38,16 +42,6 @@ serve(async function handleRequest(req) {
 
     if (!apifyToken) {
       throw new Error("Missing APIFY_API_TOKEN environment variable");
-    }
-
-    if (functionSecret) {
-      var authHeader = req.headers.get("authorization");
-      if (authHeader !== `Bearer ${functionSecret}`) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-          headers: { "Content-Type": "application/json" },
-        });
-      }
     }
 
     var supabase = createClient(supabaseUrl, supabaseServiceKey);
