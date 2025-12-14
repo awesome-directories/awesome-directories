@@ -66,7 +66,7 @@ export function verifyServiceRole(req: Request): AuthResult {
       .replace(/_/g, "/");
 
     // Add padding to make the length a multiple of 4
-    const padding = '='.repeat((4 - (normalizedBase64.length % 4)) % 4);
+    const padding = "=".repeat((4 - (normalizedBase64.length % 4)) % 4);
     const payloadJson = atob(normalizedBase64 + padding);
     const payload = JSON.parse(payloadJson);
 
@@ -75,7 +75,6 @@ export function verifyServiceRole(req: Request): AuthResult {
       return {
         authorized: false,
         error: "Forbidden: service_role required",
-
       };
     }
 
@@ -125,7 +124,11 @@ export function requireServiceRole(
 
   if (!auth.authorized) {
     const status = auth.error?.includes("Missing") ? 401 : 403;
-    return unauthorizedResponse(auth.error || "Unauthorized", status, corsHeaders);
+    return unauthorizedResponse(
+      auth.error || "Unauthorized",
+      status,
+      corsHeaders,
+    );
   }
 
   return null;

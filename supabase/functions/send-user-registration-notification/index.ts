@@ -76,7 +76,8 @@ serve(async (req: Request) => {
       // Extract user name from metadata
       const userMeta = record.raw_user_meta_data || {};
       const appMeta = record.raw_app_meta_data || {};
-      const userName = userMeta.full_name || userMeta.name || userMeta.user_name;
+      const userName =
+        userMeta.full_name || userMeta.name || userMeta.user_name;
 
       payload = {
         user_email: record.email,
@@ -175,7 +176,10 @@ serve(async (req: Request) => {
       });
     }
 
-    console.log("Admin user registration notification sent successfully:", result.id);
+    console.log(
+      "Admin user registration notification sent successfully:",
+      result.id,
+    );
 
     return new Response(
       JSON.stringify({

@@ -31,6 +31,7 @@
 These platforms bring the most intentful traffic from your exact target audience. Submit here first.
 
 ### DevHunt
+
 - **URL:** https://devhunt.org/
 - **Why:** Developer-focused Product Hunt alternative; perfect fit for dev tools
 - **Backlink:** Dofollow (DR 59)
@@ -40,6 +41,7 @@ These platforms bring the most intentful traffic from your exact target audience
 - **Priority:** ⭐⭐⭐⭐⭐
 
 ### SaaSHub
+
 - **URL:** https://www.saashub.com/
 - **Why:** One of the most respected SaaS directories; excellent for discoverability
 - **Backlink:** Dofollow (DR 75)
@@ -49,6 +51,7 @@ These platforms bring the most intentful traffic from your exact target audience
 - **Priority:** ⭐⭐⭐⭐⭐
 
 ### BetaList
+
 - **URL:** https://betalist.com/
 - **Why:** Focused on early adopters and beta testers
 - **Backlink:** Yes
@@ -58,6 +61,7 @@ These platforms bring the most intentful traffic from your exact target audience
 - **Priority:** ⭐⭐⭐⭐⭐
 
 ### Uneed
+
 - **URL:** https://www.uneed.best/
 - **Why:** Growing platform with engaged community; daily rankings
 - **Backlink:** Dofollow (DR 72)
@@ -67,6 +71,7 @@ These platforms bring the most intentful traffic from your exact target audience
 - **Priority:** ⭐⭐⭐⭐⭐
 
 ### MicroLaunch
+
 - **URL:** https://microlaunch.net/
 - **Why:** Launch stays live for 1 month (less pressure than PH)
 - **Backlink:** Dofollow (DR 54)
@@ -76,6 +81,7 @@ These platforms bring the most intentful traffic from your exact target audience
 - **Priority:** ⭐⭐⭐⭐⭐
 
 ### AlternativeTo
+
 - **URL:** https://alternativeto.net/
 - **Why:** Massive audience looking for software alternatives
 - **Backlink:** Yes
@@ -91,6 +97,7 @@ These platforms bring the most intentful traffic from your exact target audience
 Highly engaged communities of developers and open source enthusiasts.
 
 ### DEV.to
+
 - **URL:** https://dev.to/
 - **Why:** Large developer community; great for technical content
 - **Backlink:** Nofollow but high traffic
@@ -99,6 +106,7 @@ Highly engaged communities of developers and open source enthusiasts.
 - **Priority:** ⭐⭐⭐⭐⭐
 
 ### GitHub Topics & Trending
+
 - **URL:** https://github.com/topics/
 - **Why:** Native platform visibility
 - **Cost:** Free
@@ -106,6 +114,7 @@ Highly engaged communities of developers and open source enthusiasts.
 - **Priority:** ⭐⭐⭐⭐⭐
 
 ### OpenAlternative.co
+
 - **URL:** https://openalternative.co/
 - **Why:** Curated open source alternatives directory
 - **Backlink:** Yes
@@ -114,6 +123,7 @@ Highly engaged communities of developers and open source enthusiasts.
 - **Priority:** ⭐⭐⭐⭐
 
 ### OpenSourceAlternative.to
+
 - **URL:** https://opensourcealternative.to/
 - **Why:** Open source software showcase
 - **Backlink:** Yes
@@ -122,6 +132,7 @@ Highly engaged communities of developers and open source enthusiasts.
 - **Priority:** ⭐⭐⭐⭐
 
 ### Codeberg (Mirror)
+
 - **URL:** https://codeberg.org/
 - **Why:** Non-profit, community-driven Git hosting
 - **Cost:** Free
@@ -129,6 +140,7 @@ Highly engaged communities of developers and open source enthusiasts.
 - **Priority:** ⭐⭐⭐
 
 ### SourceForge
+
 - **URL:** https://sourceforge.net/
 - **Why:** Long-standing OSS platform with loyal audience
 - **Backlink:** Yes
@@ -143,6 +155,7 @@ Highly engaged communities of developers and open source enthusiasts.
 Directories focused on startups and SaaS products.
 
 ### StartupBase
+
 - **URL:** https://startupbase.io/
 - **Why:** Launch platform for indie makers
 - **Backlink:** Yes (DA 52)
@@ -152,6 +165,7 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐⭐
 
 ### Launched.io
+
 - **URL:** https://launched.io/
 - **Why:** Startup showcase platform
 - **Backlink:** Yes (DA 39)
@@ -161,6 +175,7 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐⭐
 
 ### PitchWall (formerly BetaPage)
+
 - **URL:** https://pitchwall.co/
 - **Why:** Community-driven product discovery
 - **Backlink:** Nofollow (DR 59)
@@ -169,6 +184,7 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐⭐
 
 ### Launching Next
+
 - **URL:** https://www.launchingnext.com/
 - **Why:** Targets early adopters
 - **Cost:** Free
@@ -176,6 +192,7 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐⭐
 
 ### SideProjectors
+
 - **URL:** https://www.sideprojectors.com/
 - **Why:** Hub for side projects (can list for discovery)
 - **Cost:** Free
@@ -183,6 +200,7 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐
 
 ### Crunchbase
+
 - **URL:** https://www.crunchbase.com/
 - **Why:** High DA (90), professional credibility
 - **Backlink:** Yes
@@ -191,6 +209,7 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐⭐
 
 ### AngelList
+
 - **URL:** https://angel.co/
 - **Why:** Connects with investors and tech community
 - **Backlink:** Yes
@@ -199,6 +218,7 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐
 
 ### F6S
+
 - **URL:** https://www.f6s.com/
 - **Why:** Network for founders
 - **Cost:** Free
@@ -206,6 +226,7 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐
 
 ### ScoutForge
+
 - **URL:** https://scoutforge.net/
 - **Why:** Good for smaller projects to stand out
 - **Backlink:** Dofollow (DR 48)
@@ -213,12 +234,14 @@ Directories focused on startups and SaaS products.
 - **Priority:** ⭐⭐⭐
 
 ### SubmitHunt
+
 - **URL:** https://submithunt.co/
 - **Why:** Modern, visual gallery-style directory
 - **Cost:** Free
 - **Priority:** ⭐⭐⭐
 
 ### Internet Is Beautiful
+
 - **URL:** https://internetisbeautiful.com/
 - **Why:** Curated interesting websites
 - **Audience:** 15K+ curious minds
@@ -233,17 +256,17 @@ High engagement but requires genuine community participation. Follow the 9:1 rul
 
 ### Primary Subreddits
 
-| Subreddit | Members | Best Post Type | Rules |
-|-----------|---------|----------------|-------|
-| r/SideProject | 453K+ | Project showcase | Very supportive, direct sharing OK |
-| r/coolgithubprojects | 60K+ | GitHub project links | Direct sharing OK |
-| r/opensource | 100K+ | Open source projects | Community-friendly sharing |
-| r/SaaS | 100K+ | SaaS discussions | Build reputation first |
-| r/indiehackers | 50K+ | SHOW IH posts | One self-promo allowed with SHOW IH flair |
-| r/webdev | 2M+ | Useful tools | Provide value, not just links |
-| r/Entrepreneur | 4.8M+ | Lessons learned | Educational content focus |
-| r/startups | 1M+ | Startup resources | Share with context |
-| r/alphaandbetausers | 22K+ | Beta testing requests | Direct sharing OK |
+| Subreddit            | Members | Best Post Type        | Rules                                     |
+| -------------------- | ------- | --------------------- | ----------------------------------------- |
+| r/SideProject        | 453K+   | Project showcase      | Very supportive, direct sharing OK        |
+| r/coolgithubprojects | 60K+    | GitHub project links  | Direct sharing OK                         |
+| r/opensource         | 100K+   | Open source projects  | Community-friendly sharing                |
+| r/SaaS               | 100K+   | SaaS discussions      | Build reputation first                    |
+| r/indiehackers       | 50K+    | SHOW IH posts         | One self-promo allowed with SHOW IH flair |
+| r/webdev             | 2M+     | Useful tools          | Provide value, not just links             |
+| r/Entrepreneur       | 4.8M+   | Lessons learned       | Educational content focus                 |
+| r/startups           | 1M+     | Startup resources     | Share with context                        |
+| r/alphaandbetausers  | 22K+    | Beta testing requests | Direct sharing OK                         |
 
 ### Strategy for Reddit
 
@@ -263,22 +286,22 @@ Reach engaged audiences through newsletter features.
 
 ### Developer & OSS Newsletters
 
-| Newsletter | Focus | How to Get Featured |
-|------------|-------|---------------------|
-| **TLDR** | Tech news digest | Submit via tldr.tech |
-| **Console.dev** | Dev tools roundup | Submit interesting tools |
-| **Changelog News** | Open source news | Submit via changelog.com |
-| **Hacker Newsletter** | HN best-of | Get traction on HN first |
-| **The New Stack** | Modern dev | Pitch as newsworthy |
-| **cron.weekly** | Linux/OSS | Submit Linux-related tools |
+| Newsletter            | Focus             | How to Get Featured        |
+| --------------------- | ----------------- | -------------------------- |
+| **TLDR**              | Tech news digest  | Submit via tldr.tech       |
+| **Console.dev**       | Dev tools roundup | Submit interesting tools   |
+| **Changelog News**    | Open source news  | Submit via changelog.com   |
+| **Hacker Newsletter** | HN best-of        | Get traction on HN first   |
+| **The New Stack**     | Modern dev        | Pitch as newsworthy        |
+| **cron.weekly**       | Linux/OSS         | Submit Linux-related tools |
 
 ### Startup & Indie Newsletters
 
-| Newsletter | Focus | How to Get Featured |
-|------------|-------|---------------------|
-| **Indie Hackers Newsletter** | Indie products | Already on IH - engage more |
-| **Morning Maker Show** | Build in public | Join Discord, share updates |
-| **Failory** | Startup stories | Share your building journey |
+| Newsletter                   | Focus           | How to Get Featured         |
+| ---------------------------- | --------------- | --------------------------- |
+| **Indie Hackers Newsletter** | Indie products  | Already on IH - engage more |
+| **Morning Maker Show**       | Build in public | Join Discord, share updates |
+| **Failory**                  | Startup stories | Share your building journey |
 
 ### How to Pitch
 
@@ -314,24 +337,24 @@ Longer-form exposure to highly engaged audiences.
 
 ### Developer & OSS Podcasts
 
-| Podcast | Focus | How to Pitch |
-|---------|-------|--------------|
-| **devtools.fm** | Developer tools | Perfect fit - pitch directly |
-| **The Changelog** | Open source | Submit via changelog.com |
-| **Open Source Startup Podcast** | OSS business | Great for OSS story |
-| **FLOSS Weekly** | One OSS project/week | Submit for feature |
-| **Hanselminutes** | Diverse tech topics | Pitch via website |
-| **Full Stack Radio** | Dev products | Contact Adam Wathan |
-| **Scaling DevTools** | DevTool growth | Share growth story |
+| Podcast                         | Focus                | How to Pitch                 |
+| ------------------------------- | -------------------- | ---------------------------- |
+| **devtools.fm**                 | Developer tools      | Perfect fit - pitch directly |
+| **The Changelog**               | Open source          | Submit via changelog.com     |
+| **Open Source Startup Podcast** | OSS business         | Great for OSS story          |
+| **FLOSS Weekly**                | One OSS project/week | Submit for feature           |
+| **Hanselminutes**               | Diverse tech topics  | Pitch via website            |
+| **Full Stack Radio**            | Dev products         | Contact Adam Wathan          |
+| **Scaling DevTools**            | DevTool growth       | Share growth story           |
 
 ### Indie/Startup Podcasts
 
-| Podcast | Focus | How to Pitch |
-|---------|-------|--------------|
-| **Indie Hackers Podcast** | Indie stories | Share via IH community |
-| **The Bootstrapped Founder** | Bootstrap journey | Pitch via arvid.io |
-| **My First Million** | Side projects | Big audience, harder to get on |
-| **Startups For the Rest of Us** | Practical startup advice | Long-running, credible |
+| Podcast                         | Focus                    | How to Pitch                   |
+| ------------------------------- | ------------------------ | ------------------------------ |
+| **Indie Hackers Podcast**       | Indie stories            | Share via IH community         |
+| **The Bootstrapped Founder**    | Bootstrap journey        | Pitch via arvid.io             |
+| **My First Million**            | Side projects            | Big audience, harder to get on |
+| **Startups For the Rest of Us** | Practical startup advice | Long-running, credible         |
 
 ### Pitch Template
 
@@ -366,20 +389,20 @@ Leverage the tech stack for additional visibility.
 
 ### Astro.js
 
-| Platform | URL | How to Submit |
-|----------|-----|---------------|
-| **Astro Showcase** | astro.build/showcase | Submit via website |
-| **Astro Discord** | discord.gg/astro | Share in #showcase |
-| **Astro GitHub** | github.com/withastro | Star, contribute, share |
+| Platform           | URL                  | How to Submit           |
+| ------------------ | -------------------- | ----------------------- |
+| **Astro Showcase** | astro.build/showcase | Submit via website      |
+| **Astro Discord**  | discord.gg/astro     | Share in #showcase      |
+| **Astro GitHub**   | github.com/withastro | Star, contribute, share |
 
 ### Vue.js
 
-| Platform | URL | How to Submit |
-|----------|-----|---------------|
-| **Made with Vue.js** | madewithvuejs.com/submit | Submit form |
-| **Vue.js Examples** | vuejsexamples.com | Submit via site |
-| **awesome-vue** | github.com/vuejs/awesome-vue | Submit PR |
-| **Vue Discord** | discord.gg/vue | Share in showcase channel |
+| Platform             | URL                          | How to Submit             |
+| -------------------- | ---------------------------- | ------------------------- |
+| **Made with Vue.js** | madewithvuejs.com/submit     | Submit form               |
+| **Vue.js Examples**  | vuejsexamples.com            | Submit via site           |
+| **awesome-vue**      | github.com/vuejs/awesome-vue | Submit PR                 |
+| **Vue Discord**      | discord.gg/vue               | Share in showcase channel |
 
 **Priority:** ⭐⭐⭐⭐
 
@@ -391,14 +414,14 @@ Get listed in curated GitHub lists for long-term organic traffic.
 
 ### Highly Relevant Lists
 
-| Repository | Stars | Relevance |
-|------------|-------|-----------|
-| **awesome-indie** | Lists for indie makers | High |
-| **awesome-saas-boilerplates** | SaaS resources | Medium |
-| **awesome-seo** | SEO tools | High |
-| **awesome-marketing** | Marketing tools | High |
-| **awesome-startup** | Startup resources | High |
-| **awesome-selfhosted** | Self-hosted tools | Medium |
+| Repository                    | Stars                  | Relevance |
+| ----------------------------- | ---------------------- | --------- |
+| **awesome-indie**             | Lists for indie makers | High      |
+| **awesome-saas-boilerplates** | SaaS resources         | Medium    |
+| **awesome-seo**               | SEO tools              | High      |
+| **awesome-marketing**         | Marketing tools        | High      |
+| **awesome-startup**           | Startup resources      | High      |
+| **awesome-selfhosted**        | Self-hosted tools      | Medium    |
 
 ### How to Submit
 
@@ -417,21 +440,21 @@ Real-time communities for ongoing engagement.
 
 ### Indie/Maker Communities
 
-| Community | Platform | Focus | How to Join |
-|-----------|----------|-------|-------------|
-| **WIP (wip.co)** | Telegram/Web | Build in public | wip.co |
-| **Morning Maker Show** | Discord | Indie makers | Via website |
-| **Ramen Club** | Discord | Bootstrappers | Via invitation |
-| **Indie Worldwide** | Discord | Bootstrapped founders | indieworldwide.com |
-| **Small Bets** | Community | Small wins first | smallbets.co (paid) |
+| Community              | Platform     | Focus                 | How to Join         |
+| ---------------------- | ------------ | --------------------- | ------------------- |
+| **WIP (wip.co)**       | Telegram/Web | Build in public       | wip.co              |
+| **Morning Maker Show** | Discord      | Indie makers          | Via website         |
+| **Ramen Club**         | Discord      | Bootstrappers         | Via invitation      |
+| **Indie Worldwide**    | Discord      | Bootstrapped founders | indieworldwide.com  |
+| **Small Bets**         | Community    | Small wins first      | smallbets.co (paid) |
 
 ### Developer Communities
 
-| Community | Platform | Focus |
-|-----------|----------|-------|
-| **Reactiflux** | Discord | React/JS developers |
-| **DevChat** | Slack | General dev |
-| **The Practical Dev** | Various | DEV.to community |
+| Community             | Platform | Focus               |
+| --------------------- | -------- | ------------------- |
+| **Reactiflux**        | Discord  | React/JS developers |
+| **DevChat**           | Slack    | General dev         |
+| **The Practical Dev** | Various  | DEV.to community    |
 
 ### Strategy
 
@@ -450,20 +473,20 @@ Build domain authority through quality directory submissions.
 
 ### High-DA Directories
 
-| Directory | DA | Link Type | Cost |
-|-----------|-----|-----------|------|
-| **BOTW (Best of the Web)** | 60+ | Dofollow | Free/Paid |
-| **Jasmine Directory** | 50+ | Dofollow | Free |
-| **Hotfrog** | 50+ | Dofollow | Free |
-| **SoMuch.com** | 45+ | Dofollow | Free |
+| Directory                  | DA  | Link Type | Cost      |
+| -------------------------- | --- | --------- | --------- |
+| **BOTW (Best of the Web)** | 60+ | Dofollow  | Free/Paid |
+| **Jasmine Directory**      | 50+ | Dofollow  | Free      |
+| **Hotfrog**                | 50+ | Dofollow  | Free      |
+| **SoMuch.com**             | 45+ | Dofollow  | Free      |
 
 ### Web Tool Directories
 
-| Directory | URL | Focus |
-|-----------|-----|-------|
+| Directory          | URL             | Focus                |
+| ------------------ | --------------- | -------------------- |
 | **Mr. Free Tools** | mrfreetools.com | Free tools directory |
-| **Tools in Free** | toolsinfree.com | Online utilities |
-| **WebCurate** | webcurate.co | Dev tools |
+| **Tools in Free**  | toolsinfree.com | Online utilities     |
+| **WebCurate**      | webcurate.co    | Dev tools            |
 
 ### Submission Tips
 
@@ -483,6 +506,7 @@ Ongoing visibility through social channels.
 ### Twitter/X Strategy
 
 **Hashtags to Use:**
+
 - #buildinpublic
 - #indiehackers
 - #opensource
@@ -493,6 +517,7 @@ Ongoing visibility through social channels.
 - #vuejs
 
 **Content Ideas:**
+
 - Share milestones (100 directories, 500 users, etc.)
 - Behind-the-scenes development updates
 - Tips from curating directories
@@ -501,11 +526,11 @@ Ongoing visibility through social channels.
 
 ### Build in Public Platforms
 
-| Platform | URL | Focus |
-|----------|-----|-------|
+| Platform            | URL                | Focus                 |
+| ------------------- | ------------------ | --------------------- |
 | **Public Builders** | publicbuilders.org | Directory of builders |
-| **MakerLog** | getmakerlog.com | Daily task logging |
-| **WIP** | wip.co | Progress sharing |
+| **MakerLog**        | getmakerlog.com    | Daily task logging    |
+| **WIP**             | wip.co             | Progress sharing      |
 
 **Priority:** ⭐⭐⭐⭐
 
@@ -562,6 +587,7 @@ Key Features:
 ## Timeline & Priority
 
 ### Week 1: Foundation
+
 - [ ] DevHunt (GitHub PR)
 - [ ] SaaSHub
 - [ ] AlternativeTo
@@ -569,6 +595,7 @@ Key Features:
 - [ ] r/SideProject post
 
 ### Week 2: Directories
+
 - [ ] BetaList
 - [ ] Uneed
 - [ ] MicroLaunch
@@ -576,16 +603,19 @@ Key Features:
 - [ ] Launched.io
 
 ### Week 3: Communities
+
 - [ ] Reddit (remaining subreddits)
 - [ ] Discord communities
 - [ ] Framework showcases (Astro, Vue)
 
 ### Week 4: Content & Outreach
+
 - [ ] Newsletter pitches
 - [ ] Podcast pitches
 - [ ] Awesome list PRs
 
 ### Ongoing
+
 - [ ] Twitter #buildinpublic
 - [ ] Respond to all comments
 - [ ] Update listings with new features
@@ -598,10 +628,10 @@ Key Features:
 Create a spreadsheet with these columns:
 
 | Platform | Status | Date Submitted | Date Approved | Link | Notes |
-|----------|--------|----------------|---------------|------|-------|
-| DevHunt | | | | | |
-| SaaSHub | | | | | |
-| ... | | | | | |
+| -------- | ------ | -------------- | ------------- | ---- | ----- |
+| DevHunt  |        |                |               |      |       |
+| SaaSHub  |        |                |               |      |       |
+| ...      |        |                |               |      |       |
 
 ---
 
@@ -625,4 +655,4 @@ Create a spreadsheet with these columns:
 
 ---
 
-*Last Updated: December 2025*
+_Last Updated: December 2025_
