@@ -30,7 +30,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 - 🔐 **Optional Authentication** - Google & GitHub OAuth via Supabase
 - ❤️ **Favorites** - Save directories to your personal collection
 - ✅ **Submission Tracking** - Track which directories you've submitted to
-- 📧 **Newsletter Integration** - Mautic-powered email capture
+- 📧 **Newsletter Integration** - Listmonk-powered email capture
 - 📈 **Public Stats** - Transparent analytics dashboard
 - 🎨 **Screenshot Generation** - Social media sharing cards
 
@@ -50,7 +50,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 - **Frontend:** Vue.js 3 (Composition API), Vite, Tailwind CSS
 - **Backend:** Supabase (PostgreSQL + Auth + Realtime)
 - **Hosting:** GitHub Pages (Static SPA)
-- **Newsletter:** Mautic (self-hosted at crm.meysam.io)
+- **Newsletter:** Listmonk (self-hosted at newsletter.meysam.io)
 - **Analytics:** Pirsch (privacy-first)
 - **CI/CD:** GitHub Actions
 - **APIs:** Moz API for Domain Rating scores
@@ -63,7 +63,7 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
 
 - Bun
 - Supabase account (free tier works)
-- Mautic instance (or use environment variable stubs)
+- Listmonk instance (optional - hardcoded in component)
 - GitHub repository for Giscus
 
 ### Installation
@@ -93,10 +93,6 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
    # Required
    VITE_SUPABASE_URL=https://your-project.supabase.co
    VITE_SUPABASE_ANON_KEY=your-anon-key
-
-   # Required for newsletter
-   VITE_MAUTIC_BASE_URL=https://mautic.your-domain.com
-   VITE_MAUTIC_FORM_ID=your-form-id
 
    # Optional
    VITE_PIRSCH_SITE_ID=
@@ -148,8 +144,6 @@ A curated directory aggregator that helps indie hackers, bootstrappers, and solo
      ```
      VITE_SUPABASE_URL
      VITE_SUPABASE_ANON_KEY
-     VITE_MAUTIC_BASE_URL
-     VITE_MAUTIC_FORM_ID
      VITE_PIRSCH_SITE_ID
      VITE_GITHUB_REPO
      VITE_GITHUB_REPO_ID
@@ -200,11 +194,14 @@ Output will be in `dist/` directory.
 3. **Row Level Security (RLS):**
    Policies are defined in the migration file and will be automatically applied
 
-### Mautic Setup
+### Listmonk Setup (Optional)
 
-1. Create a form in Mautic with fields: `email`, `name`, `product_name`
-2. Get the form ID from the Mautic dashboard
-3. Add to environment variables
+Newsletter subscription is handled via a self-hosted Listmonk instance:
+
+1. Deploy Listmonk (or use the existing instance at newsletter.meysam.io)
+2. Create a mailing list and get its UUID
+3. The form endpoint and list ID are hardcoded in `AppFooter.astro`
+4. Listmonk handles subscription confirmation via double opt-in
 
 ### Giscus Setup
 
@@ -296,7 +293,7 @@ bun run preview  # Preview production build
 
 - `useAuth()` - Authentication state and methods
 - `useDirectories()` - Directory data and filtering
-- `useMauticNewsletter()` - Newsletter subscription
+- `useListmonkNewsletter()` - Newsletter subscription (Listmonk)
 
 ---
 
@@ -324,12 +321,10 @@ We welcome contributions! Here's how:
 
 ### Required
 
-| Variable                 | Description            | Example                          |
-| ------------------------ | ---------------------- | -------------------------------- |
-| `VITE_SUPABASE_URL`      | Supabase project URL   | `https://xxx.supabase.co`        |
-| `VITE_SUPABASE_ANON_KEY` | Supabase anonymous key | `eyJhbGc...`                     |
-| `VITE_MAUTIC_BASE_URL`   | Mautic instance URL    | `https://mautic.your-domain.com` |
-| `VITE_MAUTIC_FORM_ID`    | Mautic form ID         | `5`                              |
+| Variable                 | Description            | Example                   |
+| ------------------------ | ---------------------- | ------------------------- |
+| `VITE_SUPABASE_URL`      | Supabase project URL   | `https://xxx.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anonymous key | `eyJhbGc...`              |
 
 ### Optional
 

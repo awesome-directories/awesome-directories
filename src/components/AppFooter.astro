@@ -107,22 +107,53 @@ var currentYear = new Date().getFullYear();
           We add new verified directories weekly. Be the first to know—plus get
           actionable launch strategies that actually work.
         </p>
-        <form id="newsletter-form" class="space-y-3">
+        <form
+          id="newsletter-form"
+          class="space-y-3 listmonk-form"
+          data-pirsch-event="subscribe"
+          data-pirsch-meta-source="footer"
+          data-pirsch-non-interactive
+          action="https://newsletter.meysam.io/subscription/form"
+          method="post"
+        >
+          <input type="hidden" name="nonce" />
+          <input type="hidden" name="l" value="3a836c26-900d-4d3f-89d9-eba6943ca1ac" />
+
+          <!-- Honeypot fields for spam protection -->
+          <input type="text" name="name" value="" class="listmonk-honeypot" tabindex="-1" autocomplete="new-password" aria-hidden="true" />
+          <input type="text" name="company" value="" class="listmonk-honeypot" tabindex="-1" autocomplete="new-password" aria-hidden="true" />
+          <input type="text" name="website" value="" class="listmonk-honeypot" tabindex="-1" autocomplete="new-password" aria-hidden="true" />
+
           <label for="newsletter-email" class="sr-only">Email address</label>
           <input
             id="newsletter-email"
             type="email"
+            name="email"
             required
             placeholder="Your email"
             class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm min-h-[44px]"
           />
+
+          <altcha-widget
+            class="altcha-widget"
+            challengeurl="https://newsletter.meysam.io/api/public/captcha/altcha"
+            auto="onfocus"
+            aria-label="Captcha verification"
+          ></altcha-widget>
+          <script type="module" src="https://newsletter.meysam.io/public/static/altcha.umd.js" async defer></script>
 
           <button
             id="newsletter-submit"
             type="submit"
             class="w-full btn-primary min-h-[44px]"
           >
-            Join 100+ Founders
+            <span class="button-text">Join 100+ Founders</span>
+            <span class="button-loader hidden">
+              <svg class="inline-block animate-spin mr-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+              </svg>
+              Subscribing...
+            </span>
           </button>
 
           <p id="newsletter-success" class="text-sm text-success hidden"></p>
@@ -215,9 +246,23 @@ var currentYear = new Date().getFullYear();
   </div>
 </footer>
 
-<script>
-  import { supabase } from "@/lib/supabase-client";
+<style>
+  /* Hide honeypot fields */
+  .listmonk-honeypot {
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 
+  /* Style the Altcha widget to match the dark theme */
+  .altcha-widget {
+    display: none;
+  }
+</style>
+
+<script>
   var form = document.getElementById("newsletter-form") as HTMLFormElement;
   var emailInput = document.getElementById(
     "newsletter-email",
@@ -225,8 +270,16 @@ var currentYear = new Date().getFullYear();
   var submitButton = document.getElementById(
     "newsletter-submit",
   ) as HTMLButtonElement;
+  var buttonText = submitButton?.querySelector(".button-text");
+  var buttonLoader = submitButton?.querySelector(".button-loader");
   var successMessage = document.getElementById("newsletter-success");
   var errorMessage = document.getElementById("newsletter-error");
+
+  function setLoading(isLoading: boolean) {
+    if (submitButton) submitButton.disabled = isLoading;
+    buttonText?.classList.toggle("hidden", isLoading);
+    buttonLoader?.classList.toggle("hidden", !isLoading);
+  }
 
   form?.addEventListener("submit", async function handleSubmit(e) {
     e.preventDefault();
@@ -234,53 +287,34 @@ var currentYear = new Date().getFullYear();
     var email = emailInput?.value;
     if (!email) return;
 
-    if (submitButton) submitButton.disabled = true;
-    if (submitButton) submitButton.textContent = "Subscribing...";
+    setLoading(true);
     successMessage?.classList.add("hidden");
     errorMessage?.classList.add("hidden");
 
     try {
-      var { error: dbError } = await supabase
-        .from("newsletter_signups")
-        .insert({
-          email,
-          source: "footer",
-        });
+      var formData = new FormData(form);
 
-      if (dbError) {
-        if (dbError.code === "23505") {
-          if (successMessage) {
-            successMessage.textContent = "You are already subscribed!";
-            successMessage.classList.remove("hidden");
-          }
-          emailInput.value = "";
-          return;
-        } else {
-          throw dbError;
-        }
-      }
+      var response = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+      });
 
-      var mauticBaseUrl = import.meta.env.PUBLIC_MAUTIC_BASE_URL;
-      var mauticFormId = import.meta.env.PUBLIC_MAUTIC_FORM_ID;
-
-      if (mauticBaseUrl && mauticFormId) {
-        var formData = new FormData();
-        formData.append("mauticform[email]", email);
-        formData.append("mauticform[formId]", mauticFormId);
-
-        await fetch(`${mauticBaseUrl}/form/submit?formId=${mauticFormId}`, {
-          method: "POST",
-          body: formData,
-          mode: "no-cors",
-        });
-      }
-
+      // With no-cors mode, we can't read the response, so we assume success
+      // Listmonk will handle the actual subscription
       if (successMessage) {
-        successMessage.textContent = "✅ Subscribed! Check your email.";
+        successMessage.textContent = "Thanks for subscribing! Please check your email to confirm.";
         successMessage.classList.remove("hidden");
       }
       emailInput.value = "";
 
+      // Reset the Altcha widget for next submission
+      var altchaWidget = form.querySelector("altcha-widget") as any;
+      if (altchaWidget?.reset) {
+        altchaWidget.reset();
+      }
+
+      // Track subscription event
       if (typeof window !== "undefined" && (window as any).pirsch) {
         (window as any).pirsch("Newsletter Signup", { source: "footer" });
       }
@@ -291,8 +325,7 @@ var currentYear = new Date().getFullYear();
         errorMessage.classList.remove("hidden");
       }
     } finally {
-      if (submitButton) submitButton.disabled = false;
-      if (submitButton) submitButton.textContent = "Subscribe";
+      setLoading(false);
     }
   });
 </script>
