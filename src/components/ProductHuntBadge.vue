@@ -9,7 +9,7 @@
     <img
       src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1041603&theme=neutral&t=1764313458442"
       alt="Awesome Directories - Curated launch directories for saas founders | Product Hunt"
-      style="width: 250px; height: 54px;"
+      style="width: 250px; height: 54px"
       width="250"
       height="54"
     />
