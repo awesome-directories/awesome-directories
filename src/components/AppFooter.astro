@@ -140,6 +140,7 @@ var currentYear = new Date().getFullYear();
             auto="onfocus"
             aria-label="Captcha verification"
           ></altcha-widget>
+          <script type="module" src="https://newsletter.meysam.io/public/static/altcha.umd.js" async defer></script>
 
           <button
             id="newsletter-submit"
@@ -245,9 +246,6 @@ var currentYear = new Date().getFullYear();
   </div>
 </footer>
 
-<!-- Altcha captcha widget script -->
-<script type="module" src="https://newsletter.meysam.io/public/static/altcha.umd.js" async defer></script>
-
 <style>
   /* Hide honeypot fields */
   .listmonk-honeypot {
@@ -260,11 +258,7 @@ var currentYear = new Date().getFullYear();
 
   /* Style the Altcha widget to match the dark theme */
   .altcha-widget {
-    --altcha-color-base: #1f2937;
-    --altcha-color-text: #d1d5db;
-    --altcha-color-border: #374151;
-    --altcha-color-border-focus: #3b82f6;
-    --altcha-max-width: 100%;
+    display: none;
   }
 </style>
 
