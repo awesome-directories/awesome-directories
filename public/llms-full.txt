@@ -1,0 +1,795 @@
+# Awesome Directories - Full Documentation
+
+> Curated directory aggregator web application helping indie hackers, bootstrappers, and solopreneurs discover 300+ verified product launch directories for SaaS products.
+
+## Quick Reference
+
+- Website: https://awesome-directories.com
+- Repository: https://github.com/awesome-directories/awesome-directories
+- License: Apache 2.0
+- Concise Version: /llms.txt
+
+---
+
+## Table of Contents
+
+1. [Project Overview](#project-overview)
+2. [Technology Stack](#technology-stack)
+3. [Project Structure](#project-structure)
+4. [Architecture Patterns](#architecture-patterns)
+5. [Database Schema](#database-schema)
+6. [Key Components](#key-components)
+7. [Composables & Logic](#composables--logic)
+8. [Routing](#routing)
+9. [Development Guide](#development-guide)
+10. [Build & Deployment](#build--deployment)
+11. [Common Tasks](#common-tasks)
+12. [Conventions & Best Practices](#conventions--best-practices)
+
+---
+
+## Project Overview
+
+### Core Value Proposition
+
+- Curated, verified directories updated weekly
+- Advanced filtering by Domain Rating (DR), category, pricing, and link type
+- User authentication with favorites and project-based submission tracking
+- Directory detail pages with related directories, ratings, and reviews
+- User directory submission system with review workflow and email notifications
+- Project management for tracking submissions across multiple products
+- Automated SEO metrics updates via Ahrefs API and Supabase Edge Functions
+- Comprehensive statistics page with interactive charts
+- Blog with SEO-optimized content, tags, search, and RSS feed
+
+### Key Features
+
+1. **Directory Listing**: 300+ curated directories with filtering and search
+2. **User Authentication**: Google/GitHub OAuth via Supabase
+3. **Favorites System**: Save and manage favorite directories
+4. **Submission Tracking**: Track which directories you've submitted products to
+5. **Directory Submissions**: Submit new directories for admin review
+6. **Ratings & Reviews**: Rate directories 1-5 stars and leave comments
+7. **Blog System**: Markdown/MDX posts with search, tags, and comments
+8. **Statistics Dashboard**: Interactive charts showing directory analytics
+9. **Email Notifications**: Automated emails for submissions, approvals, rejections
+
+---
+
+## Technology Stack
+
+### Frontend
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Astro.js | 5.16.0 | Static Site Generation with Content Collections |
+| Vue.js 3 | Latest | Interactive components (Composition API, islands) |
+| Tailwind CSS | 4.1.17 | Utility-first CSS |
+| TypeScript | - | Type safety (ES modules) |
+| Chart.js | 4.5.1 | Interactive statistics charts |
+| Pagefind | 1.4.0 | Static search indexing for blog |
+
+### Backend & Services
+
+| Service | Purpose |
+|---------|---------|
+| Supabase | PostgreSQL database, Auth, Realtime, Edge Functions |
+| Resend | Transactional email (approval, rejection, welcome emails) |
+| Listmonk | Self-hosted newsletter (newsletter.meysam.io) |
+| Ahrefs API | SEO metrics (DR, traffic) via Apify |
+| Giscus | GitHub Discussions for blog comments |
+| Pirsch | Privacy-first analytics (optional) |
+
+### Build & Deploy
+
+| Tool | Purpose |
+|------|---------|
+| Bun | Package manager (primary) |
+| Vite | Build tool via Astro |
+| GitHub Actions | CI/CD pipeline |
+| GitHub Pages | Production hosting |
+| Netlify | PR preview deployments |
+
+---
+
+## Project Structure
+
+```
+/
+├── .github/workflows/
+│   └── ci.yml                      # CI/CD pipeline
+│
+├── public/                         # Static assets
+│   ├── data/                       # Generated at build time
+│   │   ├── directories.json        # All directories data
+│   │   └── stats.json              # Statistics for charts
+│   ├── pagefind/                   # Search index (generated)
+│   ├── covers/                     # Blog post cover images
+│   ├── llms.txt                    # Concise AI documentation
+│   ├── llms-full.txt               # Full AI documentation (this file)
+│   └── robots.txt                  # SEO robots file
+│
+├── src/
+│   ├── pages/                      # Astro pages (file-based routing)
+│   │   ├── index.astro             # Home page (directory listing)
+│   │   ├── about.astro             # About page
+│   │   ├── stats.astro             # Statistics with charts
+│   │   ├── favorites.astro         # User favorites (auth required)
+│   │   ├── submissions.astro       # Project submission tracker
+│   │   ├── my-submissions.astro    # User's directory submissions
+│   │   ├── submit.astro            # Submit directory form
+│   │   ├── terms.astro             # Terms of Service
+│   │   ├── privacy.astro           # Privacy Policy
+│   │   ├── 404.astro               # Error page
+│   │   ├── directory/
+│   │   │   └── [slug].astro        # Dynamic directory detail pages
+│   │   └── blog/
+│   │       ├── index.astro         # Blog listing
+│   │       ├── [slug].astro        # Individual posts
+│   │       ├── [...page].astro     # Pagination
+│   │       └── tags/               # Tag filtering
+│   │
+│   ├── content/
+│   │   ├── config.ts               # Content collections schema
+│   │   └── blog/                   # Markdown/MDX blog posts
+│   │
+│   ├── layouts/
+│   │   └── BaseLayout.astro        # Base HTML layout with SEO
+│   │
+│   ├── components/
+│   │   ├── AppHeader.astro         # Navigation (static)
+│   │   ├── AppFooter.astro         # Footer (static)
+│   │   ├── DirectoryCard.vue       # Directory item (Vue)
+│   │   ├── DirectoryFilter.vue     # Filters sidebar (Vue)
+│   │   ├── DirectoryListContent.vue # Main listing (Vue)
+│   │   ├── DirectoryDetailActions.vue # Detail page actions
+│   │   ├── AuthModal.vue           # OAuth modal (Vue)
+│   │   ├── FavoriteButton.vue      # Favorite toggle
+│   │   ├── FavoritesContent.vue    # Favorites page content
+│   │   ├── SubmissionsContent.vue  # Submission tracker
+│   │   ├── MySubmissionsContent.vue # Directory submissions
+│   │   ├── SubmitDirectoryForm.vue # Submission form
+│   │   ├── StatsCards.vue          # Statistics cards
+│   │   ├── StatsCharts.vue         # Chart.js charts
+│   │   ├── BlogCard.astro          # Blog post card
+│   │   ├── Pagination.astro        # Pagination
+│   │   ├── TableOfContents.astro   # Blog TOC
+│   │   └── GiscusComments.astro    # Comments
+│   │
+│   ├── composables/                # Vue Composition API
+│   │   ├── useAuth.js              # Authentication
+│   │   ├── useDirectories.js       # Directory filtering
+│   │   ├── useDirectory.js         # Single directory ops
+│   │   ├── useProjects.js          # Project management
+│   │   └── useListmonkNewsletter.js # Newsletter
+│   │
+│   ├── lib/
+│   │   ├── supabase-server.js      # Build-time client
+│   │   ├── supabase-client.js      # Runtime client
+│   │   ├── supabase.js             # Shared utilities
+│   │   ├── logger.js               # Logging
+│   │   └── data/directories.js     # Data helpers
+│   │
+│   ├── stores/
+│   │   └── auth.js                 # Nanostores auth state
+│   │
+│   ├── integrations/
+│   │   ├── save-directories.js     # Save directories.json
+│   │   ├── save-stats.js           # Save stats.json
+│   │   └── pagefind.js             # Search indexing
+│   │
+│   ├── utils/
+│   │   ├── auth.js                 # Auth utilities
+│   │   └── blog.ts                 # Blog utilities
+│   │
+│   └── style.css                   # Global Tailwind
+│
+├── supabase/
+│   ├── config.toml                 # Supabase config
+│   ├── migrations/                 # Database migrations
+│   │   ├── 001_initial_schema.sql
+│   │   ├── 002_pending_directories.sql
+│   │   ├── 003_add_moz_metrics.sql
+│   │   ├── 004_setup_cron_jobs.sql
+│   │   ├── 005_setup_http_extension.sql
+│   │   ├── 006_reviews_projects_schema.sql
+│   │   └── 007_email_system.sql
+│   ├── seeds/
+│   │   └── directories.json        # Seed data
+│   └── functions/                  # Edge Functions (Deno)
+│       ├── _shared/                # Shared utilities
+│       │   ├── email.ts            # Email sending
+│       │   └── email-templates.ts  # HTML templates
+│       ├── update-seo-data/        # SEO metrics updater
+│       ├── send-approval-email/    # Approval notifications
+│       ├── send-rejection-email/   # Rejection notifications
+│       ├── send-welcome-email/     # Welcome emails
+│       ├── send-submission-confirmation/
+│       └── send-admin-notification/
+│
+├── scripts/
+│   ├── parse-directories.js        # Parse dataset
+│   ├── seed-database.js            # Populate DB
+│   └── scraper/                    # Web scraping system
+│
+├── astro.config.mjs                # Astro configuration
+├── tailwind.config.js              # Tailwind config
+├── tsconfig.json                   # TypeScript config
+└── package.json                    # Dependencies
+```
+
+---
+
+## Architecture Patterns
+
+### Build-time vs Runtime Data Flow
+
+```
+BUILD-TIME:
+Supabase DB → Astro Build → Static HTML + directories.json → GitHub Pages
+
+RUNTIME:
+User → Vue Component → /data/directories.json → Filtered Results
+User → Auth/Favorite → Supabase API → Database Update
+```
+
+### Component Architecture
+
+1. **Astro Components** (.astro): Server-rendered static content
+2. **Vue Islands** (.vue): Client-side interactive features with `client:load`
+3. **Composables**: Shared Vue Composition API logic
+4. **Stores**: Minimal global state with Nanostores
+
+### Data Strategy
+
+| Data Type | Fetch Time | Storage |
+|-----------|------------|---------|
+| Directories list | Build-time | Static JSON |
+| Blog posts | Build-time | Content Collections |
+| Statistics | Build-time | Static JSON |
+| User favorites | Runtime | Supabase |
+| User submissions | Runtime | Supabase |
+| Auth state | Runtime | Nanostores + localStorage |
+
+---
+
+## Database Schema
+
+### Core Tables
+
+#### directories
+Primary table for all directory listings.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| slug | text | URL-friendly identifier (unique) |
+| name | text | Directory name |
+| url | text | Directory website URL |
+| description | text | Directory description |
+| categories | text[] | Array of categories |
+| pricing | text | free, paid, freemium |
+| link_type | text | dofollow, nofollow, mixed |
+| domain_rating | integer | Ahrefs DR score (0-100) |
+| organic_traffic | integer | Monthly organic traffic |
+| organic_keywords | integer | Ranking keywords count |
+| helpful_count | integer | User helpfulness votes |
+| average_rating | numeric | Aggregated rating (1-5) |
+| rating_count | integer | Number of ratings |
+| review_count | integer | Number of reviews |
+| is_active | boolean | Active status |
+| is_affiliate | boolean | Has affiliate link |
+| affiliate_url | text | Affiliate URL if applicable |
+| created_at | timestamp | Creation date |
+| updated_at | timestamp | Last update |
+
+#### user_favorites
+User-saved directories.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| user_id | uuid | References auth.users |
+| directory_id | uuid | References directories |
+| created_at | timestamp | When favorited |
+
+#### pending_directories
+User-submitted directories awaiting review.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| user_id | uuid | Submitter |
+| name | text | Directory name |
+| url | text | Directory URL |
+| description | text | Description |
+| categories | text[] | Categories |
+| status | text | pending, approved, rejected |
+| admin_notes | text | Reviewer notes |
+| reviewed_by | uuid | Admin who reviewed |
+| notification_sent | boolean | Email sent flag |
+| created_at | timestamp | Submission date |
+
+#### projects
+User projects for tracking submissions.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| user_id | uuid | Project owner |
+| name | text | Project name |
+| url | text | Project URL |
+| description | text | Project description |
+| logo_url | text | Project logo |
+| created_at | timestamp | Creation date |
+
+#### project_submissions
+Track which directories a project has been submitted to.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| project_id | uuid | References projects |
+| directory_id | uuid | References directories |
+| status | text | not_started, in_progress, submitted, approved, rejected, featured |
+| submission_link | text | Actual submission URL |
+| notes | text | Personal notes |
+| created_at | timestamp | Creation date |
+
+#### directory_ratings
+User ratings for directories.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| user_id | uuid | Rater |
+| directory_id | uuid | Directory rated |
+| rating | integer | 1-5 stars |
+| created_at | timestamp | When rated |
+
+#### directory_reviews
+User comments on directories.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| user_id | uuid | Reviewer |
+| directory_id | uuid | Directory reviewed |
+| content | text | Review text |
+| created_at | timestamp | When posted |
+
+#### email_preferences
+User email opt-out settings.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| user_id | uuid | User reference |
+| submission_updates | boolean | Opt-in for updates |
+| welcome_emails | boolean | Opt-in for welcome |
+| review_notifications | boolean | Opt-in for reviews |
+| weekly_digest | boolean | Opt-in for digest |
+| marketing_emails | boolean | Opt-in for marketing |
+
+#### email_logs
+Track all sent emails.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| email_type | text | Type of email |
+| email_to | text | Recipient |
+| email_subject | text | Subject line |
+| status | text | sent, failed |
+| error_message | text | Error if failed |
+| created_at | timestamp | When sent |
+
+### Key Indexes
+
+- `directories.categories` - GIN index for array queries
+- `directories.domain_rating` - DESC index (nulls last)
+- `directories.slug` - Unique index
+- `directories.is_active` - Status filter
+- `directories.pricing` - Pricing filter
+
+### Row Level Security
+
+- Enabled on user-specific tables (favorites, submissions, preferences)
+- Public read access on directories table
+- Users can only modify their own data
+
+---
+
+## Key Components
+
+### Vue Interactive Components
+
+| Component | Purpose | Location |
+|-----------|---------|----------|
+| DirectoryListContent.vue | Main directory listing with filters/search | Home page |
+| DirectoryFilter.vue | Sidebar filter controls | Home page |
+| DirectoryCard.vue | Individual directory display | Listing |
+| DirectoryDetailActions.vue | Favorite/rate on detail page | Detail page |
+| FavoritesContent.vue | User's saved directories | /favorites |
+| SubmissionsContent.vue | Project submission tracker | /submissions |
+| MySubmissionsContent.vue | Directory submissions status | /my-submissions |
+| SubmitDirectoryForm.vue | New directory submission form | /submit |
+| AuthModal.vue | Google/GitHub OAuth dialog | Global |
+| FavoriteButton.vue | Favorite toggle button | Various |
+| StatsCards.vue | Statistics overview cards | /stats |
+| StatsCharts.vue | Chart.js visualizations | /stats |
+
+### Astro Static Components
+
+| Component | Purpose |
+|-----------|---------|
+| AppHeader.astro | Main navigation |
+| AppFooter.astro | Footer with links |
+| BaseLayout.astro | HTML wrapper with SEO |
+| BlogCard.astro | Blog post preview |
+| Pagination.astro | Page navigation |
+| TableOfContents.astro | Blog post TOC |
+| RelatedPosts.astro | Related articles |
+| ShareButtons.astro | Social sharing |
+| GiscusComments.astro | GitHub Discussions |
+
+---
+
+## Composables & Logic
+
+### useDirectories.js
+
+Client-side directory data management.
+
+```javascript
+// State
+directories      // All directories from JSON
+filteredDirectories  // After filters applied
+loading, error   // Loading states
+
+// Methods
+loadDirectories()     // Fetch /data/directories.json
+filterDirectories()   // Apply all active filters
+searchDirectories(query)  // Text search
+sortDirectories(sortBy)   // Sort by: helpful, dr, newest, alpha
+
+// Filter Options
+- categories: string[]
+- drRange: [min, max]
+- linkType: 'dofollow' | 'nofollow' | 'mixed'
+- pricing: 'free' | 'paid' | 'freemium'
+- searchQuery: string
+```
+
+### useAuth.js
+
+Authentication state management.
+
+```javascript
+// State
+user        // Current user object
+session     // Supabase session
+loading     // Auth loading state
+
+// Methods
+signInWithGoogle()   // Google OAuth
+signInWithGithub()   // GitHub OAuth
+signOut()            // Clear session
+refreshSession()     // Refresh token
+```
+
+### useDirectory.js
+
+Single directory operations.
+
+```javascript
+// Methods
+addToFavorites(directoryId)
+removeFromFavorites(directoryId)
+isFavorite(directoryId)    // Check favorite status
+getUserFavoriteIds()       // Get all user's favorites
+```
+
+### useProjects.js
+
+Project and submission tracking.
+
+```javascript
+// State
+projects, currentProject, projectSubmissions
+
+// Project Methods
+loadProjects()
+createProject(data)
+updateProject(id, data)
+deleteProject(id)
+
+// Submission Methods
+loadProjectSubmissions(projectId)
+upsertSubmission(data)
+updateSubmissionStatus(id, status)
+updateSubmissionLink(id, link)
+deleteSubmission(id)
+getSubmissionStats()  // Counts by status
+```
+
+---
+
+## Routing
+
+### Static Pages
+
+| Route | File | Auth Required |
+|-------|------|---------------|
+| / | index.astro | No |
+| /about | about.astro | No |
+| /stats | stats.astro | No |
+| /terms | terms.astro | No |
+| /privacy | privacy.astro | No |
+| /favorites | favorites.astro | Yes |
+| /submissions | submissions.astro | Yes |
+| /my-submissions | my-submissions.astro | Yes |
+| /submit | submit.astro | Yes |
+| /404 | 404.astro | No |
+
+### Dynamic Routes
+
+| Route | File | Description |
+|-------|------|-------------|
+| /directory/[slug] | directory/[slug].astro | Directory detail pages |
+| /blog | blog/index.astro | Blog listing |
+| /blog/[slug] | blog/[slug].astro | Individual posts |
+| /blog/[...page] | blog/[...page].astro | Pagination |
+| /blog/tags/[tag] | blog/tags/[tag].astro | Posts by tag |
+
+### Dynamic Page Generation
+
+Directory and blog pages use `getStaticPaths()`:
+
+```javascript
+// src/pages/directory/[slug].astro
+export async function getStaticPaths() {
+  const directories = await getAllDirectories();
+  return directories.map(dir => ({
+    params: { slug: dir.slug },
+    props: { directory: dir }
+  }));
+}
+```
+
+---
+
+## Development Guide
+
+### Prerequisites
+
+- Bun (primary) or Node.js 18+
+- Supabase account
+- GitHub account (for Giscus comments)
+
+### Quick Start
+
+```bash
+# Install dependencies
+bun install
+
+# Copy environment file
+cp .env.example .env
+
+# Start dev server
+bun start     # http://localhost:3000
+
+# Build for production
+bun run build
+
+# Preview production
+bun run preview
+```
+
+### Environment Variables
+
+Required:
+```env
+VITE_SUPABASE_URL=https://xxx.supabase.co
+VITE_SUPABASE_ANON_KEY=<anon-key>
+```
+
+Optional:
+```env
+VITE_PIRSCH_SITE_ID=<analytics-id>
+VITE_GITHUB_REPO=awesome-directories/awesome-directories
+VITE_GITHUB_REPO_ID=<repo-id>
+VITE_GITHUB_CATEGORY=Announcements
+VITE_GITHUB_CATEGORY_ID=<category-id>
+PUBLIC_PREVIEW=true  # Show draft posts
+```
+
+Edge Functions:
+```env
+SUPABASE_SERVICE_ROLE_KEY=<service-role-key>
+RESEND_API_KEY=<resend-api-key>
+FROM_EMAIL=notifications@domain.com
+APIFY_API_TOKEN=<apify-token>
+```
+
+---
+
+## Build & Deployment
+
+### Build Process
+
+1. Astro fetches all directories from Supabase
+2. Static HTML pages generated for all routes
+3. `directories.json` saved to `public/data/`
+4. `stats.json` generated with analytics data
+5. Pagefind indexes blog content
+6. Assets compressed (Gzip + Brotli)
+
+### GitHub Actions Workflow
+
+**On Pull Request:**
+1. Build with `PUBLIC_PREVIEW=true`
+2. Deploy to Netlify for preview
+3. Comment preview URL on PR
+4. Run link checker
+
+**On Push to Main:**
+1. Build production site
+2. Deploy to GitHub Pages
+
+### Performance Optimizations
+
+- Static Site Generation (no SSR overhead)
+- Aggressive code splitting (vendor chunks)
+- Terser minification (console removed)
+- LightningCSS minification
+- Gzip level 9 + Brotli level 11
+- Sharp image optimization
+- Lighthouse target: 95+
+
+---
+
+## Common Tasks
+
+### Adding a New Directory
+
+Via submission form:
+1. User submits at /submit
+2. Stored in `pending_directories`
+3. Admin reviews in Supabase dashboard
+4. On approval, moved to `directories` table
+5. Rebuild site to reflect changes
+
+### Adding a Blog Post
+
+1. Create `.md` or `.mdx` file in `src/content/blog/`
+2. Add frontmatter:
+
+```markdown
+---
+title: "Post Title"
+description: "SEO description"
+date: 2025-01-15
+tags: ["SEO", "Marketing"]
+author: "Author Name"
+coverImage: "/covers/image.jpg"
+draft: false
+---
+
+Content here...
+```
+
+3. Rebuild site
+
+### Database Migrations
+
+```bash
+# Create migration
+supabase migration new <name>
+
+# Apply locally
+supabase db reset
+
+# Push to remote
+supabase db push
+```
+
+### Updating SEO Metrics
+
+Automated via Supabase pg_cron calling `update-seo-data` Edge Function.
+
+Manual:
+```bash
+curl -X POST https://project.supabase.co/functions/v1/update-seo-data \
+  -H "Authorization: Bearer SECRET" \
+  -d '{"batchSize": 10}'
+```
+
+---
+
+## Conventions & Best Practices
+
+### Code Style
+
+- Astro components for static content
+- Vue components only for interactivity
+- Vue 3 Composition API with `<script setup>`
+- Tailwind CSS utility classes
+- Mobile-first responsive design
+- TypeScript where applicable
+
+### State Management
+
+- Nanostores for minimal global state (auth only)
+- Composables for component-level state
+- No Vuex/Pinia (too heavy)
+- Client-side caching where needed
+
+### Security
+
+- Row Level Security on all user tables
+- Never commit `.env` files
+- OAuth handled by Supabase
+- HTTPS enforced by GitHub Pages
+- Edge Functions validate authorization
+
+### SEO
+
+- All content in static HTML
+- Structured data (Schema.org)
+- Open Graph + Twitter Cards
+- Automatic sitemap generation
+- Proper canonical URLs
+
+### Accessibility
+
+- WCAG 2.1 AA target
+- Semantic HTML structure
+- Keyboard navigation
+- Screen reader compatible
+
+### Performance
+
+- Minimize client-side JavaScript
+- Lazy load Vue islands
+- Optimize images
+- Cache static assets
+- Monitor bundle size
+
+---
+
+## Troubleshooting
+
+### Build Errors
+
+- Check Astro build output for details
+- Verify environment variables are set
+- Ensure Supabase is accessible
+
+### Runtime Issues
+
+- Browser console for client errors
+- Vue DevTools in development
+- Supabase dashboard for DB logs
+
+### Common Fixes
+
+- `bun install` after pulling changes
+- Clear `.astro` cache if builds fail
+- Rebuild after database changes
+
+---
+
+## Additional Resources
+
+- Astro Docs: https://docs.astro.build
+- Vue 3 Docs: https://vuejs.org
+- Supabase Docs: https://supabase.com/docs
+- Tailwind CSS: https://tailwindcss.com
+- Chart.js: https://www.chartjs.org
+
+---
+
+**Last Updated**: 2025-12
+**Framework**: Astro.js 5.x SSG + Vue.js Islands
+**Target Performance**: Lighthouse 95+
