@@ -1,0 +1,93 @@
+# Awesome Directories
+
+> Curated directory aggregator helping indie hackers discover 300+ verified product launch directories for SaaS products.
+
+## Quick Links
+
+- Website: https://awesome-directories.com
+- Repository: https://github.com/awesome-directories/awesome-directories
+- License: Apache 2.0
+- Full Documentation: /llms-full.txt
+
+## Tech Stack
+
+- Framework: Astro.js 5.x (Static Site Generation)
+- Interactive Components: Vue.js 3 (Composition API, islands architecture)
+- Styling: Tailwind CSS 4.x
+- Database: Supabase (PostgreSQL + Auth + Edge Functions)
+- Email: Resend API
+- Hosting: GitHub Pages
+
+## Project Structure
+
+```
+src/
+├── pages/           # Astro pages (file-based routing)
+├── components/      # Astro (static) + Vue (interactive) components
+├── composables/     # Vue Composition API logic
+├── content/blog/    # Markdown/MDX blog posts
+├── layouts/         # Base HTML layouts
+├── lib/             # Supabase clients, utilities
+├── stores/          # Nanostores for auth state
+└── integrations/    # Custom Astro integrations
+
+supabase/
+├── migrations/      # Database schema migrations
+├── seeds/           # Seed data (directories.json)
+└── functions/       # Edge Functions (Deno runtime)
+
+public/
+├── data/            # Generated at build: directories.json, stats.json
+└── pagefind/        # Search index (generated)
+```
+
+## Key Entry Points
+
+- `src/pages/index.astro` - Home page with directory listing
+- `src/pages/directory/[slug].astro` - Dynamic directory detail pages
+- `src/pages/blog/[slug].astro` - Blog post pages
+- `src/components/DirectoryListContent.vue` - Main filtering/search UI
+- `src/composables/useDirectories.js` - Client-side data logic
+- `src/lib/supabase-server.js` - Build-time database client
+- `src/lib/supabase-client.js` - Runtime database client
+
+## Development
+
+```bash
+bun install          # Install dependencies
+bun start            # Dev server on localhost:3000
+bun run build        # Build static site
+bun run preview      # Preview production build
+```
+
+## Architecture Pattern
+
+1. **Build-time**: Fetch directories from Supabase → Generate static HTML + JSON
+2. **Runtime**: Load `/data/directories.json` for client-side filtering
+3. **Interactive**: Vue islands hydrate for filters, auth, favorites
+4. **Auth**: Supabase OAuth (Google/GitHub) for user features
+
+## Core Features
+
+- Directory listing with advanced filtering (DR, category, pricing, link type)
+- User authentication with favorites and submission tracking
+- Directory submission system with admin review workflow
+- Blog with Markdown/MDX, search (Pagefind), and comments (Giscus)
+- Statistics page with Chart.js visualizations
+- Email notifications via Resend (approval, rejection, welcome)
+
+## Database Tables
+
+- `directories` - Main directory listings with SEO metrics
+- `user_favorites` - User saved directories
+- `pending_directories` - User submissions awaiting review
+- `projects` / `project_submissions` - Track submissions per project
+- `directory_ratings` / `directory_reviews` - User ratings and comments
+
+## Important Conventions
+
+- Astro components (.astro) for static content
+- Vue components (.vue) with `client:load` for interactivity
+- Build-time data fetching; runtime for user-specific features
+- Mobile-first responsive design
+- WCAG 2.1 AA accessibility target
