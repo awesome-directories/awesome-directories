@@ -38,130 +38,52 @@
       </div>
     </div>
 
-    <!-- Main Content -->
-    <div v-else>
-      <!-- Sticky Filter Bar -->
+    <!-- Main Content with Sidebar Layout -->
+    <div v-else class="directory-layout">
+      <!-- Mobile Filter Button & Search Bar -->
       <div
-        class="bg-white border-b border-gray-200 sticky top-0 sm:top-16 z-40 shadow-sm"
+        class="lg:hidden sticky top-0 sm:top-16 z-40 bg-white border-b border-gray-200 shadow-sm"
       >
-        <div
-          class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4"
-        >
-          <!-- First-Visit Tooltip -->
-          <transition
-            name="slide-down"
-            @enter="onTooltipEnter"
-            @after-enter="onTooltipAfterEnter"
-            @leave="onTooltipLeave"
-          >
-            <div
-              v-if="showTooltip"
-              class="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3"
-              role="status"
-              aria-live="polite"
-            >
-              <span class="text-lg flex-shrink-0" aria-hidden="true">👋</span>
-              <div class="flex-1 text-sm text-gray-700">
-                <p class="font-medium mb-1">
-                  We pre-filtered to show you the best directories
-                </p>
-                <p class="text-gray-600">
-                  DoFollow links with high DR (70+). Tap "All Directories" to
-                  see everything.
-                </p>
-              </div>
-              <button
-                @click="dismissTooltip"
-                class="text-gray-400 hover:text-gray-600 focus:text-gray-600 flex-shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                aria-label="Dismiss notification"
+        <div class="px-3 sm:px-4 py-3">
+          <!-- Search Bar -->
+          <div class="mb-3">
+            <label for="mobile-search" class="sr-only">Search directories</label>
+            <div class="relative w-full">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
               >
                 <svg
-                  class="w-5 h-5"
+                  class="h-5 w-5 text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
-                  aria-hidden="true"
                 >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   />
                 </svg>
-              </button>
-            </div>
-          </transition>
-
-          <!-- Search Bar -->
-          <div class="mb-3">
-            <label for="directory-search" class="sr-only"
-              >Search directories</label
-            >
-            <div class="relative w-full">
+              </div>
               <input
-                id="directory-search"
+                id="mobile-search"
                 v-model="searchQuery"
                 type="search"
                 placeholder="Search directories..."
-                class="search-input w-full pl-10 pr-12 py-3 sm:py-2.5 border border-gray-300 rounded-lg text-sm sm:text-base bg-white min-h-[48px] sm:min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent transition-all"
-                aria-label="Search directories"
-                :aria-describedby="searchQuery ? 'search-clear' : undefined"
+                class="search-input w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg text-base bg-white min-h-[48px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent transition-all"
               />
-              <transition name="fade">
-                <button
-                  v-if="searchQuery"
-                  id="search-clear"
-                  @click="clearSearch"
-                  class="absolute inset-y-0 right-0 w-12 flex items-center justify-center rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors z-10"
-                  aria-label="Clear search"
-                >
-                  <svg
-                    class="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </transition>
-            </div>
-          </div>
-
-          <!-- Active Filter Chips -->
-          <div
-            v-if="activeFilterChips.length > 0"
-            class="flex items-center gap-2 flex-wrap mb-3"
-            role="group"
-            aria-label="Active filters"
-          >
-            <span class="text-xs text-gray-500 mr-1">Active:</span>
-            <transition-group
-              name="chip"
-              tag="div"
-              class="flex items-center gap-2 flex-wrap"
-            >
               <button
-                v-for="chip in activeFilterChips"
-                :key="chip.key"
-                @click="removeFilter(chip.key)"
-                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-primary/10 text-primary text-xs font-medium rounded-full hover:bg-primary/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
-                :aria-label="`Remove ${chip.type} filter: ${chip.label}`"
+                v-if="searchQuery"
+                @click="clearSearch"
+                class="absolute inset-y-0 right-0 w-12 flex items-center justify-center rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors z-10"
+                aria-label="Clear search"
               >
-                <span>{{ chip.label }}</span>
                 <svg
-                  class="w-3.5 h-3.5"
+                  class="h-5 w-5 text-gray-400 hover:text-gray-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
-                  aria-hidden="true"
                 >
                   <path
                     stroke-linecap="round"
@@ -171,497 +93,316 @@
                   />
                 </svg>
               </button>
-            </transition-group>
-            <button
-              v-if="activeFilterChips.length > 1"
-              @click="resetAllFilters"
-              class="text-xs text-gray-500 hover:text-gray-700 underline underline-offset-2 ml-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 rounded"
-              aria-label="Clear all filters"
-            >
-              Clear all
-            </button>
-          </div>
-
-          <!-- Quick Filter Pills -->
-          <div class="mb-3">
-            <div
-              class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0"
-              role="group"
-              aria-label="Quick filter presets"
-            >
-              <button
-                v-for="preset in quickFilterPresets"
-                :key="preset.id"
-                @click="applyQuickFilter(preset)"
-                :class="[
-                  'flex-shrink-0 px-4 py-2.5 sm:py-2 rounded-full text-sm font-medium transition-all min-h-[44px] sm:min-h-[40px] whitespace-nowrap touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-                  isActivePreset(preset)
-                    ? 'bg-primary text-white shadow-sm focus-visible:ring-primary'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300 focus-visible:ring-gray-400',
-                ]"
-                :aria-label="`Apply ${preset.label} filter`"
-                :aria-pressed="isActivePreset(preset)"
-              >
-                <span class="inline-block mr-1" aria-hidden="true">{{
-                  preset.icon
-                }}</span>
-                <span>{{ preset.label }}</span>
-              </button>
             </div>
           </div>
 
-          <!-- Advanced Filters Accordion -->
-          <div class="border-t border-gray-200 pt-3">
+          <!-- Filter Button & Result Count -->
+          <div class="flex items-center justify-between gap-3">
             <button
-              @click="toggleAdvancedFilters"
-              class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 min-h-[48px] sm:min-h-[44px] w-full justify-between touch-manipulation active:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              aria-label="Toggle advanced filters"
-              :aria-expanded="advancedFiltersExpanded"
-              aria-controls="advanced-filters"
+              @click="openMobileFilters"
+              class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-sm rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-[44px]"
             >
-              <span>Advanced Filters</span>
               <svg
-                class="w-5 h-5 transition-transform duration-200 flex-shrink-0"
-                :class="{ 'rotate-180': advancedFiltersExpanded }"
+                class="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                aria-hidden="true"
               >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M19 9l-7 7-7-7"
+                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
                 />
               </svg>
+              <span>Filters</span>
+              <span
+                v-if="activeFilterCount > 0"
+                class="inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-primary rounded-full"
+              >
+                {{ activeFilterCount }}
+              </span>
             </button>
 
-            <transition
-              name="accordion"
-              @enter="onEnter"
-              @after-enter="onAfterEnter"
-              @leave="onLeave"
+            <span class="text-sm text-gray-600">
+              <span class="font-semibold text-gray-900">{{
+                visibleDirectories.length.toLocaleString()
+              }}</span>
+              results
+            </span>
+          </div>
+
+          <!-- Active Filter Chips (Mobile) -->
+          <div
+            v-if="activeFilterChips.length > 0"
+            class="mt-3 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide"
+          >
+            <button
+              v-for="chip in activeFilterChips"
+              :key="chip.key"
+              @click="removeFilter(chip.key)"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-primary/10 text-primary text-xs font-medium rounded-full hover:bg-primary/20 transition-colors flex-shrink-0"
             >
-              <div
-                v-show="advancedFiltersExpanded"
-                id="advanced-filters"
-                class="overflow-hidden"
-              >
-                <div
-                  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 mt-3 pb-1"
-                  role="group"
-                  aria-label="Advanced filter options"
+              <span>{{ chip.label }}</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Sidebar + Content Grid -->
+      <div class="directory-grid">
+        <!-- Sidebar (Desktop) -->
+        <FilterSidebar
+          :filters="currentFilters"
+          :categories="categories"
+          :resultCount="visibleDirectories.length"
+          :isMobile="false"
+          @update:filters="handleFilterUpdate"
+          @reset="resetToDefault"
+          @applyPreset="applyQuickFilter"
+          class="hidden lg:block"
+        />
+
+        <!-- Main Content Area -->
+        <div class="directory-content">
+          <!-- Desktop Search & Results Header -->
+          <div class="hidden lg:block sticky top-16 z-30 bg-gray-50 border-b border-gray-200">
+            <div class="px-6 py-4">
+              <!-- Search Bar -->
+              <div class="mb-4">
+                <label for="desktop-search" class="sr-only">Search directories</label>
+                <div class="relative max-w-xl">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                  >
+                    <svg
+                      class="h-5 w-5 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    id="desktop-search"
+                    v-model="searchQuery"
+                    type="search"
+                    placeholder="Search directories by name, description, or category..."
+                    class="search-input w-full pl-10 pr-12 py-2.5 border border-gray-300 rounded-lg text-sm bg-white min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent transition-all"
+                  />
+                  <button
+                    v-if="searchQuery"
+                    @click="clearSearch"
+                    class="absolute inset-y-0 right-0 w-10 flex items-center justify-center rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors"
+                    aria-label="Clear search"
+                  >
+                    <svg
+                      class="h-5 w-5 text-gray-400 hover:text-gray-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Results Summary & Active Chips -->
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 flex-wrap">
+                  <span class="text-sm text-gray-700">
+                    <span class="font-semibold text-gray-900">{{
+                      visibleDirectories.length.toLocaleString()
+                    }}</span>
+                    <template v-if="isDefaultState">
+                      {{ resultsLabel }}
+                    </template>
+                    <template v-else-if="hasActiveFilters">
+                      of {{ totalDirectoriesCount.toLocaleString() }} directories
+                    </template>
+                    <template v-else>
+                      {{ visibleDirectories.length === 1 ? "directory" : "directories" }}
+                    </template>
+                  </span>
+
+                  <!-- Active Filter Chips (Desktop) -->
+                  <div
+                    v-if="activeFilterChips.length > 0"
+                    class="flex items-center gap-2 flex-wrap"
+                  >
+                    <button
+                      v-for="chip in activeFilterChips"
+                      :key="chip.key"
+                      @click="removeFilter(chip.key)"
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full hover:bg-primary/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      <span>{{ chip.label }}</span>
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Pending Submissions Badge -->
+                <span
+                  v-if="pendingSubmissions.length > 0"
+                  class="text-xs text-yellow-800 bg-yellow-50 px-2 py-1 rounded-full"
                 >
-                  <div>
-                    <label
-                      for="filter-category"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
-                    >
-                      Category
-                    </label>
-                    <select
-                      id="filter-category"
-                      v-model="currentFilters.category"
-                      @change="applyFilters"
-                      :class="[
-                        'w-full px-3 py-3 sm:py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none border',
-                        currentFilters.category !== 'All'
-                          ? 'border-primary/50 bg-primary/5'
-                          : 'border-gray-300',
-                      ]"
-                    >
-                      <option v-for="cat in categories" :key="cat" :value="cat">
-                        {{ cat }}
-                      </option>
-                    </select>
-                  </div>
+                  {{ pendingSubmissions.length }} pending
+                </span>
+              </div>
+            </div>
+          </div>
 
-                  <div>
-                    <label
-                      for="filter-dr"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
-                    >
-                      Domain Rating
-                    </label>
-                    <select
-                      id="filter-dr"
-                      v-model="currentFilters.drRange"
-                      @change="applyFilters"
-                      :class="[
-                        'w-full px-3 py-3 sm:py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none border',
-                        currentFilters.drRange !== 'All'
-                          ? 'border-primary/50 bg-primary/5'
-                          : 'border-gray-300',
-                      ]"
-                    >
-                      <option value="All">All DR</option>
-                      <option value="80+">80+</option>
-                      <option value="70+">70+</option>
-                      <option value="70-79">70-79</option>
-                      <option value="60-69">60-69</option>
-                      <option value="<60">&lt;60</option>
-                    </select>
+          <!-- Directory Grid -->
+          <div class="p-4 sm:p-6">
+            <!-- Loading Skeleton -->
+            <div v-if="isLoading" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+              <div v-for="i in 6" :key="i" class="animate-pulse">
+                <div class="bg-white rounded-xl border border-gray-200 p-5">
+                  <div class="flex items-start gap-4">
+                    <div class="w-14 h-14 bg-gray-200 rounded-xl"></div>
+                    <div class="flex-1">
+                      <div class="h-5 bg-gray-200 rounded w-3/4 mb-2"></div>
+                      <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </div>
                   </div>
-
-                  <div>
-                    <label
-                      for="filter-link"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
-                    >
-                      Link Type
-                    </label>
-                    <select
-                      id="filter-link"
-                      v-model="currentFilters.linkType"
-                      @change="applyFilters"
-                      :class="[
-                        'w-full px-3 py-3 sm:py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none border',
-                        currentFilters.linkType !== 'All'
-                          ? 'border-primary/50 bg-primary/5'
-                          : 'border-gray-300',
-                      ]"
-                    >
-                      <option value="All">All</option>
-                      <option value="Dofollow Only">Dofollow Only</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label
-                      for="filter-pricing"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
-                    >
-                      Pricing
-                    </label>
-                    <select
-                      id="filter-pricing"
-                      v-model="currentFilters.pricing"
-                      @change="applyFilters"
-                      :class="[
-                        'w-full px-3 py-3 sm:py-2.5 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none border',
-                        currentFilters.pricing !== 'All'
-                          ? 'border-primary/50 bg-primary/5'
-                          : 'border-gray-300',
-                      ]"
-                    >
-                      <option value="All">All</option>
-                      <option value="free">Free</option>
-                      <option value="paid">Paid</option>
-                      <option value="freemium">Freemium</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label
-                      for="filter-sort"
-                      class="block text-sm font-medium text-gray-900 mb-1.5"
-                    >
-                      Sort By
-                    </label>
-                    <select
-                      id="filter-sort"
-                      v-model="currentFilters.sortBy"
-                      @change="applyFilters"
-                      class="w-full px-3 py-3 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm min-h-[48px] sm:min-h-[44px] bg-white touch-manipulation transition-colors focus:outline-none"
-                    >
-                      <option>Highest Rated</option>
-                      <option>Highest DR</option>
-                      <option>Newest</option>
-                      <option>Alphabetical</option>
-                    </select>
+                  <div class="mt-4 h-12 bg-gray-200 rounded"></div>
+                  <div class="mt-4 grid grid-cols-3 gap-2">
+                    <div class="h-16 bg-gray-200 rounded"></div>
+                    <div class="h-16 bg-gray-200 rounded"></div>
+                    <div class="h-16 bg-gray-200 rounded"></div>
                   </div>
                 </div>
               </div>
-            </transition>
-          </div>
-
-          <!-- Results Summary -->
-          <div
-            class="mt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-gray-200"
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            <div class="flex items-center gap-2 flex-wrap">
-              <!-- Result count with context -->
-              <span class="text-sm text-gray-700">
-                <span class="font-semibold text-gray-900">{{
-                  visibleDirectories.length.toLocaleString()
-                }}</span>
-                <template v-if="isDefaultState">
-                  {{ resultsLabel }}
-                </template>
-                <template v-else-if="hasActiveFilters">
-                  of {{ totalDirectoriesCount.toLocaleString() }} directories
-                </template>
-                <template v-else>
-                  {{
-                    visibleDirectories.length === 1
-                      ? "directory"
-                      : "directories"
-                  }}
-                </template>
-              </span>
-
-              <!-- Search scope indicator -->
-              <span
-                v-if="
-                  currentFilters.search &&
-                  hasActiveFilters &&
-                  activeFilterChips.length > 1
-                "
-                class="text-xs text-blue-700 bg-blue-50 px-2 py-1 rounded-full inline-flex items-center gap-1"
-              >
-                <svg
-                  class="w-3 h-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-                  />
-                </svg>
-                filtered search
-              </span>
-
-              <!-- Pending submissions badge -->
-              <span
-                v-if="pendingSubmissions.length > 0"
-                class="text-xs text-yellow-800 bg-yellow-50 px-2 py-1 rounded-full"
-              >
-                {{ pendingSubmissions.length }} pending
-              </span>
             </div>
 
-            <button
-              v-if="!isDefaultState"
-              @click="resetToDefault"
-              class="text-sm text-primary hover:text-primary-dark font-medium whitespace-nowrap min-h-[48px] sm:min-h-[44px] px-3 -mx-3 sm:mx-0 sm:px-2 flex items-center gap-1.5 touch-manipulation active:bg-gray-50 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              aria-label="Reset to default filters"
+            <!-- Empty State -->
+            <div
+              v-else-if="visibleDirectories.length === 0"
+              class="text-center py-12 px-4"
             >
-              <svg
-                class="w-4 h-4 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-              <span>Reset filters</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Directory Grid -->
-      <div class="max-w-8xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8">
-        <!-- Loading Skeleton -->
-        <div v-if="isLoading" class="space-y-4">
-          <div v-for="i in 6" :key="i" class="animate-pulse">
-            <div class="bg-gray-200 rounded-lg h-48"></div>
-          </div>
-        </div>
-
-        <!-- Empty State -->
-        <div
-          v-else-if="visibleDirectories.length === 0"
-          class="text-center py-12 px-4"
-          role="status"
-          aria-live="polite"
-        >
-          <div class="mb-4">
-            <svg
-              class="w-16 h-16 mx-auto text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </div>
-
-          <!-- Different messages based on context -->
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">
-            <template v-if="currentFilters.search">
-              No results for "{{ currentFilters.search }}"
-            </template>
-            <template v-else> No directories match your filters </template>
-          </h2>
-
-          <!-- Show active filters -->
-          <div v-if="activeFilterChips.length > 0" class="mb-4">
-            <p class="text-gray-600 mb-3">
-              <template
-                v-if="currentFilters.search && activeFilterChips.length > 1"
-              >
-                Your search is limited by
-                {{ activeFilterChips.length - 1 }} active filter{{
-                  activeFilterChips.length > 2 ? "s" : ""
-                }}:
-              </template>
-              <template v-else-if="!currentFilters.search">
-                Active filters:
-              </template>
-            </p>
-            <div class="flex items-center justify-center gap-2 flex-wrap">
-              <button
-                v-for="chip in activeFilterChips"
-                :key="chip.key"
-                @click="removeFilter(chip.key)"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-full hover:bg-red-50 hover:text-red-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 group"
-                :aria-label="`Remove ${chip.type} filter: ${chip.label}`"
-              >
-                <span>{{ chip.label }}</span>
+              <div class="mb-4">
                 <svg
-                  class="w-4 h-4 text-gray-400 group-hover:text-red-500"
+                  class="w-16 h-16 mx-auto text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
-                  aria-hidden="true"
                 >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   />
                 </svg>
+              </div>
+
+              <h2 class="text-xl font-semibold text-gray-900 mb-2">
+                <template v-if="currentFilters.search">
+                  No results for "{{ currentFilters.search }}"
+                </template>
+                <template v-else>No directories match your filters</template>
+              </h2>
+
+              <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                Try adjusting your filters or search query to find more directories.
+              </p>
+
+              <div class="space-y-3 max-w-xs mx-auto">
+                <button
+                  v-if="currentFilters.search && searchOnlyResultsCount > 0"
+                  @click="searchAllDirectories"
+                  class="w-full btn-primary min-h-[44px]"
+                >
+                  Search all directories ({{ searchOnlyResultsCount }} results)
+                </button>
+                <button
+                  @click="resetToDefault"
+                  class="w-full px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors min-h-[44px]"
+                >
+                  Reset all filters
+                </button>
+              </div>
+            </div>
+
+            <!-- Directory Cards Grid -->
+            <div
+              v-else
+              class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5"
+            >
+              <DirectoryCard
+                v-for="dir in visibleDirectories.slice(0, itemsToShow)"
+                :key="dir.id"
+                :directory="dir"
+                :isPendingSubmission="dir.isPending"
+                :userFavoriteIds="userFavoriteIds"
+              />
+            </div>
+
+            <!-- Load More Button -->
+            <div
+              v-if="visibleDirectories.length > itemsToShow"
+              class="mt-8 text-center"
+            >
+              <button
+                @click="loadMore"
+                class="btn-primary min-h-[44px] w-full sm:w-auto px-8"
+              >
+                Load More
+                <span class="ml-2 opacity-80">
+                  ({{ (visibleDirectories.length - itemsToShow).toLocaleString() }} remaining)
+                </span>
               </button>
             </div>
           </div>
-
-          <!-- Suggestions -->
-          <div class="space-y-3 max-w-md mx-auto">
-            <!-- Search all directories option (when search + filters active) -->
-            <button
-              v-if="
-                currentFilters.search &&
-                searchOnlyResultsCount > 0 &&
-                activeFilterChips.length > 1
-              "
-              @click="searchAllDirectories"
-              class="w-full btn-primary min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2"
-            >
-              <svg
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <span>Search all directories</span>
-              <span
-                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white bg-opacity-20"
-              >
-                {{ searchOnlyResultsCount }} result{{
-                  searchOnlyResultsCount !== 1 ? "s" : ""
-                }}
-              </span>
-            </button>
-
-            <!-- Reset all filters -->
-            <button
-              @click="resetAllFilters"
-              :class="[
-                'w-full min-h-[48px] sm:min-h-[44px] px-6 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors',
-                currentFilters.search &&
-                searchOnlyResultsCount > 0 &&
-                activeFilterChips.length > 1
-                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  : 'btn-primary',
-              ]"
-            >
-              <svg
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                />
-              </svg>
-              <span>Reset all filters</span>
-              <span
-                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white bg-opacity-20"
-              >
-                {{ totalDirectoriesCount }} directories
-              </span>
-            </button>
-          </div>
-
-          <!-- Helpful tip -->
-          <p
-            v-if="activeFilterChips.length > 0"
-            class="text-sm text-gray-500 mt-6"
-          >
-            💡 Tip: Click on any filter chip above to remove it individually
-          </p>
-        </div>
-
-        <!-- Directory Grid -->
-        <div
-          v-else
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
-        >
-          <DirectoryCard
-            v-for="dir in visibleDirectories.slice(0, itemsToShow)"
-            :key="dir.id"
-            :directory="dir"
-            :isPendingSubmission="dir.isPending"
-            :userFavoriteIds="userFavoriteIds"
-          />
-        </div>
-
-        <!-- Load More Button -->
-        <div
-          v-if="visibleDirectories.length > itemsToShow"
-          class="mt-6 sm:mt-8 text-center"
-        >
-          <button
-            @click="loadMore"
-            class="btn-primary min-h-[48px] sm:min-h-[44px] w-full sm:w-auto px-6 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2"
-            aria-label="Load more directories"
-          >
-            <span>Load More</span>
-            <span
-              class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-white bg-opacity-20"
-            >
-              {{ (visibleDirectories.length - itemsToShow).toLocaleString() }}
-              remaining
-            </span>
-          </button>
         </div>
       </div>
+
+      <!-- Mobile Filter Drawer -->
+      <Teleport to="body">
+        <Transition name="drawer">
+          <div
+            v-if="mobileFiltersOpen"
+            class="fixed inset-0 z-50 lg:hidden"
+          >
+            <!-- Backdrop -->
+            <div
+              class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              @click="closeMobileFilters"
+            ></div>
+
+            <!-- Drawer -->
+            <FilterSidebar
+              :filters="currentFilters"
+              :categories="categories"
+              :resultCount="visibleDirectories.length"
+              :isMobile="true"
+              :isMobileOpen="mobileFiltersOpen"
+              @update:filters="handleFilterUpdate"
+              @reset="resetToDefault"
+              @applyPreset="applyQuickFilter"
+              @close="closeMobileFilters"
+            />
+          </div>
+        </Transition>
+      </Teleport>
     </div>
   </div>
 </template>
@@ -674,6 +415,7 @@ import { useDirectory } from "@/composables/useDirectory";
 import { supabase } from "@/lib/supabase-client";
 import httpClient from "@/lib/httpclient.js";
 import DirectoryCard from "./DirectoryCard.vue";
+import FilterSidebar from "./FilterSidebar.vue";
 import log from "@/lib/logger.js";
 
 const props = defineProps({
@@ -691,8 +433,9 @@ const filteredData = ref([]);
 const pendingSubmissions = ref([]);
 const isLoading = ref(true);
 const userFavoriteIds = ref([]);
+const mobileFiltersOpen = ref(false);
 
-// Default filters: DoFollow + DR 70+ for instant value
+// Default filters: DR 70+ for instant value
 const DEFAULT_FILTERS = {
   search: "",
   category: "All",
@@ -703,75 +446,23 @@ const DEFAULT_FILTERS = {
 };
 
 const currentFilters = ref({ ...DEFAULT_FILTERS });
-
 const itemsToShow = ref(30);
-const advancedFiltersExpanded = ref(false);
-const showTooltip = ref(false);
 
-// Quick filter presets
-const quickFilterPresets = ref([
-  {
-    id: "quick-wins",
-    label: "Quick Wins",
-    icon: "🚀",
-    filters: {
-      category: "All",
-      drRange: "70+",
-      linkType: "Dofollow Only",
-      pricing: "free",
-      sortBy: "Highest DR",
-    },
-  },
-  {
-    id: "premium",
-    label: "Premium",
-    icon: "💎",
-    filters: {
-      category: "All",
-      drRange: "80+",
-      linkType: "Dofollow Only",
-      pricing: "All",
-      sortBy: "Highest DR",
-    },
-  },
-  {
-    id: "all-free",
-    label: "All Free",
-    icon: "🆓",
-    filters: {
-      category: "All",
-      drRange: "All",
-      linkType: "All",
-      pricing: "free",
-      sortBy: "Highest Rated",
-    },
-  },
-  {
-    id: "top-rated",
-    label: "Top Rated",
-    icon: "⭐",
-    filters: {
-      category: "All",
-      drRange: "All",
-      linkType: "All",
-      pricing: "All",
-      sortBy: "Highest Rated",
-    },
-  },
-  {
-    id: "all",
-    label: "All Directories",
-    icon: "⚡",
-    filters: {
-      category: "All",
-      drRange: "All",
-      linkType: "All",
-      pricing: "All",
-      sortBy: "Highest DR",
-    },
-  },
-]);
+// Search input state with debounce
+const searchQuery = ref("");
+let searchDebounceTimer = null;
 
+watch(searchQuery, (newValue) => {
+  if (searchDebounceTimer) {
+    clearTimeout(searchDebounceTimer);
+  }
+  searchDebounceTimer = setTimeout(() => {
+    currentFilters.value.search = newValue;
+    applyFilters();
+  }, 300);
+});
+
+// Computed properties
 const hasActiveFilters = computed(() => {
   return (
     currentFilters.value.search ||
@@ -782,7 +473,16 @@ const hasActiveFilters = computed(() => {
   );
 });
 
-// Compute active filter chips for display
+const activeFilterCount = computed(() => {
+  let count = 0;
+  if (currentFilters.value.search) count++;
+  if (currentFilters.value.category !== "All") count++;
+  if (currentFilters.value.drRange !== "All") count++;
+  if (currentFilters.value.linkType !== "All") count++;
+  if (currentFilters.value.pricing !== "All") count++;
+  return count;
+});
+
 const activeFilterChips = computed(() => {
   const chips = [];
 
@@ -813,7 +513,7 @@ const activeFilterChips = computed(() => {
   if (currentFilters.value.linkType !== "All") {
     chips.push({
       key: "linkType",
-      label: currentFilters.value.linkType,
+      label: "DoFollow",
       type: "Link Type",
     });
   }
@@ -832,49 +532,20 @@ const activeFilterChips = computed(() => {
   return chips;
 });
 
-// Count results without any filters (for empty state suggestions)
 const totalDirectoriesCount = computed(() => allData.value.length);
 
-// Count results with only search (no other filters)
 const searchOnlyResultsCount = computed(() => {
   if (!currentFilters.value.search) return 0;
   const searchLower = currentFilters.value.search.toLowerCase();
   return allData.value.filter((dir) => {
     return (
       dir.name.toLowerCase().includes(searchLower) ||
-      (dir.description &&
-        dir.description.toLowerCase().includes(searchLower)) ||
+      (dir.description && dir.description.toLowerCase().includes(searchLower)) ||
       (dir.categories &&
         dir.categories.some((cat) => cat.toLowerCase().includes(searchLower)))
     );
   }).length;
 });
-
-// Remove a specific filter
-function removeFilter(filterKey) {
-  if (filterKey === "search") {
-    currentFilters.value.search = "";
-    searchQuery.value = "";
-  } else if (filterKey === "category") {
-    currentFilters.value.category = "All";
-  } else if (filterKey === "drRange") {
-    currentFilters.value.drRange = "All";
-  } else if (filterKey === "linkType") {
-    currentFilters.value.linkType = "All";
-  } else if (filterKey === "pricing") {
-    currentFilters.value.pricing = "All";
-  }
-  applyFilters();
-}
-
-// Search all directories (remove filters but keep search)
-function searchAllDirectories() {
-  currentFilters.value.category = "All";
-  currentFilters.value.drRange = "All";
-  currentFilters.value.linkType = "All";
-  currentFilters.value.pricing = "All";
-  applyFilters();
-}
 
 const isDefaultState = computed(() => {
   return (
@@ -889,7 +560,7 @@ const isDefaultState = computed(() => {
 
 const resultsLabel = computed(() => {
   if (isDefaultState.value) {
-    return "premium directories (DoFollow + DR 70+)";
+    return "premium directories (DR 70+)";
   }
   return visibleDirectories.value.length === 1 ? "directory" : "directories";
 });
@@ -901,108 +572,30 @@ const filteredPendingSubmissions = computed(() => {
   });
 });
 
-const visibleDirectories = computed(function computeVisibleDirectories() {
-  var pending = filteredPendingSubmissions.value.map(function mapPending(p) {
-    return { ...convertPendingToDirectory(p), isPending: true };
-  });
+const visibleDirectories = computed(() => {
+  const pending = filteredPendingSubmissions.value.map((p) => ({
+    ...convertPendingToDirectory(p),
+    isPending: true,
+  }));
   return [...pending, ...filteredData.value];
 });
 
-onMounted(async function handleMounted() {
+// Error handling
+const error = ref(null);
+const retryCount = ref(0);
+const maxRetries = 3;
+
+// Lifecycle
+onMounted(async () => {
   await loadDirectories();
   await loadUserData();
-  checkFirstVisit();
 });
 
-// Check if this is the user's first visit
-function checkFirstVisit() {
-  const hasVisited = localStorage.getItem("awesome-dirs-visited");
-  if (!hasVisited) {
-    showTooltip.value = true;
-    localStorage.setItem("awesome-dirs-visited", "true");
-  }
-}
-
-function dismissTooltip() {
-  showTooltip.value = false;
-}
-
-// Search input state
-var searchQuery = ref("");
-var searchDebounceTimer = ref(null);
-
-// Watch for search query changes with debouncing
-watch(searchQuery, function handleSearchChange(newValue) {
-  if (searchDebounceTimer.value) {
-    clearTimeout(searchDebounceTimer.value);
-  }
-
-  searchDebounceTimer.value = setTimeout(function executeSearch() {
-    currentFilters.value.search = newValue;
-    applyFilters();
-  }, 300);
-});
-
-// Apply quick filter preset
-function applyQuickFilter(preset) {
-  currentFilters.value = {
-    search: "",
-    ...preset.filters,
-  };
-
-  searchQuery.value = "";
-
-  applyFilters();
-  advancedFiltersExpanded.value = false;
-  itemsToShow.value = 30;
-}
-
-// Check if a preset is currently active
-function isActivePreset(preset) {
-  return (
-    currentFilters.value.category === preset.filters.category &&
-    currentFilters.value.drRange === preset.filters.drRange &&
-    currentFilters.value.linkType === preset.filters.linkType &&
-    currentFilters.value.pricing === preset.filters.pricing &&
-    currentFilters.value.sortBy === preset.filters.sortBy &&
-    !currentFilters.value.search
-  );
-}
-
-// Reset to default smart filters
-function resetToDefault() {
-  currentFilters.value = { ...DEFAULT_FILTERS };
-  searchQuery.value = "";
-  itemsToShow.value = 30;
-  applyFilters();
-  advancedFiltersExpanded.value = false;
-}
-
-function resetAllFilters() {
-  resetToDefault();
-}
-
-// Toggle advanced filters visibility
-function toggleAdvancedFilters() {
-  advancedFiltersExpanded.value = !advancedFiltersExpanded.value;
-}
-
-var error = ref(null);
-var retryCount = ref(0);
-var maxRetries = 3;
-
-function clearSearch() {
-  searchQuery.value = "";
-  var searchInput = document.getElementById("directory-search");
-  if (searchInput) {
-    searchInput.focus();
-  }
-}
-
+// Methods
 async function loadDirectories() {
   try {
     error.value = null;
-    var response = await httpClient.get("/data/directories.json");
+    const response = await httpClient.get("/data/directories.json");
     allData.value = await response.json();
     filteredData.value = [...allData.value];
     isLoading.value = false;
@@ -1027,7 +620,6 @@ async function loadUserData() {
   if (!user.value) return;
 
   try {
-    // Load user's pending submissions
     const { data: pending } = await supabase
       .from("pending_directories")
       .select("*")
@@ -1035,22 +627,20 @@ async function loadUserData() {
       .eq("status", "pending");
 
     pendingSubmissions.value = pending || [];
-
-    // Load user's favorites
     userFavoriteIds.value = await getUserFavoriteIds(user.value);
 
     log.info(
-      `Loaded ${pendingSubmissions.value.length} pending submissions, ${userFavoriteIds.value.length} favorites`,
+      `Loaded ${pendingSubmissions.value.length} pending submissions, ${userFavoriteIds.value.length} favorites`
     );
-  } catch (error) {
-    log.error("Failed to load user data:", error);
+  } catch (err) {
+    log.error("Failed to load user data:", err);
   }
 }
 
 function convertPendingToDirectory(pending) {
   return {
     id: pending.id,
-    slug: pending.id, // Use id as a safe, unique slug for pending submissions
+    slug: pending.id,
     name: pending.name,
     description: pending.description,
     url: pending.url,
@@ -1069,20 +659,17 @@ function convertPendingToDirectory(pending) {
 }
 
 function applyFiltersToDirectory(dir) {
-  // Search filter
   if (currentFilters.value.search) {
     const searchLower = currentFilters.value.search.toLowerCase();
     const matchesSearch =
       dir.name.toLowerCase().includes(searchLower) ||
-      (dir.description &&
-        dir.description.toLowerCase().includes(searchLower)) ||
+      (dir.description && dir.description.toLowerCase().includes(searchLower)) ||
       (dir.categories &&
         dir.categories.some((cat) => cat.toLowerCase().includes(searchLower)));
 
     if (!matchesSearch) return false;
   }
 
-  // Category filter
   if (currentFilters.value.category !== "All") {
     if (
       !dir.categories ||
@@ -1092,7 +679,6 @@ function applyFiltersToDirectory(dir) {
     }
   }
 
-  // DR filter
   if (currentFilters.value.drRange !== "All") {
     if (!dir.domain_rating) return false;
     const dr = dir.domain_rating;
@@ -1105,12 +691,10 @@ function applyFiltersToDirectory(dir) {
     if (range === "<60" && dr >= 60) return false;
   }
 
-  // Link type filter
   if (currentFilters.value.linkType === "Dofollow Only") {
     if (!dir.is_dofollow) return false;
   }
 
-  // Pricing filter
   if (currentFilters.value.pricing !== "All") {
     if (
       !dir.pricing_type ||
@@ -1135,7 +719,6 @@ function sortDirectories(dirs, sortBy) {
   switch (sortBy) {
     case "Highest Rated":
       return sorted.sort((a, b) => {
-        // Sort by average rating first, then by rating count
         const ratingA = a.average_rating || 0;
         const ratingB = b.average_rating || 0;
         if (ratingB !== ratingA) return ratingB - ratingA;
@@ -1151,7 +734,7 @@ function sortDirectories(dirs, sortBy) {
     case "Newest":
       return sorted.sort(
         (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
     case "Alphabetical":
       return sorted.sort((a, b) => a.name.localeCompare(b.name));
@@ -1160,71 +743,92 @@ function sortDirectories(dirs, sortBy) {
   }
 }
 
+function handleFilterUpdate(newFilters) {
+  currentFilters.value = newFilters;
+  applyFilters();
+}
+
+function applyQuickFilter(preset) {
+  currentFilters.value = {
+    search: "",
+    ...preset.filters,
+  };
+  searchQuery.value = "";
+  applyFilters();
+  itemsToShow.value = 30;
+}
+
+function removeFilter(filterKey) {
+  if (filterKey === "search") {
+    currentFilters.value.search = "";
+    searchQuery.value = "";
+  } else if (filterKey === "category") {
+    currentFilters.value.category = "All";
+  } else if (filterKey === "drRange") {
+    currentFilters.value.drRange = "All";
+  } else if (filterKey === "linkType") {
+    currentFilters.value.linkType = "All";
+  } else if (filterKey === "pricing") {
+    currentFilters.value.pricing = "All";
+  }
+  applyFilters();
+}
+
+function searchAllDirectories() {
+  currentFilters.value.category = "All";
+  currentFilters.value.drRange = "All";
+  currentFilters.value.linkType = "All";
+  currentFilters.value.pricing = "All";
+  applyFilters();
+}
+
+function resetToDefault() {
+  currentFilters.value = { ...DEFAULT_FILTERS };
+  searchQuery.value = "";
+  itemsToShow.value = 30;
+  applyFilters();
+}
+
+function clearSearch() {
+  searchQuery.value = "";
+  currentFilters.value.search = "";
+  applyFilters();
+}
+
 function loadMore() {
   itemsToShow.value += 30;
 }
 
-function onEnter(el) {
-  el.style.height = "0";
-  el.style.overflow = "hidden";
-
-  requestAnimationFrame(function setHeight() {
-    el.style.height = el.scrollHeight + "px";
-  });
+function openMobileFilters() {
+  mobileFiltersOpen.value = true;
+  document.body.style.overflow = "hidden";
 }
 
-function onAfterEnter(el) {
-  el.style.height = "auto";
-  el.style.overflow = "visible";
-}
-
-function onLeave(el) {
-  el.style.height = el.scrollHeight + "px";
-  el.style.overflow = "hidden";
-
-  requestAnimationFrame(function collapseHeight() {
-    requestAnimationFrame(function setZeroHeight() {
-      el.style.height = "0";
-    });
-  });
-}
-
-function onTooltipEnter(el) {
-  el.style.maxHeight = "0";
-  el.style.overflow = "hidden";
-  el.style.opacity = "0";
-}
-
-function onTooltipAfterEnter(el) {
-  el.style.maxHeight = el.scrollHeight + "px";
-  el.style.opacity = "1";
-}
-
-function onTooltipLeave(el) {
-  el.style.maxHeight = "0";
-  el.style.opacity = "0";
+function closeMobileFilters() {
+  mobileFiltersOpen.value = false;
+  document.body.style.overflow = "";
 }
 </script>
 
 <style scoped>
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+@reference "../style.css";
+
+.directory-layout {
+  @apply min-h-screen bg-gray-50;
 }
 
-.touch-manipulation {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+.directory-grid {
+  @apply lg:grid lg:grid-cols-[280px_1fr];
 }
 
+.directory-content {
+  @apply min-h-screen;
+}
+
+/* Search input styling */
 .search-input {
   outline: none;
-  transition:
-    box-shadow 0.2s ease-in-out,
-    border-color 0.2s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 .search-input:focus {
@@ -1237,74 +841,38 @@ function onTooltipLeave(el) {
   appearance: none;
 }
 
-.accordion-enter-active,
-.accordion-leave-active {
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Scrollbar hide utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
-.slide-down-enter-active,
-.slide-down-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.slide-down-enter-from,
-.slide-down-leave-to {
-  max-height: 0;
+/* Drawer transition */
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.drawer-enter-active .filter-sidebar,
+.drawer-leave-active .filter-sidebar {
+  transition: transform 0.3s ease;
+}
+
+.drawer-enter-from,
+.drawer-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
+.drawer-enter-from .filter-sidebar,
+.drawer-leave-to .filter-sidebar {
+  transform: translateX(-100%);
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Filter chip transitions */
-.chip-enter-active {
-  transition: all 0.2s ease-out;
-}
-
-.chip-leave-active {
-  transition: all 0.15s ease-in;
-}
-
-.chip-enter-from {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.chip-leave-to {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.chip-move {
-  transition: transform 0.2s ease;
-}
-
-@media (max-width: 640px) {
-  .scrollbar-hide {
-    scroll-padding-left: 0.75rem;
-    scroll-padding-right: 0.75rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .accordion-enter-active,
-  .accordion-leave-active,
-  .slide-down-enter-active,
-  .slide-down-leave-active,
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: none;
-  }
-}
-
+/* Loading animation */
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
@@ -1316,6 +884,16 @@ function onTooltipLeave(el) {
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .drawer-enter-active,
+  .drawer-leave-active,
+  .drawer-enter-active .filter-sidebar,
+  .drawer-leave-active .filter-sidebar {
+    transition: none;
   }
 }
 </style>
