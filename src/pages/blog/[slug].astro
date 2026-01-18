@@ -65,11 +65,13 @@ const siteUrlRaw = Astro.site?.toString() || "https://awesome-directories.com";
 const siteUrl = siteUrlRaw.replace(/\/+$/, "");
 const postUrl = `${siteUrl}/blog/${post.slug}`;
 const ogImage = coverImage || `${siteUrl}/og-image.png`;
+const markdownUrl = `/blog/${post.slug}.md`;
 ---
 
 <BaseLayout
   title={`${title} | Awesome Directories Blog`}
   description={description}
+  markdownUrl={markdownUrl}
 >
   <Fragment slot="head">
     <!-- Open Graph / Facebook -->

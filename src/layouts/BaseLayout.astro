@@ -11,6 +11,7 @@ interface Props {
   canonicalUrl?: string;
   structuredData?: object | object[];
   noIndex?: boolean;
+  markdownUrl?: string;
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   canonicalUrl = Astro.url.href,
   structuredData,
   noIndex = false,
+  markdownUrl,
 } = Astro.props;
 
 const siteUrl = "https://awesome-directories.com";
@@ -151,6 +153,16 @@ const twitterHandle = "@meysamazing";
       title="Awesome Directories Blog RSS Feed"
       href="/rss.xml"
     />
+
+    <!-- Markdown alternate for AI agents (Third Audience) -->
+    {markdownUrl && (
+      <link
+        rel="alternate"
+        type="text/markdown"
+        title="Markdown"
+        href={markdownUrl}
+      />
+    )}
 
     <!-- Webmention -->
     <link
