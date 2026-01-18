@@ -7,6 +7,7 @@ import { defineConfig } from "astro/config";
 import { fileURLToPath } from "node:url";
 import { saveDirectoriesIntegration } from "./src/integrations/save-directories.js";
 import { saveStatsIntegration } from "./src/integrations/save-stats.js";
+import { saveMarkdownIntegration } from "./src/integrations/save-markdown.js";
 import pagefindIntegration from "./src/integrations/pagefind.js";
 
 // https://astro.build/config
@@ -21,6 +22,7 @@ export default defineConfig({
     mdx(),
     saveDirectoriesIntegration(),
     saveStatsIntegration(),
+    saveMarkdownIntegration(),
     vue(),
     sitemap(),
     pagefindIntegration(),
