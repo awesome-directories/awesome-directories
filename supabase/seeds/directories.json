@@ -63,6 +63,18 @@
     "categories": [
       "General"
     ],
+    "description": "Open-source directory of 993 AI tools with real pricing and vendor-sourced SOC 2, ISO 27001, GDPR and HIPAA reports. Free to submit at aifoxx.com/submit.",
+    "is_active": true,
+    "name": "AIFoxx",
+    "pricing_type": "free",
+    "slug": "aifoxx",
+    "submission_url": "https://aifoxx.com/submit",
+    "url": "https://aifoxx.com"
+  },
+  {
+    "categories": [
+      "General"
+    ],
     "description": "Submit your product to All Startups Info to reach your target audience.",
     "is_active": true,
     "name": "All Startups Info",
