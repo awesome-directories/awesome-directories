@@ -4701,5 +4701,19 @@
     "slug": "zumvu",
     "submission_url": "http://zumvu.com/make-profile.zvx",
     "url": "http://zumvu.com/make-profile.zvx"
+  },
+  {
+    "categories": [
+      "General",
+      "SaaS"
+    ],
+    "description": "Multilingual AI tools directory with model profiles, agent skills, prompts, editorial coverage, and paid vendor submissions.",
+    "domain_rating": null,
+    "is_active": true,
+    "name": "AI Tools Radar",
+    "pricing_type": "paid",
+    "slug": "ai-tools-radar",
+    "submission_url": "https://aitoolsradar.com/en/submit",
+    "url": "https://aitoolsradar.com/"
   }
 ]
