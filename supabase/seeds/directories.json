@@ -4701,5 +4701,18 @@
     "slug": "zumvu",
     "submission_url": "http://zumvu.com/make-profile.zvx",
     "url": "http://zumvu.com/make-profile.zvx"
+  },
+  {
+    "categories": [
+      "Developer Tools",
+      "Productivity"
+    ],
+    "description": "A curated directory of independent Mac apps with official app links and a free standard editorial submission route. Optional paid priority review and clearly labeled sponsorship are separate; payment does not guarantee editorial approval.",
+    "is_active": true,
+    "name": "Indie Mac Apps",
+    "pricing_type": "freemium",
+    "slug": "indie-mac-apps",
+    "submission_url": "https://indiemacapps.com/submit",
+    "url": "https://indiemacapps.com/"
   }
 ]
