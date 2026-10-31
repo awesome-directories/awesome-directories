@@ -3742,6 +3742,36 @@
   },
   {
     "categories": [
+      "Product Launch",
+      "Startup"
+    ],
+    "description": "Product discovery directory where makers submit AI tools, apps and side projects by category. Free listing via badge link exchange, or $19.9 one-time for priority review.",
+    "domain_rating": null,
+    "is_active": true,
+    "is_dofollow": true,
+    "name": "Submito",
+    "pricing_type": "freemium",
+    "slug": "submito",
+    "submission_url": "https://submito.net/submit",
+    "url": "https://submito.net"
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    "categories": [
       "General"
     ],
     "description": "Submit your product to Sulekha to reach your target audience.",
