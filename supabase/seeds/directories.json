@@ -1639,6 +1639,18 @@
     "categories": [
       "General"
     ],
+    "description": "Submit your iPhone, iPad or Mac app to Indie Apps, a free directory of apps made by independent developers.",
+    "is_active": true,
+    "name": "Indie Apps",
+    "pricing_type": "free",
+    "slug": "indie-apps",
+    "submission_url": "https://indie-apps.com/submit",
+    "url": "https://indie-apps.com"
+  },
+  {
+    "categories": [
+      "General"
+    ],
     "description": "Submit your product to Indie Gamer Reviewer to reach your target audience.",
     "is_active": true,
     "name": "Indie Gamer Reviewer",
