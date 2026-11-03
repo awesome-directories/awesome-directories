@@ -3018,6 +3018,20 @@
     "categories": [
       "General"
     ],
+    "description": "Siteefy helps people find and compare the right tools and sites for any task, from AI tools and SaaS products to online services.",
+    "domain_rating": 76,
+    "is_active": true,
+    "is_dofollow": false,
+    "name": "Siteefy",
+    "pricing_type": "free",
+    "slug": "siteefy",
+    "submission_url": "https://siteefy.com/submit-tool?utm_source=awesome-directories",
+    "url": "https://siteefy.com"
+  },
+  {
+    "categories": [
+      "General"
+    ],
     "description": "Submit your product to Slant to reach your target audience.",
     "is_active": true,
     "name": "Slant",
