@@ -667,6 +667,18 @@
   },
   {
     "categories": [
+      "Dev Tools"
+    ],
+    "description": "Comparison of SaaS starter kits and boilerplates by stack, with a free submission form for makers.",
+    "is_active": true,
+    "name": "Boilerplates Directory",
+    "pricing_type": "free",
+    "slug": "boilerplates-directory",
+    "submission_url": "https://boilerplates.directory/submit",
+    "url": "https://boilerplates.directory"
+  },
+  {
+    "categories": [
       "General"
     ],
     "description": "Submit your product to Boing Boing to reach your target audience.",
@@ -2471,6 +2483,18 @@
     "slug": "promote-project",
     "submission_url": "https://www.promoteproiect.com",
     "url": "https://www.promoteproiect.com"
+  },
+  {
+    "categories": [
+      "General"
+    ],
+    "description": "Curated directory of installable Progressive Web Apps, with a free submission form for makers.",
+    "is_active": true,
+    "name": "PWA Directory",
+    "pricing_type": "free",
+    "slug": "pwa-directory",
+    "submission_url": "https://pwa.directory/submit",
+    "url": "https://pwa.directory"
   },
   {
     "categories": [
@@ -4461,6 +4485,18 @@
     "slug": "web-app-rater",
     "submission_url": "https://webapprater.com",
     "url": "https://webapprater.com"
+  },
+  {
+    "categories": [
+      "General"
+    ],
+    "description": "Directory of web apps that run in the browser, with a free submission form for makers.",
+    "is_active": true,
+    "name": "Web Apps Directory",
+    "pricing_type": "free",
+    "slug": "web-apps-directory",
+    "submission_url": "https://webapps.directory/submit",
+    "url": "https://webapps.directory"
   },
   {
     "categories": [
